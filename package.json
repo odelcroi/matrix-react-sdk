@@ -58,6 +58,7 @@
     "@babel/runtime": "^7.12.5",
     "@matrix-org/analytics-events": "^0.2.0",
     "@matrix-org/react-sdk-module-api": "^0.0.3",
+    "@noble/ed25519": "^1.6.1",
     "@sentry/browser": "^6.11.0",
     "@sentry/tracing": "^6.11.0",
     "@testing-library/react": "^12.1.5",
@@ -113,6 +114,7 @@
     "rfc4648": "^1.4.0",
     "sanitize-html": "^2.3.2",
     "tar-js": "^0.3.0",
+    "universal-base64url": "^1.1.0",
     "url": "^0.11.0",
     "what-input": "^5.2.10",
     "zxcvbn": "^4.4.2"

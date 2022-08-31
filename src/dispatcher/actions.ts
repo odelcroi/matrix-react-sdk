@@ -40,6 +40,8 @@ export enum Action {
      */
     ViewUserSettings = "view_user_settings",
 
+    LinkAnotherDevice = "link_another_device",
+
     /**
      * Opens the room directory. No additional payload information required.
      */

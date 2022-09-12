@@ -15,17 +15,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Relations, RelationsEvent } from 'matrix-js-sdk/src/models/relations';
-import { EventType, RelationType } from 'matrix-js-sdk/src/@types/event';
+import { Relations, RelationsEvent } from "matrix-js-sdk/src/models/relations";
+import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
 
 import EmojiPicker from "./EmojiPicker";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import dis from "../../../dispatcher/dispatcher";
-import { Action } from '../../../dispatcher/actions';
+import { Action } from "../../../dispatcher/actions";
 import RoomContext from "../../../contexts/RoomContext";
-import { FocusComposerPayload } from '../../../dispatcher/payloads/FocusComposerPayload';
+import { FocusComposerPayload } from "../../../dispatcher/payloads/FocusComposerPayload";
 
 interface IProps {
     mxEvent: MatrixEvent;

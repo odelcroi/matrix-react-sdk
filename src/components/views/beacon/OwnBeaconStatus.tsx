@@ -14,15 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Beacon } from 'matrix-js-sdk/src/matrix';
-import React, { HTMLProps } from 'react';
+import { Beacon } from "matrix-js-sdk/src/matrix";
+import React, { HTMLProps } from "react";
 
-import { _t } from '../../../languageHandler';
-import { useOwnLiveBeacons } from '../../../utils/beacon';
-import { preventDefaultWrapper } from '../../../utils/NativeEventUtils';
-import BeaconStatus from './BeaconStatus';
-import { BeaconDisplayStatus } from './displayStatus';
-import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
+import { _t } from "../../../languageHandler";
+import { useOwnLiveBeacons } from "../../../utils/beacon";
+import { preventDefaultWrapper } from "../../../utils/NativeEventUtils";
+import BeaconStatus from "./BeaconStatus";
+import { BeaconDisplayStatus } from "./displayStatus";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 
 interface Props {
     displayStatus: BeaconDisplayStatus;
@@ -54,7 +54,7 @@ const OwnBeaconStatus: React.FC<Props & HTMLProps<HTMLDivElement>> = ({
     return <BeaconStatus
         beacon={beacon}
         displayStatus={ownDisplayStatus}
-        label={_t('Live location enabled')}
+        label={_t("Live location enabled")}
         displayLiveTimeRemaining
         {...rest}
     >
@@ -67,7 +67,7 @@ const OwnBeaconStatus: React.FC<Props & HTMLProps<HTMLDivElement>> = ({
             className='mx_OwnBeaconStatus_button mx_OwnBeaconStatus_destructiveButton'
             disabled={stoppingInProgress}
         >
-            { _t('Stop') }
+            { _t("Stop") }
         </AccessibleButton>
         }
         { hasLocationPublishError && <AccessibleButton
@@ -78,7 +78,7 @@ const OwnBeaconStatus: React.FC<Props & HTMLProps<HTMLDivElement>> = ({
             onClick={preventDefaultWrapper(onResetLocationPublishError)}
             className='mx_OwnBeaconStatus_button mx_OwnBeaconStatus_destructiveButton'
         >
-            { _t('Retry') }
+            { _t("Retry") }
         </AccessibleButton>
         }
         { hasStopSharingError && <AccessibleButton
@@ -89,7 +89,7 @@ const OwnBeaconStatus: React.FC<Props & HTMLProps<HTMLDivElement>> = ({
             onClick={preventDefaultWrapper(onStopSharing)}
             className='mx_OwnBeaconStatus_button mx_OwnBeaconStatus_destructiveButton'
         >
-            { _t('Retry') }
+            { _t("Retry") }
         </AccessibleButton> }
     </BeaconStatus>;
 };

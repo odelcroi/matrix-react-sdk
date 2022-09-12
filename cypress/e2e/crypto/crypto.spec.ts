@@ -107,7 +107,7 @@ const verify = function(this: CryptoTestContext) {
         cy.contains(".mx_AccessibleButton", "Verify by emoji").click();
         cy.get<VerificationRequest>("@bobsVerificationRequest").then((request: VerificationRequest) => {
             return handleVerificationRequest(request).then((emojis: EmojiMapping[]) => {
-                cy.get('.mx_VerificationShowSas_emojiSas_block').then((emojiBlocks) => {
+                cy.get(".mx_VerificationShowSas_emojiSas_block").then((emojiBlocks) => {
                     emojis.forEach((emoji: EmojiMapping, index: number) => {
                         expect(emojiBlocks[index].textContent.toLowerCase()).to.eq(emoji[0] + emoji[1]);
                     });

@@ -14,16 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
-import { _t } from '../../../../languageHandler';
-import SdkConfig from '../../../../SdkConfig';
+import { _t } from "../../../../languageHandler";
+import SdkConfig from "../../../../SdkConfig";
 import SettingsStore from "../../../../settings/SettingsStore";
-import Modal from '../../../../Modal';
+import Modal from "../../../../Modal";
 import { formatBytes, formatCountLong } from "../../../../utils/FormattingUtils";
 import EventIndexPeg from "../../../../indexing/EventIndexPeg";
 import { SettingLevel } from "../../../../settings/SettingLevel";
-import Field from '../../../../components/views/elements/Field';
+import Field from "../../../../components/views/elements/Field";
 import BaseDialog from "../../../../components/views/dialogs/BaseDialog";
 import DialogButtons from "../../../../components/views/elements/DialogButtons";
 import { IDialogProps } from "../../../../components/views/dialogs/IDialogProps";
@@ -53,7 +53,7 @@ export default class ManageEventIndexDialog extends React.Component<IProps, ISta
             roomCount: 0,
             currentRoom: null,
             crawlerSleepTime:
-                SettingsStore.getValueAt(SettingLevel.DEVICE, 'crawlerSleepTime'),
+                SettingsStore.getValueAt(SettingLevel.DEVICE, "crawlerSleepTime"),
         };
     }
 
@@ -172,7 +172,7 @@ export default class ManageEventIndexDialog extends React.Component<IProps, ISta
                         totalRooms: formatCountLong(this.state.roomCount),
                     }) } <br />
                     <Field
-                        label={_t('Message downloading sleep time(ms)')}
+                        label={_t("Message downloading sleep time(ms)")}
                         type='number'
                         value={this.state.crawlerSleepTime.toString()}
                         onChange={this.onCrawlerSleepTimeChange} />

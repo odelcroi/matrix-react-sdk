@@ -14,15 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
-import { _t } from '../../../../languageHandler';
-import AccessibleButton from '../../elements/AccessibleButton';
-import DeviceSecurityCard from './DeviceSecurityCard';
+import { _t } from "../../../../languageHandler";
+import AccessibleButton from "../../elements/AccessibleButton";
+import DeviceSecurityCard from "./DeviceSecurityCard";
 import {
     DeviceSecurityVariation,
     DeviceWithVerification,
-} from './types';
+} from "./types";
 
 interface Props {
     device: DeviceWithVerification;
@@ -35,12 +35,12 @@ export const DeviceVerificationStatusCard: React.FC<Props> = ({
 }) => {
     const securityCardProps = device.isVerified ? {
         variation: DeviceSecurityVariation.Verified,
-        heading: _t('Verified session'),
-        description: _t('This session is ready for secure messaging.'),
+        heading: _t("Verified session"),
+        description: _t("This session is ready for secure messaging."),
     } : {
         variation: DeviceSecurityVariation.Unverified,
-        heading: _t('Unverified session'),
-        description: _t('Verify or sign out from this session for best security and reliability.'),
+        heading: _t("Unverified session"),
+        description: _t("Verify or sign out from this session for best security and reliability."),
     };
     return <DeviceSecurityCard
         {...securityCardProps}
@@ -51,7 +51,7 @@ export const DeviceVerificationStatusCard: React.FC<Props> = ({
                 onClick={onVerifyDevice}
                 data-testid={`verification-status-button-${device.device_id}`}
             >
-                { _t('Verify session') }
+                { _t("Verify session") }
             </AccessibleButton>
         }
     </DeviceSecurityCard>;

@@ -15,17 +15,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import * as React from 'react';
+import * as React from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { User } from "matrix-js-sdk/src/models/user";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
-import { _t } from '../../../languageHandler';
+import { _t } from "../../../languageHandler";
 import QRCode from "../elements/QRCode";
 import { RoomPermalinkCreator, makeUserPermalink } from "../../../utils/permalinks/Permalinks";
 import { selectText } from "../../../utils/strings";
-import StyledCheckbox from '../elements/StyledCheckbox';
+import StyledCheckbox from "../elements/StyledCheckbox";
 import { IDialogProps } from "./IDialogProps";
 import SettingsStore from "../../../settings/SettingsStore";
 import { UIFeature } from "../../../settings/UIFeature";
@@ -34,11 +34,11 @@ import CopyableText from "../elements/CopyableText";
 
 const socials = [
     {
-        name: 'Facebook',
+        name: "Facebook",
         img: require("../../../../res/img/social/facebook.png"),
         url: (url) => `https://www.facebook.com/sharer/sharer.php?u=${url}`,
     }, {
-        name: 'Twitter',
+        name: "Twitter",
         img: require("../../../../res/img/social/twitter-2.png"),
         url: (url) => `https://twitter.com/home?status=${url}`,
     }, /* // icon missing
@@ -46,15 +46,15 @@ const socials = [
         img: 'img/social/',
         url: (url) => `https://plus.google.com/share?url=${url}`,
     },*/ {
-        name: 'LinkedIn',
+        name: "LinkedIn",
         img: require("../../../../res/img/social/linkedin.png"),
         url: (url) => `https://www.linkedin.com/shareArticle?mini=true&url=${url}`,
     }, {
-        name: 'Reddit',
+        name: "Reddit",
         img: require("../../../../res/img/social/reddit.png"),
         url: (url) => `https://www.reddit.com/submit?url=${url}`,
     }, {
-        name: 'email',
+        name: "email",
         img: require("../../../../res/img/social/email-1.png"),
         url: (url) => `mailto:?body=${url}`,
     },
@@ -133,7 +133,7 @@ export default class ShareDialog extends React.PureComponent<IProps, IState> {
         let checkbox;
 
         if (this.props.target instanceof Room) {
-            title = _t('Share Room');
+            title = _t("Share Room");
 
             const events = this.props.target.getLiveTimeline().getEvents();
             if (events.length > 0) {
@@ -142,20 +142,20 @@ export default class ShareDialog extends React.PureComponent<IProps, IState> {
                         checked={this.state.linkSpecificEvent}
                         onChange={this.onLinkSpecificEventCheckboxClick}
                     >
-                        { _t('Link to most recent message') }
+                        { _t("Link to most recent message") }
                     </StyledCheckbox>
                 </div>;
             }
         } else if (this.props.target instanceof User || this.props.target instanceof RoomMember) {
-            title = _t('Share User');
+            title = _t("Share User");
         } else if (this.props.target instanceof MatrixEvent) {
-            title = _t('Share Room Message');
+            title = _t("Share Room Message");
             checkbox = <div>
                 <StyledCheckbox
                     checked={this.state.linkSpecificEvent}
                     onChange={this.onLinkSpecificEventCheckboxClick}
                 >
-                    { _t('Link to selected message') }
+                    { _t("Link to selected message") }
                 </StyledCheckbox>
             </div>;
         }
@@ -200,7 +200,7 @@ export default class ShareDialog extends React.PureComponent<IProps, IState> {
         >
             <div className="mx_ShareDialog_content">
                 <CopyableText getTextToCopy={() => matrixToUrl}>
-                    <a title={_t('Link to room')} href={matrixToUrl} onClick={ShareDialog.onLinkClick}>
+                    <a title={_t("Link to room")} href={matrixToUrl} onClick={ShareDialog.onLinkClick}>
                         { matrixToUrl }
                     </a>
                 </CopyableText>

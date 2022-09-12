@@ -17,7 +17,7 @@ limitations under the License.
 */
 
 import React, { ReactNode } from "react";
-import { Store } from 'flux/utils';
+import { Store } from "flux/utils";
 import { MatrixError } from "matrix-js-sdk/src/http-api";
 import { logger } from "matrix-js-sdk/src/logger";
 import { ViewRoom as ViewRoomEvent } from "@matrix-org/analytics-events/types/typescript/ViewRoom";
@@ -27,11 +27,11 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Optional } from "matrix-events-sdk";
 
-import dis from '../dispatcher/dispatcher';
-import { MatrixClientPeg } from '../MatrixClientPeg';
-import Modal from '../Modal';
-import { _t } from '../languageHandler';
-import { getCachedRoomIDForAlias, storeRoomAliasInCache } from '../RoomAliasCache';
+import dis from "../dispatcher/dispatcher";
+import { MatrixClientPeg } from "../MatrixClientPeg";
+import Modal from "../Modal";
+import { _t } from "../languageHandler";
+import { getCachedRoomIDForAlias, storeRoomAliasInCache } from "../RoomAliasCache";
 import { ActionPayload } from "../dispatcher/payloads";
 import { Action } from "../dispatcher/actions";
 import { retry } from "../utils/promise";
@@ -178,7 +178,7 @@ export class RoomViewStore extends Store<ActionPayload> {
                 this.viewRoom(payload);
                 break;
             // for these events blank out the roomId as we are no longer in the RoomView
-            case 'view_welcome_page':
+            case "view_welcome_page":
             case Action.ViewHomePage:
                 this.setState({
                     roomId: null,
@@ -190,12 +190,12 @@ export class RoomViewStore extends Store<ActionPayload> {
             case Action.ViewRoomError:
                 this.viewRoomError(payload);
                 break;
-            case 'will_join':
+            case "will_join":
                 this.setState({
                     joining: true,
                 });
                 break;
-            case 'cancel_join':
+            case "cancel_join":
                 this.setState({
                     joining: false,
                 });
@@ -233,11 +233,11 @@ export class RoomViewStore extends Store<ActionPayload> {
 
                 break;
             }
-            case 'on_client_not_viable':
+            case "on_client_not_viable":
             case Action.OnLoggedOut:
                 this.reset();
                 break;
-            case 'reply_to_event':
+            case "reply_to_event":
                 // If currently viewed room does not match the room in which we wish to reply then change rooms
                 // this can happen when performing a search across all rooms. Persist the data from this event for
                 // both room and search timeline rendering types, search will get auto-closed by RoomView at this time.
@@ -456,7 +456,7 @@ export class RoomViewStore extends Store<ActionPayload> {
 
         if (err.name === "ConnectionError") {
             description = _t("There was an error joining.");
-        } else if (err.errcode === 'M_INCOMPATIBLE_ROOM_VERSION') {
+        } else if (err.errcode === "M_INCOMPATIBLE_ROOM_VERSION") {
             description = <div>
                 { _t("Sorry, your homeserver is too old to participate here.") }<br />
                 { _t("Please contact your homeserver administrator.") }

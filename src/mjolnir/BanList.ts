@@ -99,9 +99,9 @@ export class BanList {
 
                 const kind = ruleTypeToStable(eventType);
 
-                const entity = ev.getContent()['entity'];
-                const recommendation = ev.getContent()['recommendation'];
-                const reason = ev.getContent()['reason'];
+                const entity = ev.getContent()["entity"];
+                const recommendation = ev.getContent()["recommendation"];
+                const reason = ev.getContent()["reason"];
                 if (!entity || !recommendation || !reason) continue;
 
                 this._rules.push(new ListRule(entity, recommendation, reason, kind));

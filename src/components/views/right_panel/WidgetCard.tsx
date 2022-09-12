@@ -28,7 +28,7 @@ import WidgetContextMenu from "../context_menus/WidgetContextMenu";
 import { Container, WidgetLayoutStore } from "../../../stores/widgets/WidgetLayoutStore";
 import UIStore from "../../../stores/UIStore";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
-import Heading from '../typography/Heading';
+import Heading from "../typography/Heading";
 
 interface IProps {
     room: Room;

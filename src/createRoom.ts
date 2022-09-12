@@ -28,9 +28,9 @@ import {
 } from "matrix-js-sdk/src/@types/partials";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { MatrixClientPeg } from './MatrixClientPeg';
-import Modal from './Modal';
-import { _t } from './languageHandler';
+import { MatrixClientPeg } from "./MatrixClientPeg";
+import Modal from "./Modal";
+import { _t } from "./languageHandler";
 import dis from "./dispatcher/dispatcher";
 import * as Rooms from "./Rooms";
 import { getAddressType } from "./UserAddress";
@@ -94,7 +94,7 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
 
     const client = MatrixClientPeg.get();
     if (client.isGuest()) {
-        dis.dispatch({ action: 'require_registration' });
+        dis.dispatch({ action: "require_registration" });
         return null;
     }
 
@@ -106,13 +106,13 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
     createOpts.visibility = createOpts.visibility || Visibility.Private;
     if (opts.dmUserId && createOpts.invite === undefined) {
         switch (getAddressType(opts.dmUserId)) {
-            case 'mx-user-id':
+            case "mx-user-id":
                 createOpts.invite = [opts.dmUserId];
                 break;
-            case 'email':
+            case "email":
                 createOpts.invite_3pid = [{
                     id_server: MatrixClientPeg.get().getIdentityServerUrl(true),
-                    medium: 'email',
+                    medium: "email",
                     address: opts.dmUserId,
                 }];
         }
@@ -165,20 +165,20 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
     // actually drop you right in to a chat.
     if (opts.guestAccess) {
         createOpts.initial_state.push({
-            type: 'm.room.guest_access',
-            state_key: '',
+            type: "m.room.guest_access",
+            state_key: "",
             content: {
-                guest_access: 'can_join',
+                guest_access: "can_join",
             },
         });
     }
 
     if (opts.encryption) {
         createOpts.initial_state.push({
-            type: 'm.room.encryption',
-            state_key: '',
+            type: "m.room.encryption",
+            state_key: "",
             content: {
-                algorithm: 'm.megolm.v1.aes-sha2',
+                algorithm: "m.megolm.v1.aes-sha2",
             },
         });
     }
@@ -237,7 +237,7 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
     }
 
     let modal;
-    if (opts.spinner) modal = Modal.createDialog(Spinner, null, 'mx_Dialog_spinner');
+    if (opts.spinner) modal = Modal.createDialog(Spinner, null, "mx_Dialog_spinner");
 
     let roomId: string;
     let room: Promise<Room>;

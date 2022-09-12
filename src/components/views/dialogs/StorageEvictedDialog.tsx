@@ -14,16 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
-import SdkConfig from '../../../SdkConfig';
-import Modal from '../../../Modal';
-import { _t } from '../../../languageHandler';
+import SdkConfig from "../../../SdkConfig";
+import Modal from "../../../Modal";
+import { _t } from "../../../languageHandler";
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
 import BugReportDialog from "./BugReportDialog";
 import { IDialogProps } from "./IDialogProps";
-import AccessibleButton from '../elements/AccessibleButton';
+import AccessibleButton from "../elements/AccessibleButton";
 
 interface IProps extends IDialogProps { }
 
@@ -55,7 +55,7 @@ export default class StorageEvictedDialog extends React.Component<IProps> {
             <BaseDialog
                 className="mx_ErrorDialog"
                 onFinished={this.props.onFinished}
-                title={_t('Missing session data')}
+                title={_t("Missing session data")}
                 contentId='mx_Dialog_content'
                 hasCancel={false}
             >

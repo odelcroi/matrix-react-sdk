@@ -120,7 +120,7 @@ export const CallLobby: FC<Props> = ({ room, call }) => {
             const devices = await MediaDeviceHandler.getDevices();
             return [devices[MediaDeviceKindEnum.AudioInput], devices[MediaDeviceKindEnum.VideoInput]];
         } catch (e) {
-            logger.warn(`Failed to get media device list`, e);
+            logger.warn("Failed to get media device list", e);
             return [[], []];
         }
     }, [], [[], []]);

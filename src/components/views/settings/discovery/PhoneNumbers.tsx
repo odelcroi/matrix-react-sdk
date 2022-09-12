@@ -15,14 +15,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import { IThreepid } from "matrix-js-sdk/src/@types/threepids";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
-import Modal from '../../../../Modal';
-import AddThreepid from '../../../../AddThreepid';
+import Modal from "../../../../Modal";
+import AddThreepid from "../../../../AddThreepid";
 import ErrorDialog from "../../dialogs/ErrorDialog";
 import Field from "../../elements/Field";
 import AccessibleButton from "../../elements/AccessibleButton";
@@ -193,7 +193,7 @@ export class PhoneNumber extends React.Component<IPhoneNumberProps, IPhoneNumber
             });
         } catch (err) {
             this.setState({ continueDisabled: false });
-            if (err.errcode !== 'M_THREEPID_AUTH_FAILED') {
+            if (err.errcode !== "M_THREEPID_AUTH_FAILED") {
                 logger.error("Unable to verify phone number: " + err);
                 Modal.createDialog(ErrorDialog, {
                     title: _t("Unable to verify phone number."),

@@ -14,18 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 // eslint-disable-next-line deprecate/import
-import { mount } from 'enzyme';
+import { mount } from "enzyme";
 
-import StyledLiveBeaconIcon from '../../../../src/components/views/beacon/StyledLiveBeaconIcon';
+import StyledLiveBeaconIcon from "../../../../src/components/views/beacon/StyledLiveBeaconIcon";
 
-describe('<StyledLiveBeaconIcon />', () => {
+describe("<StyledLiveBeaconIcon />", () => {
     const defaultProps = {};
     const getComponent = (props = {}) =>
         mount(<StyledLiveBeaconIcon {...defaultProps} {...props} />);
 
-    it('renders', () => {
+    it("renders", () => {
         const component = getComponent();
         expect(component).toBeTruthy();
     });

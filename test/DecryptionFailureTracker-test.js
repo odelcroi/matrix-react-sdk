@@ -14,15 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from 'matrix-js-sdk/src/matrix';
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
-import { DecryptionFailureTracker } from '../src/DecryptionFailureTracker';
+import { DecryptionFailureTracker } from "../src/DecryptionFailureTracker";
 
 class MockDecryptionError extends Error {
     constructor(code) {
         super();
 
-        this.code = code || 'MOCK_DECRYPTION_ERROR';
+        this.code = code || "MOCK_DECRYPTION_ERROR";
     }
 }
 
@@ -37,8 +37,8 @@ function createFailedDecryptionEvent() {
     return event;
 }
 
-describe('DecryptionFailureTracker', function() {
-    it('tracks a failed decryption for a visible event', function(done) {
+describe("DecryptionFailureTracker", function() {
+    it("tracks a failed decryption for a visible event", function(done) {
         const failedDecryptionEvent = createFailedDecryptionEvent();
 
         let count = 0;
@@ -55,12 +55,12 @@ describe('DecryptionFailureTracker', function() {
         // Immediately track the newest failures
         tracker.trackFailures();
 
-        expect(count).not.toBe(0, 'should track a failure for an event that failed decryption');
+        expect(count).not.toBe(0, "should track a failure for an event that failed decryption");
 
         done();
     });
 
-    it('tracks a failed decryption with expected raw error for a visible event', function(done) {
+    it("tracks a failed decryption with expected raw error for a visible event", function(done) {
         const failedDecryptionEvent = createFailedDecryptionEvent();
 
         let count = 0;
@@ -72,7 +72,7 @@ describe('DecryptionFailureTracker', function() {
 
         tracker.addVisibleEvent(failedDecryptionEvent);
 
-        const err = new MockDecryptionError('INBOUND_SESSION_MISMATCH_ROOM_ID');
+        const err = new MockDecryptionError("INBOUND_SESSION_MISMATCH_ROOM_ID");
         tracker.eventDecrypted(failedDecryptionEvent, err);
 
         // Pretend "now" is Infinity
@@ -81,13 +81,13 @@ describe('DecryptionFailureTracker', function() {
         // Immediately track the newest failures
         tracker.trackFailures();
 
-        expect(count).not.toBe(0, 'should track a failure for an event that failed decryption');
-        expect(reportedRawCode).toBe('INBOUND_SESSION_MISMATCH_ROOM_ID', 'Should add the rawCode to the event context');
+        expect(count).not.toBe(0, "should track a failure for an event that failed decryption");
+        expect(reportedRawCode).toBe("INBOUND_SESSION_MISMATCH_ROOM_ID", "Should add the rawCode to the event context");
 
         done();
     });
 
-    it('tracks a failed decryption for an event that becomes visible later', function(done) {
+    it("tracks a failed decryption for an event that becomes visible later", function(done) {
         const failedDecryptionEvent = createFailedDecryptionEvent();
 
         let count = 0;
@@ -104,12 +104,12 @@ describe('DecryptionFailureTracker', function() {
         // Immediately track the newest failures
         tracker.trackFailures();
 
-        expect(count).not.toBe(0, 'should track a failure for an event that failed decryption');
+        expect(count).not.toBe(0, "should track a failure for an event that failed decryption");
 
         done();
     });
 
-    it('does not track a failed decryption for an event that never becomes visible', function(done) {
+    it("does not track a failed decryption for an event that never becomes visible", function(done) {
         const failedDecryptionEvent = createFailedDecryptionEvent();
 
         let count = 0;
@@ -124,15 +124,15 @@ describe('DecryptionFailureTracker', function() {
         // Immediately track the newest failures
         tracker.trackFailures();
 
-        expect(count).toBe(0, 'should not track a failure for an event that never became visible');
+        expect(count).toBe(0, "should not track a failure for an event that never became visible");
 
         done();
     });
 
-    it('does not track a failed decryption where the event is subsequently successfully decrypted', (done) => {
+    it("does not track a failed decryption where the event is subsequently successfully decrypted", (done) => {
         const decryptedEvent = createFailedDecryptionEvent();
         const tracker = new DecryptionFailureTracker((total) => {
-            expect(true).toBe(false, 'should not track an event that has since been decrypted correctly');
+            expect(true).toBe(false, "should not track an event that has since been decrypted correctly");
         }, () => "UnknownError");
 
         tracker.addVisibleEvent(decryptedEvent);
@@ -152,11 +152,11 @@ describe('DecryptionFailureTracker', function() {
         done();
     });
 
-    it('does not track a failed decryption where the event is subsequently successfully decrypted ' +
-       'and later becomes visible', (done) => {
+    it("does not track a failed decryption where the event is subsequently successfully decrypted " +
+       "and later becomes visible", (done) => {
         const decryptedEvent = createFailedDecryptionEvent();
         const tracker = new DecryptionFailureTracker((total) => {
-            expect(true).toBe(false, 'should not track an event that has since been decrypted correctly');
+            expect(true).toBe(false, "should not track an event that has since been decrypted correctly");
         }, () => "UnknownError");
 
         const err = new MockDecryptionError();
@@ -176,7 +176,7 @@ describe('DecryptionFailureTracker', function() {
         done();
     });
 
-    it('only tracks a single failure per event, despite multiple failed decryptions for multiple events', (done) => {
+    it("only tracks a single failure per event, despite multiple failed decryptions for multiple events", (done) => {
         const decryptedEvent = createFailedDecryptionEvent();
         const decryptedEvent2 = createFailedDecryptionEvent();
 
@@ -206,12 +206,12 @@ describe('DecryptionFailureTracker', function() {
         tracker.trackFailures();
         tracker.trackFailures();
 
-        expect(count).toBe(2, count + ' failures tracked, should only track a single failure per event');
+        expect(count).toBe(2, count + " failures tracked, should only track a single failure per event");
 
         done();
     });
 
-    it('should not track a failure for an event that was tracked previously', (done) => {
+    it("should not track a failure for an event that was tracked previously", (done) => {
         const decryptedEvent = createFailedDecryptionEvent();
 
         let count = 0;
@@ -233,12 +233,12 @@ describe('DecryptionFailureTracker', function() {
 
         tracker.trackFailures();
 
-        expect(count).toBe(1, 'should only track a single failure per event');
+        expect(count).toBe(1, "should only track a single failure per event");
 
         done();
     });
 
-    xit('should not track a failure for an event that was tracked in a previous session', (done) => {
+    xit("should not track a failure for an event that was tracked in a previous session", (done) => {
         // This test uses localStorage, clear it beforehand
         localStorage.clear();
 
@@ -270,12 +270,12 @@ describe('DecryptionFailureTracker', function() {
         secondTracker.checkFailures(Infinity);
         secondTracker.trackFailures();
 
-        expect(count).toBe(1, count + ' failures tracked, should only track a single failure per event');
+        expect(count).toBe(1, count + " failures tracked, should only track a single failure per event");
 
         done();
     });
 
-    it('should count different error codes separately for multiple failures with different error codes', () => {
+    it("should count different error codes separately for multiple failures with different error codes", () => {
         const counts = {};
         const tracker = new DecryptionFailureTracker(
             (total, errorCode) => counts[errorCode] = (counts[errorCode] || 0) + total,
@@ -286,8 +286,8 @@ describe('DecryptionFailureTracker', function() {
         const decryptedEvent2 = createFailedDecryptionEvent();
         const decryptedEvent3 = createFailedDecryptionEvent();
 
-        const error1 = new MockDecryptionError('UnknownError');
-        const error2 = new MockDecryptionError('OlmKeysNotSentError');
+        const error1 = new MockDecryptionError("UnknownError");
+        const error2 = new MockDecryptionError("OlmKeysNotSentError");
 
         tracker.addVisibleEvent(decryptedEvent1);
         tracker.addVisibleEvent(decryptedEvent2);
@@ -305,23 +305,23 @@ describe('DecryptionFailureTracker', function() {
         tracker.trackFailures();
 
         //expect(counts['UnknownError']).toBe(1, 'should track one UnknownError');
-        expect(counts['OlmKeysNotSentError']).toBe(2, 'should track two OlmKeysNotSentError');
+        expect(counts["OlmKeysNotSentError"]).toBe(2, "should track two OlmKeysNotSentError");
     });
 
-    it('should aggregate error codes correctly', () => {
+    it("should aggregate error codes correctly", () => {
         const counts = {};
         const tracker = new DecryptionFailureTracker(
             (total, errorCode) => counts[errorCode] = (counts[errorCode] || 0) + total,
-            (errorCode) => 'OlmUnspecifiedError',
+            (errorCode) => "OlmUnspecifiedError",
         );
 
         const decryptedEvent1 = createFailedDecryptionEvent();
         const decryptedEvent2 = createFailedDecryptionEvent();
         const decryptedEvent3 = createFailedDecryptionEvent();
 
-        const error1 = new MockDecryptionError('ERROR_CODE_1');
-        const error2 = new MockDecryptionError('ERROR_CODE_2');
-        const error3 = new MockDecryptionError('ERROR_CODE_3');
+        const error1 = new MockDecryptionError("ERROR_CODE_1");
+        const error2 = new MockDecryptionError("ERROR_CODE_2");
+        const error3 = new MockDecryptionError("ERROR_CODE_3");
 
         tracker.addVisibleEvent(decryptedEvent1);
         tracker.addVisibleEvent(decryptedEvent2);
@@ -336,20 +336,20 @@ describe('DecryptionFailureTracker', function() {
 
         tracker.trackFailures();
 
-        expect(counts['OlmUnspecifiedError'])
-            .toBe(3, 'should track three OlmUnspecifiedError, got ' + counts['OlmUnspecifiedError']);
+        expect(counts["OlmUnspecifiedError"])
+            .toBe(3, "should track three OlmUnspecifiedError, got " + counts["OlmUnspecifiedError"]);
     });
 
-    it('should remap error codes correctly', () => {
+    it("should remap error codes correctly", () => {
         const counts = {};
         const tracker = new DecryptionFailureTracker(
             (total, errorCode) => counts[errorCode] = (counts[errorCode] || 0) + total,
-            (errorCode) => Array.from(errorCode).reverse().join(''),
+            (errorCode) => Array.from(errorCode).reverse().join(""),
         );
 
         const decryptedEvent = createFailedDecryptionEvent();
 
-        const error = new MockDecryptionError('ERROR_CODE_1');
+        const error = new MockDecryptionError("ERROR_CODE_1");
 
         tracker.addVisibleEvent(decryptedEvent);
 
@@ -360,7 +360,7 @@ describe('DecryptionFailureTracker', function() {
 
         tracker.trackFailures();
 
-        expect(counts['1_EDOC_RORRE'])
-            .toBe(1, 'should track remapped error code');
+        expect(counts["1_EDOC_RORRE"])
+            .toBe(1, "should track remapped error code");
     });
 });

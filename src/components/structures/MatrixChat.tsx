@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ComponentType, createRef } from 'react';
+import React, { ComponentType, createRef } from "react";
 import {
     ClientEvent,
     createClient,
@@ -22,9 +22,9 @@ import {
     HttpApiEvent,
     MatrixClient,
     MatrixEventEvent,
-} from 'matrix-js-sdk/src/matrix';
-import { ISyncStateData, SyncState } from 'matrix-js-sdk/src/sync';
-import { MatrixError } from 'matrix-js-sdk/src/http-api';
+} from "matrix-js-sdk/src/matrix";
+import { ISyncStateData, SyncState } from "matrix-js-sdk/src/sync";
+import { MatrixError } from "matrix-js-sdk/src/http-api";
 import { InvalidStoreError } from "matrix-js-sdk/src/errors";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { defer, IDeferred, QueryDict } from "matrix-js-sdk/src/utils";
@@ -32,45 +32,45 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { throttle } from "lodash";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { RoomType } from "matrix-js-sdk/src/@types/event";
-import { DecryptionError } from 'matrix-js-sdk/src/crypto/algorithms';
+import { DecryptionError } from "matrix-js-sdk/src/crypto/algorithms";
 
 // focus-visible is a Polyfill for the :focus-visible CSS pseudo-attribute used by various components
-import 'focus-visible';
+import "focus-visible";
 // what-input helps improve keyboard accessibility
-import 'what-input';
+import "what-input";
 
-import PosthogTrackers from '../../PosthogTrackers';
+import PosthogTrackers from "../../PosthogTrackers";
 import { DecryptionFailureTracker } from "../../DecryptionFailureTracker";
 import { IMatrixClientCreds, MatrixClientPeg } from "../../MatrixClientPeg";
 import PlatformPeg from "../../PlatformPeg";
 import SdkConfig from "../../SdkConfig";
 import dis from "../../dispatcher/dispatcher";
-import Notifier from '../../Notifier';
+import Notifier from "../../Notifier";
 import Modal from "../../Modal";
-import { showRoomInviteDialog, showStartChatInviteDialog } from '../../RoomInvite';
-import * as Rooms from '../../Rooms';
-import * as Lifecycle from '../../Lifecycle';
+import { showRoomInviteDialog, showStartChatInviteDialog } from "../../RoomInvite";
+import * as Rooms from "../../Rooms";
+import * as Lifecycle from "../../Lifecycle";
 // LifecycleStore is not used but does listen to and dispatch actions
-import '../../stores/LifecycleStore';
-import '../../stores/AutoRageshakeStore';
-import PageType from '../../PageTypes';
+import "../../stores/LifecycleStore";
+import "../../stores/AutoRageshakeStore";
+import PageType from "../../PageTypes";
 import createRoom, { IOpts } from "../../createRoom";
-import { _t, _td, getCurrentLanguage } from '../../languageHandler';
+import { _t, _td, getCurrentLanguage } from "../../languageHandler";
 import SettingsStore from "../../settings/SettingsStore";
 import ThemeController from "../../settings/controllers/ThemeController";
 import { startAnyRegistrationFlow } from "../../Registration";
-import { messageForSyncError } from '../../utils/ErrorUtils';
+import { messageForSyncError } from "../../utils/ErrorUtils";
 import ResizeNotifier from "../../utils/ResizeNotifier";
 import AutoDiscoveryUtils from "../../utils/AutoDiscoveryUtils";
-import DMRoomMap from '../../utils/DMRoomMap';
+import DMRoomMap from "../../utils/DMRoomMap";
 import ThemeWatcher from "../../settings/watchers/ThemeWatcher";
-import { FontWatcher } from '../../settings/watchers/FontWatcher';
-import { storeRoomAliasInCache } from '../../RoomAliasCache';
+import { FontWatcher } from "../../settings/watchers/FontWatcher";
+import { storeRoomAliasInCache } from "../../RoomAliasCache";
 import ToastStore from "../../stores/ToastStore";
 import * as StorageManager from "../../utils/StorageManager";
 import { UseCase } from "../../settings/enums/UseCase";
 import type LoggedInViewType from "./LoggedInView";
-import LoggedInView from './LoggedInView';
+import LoggedInView from "./LoggedInView";
 import { Action } from "../../dispatcher/actions";
 import {
     hideToast as hideAnalyticsToast,
@@ -87,44 +87,44 @@ import { SettingLevel } from "../../settings/SettingLevel";
 import ThreepidInviteStore, { IThreepidInvite, IThreepidInviteWireFormat } from "../../stores/ThreepidInviteStore";
 import { UIFeature } from "../../settings/UIFeature";
 import DialPadModal from "../views/voip/DialPadModal";
-import { showToast as showMobileGuideToast } from '../../toasts/MobileGuideToast';
+import { showToast as showMobileGuideToast } from "../../toasts/MobileGuideToast";
 import { shouldUseLoginForWelcome } from "../../utils/pages";
 import RoomListStore from "../../stores/room-list/RoomListStore";
 import { RoomUpdateCause } from "../../stores/room-list/models";
 import SecurityCustomisations from "../../customisations/Security";
 import Spinner from "../views/elements/Spinner";
 import QuestionDialog from "../views/dialogs/QuestionDialog";
-import UserSettingsDialog from '../views/dialogs/UserSettingsDialog';
-import CreateRoomDialog from '../views/dialogs/CreateRoomDialog';
-import RoomDirectory from './RoomDirectory';
+import UserSettingsDialog from "../views/dialogs/UserSettingsDialog";
+import CreateRoomDialog from "../views/dialogs/CreateRoomDialog";
+import RoomDirectory from "./RoomDirectory";
 import KeySignatureUploadFailedDialog from "../views/dialogs/KeySignatureUploadFailedDialog";
 import IncomingSasDialog from "../views/dialogs/IncomingSasDialog";
 import CompleteSecurity from "./auth/CompleteSecurity";
 import Welcome from "../views/auth/Welcome";
 import ForgotPassword from "./auth/ForgotPassword";
 import E2eSetup from "./auth/E2eSetup";
-import Registration from './auth/Registration';
+import Registration from "./auth/Registration";
 import Login from "./auth/Login";
-import ErrorBoundary from '../views/elements/ErrorBoundary';
-import VerificationRequestToast from '../views/toasts/VerificationRequestToast';
+import ErrorBoundary from "../views/elements/ErrorBoundary";
+import VerificationRequestToast from "../views/toasts/VerificationRequestToast";
 import PerformanceMonitor, { PerformanceEntryNames } from "../../performance";
 import UIStore, { UI_EVENTS } from "../../stores/UIStore";
-import SoftLogout from './auth/SoftLogout';
+import SoftLogout from "./auth/SoftLogout";
 import { makeRoomPermalink } from "../../utils/permalinks/Permalinks";
 import { copyPlaintext } from "../../utils/strings";
-import { PosthogAnalytics } from '../../PosthogAnalytics';
+import { PosthogAnalytics } from "../../PosthogAnalytics";
 import { initSentry } from "../../sentry";
 import LegacyCallHandler from "../../LegacyCallHandler";
 import { showSpaceInvite } from "../../utils/space";
 import AccessibleButton from "../views/elements/AccessibleButton";
 import { ActionPayload } from "../../dispatcher/payloads";
 import { SummarizedNotificationState } from "../../stores/notifications/SummarizedNotificationState";
-import Views from '../../Views';
+import Views from "../../Views";
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
-import { ViewHomePagePayload } from '../../dispatcher/payloads/ViewHomePagePayload';
-import { AfterLeaveRoomPayload } from '../../dispatcher/payloads/AfterLeaveRoomPayload';
-import { DoAfterSyncPreparedPayload } from '../../dispatcher/payloads/DoAfterSyncPreparedPayload';
-import { ViewStartChatOrReusePayload } from '../../dispatcher/payloads/ViewStartChatOrReusePayload';
+import { ViewHomePagePayload } from "../../dispatcher/payloads/ViewHomePagePayload";
+import { AfterLeaveRoomPayload } from "../../dispatcher/payloads/AfterLeaveRoomPayload";
+import { DoAfterSyncPreparedPayload } from "../../dispatcher/payloads/DoAfterSyncPreparedPayload";
+import { ViewStartChatOrReusePayload } from "../../dispatcher/payloads/ViewStartChatOrReusePayload";
 import { IConfigOptions } from "../../IConfigOptions";
 import { SnakedObject } from "../../utils/SnakedObject";
 import { leaveRoomBehaviour } from "../../utils/leave-behaviour";
@@ -134,9 +134,9 @@ import { ShowThreadPayload } from "../../dispatcher/payloads/ShowThreadPayload";
 import { RightPanelPhases } from "../../stores/right-panel/RightPanelStorePhases";
 import RightPanelStore from "../../stores/right-panel/RightPanelStore";
 import { TimelineRenderingType } from "../../contexts/RoomContext";
-import { UseCaseSelection } from '../views/elements/UseCaseSelection';
-import { ValidatedServerConfig } from '../../utils/ValidatedServerConfig';
-import { isLocalRoom } from '../../utils/localRoom/isLocalRoom';
+import { UseCaseSelection } from "../views/elements/UseCaseSelection";
+import { ValidatedServerConfig } from "../../utils/ValidatedServerConfig";
+import { isLocalRoom } from "../../utils/localRoom/isLocalRoom";
 
 // legacy export
 export { default as Views } from "../../Views";
@@ -148,8 +148,8 @@ const AUTH_SCREENS = ["register", "login", "forgot_password", "start_sso", "star
 // re-factoring to be included in this list in future.
 const ONBOARDING_FLOW_STARTERS = [
     Action.ViewUserSettings,
-    'view_create_chat',
-    'view_create_room',
+    "view_create_chat",
+    "view_create_room",
 ];
 
 interface IScreen {
@@ -272,7 +272,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         this.screenAfterLogin = this.props.initialScreenAfterLogin;
         if (this.screenAfterLogin) {
             const params = this.screenAfterLogin.params || {};
-            if (this.screenAfterLogin.screen.startsWith("room/") && params['signurl'] && params['email']) {
+            if (this.screenAfterLogin.screen.startsWith("room/") && params["signurl"] && params["email"]) {
                 // probably a threepid invite - try to store it
                 const roomId = this.screenAfterLogin.screen.substring("room/".length);
                 ThreepidInviteStore.instance.storeInvite(roomId, params as unknown as IThreepidInviteWireFormat);
@@ -309,7 +309,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
         // object field used for tracking the status info appended to the title tag.
         // we don't do it as react state as i'm scared about triggering needless react refreshes.
-        this.subTitleStatus = '';
+        this.subTitleStatus = "";
 
         // the first thing to do is to try the token params in the query-string
         // if the session isn't soft logged out (ie: is a clean session being logged in)
@@ -338,9 +338,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 // the old creds, but rather go straight to the relevant page
                 const firstScreen = this.screenAfterLogin ? this.screenAfterLogin.screen : null;
 
-                if (firstScreen === 'login' ||
-                    firstScreen === 'register' ||
-                    firstScreen === 'forgot_password') {
+                if (firstScreen === "login" ||
+                    firstScreen === "register" ||
+                    firstScreen === "forgot_password") {
                     this.showScreenAfterLogin();
                     return;
                 }
@@ -486,7 +486,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             if (!loadedSession) {
                 // fall back to showing the welcome screen... unless we have a 3pid invite pending
                 if (ThreepidInviteStore.instance.pickBestInvite()) {
-                    dis.dispatch({ action: 'start_registration' });
+                    dis.dispatch({ action: "start_registration" });
                 } else {
                     dis.dispatch({ action: "view_welcome_page" });
                 }
@@ -547,20 +547,20 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 action: Action.DoAfterSyncPrepared,
                 deferred_action: payload,
             });
-            dis.dispatch({ action: 'require_registration' });
+            dis.dispatch({ action: "require_registration" });
             return;
         }
 
         switch (payload.action) {
-            case 'MatrixActions.accountData':
+            case "MatrixActions.accountData":
                 // XXX: This is a collection of several hacks to solve a minor problem. We want to
                 // update our local state when the identity server changes, but don't want to put that in
                 // the js-sdk as we'd be then dictating how all consumers need to behave. However,
                 // this component is already bloated and we probably don't want this tiny logic in
                 // here, but there's no better place in the react-sdk for it. Additionally, we're
                 // abusing the MatrixActionCreator stuff to avoid errors on dispatches.
-                if (payload.event_type === 'm.identity_server') {
-                    const fullUrl = payload.event_content ? payload.event_content['base_url'] : null;
+                if (payload.event_type === "m.identity_server") {
+                    const fullUrl = payload.event_content ? payload.event_content["base_url"] : null;
                     if (!fullUrl) {
                         MatrixClientPeg.get().setIdentityServerUrl(null);
                         localStorage.removeItem("mx_is_access_token");
@@ -572,18 +572,18 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     }
 
                     // redispatch the change with a more specific action
-                    dis.dispatch({ action: 'id_server_changed' });
+                    dis.dispatch({ action: "id_server_changed" });
                 }
                 break;
-            case 'logout':
+            case "logout":
                 LegacyCallHandler.instance.hangupAllCalls();
                 Promise.all([...CallStore.instance.activeCalls].map(call => call.disconnect()))
                     .finally(() => Lifecycle.logout());
                 break;
-            case 'require_registration':
+            case "require_registration":
                 startAnyRegistrationFlow(payload as any);
                 break;
-            case 'start_registration':
+            case "start_registration":
                 if (Lifecycle.isSoftLogout()) {
                     this.onSoftLogout();
                     break;
@@ -594,7 +594,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 }
                 this.startRegistration(payload.params || {});
                 break;
-            case 'start_login':
+            case "start_login":
                 if (Lifecycle.isSoftLogout()) {
                     this.onSoftLogout();
                     break;
@@ -604,34 +604,34 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 }
                 this.viewLogin();
                 break;
-            case 'start_password_recovery':
+            case "start_password_recovery":
                 this.setStateForNewView({
                     view: Views.FORGOT_PASSWORD,
                 });
-                this.notifyNewScreen('forgot_password');
+                this.notifyNewScreen("forgot_password");
                 break;
-            case 'start_chat':
+            case "start_chat":
                 createRoom({
                     dmUserId: payload.user_id,
                 });
                 break;
-            case 'leave_room':
+            case "leave_room":
                 this.leaveRoom(payload.room_id);
                 break;
-            case 'forget_room':
+            case "forget_room":
                 this.forgetRoom(payload.room_id);
                 break;
-            case 'copy_room':
+            case "copy_room":
                 this.copyRoom(payload.room_id);
                 break;
-            case 'reject_invite':
+            case "reject_invite":
                 Modal.createDialog(QuestionDialog, {
-                    title: _t('Reject invitation'),
-                    description: _t('Are you sure you want to reject the invitation?'),
+                    title: _t("Reject invitation"),
+                    description: _t("Are you sure you want to reject the invitation?"),
                     onFinished: (confirm) => {
                         if (confirm) {
                             // FIXME: controller shouldn't be loading a view :(
-                            const modal = Modal.createDialog(Spinner, null, 'mx_Dialog_spinner');
+                            const modal = Modal.createDialog(Spinner, null, "mx_Dialog_spinner");
 
                             MatrixClientPeg.get().leave(payload.room_id).then(() => {
                                 modal.close();
@@ -641,7 +641,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                             }, (err) => {
                                 modal.close();
                                 Modal.createDialog(ErrorDialog, {
-                                    title: _t('Failed to reject invitation'),
+                                    title: _t("Failed to reject invitation"),
                                     description: err.toString(),
                                 });
                             });
@@ -649,7 +649,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     },
                 });
                 break;
-            case 'view_user_info':
+            case "view_user_info":
                 this.viewUser(payload.userId, payload.subAction);
                 break;
             case "MatrixActions.RoomState.events": {
@@ -679,7 +679,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 }
                 break;
             }
-            case 'view_legacy_group':
+            case "view_legacy_group":
                 this.viewLegacyGroup(payload.groupId);
                 break;
             case Action.ViewUserSettings: {
@@ -692,7 +692,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 this.viewSomethingBehindModal();
                 break;
             }
-            case 'view_create_room':
+            case "view_create_room":
                 this.createRoom(payload.public, payload.defaultName, payload.type);
 
                 // View the welcome or home page if we need something to look at
@@ -701,13 +701,13 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             case Action.ViewRoomDirectory: {
                 Modal.createDialog(RoomDirectory, {
                     initialText: payload.initialText,
-                }, 'mx_RoomDirectory_dialogWrapper', false, true);
+                }, "mx_RoomDirectory_dialogWrapper", false, true);
 
                 // View the welcome or home page if we need something to look at
                 this.viewSomethingBehindModal();
                 break;
             }
-            case 'view_welcome_page':
+            case "view_welcome_page":
                 this.viewWelcome();
                 break;
             case Action.ViewHomePage:
@@ -716,13 +716,13 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             case Action.ViewStartChatOrReuse:
                 this.chatCreateOrReuse(payload.user_id);
                 break;
-            case 'view_create_chat':
+            case "view_create_chat":
                 showStartChatInviteDialog(payload.initialText || "");
 
                 // View the welcome or home page if we need something to look at
                 this.viewSomethingBehindModal();
                 break;
-            case 'view_invite': {
+            case "view_invite": {
                 const room = MatrixClientPeg.get().getRoom(payload.roomId);
                 if (room?.isSpaceRoom()) {
                     showSpaceInvite(room);
@@ -731,21 +731,21 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 }
                 break;
             }
-            case 'view_last_screen':
+            case "view_last_screen":
                 // This function does what we want, despite the name. The idea is that it shows
                 // the last room we were looking at or some reasonable default/guess. We don't
                 // have to worry about email invites or similar being re-triggered because the
                 // function will have cleared that state and not execute that path.
                 this.showScreenAfterLogin();
                 break;
-            case 'hide_left_panel':
+            case "hide_left_panel":
                 this.setState({
                     collapseLhs: true,
                 }, () => {
                     this.state.resizeNotifier.notifyLeftHandleResized();
                 });
                 break;
-            case 'show_left_panel':
+            case "show_left_panel":
                 this.setState({
                     collapseLhs: false,
                 }, () => {
@@ -769,13 +769,13 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     this.onLoggedIn();
                 }
                 break;
-            case 'on_client_not_viable':
+            case "on_client_not_viable":
                 this.onSoftLogout();
                 break;
             case Action.OnLoggedOut:
                 this.onLoggedOut();
                 break;
-            case 'will_start_client':
+            case "will_start_client":
                 this.setState({ ready: false }, () => {
                     // if the client is about to start, we are, by definition, not ready.
                     // Set ready to false now, then it'll be set to true when the sync
@@ -783,18 +783,18 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     this.onWillStartClient();
                 });
                 break;
-            case 'client_started':
+            case "client_started":
                 this.onClientStarted();
                 break;
-            case 'send_event':
+            case "send_event":
                 this.onSendEvent(payload.room_id, payload.event);
                 break;
-            case 'aria_hide_main_app':
+            case "aria_hide_main_app":
                 this.setState({
                     hideToSRUsers: true,
                 });
                 break;
-            case 'aria_unhide_main_app':
+            case "aria_unhide_main_app":
                 this.setState({
                     hideToSRUsers: false,
                 });
@@ -885,7 +885,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         this.setStateForNewView(newState);
         ThemeController.isLogin = true;
         this.themeWatcher.recheck();
-        this.notifyNewScreen('register');
+        this.notifyNewScreen("register");
     }
 
     // switch view to the given room
@@ -902,7 +902,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         // it would have been retrieved.
         if (!this.firstSyncComplete) {
             if (!this.firstSyncPromise) {
-                logger.warn('Cannot view a room before first sync. room_id:', roomInfo.room_id);
+                logger.warn("Cannot view a room before first sync. room_id:", roomInfo.room_id);
                 return;
             }
             await this.firstSyncPromise.promise;
@@ -926,7 +926,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
             // Store this as the ID of the last room accessed. This is so that we can
             // persist which room is being stored across refreshes and browser quits.
-            localStorage?.setItem('mx_last_room_id', room.roomId);
+            localStorage?.setItem("mx_last_room_id", room.roomId);
         }
 
         // If we are redirecting to a Room Alias and it is for the room we already showing then replace history item
@@ -958,7 +958,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             ready: true,
             roomJustCreatedOpts: roomInfo.justCreatedOpts,
         }, () => {
-            this.notifyNewScreen('room/' + presentedId, replaceLast);
+            this.notifyNewScreen("room/" + presentedId, replaceLast);
         });
     }
 
@@ -979,7 +979,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         this.setStateForNewView({
             view: Views.WELCOME,
         });
-        this.notifyNewScreen('welcome');
+        this.notifyNewScreen("welcome");
         ThemeController.isLogin = true;
         this.themeWatcher.recheck();
     }
@@ -989,7 +989,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             view: Views.LOGIN,
             ...otherState,
         });
-        this.notifyNewScreen('login');
+        this.notifyNewScreen("login");
         ThemeController.isLogin = true;
         this.themeWatcher.recheck();
     }
@@ -1002,7 +1002,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             currentRoomId: null,
         });
         this.setPage(PageType.HomePage);
-        this.notifyNewScreen('home');
+        this.notifyNewScreen("home");
         ThemeController.isLogin = false;
         this.themeWatcher.recheck();
     }
@@ -1013,11 +1013,11 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         const waitForSync = this.firstSyncPromise ?
             this.firstSyncPromise.promise : Promise.resolve();
         waitForSync.then(() => {
-            if (subAction === 'chat') {
+            if (subAction === "chat") {
                 this.chatCreateOrReuse(userId);
                 return;
             }
-            this.notifyNewScreen('user/' + userId);
+            this.notifyNewScreen("user/" + userId);
             this.setState({ currentUserId: userId });
             this.setPage(PageType.UserView);
         });
@@ -1029,7 +1029,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             currentRoomId: null,
             currentGroupId: groupId,
         });
-        this.notifyNewScreen('group/' + groupId);
+        this.notifyNewScreen("group/" + groupId);
         this.setPage(PageType.LegacyGroupView);
     }
 
@@ -1062,7 +1062,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 });
             }
             dis.dispatch({
-                action: 'require_registration',
+                action: "require_registration",
                 // If the set_mxid dialog is cancelled, view /welcome because if the
                 // browser was pointing at /user/@someone:domain?action=chat, the URL
                 // needs to be reset so that they can revisit /user/.. // (and trigger
@@ -1070,7 +1070,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 go_welcome_on_cancel: true,
                 screen_after: {
                     screen: `user/${snakedConfig.get("welcome_user_id")}`,
-                    params: { action: 'chat' },
+                    params: { action: "chat" },
                 },
             });
             return;
@@ -1090,7 +1090,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             });
         } else {
             dis.dispatch({
-                action: 'start_chat',
+                action: "start_chat",
                 user_id: userId,
             });
         }
@@ -1106,7 +1106,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         if (memberCount === 1) {
             warnings.push((
                 <span className="warning" key="only_member_warning">
-                    { ' '/* Whitespace, otherwise the sentences get smashed together */ }
+                    { " "/* Whitespace, otherwise the sentences get smashed together */ }
                     { _t("You are the only person here. " +
                         "If you leave, no one will be able to join in the future, including you.") }
                 </span>
@@ -1115,13 +1115,13 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             return warnings;
         }
 
-        const joinRules = roomToLeave.currentState.getStateEvents('m.room.join_rules', '');
+        const joinRules = roomToLeave.currentState.getStateEvents("m.room.join_rules", "");
         if (joinRules) {
             const rule = joinRules.getContent().join_rule;
             if (rule !== "public") {
                 warnings.push((
                     <span className="warning" key="non_public_warning">
-                        { ' '/* Whitespace, otherwise the sentences get smashed together */ }
+                        { " "/* Whitespace, otherwise the sentences get smashed together */ }
                         { isSpace
                             ? _t("This space is not public. You will not be able to rejoin without an invite.")
                             : _t("This room is not public. You will not be able to rejoin without an invite.") }
@@ -1366,12 +1366,12 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 this.screenAfterLogin.params,
             );
             this.screenAfterLogin = null;
-        } else if (localStorage && localStorage.getItem('mx_last_room_id')) {
+        } else if (localStorage && localStorage.getItem("mx_last_room_id")) {
             // Before defaulting to directory, show the last viewed room
             this.viewLastRoom();
         } else {
             if (MatrixClientPeg.get().isGuest()) {
-                dis.dispatch({ action: 'view_welcome_page' });
+                dis.dispatch({ action: "view_welcome_page" });
             } else {
                 dis.dispatch({ action: Action.ViewHomePage });
             }
@@ -1381,7 +1381,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     private viewLastRoom() {
         dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
-            room_id: localStorage.getItem('mx_last_room_id'),
+            room_id: localStorage.getItem("mx_last_room_id"),
             metricsTrigger: undefined, // other
         });
     }
@@ -1395,7 +1395,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             collapseLhs: false,
             currentRoomId: null,
         });
-        this.subTitleStatus = '';
+        this.subTitleStatus = "";
         this.setPageSubtitle();
     }
 
@@ -1403,14 +1403,14 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
      * Called when the session is softly logged out
      */
     private onSoftLogout() {
-        this.notifyNewScreen('soft_logout');
+        this.notifyNewScreen("soft_logout");
         this.setStateForNewView({
             view: Views.SOFT_LOGOUT,
             ready: false,
             collapseLhs: false,
             currentRoomId: null,
         });
-        this.subTitleStatus = '';
+        this.subTitleStatus = "";
         this.setPageSubtitle();
     }
 
@@ -1481,39 +1481,39 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             if (Lifecycle.isLoggingOut()) return;
 
             // A modal might have been open when we were logged out by the server
-            Modal.closeCurrentModal('Session.logged_out');
+            Modal.closeCurrentModal("Session.logged_out");
 
-            if (errObj.httpStatus === 401 && errObj.data && errObj.data['soft_logout']) {
+            if (errObj.httpStatus === 401 && errObj.data && errObj.data["soft_logout"]) {
                 logger.warn("Soft logout issued by server - avoiding data deletion");
                 Lifecycle.softLogout();
                 return;
             }
 
             Modal.createDialog(ErrorDialog, {
-                title: _t('Signed Out'),
-                description: _t('For security, this session has been signed out. Please sign in again.'),
+                title: _t("Signed Out"),
+                description: _t("For security, this session has been signed out. Please sign in again."),
             });
 
             dis.dispatch({
-                action: 'logout',
+                action: "logout",
             });
         });
         cli.on(HttpApiEvent.NoConsent, function(message, consentUri) {
             Modal.createDialog(QuestionDialog, {
-                title: _t('Terms and Conditions'),
+                title: _t("Terms and Conditions"),
                 description: <div>
                     <p> { _t(
-                        'To continue using the %(homeserverDomain)s homeserver ' +
-                        'you must review and agree to our terms and conditions.',
+                        "To continue using the %(homeserverDomain)s homeserver " +
+                        "you must review and agree to our terms and conditions.",
                         { homeserverDomain: cli.getDomain() },
                     ) }
                     </p>
                 </div>,
-                button: _t('Review terms and conditions'),
-                cancelButton: _t('Dismiss'),
+                button: _t("Review terms and conditions"),
+                cancelButton: _t("Dismiss"),
                 onFinished: (confirmed) => {
                     if (confirmed) {
-                        const wnd = window.open(consentUri, '_blank');
+                        const wnd = window.open(consentUri, "_blank");
                         wnd.opener = null;
                     }
                 },
@@ -1545,9 +1545,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         });
         cli.on(CryptoEvent.Warning, (type) => {
             switch (type) {
-                case 'CRYPTO_WARNING_OLD_VERSION_DETECTED':
+                case "CRYPTO_WARNING_OLD_VERSION_DETECTED":
                     Modal.createDialog(ErrorDialog, {
-                        title: _t('Old cryptography data detected'),
+                        title: _t("Old cryptography data detected"),
                         description: _t(
                             "Data from an older version of %(brand)s has been detected. " +
                             "This will have caused end-to-end cryptography to malfunction " +
@@ -1582,14 +1582,14 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             if (haveNewVersion) {
                 Modal.createDialogAsync(
                     import(
-                        '../../async-components/views/dialogs/security/NewRecoveryMethodDialog'
+                        "../../async-components/views/dialogs/security/NewRecoveryMethodDialog"
                     ) as unknown as Promise<ComponentType<{}>>,
                     { newVersionInfo },
                 );
             } else {
                 Modal.createDialogAsync(
                     import(
-                        '../../async-components/views/dialogs/security/RecoveryMethodRemovedDialog'
+                        "../../async-components/views/dialogs/security/RecoveryMethodRemovedDialog"
                     ) as unknown as Promise<ComponentType<{}>>,
                 );
             }
@@ -1608,7 +1608,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 }, null, /* priority = */ false, /* static = */ true);
             } else if (request.pending) {
                 ToastStore.sharedInstance().addOrReplaceToast({
-                    key: 'verifreq_' + request.channel.transactionId,
+                    key: "verifreq_" + request.channel.transactionId,
                     title: _t("Verification requested"),
                     icon: "verification",
                     props: { request },
@@ -1658,58 +1658,58 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             return;
         }
 
-        if (screen === 'register') {
+        if (screen === "register") {
             dis.dispatch({
-                action: 'start_registration',
+                action: "start_registration",
                 params: params,
             });
             PerformanceMonitor.instance.start(PerformanceEntryNames.REGISTER);
-        } else if (screen === 'login') {
+        } else if (screen === "login") {
             dis.dispatch({
-                action: 'start_login',
+                action: "start_login",
                 params: params,
             });
             PerformanceMonitor.instance.start(PerformanceEntryNames.LOGIN);
-        } else if (screen === 'forgot_password') {
+        } else if (screen === "forgot_password") {
             dis.dispatch({
-                action: 'start_password_recovery',
+                action: "start_password_recovery",
                 params: params,
             });
-        } else if (screen === 'soft_logout') {
+        } else if (screen === "soft_logout") {
             if (cli.getUserId() && !Lifecycle.isSoftLogout()) {
                 // Logged in - visit a room
                 this.viewLastRoom();
             } else {
                 // Ultimately triggers soft_logout if needed
                 dis.dispatch({
-                    action: 'start_login',
+                    action: "start_login",
                     params: params,
                 });
             }
-        } else if (screen === 'new') {
+        } else if (screen === "new") {
             dis.dispatch({
-                action: 'view_create_room',
+                action: "view_create_room",
             });
-        } else if (screen === 'dm') {
+        } else if (screen === "dm") {
             dis.dispatch({
-                action: 'view_create_chat',
+                action: "view_create_chat",
             });
-        } else if (screen === 'settings') {
+        } else if (screen === "settings") {
             dis.fire(Action.ViewUserSettings);
-        } else if (screen === 'welcome') {
+        } else if (screen === "welcome") {
             dis.dispatch({
-                action: 'view_welcome_page',
+                action: "view_welcome_page",
             });
-        } else if (screen === 'home') {
+        } else if (screen === "home") {
             dis.dispatch({
                 action: Action.ViewHomePage,
             });
-        } else if (screen === 'start') {
-            this.showScreen('home');
+        } else if (screen === "start") {
+            this.showScreen("home");
             dis.dispatch({
-                action: 'require_registration',
+                action: "require_registration",
             });
-        } else if (screen === 'directory') {
+        } else if (screen === "directory") {
             dis.fire(Action.ViewRoomDirectory);
         } else if (screen === "start_sso" || screen === "start_cas") {
             let cli = MatrixClientPeg.get();
@@ -1723,15 +1723,15 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
             const type = screen === "start_sso" ? "sso" : "cas";
             PlatformPeg.get().startSingleSignOn(cli, type, this.getFragmentAfterLogin());
-        } else if (screen.indexOf('room/') === 0) {
+        } else if (screen.indexOf("room/") === 0) {
             // Rooms can have the following formats:
             // #room_alias:domain or !opaque_id:domain
             const room = screen.substring(5);
-            const domainOffset = room.indexOf(':') + 1; // 0 in case room does not contain a :
+            const domainOffset = room.indexOf(":") + 1; // 0 in case room does not contain a :
             let eventOffset = room.length;
             // room aliases can contain slashes only look for slash after domain
-            if (room.substring(domainOffset).indexOf('/') > -1) {
-                eventOffset = domainOffset + room.substring(domainOffset).indexOf('/');
+            if (room.substring(domainOffset).indexOf("/") > -1) {
+                eventOffset = domainOffset + room.substring(domainOffset).indexOf("/");
             }
             const roomString = room.substring(0, eventOffset);
             let eventId = room.substring(eventOffset + 1); // empty string if no event id given
@@ -1764,7 +1764,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             // then params.via is an array of strings.
             let via = [];
             if (params.via) {
-                if (typeof(params.via) === 'string') via = [params.via];
+                if (typeof(params.via) === "string") via = [params.via];
                 else via = params.via;
             }
 
@@ -1789,24 +1789,24 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 room_id: undefined,
                 metricsTrigger: undefined, // unknown or external trigger
             };
-            if (roomString[0] === '#') {
+            if (roomString[0] === "#") {
                 payload.room_alias = roomString;
             } else {
                 payload.room_id = roomString;
             }
 
             dis.dispatch(payload);
-        } else if (screen.indexOf('user/') === 0) {
+        } else if (screen.indexOf("user/") === 0) {
             const userId = screen.substring(5);
             dis.dispatch({
-                action: 'view_user_info',
+                action: "view_user_info",
                 userId: userId,
                 subAction: params.action,
             });
-        } else if (screen.indexOf('group/') === 0) {
+        } else if (screen.indexOf("group/") === 0) {
             const groupId = screen.substring(6);
             dis.dispatch({
-                action: 'view_legacy_group',
+                action: "view_legacy_group",
                 groupId: groupId,
             });
         } else {
@@ -1823,7 +1823,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
     private onLogoutClick(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
         dis.dispatch({
-            action: 'logout',
+            action: "logout",
         });
         event.stopPropagation();
         event.preventDefault();
@@ -1834,11 +1834,11 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         const width = UIStore.instance.windowWidth;
 
         if (this.prevWindowWidth < LHS_THRESHOLD && width >= LHS_THRESHOLD) {
-            dis.dispatch({ action: 'show_left_panel' });
+            dis.dispatch({ action: "show_left_panel" });
         }
 
         if (this.prevWindowWidth >= LHS_THRESHOLD && width < LHS_THRESHOLD) {
-            dis.dispatch({ action: 'hide_left_panel' });
+            dis.dispatch({ action: "hide_left_panel" });
         }
 
         this.prevWindowWidth = width;
@@ -1846,7 +1846,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     };
 
     private dispatchTimelineResize() {
-        dis.dispatch({ action: 'timeline_resize' });
+        dis.dispatch({ action: "timeline_resize" });
     }
 
     private onRegisterClick = () => {
@@ -1875,11 +1875,11 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         if (!cli) return;
 
         cli.sendEvent(roomId, event.getType(), event.getContent()).then(() => {
-            dis.dispatch({ action: 'message_sent' });
+            dis.dispatch({ action: "message_sent" });
         });
     }
 
-    private setPageSubtitle(subtitle = '') {
+    private setPageSubtitle(subtitle = "") {
         if (this.state.currentRoomId) {
             const client = MatrixClientPeg.get();
             const room = client && client.getRoom(this.state.currentRoomId);
@@ -1905,7 +1905,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             PlatformPeg.get().setNotificationCount(numUnreadRooms);
         }
 
-        this.subTitleStatus = '';
+        this.subTitleStatus = "";
         if (state === SyncState.Error) {
             this.subTitleStatus += `[${_t("Offline")}] `;
         }
@@ -2029,7 +2029,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                         <Spinner />
                         <div className="mx_MatrixChat_splashButtons">
                             <AccessibleButton kind='link_inline' onClick={this.onLogoutClick}>
-                                { _t('Logout') }
+                                { _t("Logout") }
                             </AccessibleButton>
                         </div>
                     </div>

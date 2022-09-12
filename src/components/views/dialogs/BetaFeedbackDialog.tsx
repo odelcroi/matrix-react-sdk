@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from "react";
 
-import { _t } from '../../../languageHandler';
+import { _t } from "../../../languageHandler";
 import { IDialogProps } from "./IDialogProps";
 import SettingsStore from "../../../settings/SettingsStore";
 import AccessibleButton from "../elements/AccessibleButton";

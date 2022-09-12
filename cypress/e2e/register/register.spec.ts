@@ -44,7 +44,7 @@ describe("Registration", () => {
         cy.get(".mx_ServerPickerDialog_otherHomeserver").type(synapse.baseUrl);
         cy.get(".mx_ServerPickerDialog_continue").click();
         // wait for the dialog to go away
-        cy.get('.mx_ServerPickerDialog').should('not.exist');
+        cy.get(".mx_ServerPickerDialog").should("not.exist");
 
         cy.get("#mx_RegistrationForm_username").should("be.visible");
         // Hide the server text as it contains the randomly allocated Synapse port
@@ -77,7 +77,7 @@ describe("Registration", () => {
         cy.checkA11y();
         cy.get(".mx_UseCaseSelection_skip .mx_AccessibleButton").click();
 
-        cy.url().should('contain', '/#/home');
+        cy.url().should("contain", "/#/home");
         cy.stopMeasuring("from-submit-to-home");
 
         cy.get('[aria-label="User menu"]').click();
@@ -92,7 +92,7 @@ describe("Registration", () => {
         cy.get(".mx_ServerPickerDialog_otherHomeserver").type(synapse.baseUrl);
         cy.get(".mx_ServerPickerDialog_continue").click();
         // wait for the dialog to go away
-        cy.get('.mx_ServerPickerDialog').should('not.exist');
+        cy.get(".mx_ServerPickerDialog").should("not.exist");
 
         cy.get("#mx_RegistrationForm_username").should("be.visible");
 

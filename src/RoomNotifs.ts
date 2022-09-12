@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { PushProcessor } from 'matrix-js-sdk/src/pushprocessor';
+import { PushProcessor } from "matrix-js-sdk/src/pushprocessor";
 import { NotificationCountType, Room } from "matrix-js-sdk/src/models/room";
 import {
     ConditionKind,
@@ -24,15 +24,15 @@ import {
     PushRuleKind,
     TweakName,
 } from "matrix-js-sdk/src/@types/PushRules";
-import { EventType } from 'matrix-js-sdk/src/@types/event';
+import { EventType } from "matrix-js-sdk/src/@types/event";
 
-import { MatrixClientPeg } from './MatrixClientPeg';
+import { MatrixClientPeg } from "./MatrixClientPeg";
 
 export enum RoomNotifState {
-    AllMessagesLoud = 'all_messages_loud',
-    AllMessages = 'all_messages',
-    MentionsOnly = 'mentions_only',
-    Mute = 'mute',
+    AllMessagesLoud = "all_messages_loud",
+    AllMessages = "all_messages",
+    MentionsOnly = "mentions_only",
+    Mute = "mute",
 }
 
 export function getRoomNotifsState(roomId: string): RoomNotifState {
@@ -48,7 +48,7 @@ export function getRoomNotifsState(roomId: string): RoomNotifState {
     // for everything else, look at the room rule.
     let roomRule = null;
     try {
-        roomRule = MatrixClientPeg.get().getRoomPushRule('global', roomId);
+        roomRule = MatrixClientPeg.get().getRoomPushRule("global", roomId);
     } catch (err) {
         // Possible that the client doesn't have pushRules yet. If so, it
         // hasn't started either, so indicate that this room is not notifying.
@@ -85,8 +85,8 @@ export function getUnreadNotificationCount(room: Room, type: NotificationCountTy
     // there. We only go one level down to avoid performance issues, and theory
     // is that 1st generation rooms will have already been read by the 3rd generation.
     const createEvent = room.currentState.getStateEvents(EventType.RoomCreate, "");
-    if (createEvent && createEvent.getContent()['predecessor']) {
-        const oldRoomId = createEvent.getContent()['predecessor']['room_id'];
+    if (createEvent && createEvent.getContent()["predecessor"]) {
+        const oldRoomId = createEvent.getContent()["predecessor"]["room_id"];
         const oldRoom = MatrixClientPeg.get().getRoom(oldRoomId);
         if (oldRoom) {
             // We only ever care if there's highlights in the old room. No point in
@@ -105,9 +105,9 @@ function setRoomNotifsStateMuted(roomId: string): Promise<any> {
     const promises = [];
 
     // delete the room rule
-    const roomRule = cli.getRoomPushRule('global', roomId);
+    const roomRule = cli.getRoomPushRule("global", roomId);
     if (roomRule) {
-        promises.push(cli.deletePushRule('global', PushRuleKind.RoomSpecific, roomRule.rule_id));
+        promises.push(cli.deletePushRule("global", PushRuleKind.RoomSpecific, roomRule.rule_id));
     }
 
     // add/replace an override rule to squelch everything in this room
@@ -115,11 +115,11 @@ function setRoomNotifsStateMuted(roomId: string): Promise<any> {
     // is an override rule, not a room rule: it still pertains to this room
     // though, so using the room ID as the rule ID is logical and prevents
     // duplicate copies of the rule.
-    promises.push(cli.addPushRule('global', PushRuleKind.Override, roomId, {
+    promises.push(cli.addPushRule("global", PushRuleKind.Override, roomId, {
         conditions: [
             {
                 kind: ConditionKind.EventMatch,
-                key: 'room_id',
+                key: "room_id",
                 pattern: roomId,
             },
         ],
@@ -137,34 +137,34 @@ function setRoomNotifsStateUnmuted(roomId: string, newState: RoomNotifState): Pr
 
     const overrideMuteRule = findOverrideMuteRule(roomId);
     if (overrideMuteRule) {
-        promises.push(cli.deletePushRule('global', PushRuleKind.Override, overrideMuteRule.rule_id));
+        promises.push(cli.deletePushRule("global", PushRuleKind.Override, overrideMuteRule.rule_id));
     }
 
     if (newState === RoomNotifState.AllMessages) {
-        const roomRule = cli.getRoomPushRule('global', roomId);
+        const roomRule = cli.getRoomPushRule("global", roomId);
         if (roomRule) {
-            promises.push(cli.deletePushRule('global', PushRuleKind.RoomSpecific, roomRule.rule_id));
+            promises.push(cli.deletePushRule("global", PushRuleKind.RoomSpecific, roomRule.rule_id));
         }
     } else if (newState === RoomNotifState.MentionsOnly) {
-        promises.push(cli.addPushRule('global', PushRuleKind.RoomSpecific, roomId, {
+        promises.push(cli.addPushRule("global", PushRuleKind.RoomSpecific, roomId, {
             actions: [
                 PushRuleActionName.DontNotify,
             ],
         }));
         // https://matrix.org/jira/browse/SPEC-400
-        promises.push(cli.setPushRuleEnabled('global', PushRuleKind.RoomSpecific, roomId, true));
+        promises.push(cli.setPushRuleEnabled("global", PushRuleKind.RoomSpecific, roomId, true));
     } else if (newState === RoomNotifState.AllMessagesLoud) {
-        promises.push(cli.addPushRule('global', PushRuleKind.RoomSpecific, roomId, {
+        promises.push(cli.addPushRule("global", PushRuleKind.RoomSpecific, roomId, {
             actions: [
                 PushRuleActionName.Notify,
                 {
                     set_tweak: TweakName.Sound,
-                    value: 'default',
+                    value: "default",
                 },
             ],
         }));
         // https://matrix.org/jira/browse/SPEC-400
-        promises.push(cli.setPushRuleEnabled('global', PushRuleKind.RoomSpecific, roomId, true));
+        promises.push(cli.setPushRuleEnabled("global", PushRuleKind.RoomSpecific, roomId, true));
     }
 
     return Promise.all(promises);
@@ -188,7 +188,7 @@ function isRuleForRoom(roomId: string, rule: IPushRule): boolean {
         return false;
     }
     const cond = rule.conditions[0];
-    return (cond.kind === ConditionKind.EventMatch && cond.key === 'room_id' && cond.pattern === roomId);
+    return (cond.kind === ConditionKind.EventMatch && cond.key === "room_id" && cond.pattern === roomId);
 }
 
 function isMuteRule(rule: IPushRule): boolean {

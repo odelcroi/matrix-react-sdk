@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import { Widget, WidgetKind } from "matrix-widget-api";
 import { logger } from "matrix-js-sdk/src/logger";
 

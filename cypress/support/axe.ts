@@ -24,10 +24,10 @@ import Chainable = Cypress.Chainable;
 
 function terminalLog(violations: axe.Result[]): void {
     cy.task(
-        'log',
+        "log",
         `${violations.length} accessibility violation${
-            violations.length === 1 ? '' : 's'
-        } ${violations.length === 1 ? 'was' : 'were'} detected`,
+            violations.length === 1 ? "" : "s"
+        } ${violations.length === 1 ? "was" : "were"} detected`,
     );
 
     // pluck specific keys to keep the table readable
@@ -38,7 +38,7 @@ function terminalLog(violations: axe.Result[]): void {
         nodes: nodes.length,
     }));
 
-    cy.task('table', violationData);
+    cy.task("table", violationData);
 }
 
 Cypress.Commands.overwrite("checkA11y", (
@@ -52,7 +52,7 @@ Cypress.Commands.overwrite("checkA11y", (
         ...options,
         rules: {
             // Disable contrast checking for now as we have too many issues with it
-            'color-contrast': {
+            "color-contrast": {
                 enabled: false,
             },
             ...options.rules,

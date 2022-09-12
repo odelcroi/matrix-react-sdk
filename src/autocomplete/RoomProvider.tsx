@@ -20,14 +20,14 @@ import React from "react";
 import { sortBy, uniqBy } from "lodash";
 import { Room } from "matrix-js-sdk/src/models/room";
 
-import { _t } from '../languageHandler';
-import AutocompleteProvider from './AutocompleteProvider';
-import { MatrixClientPeg } from '../MatrixClientPeg';
-import QueryMatcher from './QueryMatcher';
-import { PillCompletion } from './Components';
+import { _t } from "../languageHandler";
+import AutocompleteProvider from "./AutocompleteProvider";
+import { MatrixClientPeg } from "../MatrixClientPeg";
+import QueryMatcher from "./QueryMatcher";
+import { PillCompletion } from "./Components";
 import { makeRoomPermalink } from "../utils/permalinks/Permalinks";
 import { ICompletion, ISelectionRange } from "./Autocompleter";
-import RoomAvatar from '../components/views/avatars/RoomAvatar';
+import RoomAvatar from "../components/views/avatars/RoomAvatar";
 import { TimelineRenderingType } from "../contexts/RoomContext";
 
 const ROOM_REGEX = /\B#\S*/g;
@@ -51,7 +51,7 @@ export default class RoomProvider extends AutocompleteProvider {
     constructor(room: Room, renderingType?: TimelineRenderingType) {
         super({ commandRegex: ROOM_REGEX, renderingType });
         this.matcher = new QueryMatcher([], {
-            keys: ['displayedAlias', 'matchName'],
+            keys: ["displayedAlias", "matchName"],
         });
     }
 
@@ -85,9 +85,9 @@ export default class RoomProvider extends AutocompleteProvider {
             // Filter out any matches where the user will have also autocompleted new rooms
             matcherObjects = matcherObjects.filter((r) => {
                 const tombstone = r.room.currentState.getStateEvents("m.room.tombstone", "");
-                if (tombstone && tombstone.getContent() && tombstone.getContent()['replacement_room']) {
+                if (tombstone && tombstone.getContent() && tombstone.getContent()["replacement_room"]) {
                     const hasReplacementRoom = matcherObjects.some(
-                        (r2) => r2.room.roomId === tombstone.getContent()['replacement_room'],
+                        (r2) => r2.room.roomId === tombstone.getContent()["replacement_room"],
                     );
                     return !hasReplacementRoom;
                 }
@@ -107,7 +107,7 @@ export default class RoomProvider extends AutocompleteProvider {
                     completion: room.displayedAlias,
                     completionId: room.room.roomId,
                     type: "room",
-                    suffix: ' ',
+                    suffix: " ",
                     href: makeRoomPermalink(room.displayedAlias),
                     component: (
                         <PillCompletion title={room.room.name} description={room.displayedAlias}>
@@ -122,7 +122,7 @@ export default class RoomProvider extends AutocompleteProvider {
     }
 
     getName() {
-        return _t('Rooms');
+        return _t("Rooms");
     }
 
     renderCompletions(completions: React.ReactNode[]): React.ReactNode {

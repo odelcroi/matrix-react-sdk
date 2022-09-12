@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { _td } from './languageHandler';
+import { _td } from "./languageHandler";
 
 const PHONE_NUMBER_REGEXP = /^[0-9 -.]+$/;
 
@@ -32,14 +32,14 @@ export function looksValid(phoneNumber: string) {
 }
 
 // Regional Indicator Symbol Letter A
-const UNICODE_BASE = 127462 - 'A'.charCodeAt(0);
+const UNICODE_BASE = 127462 - "A".charCodeAt(0);
 // Country code should be exactly 2 uppercase characters
 const COUNTRY_CODE_REGEX = /^[A-Z]{2}$/;
 
 export const getEmojiFlag = (countryCode: string) => {
-    if (!COUNTRY_CODE_REGEX.test(countryCode)) return '';
+    if (!COUNTRY_CODE_REGEX.test(countryCode)) return "";
     // Rip the country code out of the emoji and use that
-    return String.fromCodePoint(...countryCode.split('').map(l => UNICODE_BASE + l.charCodeAt(0)));
+    return String.fromCodePoint(...countryCode.split("").map(l => UNICODE_BASE + l.charCodeAt(0)));
 };
 
 export interface PhoneNumberCountryDefinition {

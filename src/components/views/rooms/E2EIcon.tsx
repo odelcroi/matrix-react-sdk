@@ -16,9 +16,9 @@ limitations under the License.
 */
 
 import React, { useState } from "react";
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import { _t, _td } from '../../../languageHandler';
+import { _t, _td } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
 import Tooltip from "../elements/Tooltip";
 import { E2EStatus } from "../../../utils/ShieldUtils";

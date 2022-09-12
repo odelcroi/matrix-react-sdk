@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 // eslint-disable-next-line deprecate/import
-import { mount, ReactWrapper } from 'enzyme';
-import { act } from 'react-dom/test-utils';
-import { IPassphraseInfo } from 'matrix-js-sdk/src/crypto/api';
+import { mount, ReactWrapper } from "enzyme";
+import { act } from "react-dom/test-utils";
+import { IPassphraseInfo } from "matrix-js-sdk/src/crypto/api";
 
-import { findByTestId, getMockClientWithEventEmitter, unmockClientPeg } from '../../../test-utils';
-import { findById, flushPromises } from '../../../test-utils';
+import { findByTestId, getMockClientWithEventEmitter, unmockClientPeg } from "../../../test-utils";
+import { findById, flushPromises } from "../../../test-utils";
 import AccessSecretStorageDialog from "../../../../src/components/views/dialogs/security/AccessSecretStorageDialog";
 
 describe("AccessSecretStorageDialog", () => {
@@ -40,7 +40,7 @@ describe("AccessSecretStorageDialog", () => {
 
     beforeEach(() => {
         jest.clearAllMocks();
-        mockClient.keyBackupKeyFromRecoveryKey.mockReturnValue('a raw key' as unknown as Uint8Array);
+        mockClient.keyBackupKeyFromRecoveryKey.mockReturnValue("a raw key" as unknown as Uint8Array);
         mockClient.isValidRecoveryKey.mockReturnValue(false);
     });
 
@@ -63,7 +63,7 @@ describe("AccessSecretStorageDialog", () => {
         const e = { preventDefault: () => {} };
 
         act(() => {
-            wrapper.find('form').simulate('submit', e);
+            wrapper.find("form").simulate("submit", e);
         });
 
         await flushPromises();
@@ -75,13 +75,13 @@ describe("AccessSecretStorageDialog", () => {
     it("Considers a valid key to be valid", async () => {
         const checkPrivateKey = jest.fn().mockResolvedValue(true);
         const wrapper = getComponent({ checkPrivateKey });
-        mockClient.keyBackupKeyFromRecoveryKey.mockReturnValue('a raw key' as unknown as Uint8Array);
+        mockClient.keyBackupKeyFromRecoveryKey.mockReturnValue("a raw key" as unknown as Uint8Array);
         mockClient.checkSecretStorageKey.mockResolvedValue(true);
 
         const v = "asdf";
         const e = { target: { value: v } };
         act(() => {
-            findById(wrapper, 'mx_securityKey').find('input').simulate('change', e);
+            findById(wrapper, "mx_securityKey").find("input").simulate("change", e);
             wrapper.setProps({});
         });
         await act(async () => {
@@ -91,10 +91,10 @@ describe("AccessSecretStorageDialog", () => {
             wrapper.setProps({});
         });
 
-        const submitButton = findByTestId(wrapper, 'dialog-primary-button').at(0);
+        const submitButton = findByTestId(wrapper, "dialog-primary-button").at(0);
         // submit button is enabled when key is valid
         expect(submitButton.props().disabled).toBeFalsy();
-        expect(wrapper.find('.mx_AccessSecretStorageDialog_recoveryKeyFeedback').text()).toEqual('Looks good!');
+        expect(wrapper.find(".mx_AccessSecretStorageDialog_recoveryKeyFeedback").text()).toEqual("Looks good!");
     });
 
     it("Notifies the user if they input an invalid Security Key", async () => {
@@ -106,18 +106,18 @@ describe("AccessSecretStorageDialog", () => {
         });
 
         act(() => {
-            findById(wrapper, 'mx_securityKey').find('input').simulate('change', e);
+            findById(wrapper, "mx_securityKey").find("input").simulate("change", e);
         });
         // force a validation now because it debounces
         // @ts-ignore private
         await wrapper.instance().validateRecoveryKey();
 
-        const submitButton = findByTestId(wrapper, 'dialog-primary-button').at(0);
+        const submitButton = findByTestId(wrapper, "dialog-primary-button").at(0);
         // submit button is disabled when recovery key is invalid
         expect(submitButton.props().disabled).toBeTruthy();
         expect(
-            wrapper.find('.mx_AccessSecretStorageDialog_recoveryKeyFeedback').text(),
-        ).toEqual('Invalid Security Key');
+            wrapper.find(".mx_AccessSecretStorageDialog_recoveryKeyFeedback").text(),
+        ).toEqual("Invalid Security Key");
 
         wrapper.setProps({});
         const notification = wrapper.find(".mx_AccessSecretStorageDialog_recoveryKeyFeedback");
@@ -126,16 +126,16 @@ describe("AccessSecretStorageDialog", () => {
 
     it("Notifies the user if they input an invalid passphrase", async function() {
         const keyInfo = {
-            name: 'test',
-            algorithm: 'test',
-            iv: 'test',
-            mac: '1:2:3:4',
+            name: "test",
+            algorithm: "test",
+            iv: "test",
+            mac: "1:2:3:4",
             passphrase: {
                 // this type is weird in js-sdk
                 // cast 'm.pbkdf2' to itself
-                algorithm: 'm.pbkdf2' as IPassphraseInfo['algorithm'],
+                algorithm: "m.pbkdf2" as IPassphraseInfo["algorithm"],
                 iterations: 2,
-                salt: 'nonempty',
+                salt: "nonempty",
             },
         };
         const checkPrivateKey = jest.fn().mockResolvedValue(false);
@@ -145,16 +145,16 @@ describe("AccessSecretStorageDialog", () => {
         // update passphrase
         act(() => {
             const e = { target: { value: "a" } };
-            findById(wrapper, 'mx_passPhraseInput').at(1).simulate('change', e);
+            findById(wrapper, "mx_passPhraseInput").at(1).simulate("change", e);
         });
         wrapper.setProps({});
 
         // input updated
-        expect(findById(wrapper, 'mx_passPhraseInput').at(0).props().value).toEqual('a');
+        expect(findById(wrapper, "mx_passPhraseInput").at(0).props().value).toEqual("a");
 
         // submit the form
         act(() => {
-            wrapper.find('form').at(0).simulate('submit');
+            wrapper.find("form").at(0).simulate("submit");
         });
         await flushPromises();
 

@@ -58,15 +58,15 @@ describe("ForwardDialog", () => {
         getRoom: jest.fn(),
         getAccountData: jest.fn().mockReturnValue(accountDataEvent),
         getPushActionsForEvent: jest.fn(),
-        mxcUrlToHttp: jest.fn().mockReturnValue(''),
+        mxcUrlToHttp: jest.fn().mockReturnValue(""),
         isRoomEncrypted: jest.fn().mockReturnValue(false),
         getProfileInfo: jest.fn().mockResolvedValue({
-            displayname: 'Alice',
+            displayname: "Alice",
         }),
         decryptEventIfNeeded: jest.fn(),
         sendEvent: jest.fn(),
         getClientWellKnown: jest.fn().mockReturnValue({
-            [TILE_SERVER_WK_KEY.name]: { map_style_url: 'maps.com' },
+            [TILE_SERVER_WK_KEY.name]: { map_style_url: "maps.com" },
         }),
     });
     const defaultRooms = ["a", "A", "b"].map(name => mkStubRoom(name, name, mockClient));
@@ -101,7 +101,7 @@ describe("ForwardDialog", () => {
     });
 
     afterAll(() => {
-        jest.spyOn(MatrixClientPeg, 'get').mockRestore();
+        jest.spyOn(MatrixClientPeg, "get").mockRestore();
     });
 
     it("shows a preview with us as the sender", async () => {
@@ -210,7 +210,7 @@ describe("ForwardDialog", () => {
         expect(secondButton.prop("disabled")).toBe(false);
     });
 
-    describe('Location events', () => {
+    describe("Location events", () => {
         // 14.03.2022 16:15
         const now = 1647270879403;
         const roomId = "a";
@@ -222,11 +222,11 @@ describe("ForwardDialog", () => {
         beforeEach(() => {
             // legacy events will default timestamp to Date.now()
             // mock a stable now for easy assertion
-            jest.spyOn(Date, 'now').mockReturnValue(now);
+            jest.spyOn(Date, "now").mockReturnValue(now);
         });
 
         afterAll(() => {
-            jest.spyOn(Date, 'now').mockRestore();
+            jest.spyOn(Date, "now").mockRestore();
         });
 
         const sendToFirstRoom = (wrapper: ReactWrapper): void =>
@@ -235,10 +235,10 @@ describe("ForwardDialog", () => {
                 sendToFirstRoomButton.simulate("click");
             });
 
-        it('converts legacy location events to pin drop shares', async () => {
+        it("converts legacy location events to pin drop shares", async () => {
             const wrapper = await mountForwardDialog(legacyLocationEvent);
 
-            expect(wrapper.find('MLocationBody').length).toBeTruthy();
+            expect(wrapper.find("MLocationBody").length).toBeTruthy();
             sendToFirstRoom(wrapper);
 
             // text and description from original event are removed
@@ -261,10 +261,10 @@ describe("ForwardDialog", () => {
             );
         });
 
-        it('removes personal information from static self location shares', async () => {
+        it("removes personal information from static self location shares", async () => {
             const wrapper = await mountForwardDialog(modernLocationEvent);
 
-            expect(wrapper.find('MLocationBody').length).toBeTruthy();
+            expect(wrapper.find("MLocationBody").length).toBeTruthy();
             sendToFirstRoom(wrapper);
 
             const timestamp = M_TIMESTAMP.findIn<number>(modernLocationEvent.getContent());
@@ -286,9 +286,9 @@ describe("ForwardDialog", () => {
             );
         });
 
-        it('forwards beacon location as a pin drop event', async () => {
+        it("forwards beacon location as a pin drop event", async () => {
             const timestamp = 123456;
-            const beaconEvent = makeBeaconEvent('@alice:server.org', { geoUri, timestamp });
+            const beaconEvent = makeBeaconEvent("@alice:server.org", { geoUri, timestamp });
             const text = `Location ${geoUri} at ${new Date(timestamp).toISOString()}`;
             const expectedContent = {
                 msgtype: "m.location",
@@ -304,7 +304,7 @@ describe("ForwardDialog", () => {
             };
             const wrapper = await mountForwardDialog(beaconEvent);
 
-            expect(wrapper.find('MLocationBody').length).toBeTruthy();
+            expect(wrapper.find("MLocationBody").length).toBeTruthy();
 
             sendToFirstRoom(wrapper);
 
@@ -313,10 +313,10 @@ describe("ForwardDialog", () => {
             );
         });
 
-        it('forwards pin drop event', async () => {
+        it("forwards pin drop event", async () => {
             const wrapper = await mountForwardDialog(pinDropLocationEvent);
 
-            expect(wrapper.find('MLocationBody').length).toBeTruthy();
+            expect(wrapper.find("MLocationBody").length).toBeTruthy();
 
             sendToFirstRoom(wrapper);
 

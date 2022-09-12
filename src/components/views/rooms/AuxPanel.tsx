@@ -14,20 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { lexicographicCompare } from 'matrix-js-sdk/src/utils';
-import { Room } from 'matrix-js-sdk/src/models/room';
-import { throttle } from 'lodash';
+import React from "react";
+import { lexicographicCompare } from "matrix-js-sdk/src/utils";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { throttle } from "lodash";
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
-import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import AppsDrawer from './AppsDrawer';
+import AppsDrawer from "./AppsDrawer";
 import SettingsStore from "../../../settings/SettingsStore";
 import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
 import { UIFeature } from "../../../settings/UIFeature";
 import ResizeNotifier from "../../../utils/ResizeNotifier";
-import LegacyCallViewForRoom from '../voip/LegacyCallViewForRoom';
+import LegacyCallViewForRoom from "../voip/LegacyCallViewForRoom";
 import { objectHasDiff } from "../../../utils/objects";
 
 interface IProps {
@@ -94,7 +94,7 @@ export default class AuxPanel extends React.Component<IProps, IState> {
         const counters = [];
 
         if (this.props.room && SettingsStore.getValue("feature_state_counters")) {
-            const stateEvs = this.props.room.currentState.getStateEvents('re.jki.counter');
+            const stateEvs = this.props.room.currentState.getStateEvents("re.jki.counter");
             stateEvs.sort((a, b) => lexicographicCompare(a.getStateKey(), b.getStateKey()));
 
             for (const ev of stateEvs) {

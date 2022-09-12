@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
 import { _t } from "../../../languageHandler";
-import dis from '../../../dispatcher/dispatcher';
+import dis from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";

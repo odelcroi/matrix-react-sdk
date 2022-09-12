@@ -40,7 +40,7 @@ describe("Markdown parser test", () => {
             "https://riot.im/app/#/room/#_foonetic_xkcd:matrix.org",
         ].join("\n");
 
-        it('tests that links with markdown empasis in them are getting properly HTML formatted', () => {
+        it("tests that links with markdown empasis in them are getting properly HTML formatted", () => {
             /* eslint-disable max-len */
             const expectedResult = [
                 "<p>Test1:<br />#_foonetic_xkcd:matrix.org<br />http://google.com/_thing_<br />https://matrix.org/_matrix/client/foo/123_<br />#_foonetic_xkcd:matrix.org</p>",
@@ -53,7 +53,7 @@ describe("Markdown parser test", () => {
             const md = new Markdown(testString);
             expect(md.toHTML()).toEqual(expectedResult);
         });
-        it('tests that links with autolinks are not touched at all and are still properly formatted', () => {
+        it("tests that links with autolinks are not touched at all and are still properly formatted", () => {
             const test = [
                 "Test1:",
                 "<#_foonetic_xkcd:matrix.org>",
@@ -92,29 +92,29 @@ describe("Markdown parser test", () => {
             expect(md.toHTML()).toEqual(expectedResult);
         });
 
-        it('expects that links in codeblock are not modified', () => {
+        it("expects that links in codeblock are not modified", () => {
             const expectedResult = [
                 '<pre><code class="language-Test1:">#_foonetic_xkcd:matrix.org',
-                'http://google.com/_thing_',
-                'https://matrix.org/_matrix/client/foo/123_',
-                '#_foonetic_xkcd:matrix.org',
-                '',
-                'Test1A:',
-                '#_foonetic_xkcd:matrix.org',
-                'http://google.com/_thing_',
-                'https://matrix.org/_matrix/client/foo/123_',
-                '#_foonetic_xkcd:matrix.org',
-                '',
-                'Test2:',
-                'http://domain.xyz/foo/bar-_stuff-like-this_-in-it.jpg',
-                'http://domain.xyz/foo/bar-_stuff-like-this_-in-it.jpg',
-                '',
-                'Test3:',
-                'https://riot.im/app/#/room/#_foonetic_xkcd:matrix.org',
-                'https://riot.im/app/#/room/#_foonetic_xkcd:matrix.org```',
-                '</code></pre>',
-                '',
-            ].join('\n');
+                "http://google.com/_thing_",
+                "https://matrix.org/_matrix/client/foo/123_",
+                "#_foonetic_xkcd:matrix.org",
+                "",
+                "Test1A:",
+                "#_foonetic_xkcd:matrix.org",
+                "http://google.com/_thing_",
+                "https://matrix.org/_matrix/client/foo/123_",
+                "#_foonetic_xkcd:matrix.org",
+                "",
+                "Test2:",
+                "http://domain.xyz/foo/bar-_stuff-like-this_-in-it.jpg",
+                "http://domain.xyz/foo/bar-_stuff-like-this_-in-it.jpg",
+                "",
+                "Test3:",
+                "https://riot.im/app/#/room/#_foonetic_xkcd:matrix.org",
+                "https://riot.im/app/#/room/#_foonetic_xkcd:matrix.org```",
+                "</code></pre>",
+                "",
+            ].join("\n");
             const md = new Markdown("```" + testString + "```");
             expect(md.toHTML()).toEqual(expectedResult);
         });
@@ -122,45 +122,45 @@ describe("Markdown parser test", () => {
         it('expects that links with emphasis are "escaped" correctly', () => {
             /* eslint-disable max-len */
             const testString = [
-                'http://domain.xyz/foo/bar-_stuff-like-this_-in-it.jpg' + " " + 'http://domain.xyz/foo/bar-_stuff-like-this_-in-it.jpg',
-                'http://domain.xyz/foo/bar-_stuff-like-this_-in-it.jpg' + " " + 'http://domain.xyz/foo/bar-_stuff-like-this_-in-it.jpg',
-            ].join('\n');
+                "http://domain.xyz/foo/bar-_stuff-like-this_-in-it.jpg" + " " + "http://domain.xyz/foo/bar-_stuff-like-this_-in-it.jpg",
+                "http://domain.xyz/foo/bar-_stuff-like-this_-in-it.jpg" + " " + "http://domain.xyz/foo/bar-_stuff-like-this_-in-it.jpg",
+            ].join("\n");
             const expectedResult = [
                 "http://domain.xyz/foo/bar-_stuff-like-this_-in-it.jpg http://domain.xyz/foo/bar-_stuff-like-this_-in-it.jpg",
                 "http://domain.xyz/foo/bar-_stuff-like-this_-in-it.jpg http://domain.xyz/foo/bar-_stuff-like-this_-in-it.jpg",
-            ].join('<br />');
+            ].join("<br />");
             /* eslint-enable max-len */
             const md = new Markdown(testString);
             expect(md.toHTML()).toEqual(expectedResult);
         });
 
-        it('expects that the link part will not be accidentally added to <strong>', () => {
+        it("expects that the link part will not be accidentally added to <strong>", () => {
             /* eslint-disable max-len */
-            const testString = `https://github.com/matrix-org/synapse/blob/develop/synapse/module_api/__init__.py`;
-            const expectedResult = 'https://github.com/matrix-org/synapse/blob/develop/synapse/module_api/__init__.py';
+            const testString = "https://github.com/matrix-org/synapse/blob/develop/synapse/module_api/__init__.py";
+            const expectedResult = "https://github.com/matrix-org/synapse/blob/develop/synapse/module_api/__init__.py";
             /* eslint-enable max-len */
             const md = new Markdown(testString);
             expect(md.toHTML()).toEqual(expectedResult);
         });
 
-        it('expects that the link part will not be accidentally added to <strong> for multiline links', () => {
+        it("expects that the link part will not be accidentally added to <strong> for multiline links", () => {
             /* eslint-disable max-len */
             const testString = [
-                'https://github.com/matrix-org/synapse/blob/develop/synapse/module_api/__init__.py' + " " + 'https://github.com/matrix-org/synapse/blob/develop/synapse/module_api/__init__.py',
-                'https://github.com/matrix-org/synapse/blob/develop/synapse/module_api/__init__.py' + " " + 'https://github.com/matrix-org/synapse/blob/develop/synapse/module_api/__init__.py',
-            ].join('\n');
+                "https://github.com/matrix-org/synapse/blob/develop/synapse/module_api/__init__.py" + " " + "https://github.com/matrix-org/synapse/blob/develop/synapse/module_api/__init__.py",
+                "https://github.com/matrix-org/synapse/blob/develop/synapse/module_api/__init__.py" + " " + "https://github.com/matrix-org/synapse/blob/develop/synapse/module_api/__init__.py",
+            ].join("\n");
             const expectedResult = [
-                'https://github.com/matrix-org/synapse/blob/develop/synapse/module_api/__init__.py' + " " + 'https://github.com/matrix-org/synapse/blob/develop/synapse/module_api/__init__.py',
-                'https://github.com/matrix-org/synapse/blob/develop/synapse/module_api/__init__.py' + " " + 'https://github.com/matrix-org/synapse/blob/develop/synapse/module_api/__init__.py',
-            ].join('<br />');
+                "https://github.com/matrix-org/synapse/blob/develop/synapse/module_api/__init__.py" + " " + "https://github.com/matrix-org/synapse/blob/develop/synapse/module_api/__init__.py",
+                "https://github.com/matrix-org/synapse/blob/develop/synapse/module_api/__init__.py" + " " + "https://github.com/matrix-org/synapse/blob/develop/synapse/module_api/__init__.py",
+            ].join("<br />");
             /* eslint-enable max-len */
             const md = new Markdown(testString);
             expect(md.toHTML()).toEqual(expectedResult);
         });
 
-        it('resumes applying formatting to the rest of a message after a link', () => {
-            const testString = 'http://google.com/_thing_ *does* __not__ exist';
-            const expectedResult = 'http://google.com/_thing_ <em>does</em> <strong>not</strong> exist';
+        it("resumes applying formatting to the rest of a message after a link", () => {
+            const testString = "http://google.com/_thing_ *does* __not__ exist";
+            const expectedResult = "http://google.com/_thing_ <em>does</em> <strong>not</strong> exist";
             const md = new Markdown(testString);
             expect(md.toHTML()).toEqual(expectedResult);
         });

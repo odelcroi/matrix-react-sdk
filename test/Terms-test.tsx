@@ -18,11 +18,11 @@ import {
     MatrixEvent,
     EventType,
     SERVICE_TYPES,
-} from 'matrix-js-sdk/src/matrix';
+} from "matrix-js-sdk/src/matrix";
 
-import { startTermsFlow, Service } from '../src/Terms';
-import { getMockClientWithEventEmitter } from './test-utils';
-import { MatrixClientPeg } from '../src/MatrixClientPeg';
+import { startTermsFlow, Service } from "../src/Terms";
+import { getMockClientWithEventEmitter } from "./test-utils";
+import { MatrixClientPeg } from "../src/MatrixClientPeg";
 
 const POLICY_ONE = {
     version: "six",
@@ -40,10 +40,10 @@ const POLICY_TWO = {
     },
 };
 
-const IM_SERVICE_ONE = new Service(SERVICE_TYPES.IM, 'https://imone.test', 'a token token');
-const IM_SERVICE_TWO = new Service(SERVICE_TYPES.IM, 'https://imtwo.test', 'a token token');
+const IM_SERVICE_ONE = new Service(SERVICE_TYPES.IM, "https://imone.test", "a token token");
+const IM_SERVICE_TWO = new Service(SERVICE_TYPES.IM, "https://imtwo.test", "a token token");
 
-describe('Terms', function() {
+describe("Terms", function() {
     const mockClient = getMockClientWithEventEmitter({
         getAccountData: jest.fn(),
         getTerms: jest.fn(),
@@ -59,10 +59,10 @@ describe('Terms', function() {
     });
 
     afterAll(() => {
-        jest.spyOn(MatrixClientPeg, 'get').mockRestore();
+        jest.spyOn(MatrixClientPeg, "get").mockRestore();
     });
 
-    it('should prompt for all terms & services if no account data', async function() {
+    it("should prompt for all terms & services if no account data", async function() {
         mockClient.getAccountData.mockReturnValue(null);
         mockClient.getTerms.mockResolvedValue({
             policies: {
@@ -82,7 +82,7 @@ describe('Terms', function() {
         ], []);
     });
 
-    it('should not prompt if all policies are signed in account data', async function() {
+    it("should not prompt if all policies are signed in account data", async function() {
         const directEvent = new MatrixEvent({
             type: EventType.Direct,
             content: {
@@ -103,8 +103,8 @@ describe('Terms', function() {
         expect(interactionCallback).not.toHaveBeenCalled();
         expect(mockClient.agreeToTerms).toBeCalledWith(
             SERVICE_TYPES.IM,
-            'https://imone.test',
-            'a token token',
+            "https://imone.test",
+            "a token token",
             ["http://example.com/one"],
         );
     });
@@ -138,8 +138,8 @@ describe('Terms', function() {
         ], ["http://example.com/one"]);
         expect(mockClient.agreeToTerms).toBeCalledWith(
             SERVICE_TYPES.IM,
-            'https://imone.test',
-            'a token token',
+            "https://imone.test",
+            "a token token",
             ["http://example.com/one", "http://example.com/two"],
         );
     });
@@ -155,13 +155,13 @@ describe('Terms', function() {
 
         mockClient.getTerms.mockImplementation(async (_serviceTypes: SERVICE_TYPES, baseUrl: string) => {
             switch (baseUrl) {
-                case 'https://imone.test':
+                case "https://imone.test":
                     return {
                         policies: {
                             "policy_the_first": POLICY_ONE,
                         },
                     };
-                case 'https://imtwo.test':
+                case "https://imtwo.test":
                     return {
                         policies: {
                             "policy_the_second": POLICY_TWO,
@@ -183,14 +183,14 @@ describe('Terms', function() {
         ], ["http://example.com/one"]);
         expect(mockClient.agreeToTerms).toBeCalledWith(
             SERVICE_TYPES.IM,
-            'https://imone.test',
-            'a token token',
+            "https://imone.test",
+            "a token token",
             ["http://example.com/one"],
         );
         expect(mockClient.agreeToTerms).toBeCalledWith(
             SERVICE_TYPES.IM,
-            'https://imtwo.test',
-            'a token token',
+            "https://imtwo.test",
+            "a token token",
             ["http://example.com/two"],
         );
     });

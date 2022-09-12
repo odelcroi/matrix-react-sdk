@@ -21,10 +21,10 @@ import { User } from "matrix-js-sdk/src/models/user";
 import { logger } from "matrix-js-sdk/src/logger";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 
-import { MatrixClientPeg } from './MatrixClientPeg';
-import MultiInviter, { CompletionStates } from './utils/MultiInviter';
-import Modal from './Modal';
-import { _t } from './languageHandler';
+import { MatrixClientPeg } from "./MatrixClientPeg";
+import MultiInviter, { CompletionStates } from "./utils/MultiInviter";
+import Modal from "./Modal";
+import { _t } from "./languageHandler";
 import InviteDialog from "./components/views/dialogs/InviteDialog";
 import BaseAvatar from "./components/views/avatars/BaseAvatar";
 import { mediaFromMxc } from "./customisations/Media";
@@ -88,7 +88,7 @@ export function isValid3pidInvite(event: MatrixEvent): boolean {
     if (!event || event.getType() !== EventType.RoomThirdPartyInvite) return false;
 
     // any events without these keys are not valid 3pid invites, so we ignore them
-    const requiredKeys = ['key_validity_url', 'public_key', 'display_name'];
+    const requiredKeys = ["key_validity_url", "public_key", "display_name"];
     if (requiredKeys.some(key => !event.getContent()[key])) {
         return false;
     }
@@ -122,7 +122,7 @@ export function showAnyInviteErrors(
     userMap?: Map<string, Member>,
 ): boolean {
     // Show user any errors
-    const failedUsers = Object.keys(states).filter(a => states[a] === 'error');
+    const failedUsers = Object.keys(states).filter(a => states[a] === "error");
     if (failedUsers.length === 1 && inviter.fatal) {
         // Just get the first message because there was a fatal problem on the first
         // user. This usually means that no other users were attempted, making it

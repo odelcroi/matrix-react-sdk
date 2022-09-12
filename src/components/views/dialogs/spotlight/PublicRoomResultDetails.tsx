@@ -32,12 +32,12 @@ interface Props {
 }
 
 export function PublicRoomResultDetails({ room, labelId, descriptionId, detailsId }: Props): JSX.Element {
-    let name = room.name || getDisplayAliasForRoom(room) || _t('Unnamed room');
+    let name = room.name || getDisplayAliasForRoom(room) || _t("Unnamed room");
     if (name.length > MAX_NAME_LENGTH) {
         name = `${name.substring(0, MAX_NAME_LENGTH)}...`;
     }
 
-    let topic = room.topic || '';
+    let topic = room.topic || "";
     // Additional truncation based on line numbers is done via CSS,
     // but to ensure that the DOM is not polluted with a huge string
     // we give it a hard limit before rendering.

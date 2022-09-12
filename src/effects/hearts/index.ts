@@ -14,7 +14,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-import ICanvasEffect from '../ICanvasEffect';
+import ICanvasEffect from "../ICanvasEffect";
 import { arrayFastClone } from "../../utils/arrays";
 
 export type HeartOptions = {
@@ -68,18 +68,18 @@ export default class Hearts implements ICanvasEffect {
     private lastAnimationTime: number;
 
     private colours = [
-        'rgba(194,210,224,1)',
-        'rgba(235,214,219,1)',
-        'rgba(255,211,45,1)',
-        'rgba(255,190,174,1)',
-        'rgba(255,173,226,1)',
-        'rgba(242,114,171,1)',
-        'rgba(228,55,116,1)',
-        'rgba(255,86,130,1)',
-        'rgba(244,36,57,1)',
-        'rgba(247,126,157,1)',
-        'rgba(243,142,140,1)',
-        'rgba(252,116,183,1)'];
+        "rgba(194,210,224,1)",
+        "rgba(235,214,219,1)",
+        "rgba(255,211,45,1)",
+        "rgba(255,190,174,1)",
+        "rgba(255,173,226,1)",
+        "rgba(242,114,171,1)",
+        "rgba(228,55,116,1)",
+        "rgba(255,86,130,1)",
+        "rgba(244,36,57,1)",
+        "rgba(247,126,157,1)",
+        "rgba(243,142,140,1)",
+        "rgba(252,116,183,1)"];
 
     public isRunning: boolean;
 
@@ -87,7 +87,7 @@ export default class Hearts implements ICanvasEffect {
         if (!canvas) {
             return;
         }
-        this.context = canvas.getContext('2d');
+        this.context = canvas.getContext("2d");
         this.particles = [];
         const count = this.options.maxCount;
         while (this.particles.length < count) {

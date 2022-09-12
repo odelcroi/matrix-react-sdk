@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import {
     Beacon,
     BeaconEvent,
@@ -22,27 +22,27 @@ import {
     MatrixEventEvent,
     MatrixClient,
     RelationType,
-} from 'matrix-js-sdk/src/matrix';
-import { BeaconLocationState } from 'matrix-js-sdk/src/content-helpers';
-import { randomString } from 'matrix-js-sdk/src/randomstring';
-import { M_BEACON } from 'matrix-js-sdk/src/@types/beacon';
-import classNames from 'classnames';
+} from "matrix-js-sdk/src/matrix";
+import { BeaconLocationState } from "matrix-js-sdk/src/content-helpers";
+import { randomString } from "matrix-js-sdk/src/randomstring";
+import { M_BEACON } from "matrix-js-sdk/src/@types/beacon";
+import classNames from "classnames";
 
-import MatrixClientContext from '../../../contexts/MatrixClientContext';
-import { useEventEmitterState } from '../../../hooks/useEventEmitter';
-import { _t } from '../../../languageHandler';
-import Modal from '../../../Modal';
-import { isBeaconWaitingToStart, useBeacon } from '../../../utils/beacon';
-import { isSelfLocation, LocationShareError } from '../../../utils/location';
-import { BeaconDisplayStatus, getBeaconDisplayStatus } from '../beacon/displayStatus';
-import BeaconStatus from '../beacon/BeaconStatus';
-import OwnBeaconStatus from '../beacon/OwnBeaconStatus';
-import Map from '../location/Map';
-import { MapError } from '../location/MapError';
-import MapFallback from '../location/MapFallback';
-import SmartMarker from '../location/SmartMarker';
-import { GetRelationsForEvent } from '../rooms/EventTile';
-import BeaconViewDialog from '../beacon/BeaconViewDialog';
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import { useEventEmitterState } from "../../../hooks/useEventEmitter";
+import { _t } from "../../../languageHandler";
+import Modal from "../../../Modal";
+import { isBeaconWaitingToStart, useBeacon } from "../../../utils/beacon";
+import { isSelfLocation, LocationShareError } from "../../../utils/location";
+import { BeaconDisplayStatus, getBeaconDisplayStatus } from "../beacon/displayStatus";
+import BeaconStatus from "../beacon/BeaconStatus";
+import OwnBeaconStatus from "../beacon/OwnBeaconStatus";
+import Map from "../location/Map";
+import { MapError } from "../location/MapError";
+import MapFallback from "../location/MapFallback";
+import SmartMarker from "../location/SmartMarker";
+import { GetRelationsForEvent } from "../rooms/EventTile";
+import BeaconViewDialog from "../beacon/BeaconViewDialog";
 import { IBodyProps } from "./IBodyProps";
 
 const useBeaconState = (beaconInfoEvent: MatrixEvent): {
@@ -200,9 +200,9 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent, getRelati
                         error={error.message as LocationShareError}
                         onClick={onClick}
                         className={classNames(
-                            'mx_MBeaconBody_mapError',
+                            "mx_MBeaconBody_mapError",
                             // set interactive class when maximised map can be opened
-                            { 'mx_MBeaconBody_mapErrorInteractive':
+                            { "mx_MBeaconBody_mapErrorInteractive":
                                 displayStatus === BeaconDisplayStatus.Active,
                             },
                         )}
@@ -224,7 +224,7 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent, getRelati
                     className='mx_MBeaconBody_chin'
                     beacon={beacon}
                     displayStatus={displayStatus}
-                    label={_t('View live location')}
+                    label={_t("View live location")}
                     withIcon
                 />
             }

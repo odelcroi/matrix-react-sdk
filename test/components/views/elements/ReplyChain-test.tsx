@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import * as testUtils from '../../../test-utils';
+import * as testUtils from "../../../test-utils";
 import { getParentEventId } from "../../../../src/utils/Reply";
 
 describe("ReplyChain", () => {
-    describe('getParentEventId', () => {
-        it('retrieves relation reply from unedited event', () => {
+    describe("getParentEventId", () => {
+        it("retrieves relation reply from unedited event", () => {
             const originalEventWithRelation = testUtils.mkEvent({
                 event: true,
                 type: "m.room.message",
@@ -37,10 +37,10 @@ describe("ReplyChain", () => {
             });
 
             expect(getParentEventId(originalEventWithRelation))
-                .toStrictEqual('$qkjmFBTEc0VvfVyzq1CJuh1QZi_xDIgNEFjZ4Pq34og');
+                .toStrictEqual("$qkjmFBTEc0VvfVyzq1CJuh1QZi_xDIgNEFjZ4Pq34og");
         });
 
-        it('retrieves relation reply from original event when edited', () => {
+        it("retrieves relation reply from original event when edited", () => {
             const originalEventWithRelation = testUtils.mkEvent({
                 event: true,
                 type: "m.room.message",
@@ -81,10 +81,10 @@ describe("ReplyChain", () => {
 
             // The relation should be pulled from the original event
             expect(getParentEventId(originalEventWithRelation))
-                .toStrictEqual('$qkjmFBTEc0VvfVyzq1CJuh1QZi_xDIgNEFjZ4Pq34og');
+                .toStrictEqual("$qkjmFBTEc0VvfVyzq1CJuh1QZi_xDIgNEFjZ4Pq34og");
         });
 
-        it('retrieves relation reply from edit event when provided', () => {
+        it("retrieves relation reply from edit event when provided", () => {
             const originalEvent = testUtils.mkEvent({
                 event: true,
                 type: "m.room.message",
@@ -125,10 +125,10 @@ describe("ReplyChain", () => {
 
             // The relation should be pulled from the edit event
             expect(getParentEventId(originalEvent))
-                .toStrictEqual('$qkjmFBTEc0VvfVyzq1CJuh1QZi_xDIgNEFjZ4Pq34og');
+                .toStrictEqual("$qkjmFBTEc0VvfVyzq1CJuh1QZi_xDIgNEFjZ4Pq34og");
         });
 
-        it('prefers relation reply from edit event over original event', () => {
+        it("prefers relation reply from edit event over original event", () => {
             const originalEventWithRelation = testUtils.mkEvent({
                 event: true,
                 type: "m.room.message",
@@ -173,10 +173,10 @@ describe("ReplyChain", () => {
             originalEventWithRelation.makeReplaced(editEvent);
 
             // The relation should be pulled from the edit event
-            expect(getParentEventId(originalEventWithRelation)).toStrictEqual('$999');
+            expect(getParentEventId(originalEventWithRelation)).toStrictEqual("$999");
         });
 
-        it('able to clear relation reply from original event by providing empty relation field', () => {
+        it("able to clear relation reply from original event by providing empty relation field", () => {
             const originalEventWithRelation = testUtils.mkEvent({
                 event: true,
                 type: "m.room.message",

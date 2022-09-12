@@ -81,7 +81,7 @@ export async function runSlashCommand(
         const title = isServerError ? _td("Server error") : _td("Command error");
 
         let errText;
-        if (typeof error === 'string') {
+        if (typeof error === "string") {
             errText = error;
         } else if ((error as ITranslatableError).translatedMessage) {
             // Check for translatable errors (newTranslatableError)
@@ -123,7 +123,7 @@ export async function shouldSendAnyway(commandText: string): Promise<boolean> {
                 }) }
             </p>
         </div>,
-        button: _t('Send as message'),
+        button: _t("Send as message"),
     });
     const [sendAnyway] = await finished;
     return sendAnyway;

@@ -14,16 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { EventStatus, MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import { EventStatus, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { EventType, EVENT_VISIBILITY_CHANGE_TYPE, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
-import { MatrixClient } from 'matrix-js-sdk/src/client';
-import { logger } from 'matrix-js-sdk/src/logger';
+import { MatrixClient } from "matrix-js-sdk/src/client";
+import { logger } from "matrix-js-sdk/src/logger";
 import { M_POLL_START } from "matrix-events-sdk";
 import { M_LOCATION } from "matrix-js-sdk/src/@types/location";
-import { M_BEACON_INFO } from 'matrix-js-sdk/src/@types/beacon';
-import { THREAD_RELATION_TYPE } from 'matrix-js-sdk/src/models/thread';
+import { M_BEACON_INFO } from "matrix-js-sdk/src/@types/beacon";
+import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 
-import { MatrixClientPeg } from '../MatrixClientPeg';
+import { MatrixClientPeg } from "../MatrixClientPeg";
 import shouldHideEvent from "../shouldHideEvent";
 import { GetRelationsForEvent } from "../components/views/rooms/EventTile";
 import SettingsStore from "../settings/SettingsStore";
@@ -47,13 +47,13 @@ export function isContentActionable(mxEvent: MatrixEvent): boolean {
     const isSent = !eventStatus || eventStatus === EventStatus.SENT;
 
     if (isSent && !mxEvent.isRedacted()) {
-        if (mxEvent.getType() === 'm.room.message') {
+        if (mxEvent.getType() === "m.room.message") {
             const content = mxEvent.getContent();
-            if (content.msgtype && content.msgtype !== 'm.bad.encrypted' && content.hasOwnProperty('body')) {
+            if (content.msgtype && content.msgtype !== "m.bad.encrypted" && content.hasOwnProperty("body")) {
                 return true;
             }
         } else if (
-            mxEvent.getType() === 'm.sticker' ||
+            mxEvent.getType() === "m.sticker" ||
             M_POLL_START.matches(mxEvent.getType()) ||
             M_BEACON_INFO.matches(mxEvent.getType())
         ) {
@@ -86,7 +86,7 @@ export function canEditContent(mxEvent: MatrixEvent): boolean {
         (
             (msgtype === MsgType.Text || msgtype === MsgType.Emote) &&
             !!body &&
-            typeof body === 'string'
+            typeof body === "string"
         )
     );
 }
@@ -212,8 +212,8 @@ export function isVoiceMessage(mxEvent: MatrixEvent): boolean {
     const content = mxEvent.getContent();
     // MSC2516 is a legacy identifier. See https://github.com/matrix-org/matrix-doc/pull/3245
     return (
-        !!content['org.matrix.msc2516.voice'] ||
-        !!content['org.matrix.msc3245.voice']
+        !!content["org.matrix.msc2516.voice"] ||
+        !!content["org.matrix.msc3245.voice"]
     );
 }
 

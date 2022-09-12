@@ -14,38 +14,38 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
-import { DeviceInfo } from 'matrix-js-sdk/src/crypto/deviceinfo';
-import { logger } from 'matrix-js-sdk/src/logger';
-import { DeviceTrustLevel } from 'matrix-js-sdk/src/crypto/CrossSigning';
+import React from "react";
+import { fireEvent, render } from "@testing-library/react";
+import { act } from "react-dom/test-utils";
+import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
+import { logger } from "matrix-js-sdk/src/logger";
+import { DeviceTrustLevel } from "matrix-js-sdk/src/crypto/CrossSigning";
 
-import SessionManagerTab from '../../../../../../src/components/views/settings/tabs/user/SessionManagerTab';
-import MatrixClientContext from '../../../../../../src/contexts/MatrixClientContext';
+import SessionManagerTab from "../../../../../../src/components/views/settings/tabs/user/SessionManagerTab";
+import MatrixClientContext from "../../../../../../src/contexts/MatrixClientContext";
 import {
     flushPromisesWithFakeTimers,
     getMockClientWithEventEmitter,
     mockClientMethodsUser,
-} from '../../../../../test-utils';
-import Modal from '../../../../../../src/Modal';
+} from "../../../../../test-utils";
+import Modal from "../../../../../../src/Modal";
 
 jest.useFakeTimers();
 
-describe('<SessionManagerTab />', () => {
-    const aliceId = '@alice:server.org';
-    const deviceId = 'alices_device';
+describe("<SessionManagerTab />", () => {
+    const aliceId = "@alice:server.org";
+    const deviceId = "alices_device";
 
     const alicesDevice = {
         device_id: deviceId,
     };
     const alicesMobileDevice = {
-        device_id: 'alices_mobile_device',
+        device_id: "alices_mobile_device",
         last_seen_ts: Date.now(),
     };
 
     const alicesOlderMobileDevice = {
-        device_id: 'alices_older_mobile_device',
+        device_id: "alices_older_mobile_device",
         last_seen_ts: Date.now() - 600000,
     };
 
@@ -70,7 +70,7 @@ describe('<SessionManagerTab />', () => {
 
     beforeEach(() => {
         jest.clearAllMocks();
-        jest.spyOn(logger, 'error').mockRestore();
+        jest.spyOn(logger, "error").mockRestore();
         mockClient.getDevices.mockResolvedValue({ devices: [] });
         mockClient.getStoredDevice.mockImplementation((_userId, id) => {
             const device = [alicesDevice, alicesMobileDevice].find(device => device.device_id === id);
@@ -81,12 +81,12 @@ describe('<SessionManagerTab />', () => {
             .mockReturnValue(new DeviceTrustLevel(false, false, false, false));
     });
 
-    it('renders spinner while devices load', () => {
+    it("renders spinner while devices load", () => {
         const { container } = render(getComponent());
-        expect(container.getElementsByClassName('mx_Spinner').length).toBeTruthy();
+        expect(container.getElementsByClassName("mx_Spinner").length).toBeTruthy();
     });
 
-    it('removes spinner when device fetch fails', async () => {
+    it("removes spinner when device fetch fails", async () => {
         mockClient.getDevices.mockRejectedValue({ httpStatus: 404 });
         const { container } = render(getComponent());
         expect(mockClient.getDevices).toHaveBeenCalled();
@@ -94,23 +94,23 @@ describe('<SessionManagerTab />', () => {
         await act(async () => {
             await flushPromisesWithFakeTimers();
         });
-        expect(container.getElementsByClassName('mx_Spinner').length).toBeFalsy();
+        expect(container.getElementsByClassName("mx_Spinner").length).toBeFalsy();
     });
 
-    it('removes spinner when device fetch fails', async () => {
+    it("removes spinner when device fetch fails", async () => {
         // eat the expected error log
-        jest.spyOn(logger, 'error').mockImplementation(() => {});
+        jest.spyOn(logger, "error").mockImplementation(() => {});
         mockClient.getDevices.mockRejectedValue({ httpStatus: 404 });
         const { container } = render(getComponent());
 
         await act(async () => {
             await flushPromisesWithFakeTimers();
         });
-        expect(container.getElementsByClassName('mx_Spinner').length).toBeFalsy();
+        expect(container.getElementsByClassName("mx_Spinner").length).toBeFalsy();
     });
 
-    it('does not fail when checking device verification fails', async () => {
-        const logSpy = jest.spyOn(logger, 'error').mockImplementation(() => {});
+    it("does not fail when checking device verification fails", async () => {
+        const logSpy = jest.spyOn(logger, "error").mockImplementation(() => {});
         mockClient.getDevices.mockResolvedValue({ devices: [alicesDevice, alicesMobileDevice] });
         const noCryptoError = new Error("End-to-end encryption disabled");
         mockClient.getStoredDevice.mockImplementation(() => { throw noCryptoError; });
@@ -123,10 +123,10 @@ describe('<SessionManagerTab />', () => {
         // called for each device despite error
         expect(mockClient.getStoredDevice).toHaveBeenCalledWith(aliceId, alicesDevice.device_id);
         expect(mockClient.getStoredDevice).toHaveBeenCalledWith(aliceId, alicesMobileDevice.device_id);
-        expect(logSpy).toHaveBeenCalledWith('Error getting device cross-signing info', noCryptoError);
+        expect(logSpy).toHaveBeenCalledWith("Error getting device cross-signing info", noCryptoError);
     });
 
-    it('sets device verification status correctly', async () => {
+    it("sets device verification status correctly", async () => {
         mockClient.getDevices.mockResolvedValue({ devices: [alicesDevice, alicesMobileDevice] });
         mockCrossSigningInfo.checkDeviceTrust
             // alices device is trusted
@@ -144,7 +144,7 @@ describe('<SessionManagerTab />', () => {
         expect(getByTestId(`device-tile-${alicesDevice.device_id}`)).toMatchSnapshot();
     });
 
-    it('renders current session section with an unverified session', async () => {
+    it("renders current session section with an unverified session", async () => {
         mockClient.getDevices.mockResolvedValue({ devices: [alicesDevice, alicesMobileDevice] });
         const { getByTestId } = render(getComponent());
 
@@ -152,13 +152,13 @@ describe('<SessionManagerTab />', () => {
             await flushPromisesWithFakeTimers();
         });
 
-        expect(getByTestId('current-session-section')).toMatchSnapshot();
+        expect(getByTestId("current-session-section")).toMatchSnapshot();
     });
 
-    it('opens encryption setup dialog when verifiying current session', async () => {
+    it("opens encryption setup dialog when verifiying current session", async () => {
         mockClient.getDevices.mockResolvedValue({ devices: [alicesDevice, alicesMobileDevice] });
         const { getByTestId } = render(getComponent());
-        const modalSpy = jest.spyOn(Modal, 'createDialog');
+        const modalSpy = jest.spyOn(Modal, "createDialog");
 
         await act(async () => {
             await flushPromisesWithFakeTimers();
@@ -170,7 +170,7 @@ describe('<SessionManagerTab />', () => {
         expect(modalSpy).toHaveBeenCalled();
     });
 
-    it('renders current session section with a verified session', async () => {
+    it("renders current session section with a verified session", async () => {
         mockClient.getDevices.mockResolvedValue({ devices: [alicesDevice, alicesMobileDevice] });
         mockClient.getStoredDevice.mockImplementation(() => new DeviceInfo(alicesDevice.device_id));
         mockCrossSigningInfo.checkDeviceTrust
@@ -182,10 +182,10 @@ describe('<SessionManagerTab />', () => {
             await flushPromisesWithFakeTimers();
         });
 
-        expect(getByTestId('current-session-section')).toMatchSnapshot();
+        expect(getByTestId("current-session-section")).toMatchSnapshot();
     });
 
-    it('does not render other sessions section when user has only one device', async () => {
+    it("does not render other sessions section when user has only one device", async () => {
         mockClient.getDevices.mockResolvedValue({ devices: [alicesDevice] });
         const { queryByTestId } = render(getComponent());
 
@@ -193,10 +193,10 @@ describe('<SessionManagerTab />', () => {
             await flushPromisesWithFakeTimers();
         });
 
-        expect(queryByTestId('other-sessions-section')).toBeFalsy();
+        expect(queryByTestId("other-sessions-section")).toBeFalsy();
     });
 
-    it('renders other sessions section when user has more than one device', async () => {
+    it("renders other sessions section when user has more than one device", async () => {
         mockClient.getDevices.mockResolvedValue({
             devices: [alicesDevice, alicesOlderMobileDevice, alicesMobileDevice],
         });
@@ -206,10 +206,10 @@ describe('<SessionManagerTab />', () => {
             await flushPromisesWithFakeTimers();
         });
 
-        expect(getByTestId('other-sessions-section')).toBeTruthy();
+        expect(getByTestId("other-sessions-section")).toBeTruthy();
     });
 
-    it('goes to filtered list from security recommendations', async () => {
+    it("goes to filtered list from security recommendations", async () => {
         mockClient.getDevices.mockResolvedValue({ devices: [alicesDevice, alicesMobileDevice] });
         const { getByTestId, container } = render(getComponent());
 
@@ -217,17 +217,17 @@ describe('<SessionManagerTab />', () => {
             await flushPromisesWithFakeTimers();
         });
 
-        fireEvent.click(getByTestId('unverified-devices-cta'));
+        fireEvent.click(getByTestId("unverified-devices-cta"));
 
         // our session manager waits a tick for rerender
         await flushPromisesWithFakeTimers();
 
         // unverified filter is set
-        expect(container.querySelector('.mx_FilteredDeviceList_header')).toMatchSnapshot();
+        expect(container.querySelector(".mx_FilteredDeviceList_header")).toMatchSnapshot();
     });
 
-    describe('device detail expansion', () => {
-        it('renders no devices expanded by default', async () => {
+    describe("device detail expansion", () => {
+        it("renders no devices expanded by default", async () => {
             mockClient.getDevices.mockResolvedValue({
                 devices: [alicesDevice, alicesOlderMobileDevice, alicesMobileDevice],
             });
@@ -237,13 +237,13 @@ describe('<SessionManagerTab />', () => {
                 await flushPromisesWithFakeTimers();
             });
 
-            const otherSessionsSection = getByTestId('other-sessions-section');
+            const otherSessionsSection = getByTestId("other-sessions-section");
 
             // no expanded device details
-            expect(otherSessionsSection.getElementsByClassName('mx_DeviceDetails').length).toBeFalsy();
+            expect(otherSessionsSection.getElementsByClassName("mx_DeviceDetails").length).toBeFalsy();
         });
 
-        it('toggles device expansion on click', async () => {
+        it("toggles device expansion on click", async () => {
             mockClient.getDevices.mockResolvedValue({
                 devices: [alicesDevice, alicesOlderMobileDevice, alicesMobileDevice],
             });

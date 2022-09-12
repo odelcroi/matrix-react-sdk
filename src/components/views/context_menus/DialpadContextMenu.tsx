@@ -16,12 +16,12 @@ limitations under the License.
 
 import * as React from "react";
 import { createRef } from "react";
-import { MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
+import { MatrixCall } from "matrix-js-sdk/src/webrtc/call";
 
 import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
-import ContextMenu, { IProps as IContextMenuProps } from '../../structures/ContextMenu';
+import ContextMenu, { IProps as IContextMenuProps } from "../../structures/ContextMenu";
 import Field from "../elements/Field";
-import DialPad from '../voip/DialPad';
+import DialPad from "../voip/DialPad";
 
 interface IProps extends IContextMenuProps {
     call: MatrixCall;
@@ -38,7 +38,7 @@ export default class DialpadContextMenu extends React.Component<IProps, IState> 
         super(props);
 
         this.state = {
-            value: '',
+            value: "",
         };
     }
 

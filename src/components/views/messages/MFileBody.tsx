@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
-import filesize from 'filesize';
+import React, { createRef } from "react";
+import filesize from "filesize";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { _t } from '../../../languageHandler';
-import Modal from '../../../Modal';
+import { _t } from "../../../languageHandler";
+import Modal from "../../../Modal";
 import AccessibleButton from "../elements/AccessibleButton";
 import { mediaFromContent } from "../../../customisations/Media";
 import ErrorDialog from "../dialogs/ErrorDialog";
@@ -35,7 +35,7 @@ export let DOWNLOAD_ICON_URL; // cached copy of the download.svg asset for the s
 async function cacheDownloadIcon() {
     if (DOWNLOAD_ICON_URL) return; // cached already
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const svg = await fetch(require('../../../../res/img/download.svg').default).then(r => r.text());
+    const svg = await fetch(require("../../../../res/img/download.svg").default).then(r => r.text());
     DOWNLOAD_ICON_URL = "data:image/svg+xml;base64," + window.btoa(svg);
 }
 
@@ -304,7 +304,7 @@ export default class MFileBody extends React.Component<IProps, IState> {
             // we won't try and convert it. Likewise, if the file size is unknown then we'll assume
             // it is too big. There is the risk of the reported file size and the actual file size
             // being different, however the user shouldn't normally run into this problem.
-            const fileTooBig = typeof(fileSize) === 'number' ? fileSize > 524288000 : true;
+            const fileTooBig = typeof(fileSize) === "number" ? fileSize > 524288000 : true;
 
             if (["application/pdf"].includes(fileType) && !fileTooBig) {
                 // We want to force a download on this type, so use an onClick handler.
@@ -321,7 +321,7 @@ export default class MFileBody extends React.Component<IProps, IState> {
                         const blobUrl = URL.createObjectURL(blob);
 
                         // We have to create an anchor to download the file
-                        const tempAnchor = document.createElement('a');
+                        const tempAnchor = document.createElement("a");
                         tempAnchor.download = this.fileName;
                         tempAnchor.href = blobUrl;
                         document.body.appendChild(tempAnchor); // for firefox: https://stackoverflow.com/a/32226068
@@ -351,7 +351,7 @@ export default class MFileBody extends React.Component<IProps, IState> {
                 </span>
             );
         } else {
-            const extra = this.linkText ? (': ' + this.linkText) : '';
+            const extra = this.linkText ? (": " + this.linkText) : "";
             return <span className="mx_MFileBody">
                 { placeholder }
                 { _t("Invalid file%(extra)s", { extra: extra }) }

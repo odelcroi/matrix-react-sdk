@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
-import SettingsStore from '../../../settings/SettingsStore';
-import { UIFeature } from '../../../settings/UIFeature';
+import SettingsStore from "../../../settings/SettingsStore";
+import { UIFeature } from "../../../settings/UIFeature";
 
 interface IProps {
     uiFeature: UIFeature;

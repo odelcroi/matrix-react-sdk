@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from 'matrix-js-sdk/src/matrix';
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import { parseEvent } from "../../src/editor/deserialize";
-import EditorModel from '../../src/editor/model';
-import DocumentOffset from '../../src/editor/offset';
-import { htmlSerializeIfNeeded, textSerialize } from '../../src/editor/serialize';
+import EditorModel from "../../src/editor/model";
+import DocumentOffset from "../../src/editor/offset";
+import { htmlSerializeIfNeeded, textSerialize } from "../../src/editor/serialize";
 import { createPartCreator } from "./mock";
 
 function htmlMessage(formattedBody: string, msgtype = "m.text") {
@@ -60,8 +60,8 @@ async function roundTripHtml(html: string): Promise<string> {
     return await md2html(html2md(html));
 }
 
-describe('editor/roundtrip', function() {
-    describe('markdown messages should round-trip if they contain', function() {
+describe("editor/roundtrip", function() {
+    describe("markdown messages should round-trip if they contain", function() {
         test.each([
             ["newlines", "hello\nworld"],
             ["pills", "text message for @room"],
@@ -85,7 +85,7 @@ describe('editor/roundtrip', function() {
             ["nested quotations", "saying\n\n> > foo\n\n> NO\n\nis valid"],
             ["quotations", "saying\n\n> NO\n\nis valid"],
             ["links", "click [this](http://example.com/)!"],
-        ])('%s', async (_name, markdown) => {
+        ])("%s", async (_name, markdown) => {
             expect(await roundTripMarkdown(markdown)).toEqual(markdown);
         });
 
@@ -109,7 +109,7 @@ describe('editor/roundtrip', function() {
             // Backslashes get doubled
             ["backslashes", "C:\\Program Files"],
             // Deletes the whitespace
-            ['newlines with trailing and leading whitespace', "hello \n world"],
+            ["newlines with trailing and leading whitespace", "hello \n world"],
             // Escapes the underscores
             ["underscores within a word", "abso_fragging_lutely"],
             // Includes the trailing text into the quotation
@@ -117,17 +117,17 @@ describe('editor/roundtrip', function() {
             ["quotations without separating newlines", "saying\n> NO\nis valid"],
             // Removes trailing and leading whitespace
             ["quotations with trailing and leading whitespace", "saying \n\n> NO\n\n is valid"],
-        ])('%s', async (_name, markdown) => {
+        ])("%s", async (_name, markdown) => {
             expect(await roundTripMarkdown(markdown)).toEqual(markdown);
         });
 
-        it('styling, but * becomes _ and __ becomes **', async function() {
+        it("styling, but * becomes _ and __ becomes **", async function() {
             expect(await roundTripMarkdown("__bold__ and *emphasised*"))
                 .toEqual("**bold** and _emphasised_");
         });
     });
 
-    describe('HTML messages should round-trip if they contain', function() {
+    describe("HTML messages should round-trip if they contain", function() {
         test.each([
             ["backslashes", "C:\\Program Files"],
             [
@@ -149,7 +149,7 @@ describe('editor/roundtrip', function() {
             ["formatting within a word", "abso<strong>fragging</strong>lutely"],
             ["formatting", "This <em>is</em> im<strong>port</strong>ant"],
             ["line breaks", "one<br>two"],
-        ])('%s', async (_name, html) => {
+        ])("%s", async (_name, html) => {
             expect(await roundTripHtml(html)).toEqual(html);
         });
 
@@ -163,7 +163,7 @@ describe('editor/roundtrip', function() {
             ["paragraphs without newlines", "<p>one</p><p>two</p>"],
             // Inserts a code block
             ["nested lists", "<ol>\n<li>asd</li>\n<li>\n<ul>\n<li>fgd</li>\n<li>sdf</li>\n</ul>\n</li>\n</ol>\n"],
-        ])('%s', async (_name, html) => {
+        ])("%s", async (_name, html) => {
             expect(await roundTripHtml(html)).toEqual(html);
         });
     });

@@ -17,27 +17,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { createClient } from 'matrix-js-sdk/src/matrix';
+import { createClient } from "matrix-js-sdk/src/matrix";
 import { InvalidStoreError } from "matrix-js-sdk/src/errors";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { decryptAES, encryptAES, IEncryptedPayload } from "matrix-js-sdk/src/crypto/aes";
-import { QueryDict } from 'matrix-js-sdk/src/utils';
+import { QueryDict } from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { IMatrixClientCreds, MatrixClientPeg } from './MatrixClientPeg';
+import { IMatrixClientCreds, MatrixClientPeg } from "./MatrixClientPeg";
 import SecurityCustomisations from "./customisations/Security";
-import EventIndexPeg from './indexing/EventIndexPeg';
-import createMatrixClient from './utils/createMatrixClient';
-import Notifier from './Notifier';
-import UserActivity from './UserActivity';
-import Presence from './Presence';
-import dis from './dispatcher/dispatcher';
-import DMRoomMap from './utils/DMRoomMap';
-import Modal from './Modal';
-import ActiveWidgetStore from './stores/ActiveWidgetStore';
+import EventIndexPeg from "./indexing/EventIndexPeg";
+import createMatrixClient from "./utils/createMatrixClient";
+import Notifier from "./Notifier";
+import UserActivity from "./UserActivity";
+import Presence from "./Presence";
+import dis from "./dispatcher/dispatcher";
+import DMRoomMap from "./utils/DMRoomMap";
+import Modal from "./Modal";
+import ActiveWidgetStore from "./stores/ActiveWidgetStore";
 import PlatformPeg from "./PlatformPeg";
 import { sendLoginRequest } from "./Login";
-import * as StorageManager from './utils/StorageManager';
+import * as StorageManager from "./utils/StorageManager";
 import SettingsStore from "./settings/SettingsStore";
 import TypingStore from "./stores/TypingStore";
 import ToastStore from "./stores/ToastStore";
@@ -48,7 +48,7 @@ import { Jitsi } from "./widgets/Jitsi";
 import { SSO_HOMESERVER_URL_KEY, SSO_ID_SERVER_URL_KEY, SSO_IDP_ID_KEY } from "./BasePlatform";
 import ThreepidInviteStore from "./stores/ThreepidInviteStore";
 import { PosthogAnalytics } from "./PosthogAnalytics";
-import LegacyCallHandler from './LegacyCallHandler';
+import LegacyCallHandler from "./LegacyCallHandler";
 import LifecycleCustomisations from "./customisations/Lifecycle";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
 import { _t } from "./languageHandler";
@@ -585,7 +585,7 @@ async function doSetLoggedIn(
     //
     // we fire it *synchronously* to make sure it fires before on_logged_in.
     // (dis.dispatch uses `setTimeout`, which does not guarantee ordering.)
-    dis.dispatch({ action: 'on_logging_in' }, true);
+    dis.dispatch({ action: "on_logging_in" }, true);
 
     if (clearStorageEnabled) {
         await clearStorage();
@@ -767,7 +767,7 @@ export function softLogout(): void {
     // Ensure that we dispatch a view change **before** stopping the client so
     // so that React components unmount first. This avoids React soft crashes
     // that can occur when components try to use a null client.
-    dis.dispatch({ action: 'on_client_not_viable' }); // generic version of on_logged_out
+    dis.dispatch({ action: "on_client_not_viable" }); // generic version of on_logged_out
     stopMatrixClient(/*unsetClient=*/false);
 
     // DO NOT CALL LOGOUT. A soft logout preserves data, logout does not.
@@ -788,13 +788,13 @@ export function isLoggingOut(): boolean {
  * syncing the client.
  */
 async function startMatrixClient(startSyncing = true): Promise<void> {
-    logger.log(`Lifecycle: Starting MatrixClient`);
+    logger.log("Lifecycle: Starting MatrixClient");
 
     // dispatch this before starting the matrix client: it's used
     // to add listeners for the 'sync' event so otherwise we'd have
     // a race condition (and we need to dispatch synchronously for this
     // to work).
-    dis.dispatch({ action: 'will_start_client' }, true);
+    dis.dispatch({ action: "will_start_client" }, true);
 
     // reset things first just in case
     TypingStore.sharedInstance().reset();
@@ -840,7 +840,7 @@ async function startMatrixClient(startSyncing = true): Promise<void> {
 
     // dispatch that we finished starting up to wire up any other bits
     // of the matrix client that cannot be set prior to starting up.
-    dis.dispatch({ action: 'client_started' });
+    dis.dispatch({ action: "client_started" });
 
     if (isSoftLogout()) {
         softLogout();

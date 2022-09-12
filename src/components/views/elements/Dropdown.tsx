@@ -15,11 +15,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ChangeEvent, createRef, CSSProperties, ReactElement, ReactNode, Ref } from 'react';
-import classnames from 'classnames';
+import React, { ChangeEvent, createRef, CSSProperties, ReactElement, ReactNode, Ref } from "react";
+import classnames from "classnames";
 
-import AccessibleButton, { ButtonEvent } from './AccessibleButton';
-import { _t } from '../../../languageHandler';
+import AccessibleButton, { ButtonEvent } from "./AccessibleButton";
+import { _t } from "../../../languageHandler";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 
@@ -128,16 +128,16 @@ export default class Dropdown extends React.Component<DropdownProps, IState> {
             // (the option that would become selected if you pressed enter)
             highlightedOption: firstChild ? firstChild.key as string : null,
             // the current search query
-            searchQuery: '',
+            searchQuery: "",
         };
 
         // Listen for all clicks on the document so we can close the
         // menu when the user clicks somewhere else
-        document.addEventListener('click', this.onDocumentClick, false);
+        document.addEventListener("click", this.onDocumentClick, false);
     }
 
     componentWillUnmount() {
-        document.removeEventListener('click', this.onDocumentClick, false);
+        document.removeEventListener("click", this.onDocumentClick, false);
     }
 
     // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
@@ -264,10 +264,10 @@ export default class Dropdown extends React.Component<DropdownProps, IState> {
 
     private collectRoot = (e: HTMLDivElement) => {
         if (this.dropdownRootElement) {
-            this.dropdownRootElement.removeEventListener('click', this.onRootClick, false);
+            this.dropdownRootElement.removeEventListener("click", this.onRootClick, false);
         }
         if (e) {
-            e.addEventListener('click', this.onRootClick, false);
+            e.addEventListener("click", this.onRootClick, false);
         }
         this.dropdownRootElement = e;
     };

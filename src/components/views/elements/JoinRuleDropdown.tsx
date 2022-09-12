@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { JoinRule } from 'matrix-js-sdk/src/@types/partials';
+import React from "react";
+import { JoinRule } from "matrix-js-sdk/src/@types/partials";
 
 import Dropdown from "./Dropdown";
 

@@ -20,11 +20,11 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import MemberAvatar from '../avatars/MemberAvatar';
-import { _t } from '../../../languageHandler';
+import MemberAvatar from "../avatars/MemberAvatar";
+import { _t } from "../../../languageHandler";
 import { useStateToggle } from "../../../hooks/useStateToggle";
 import AccessibleButton from "./AccessibleButton";
-import { Layout } from '../../../settings/enums/Layout';
+import { Layout } from "../../../settings/enums/Layout";
 
 interface IProps {
     // An array of member events to summarise
@@ -43,7 +43,7 @@ interface IProps {
     onToggle?(): void;
     // The layout currently used
     layout?: Layout;
-    'data-testid'?: string;
+    "data-testid"?: string;
 }
 
 const GenericEventListSummary: React.FC<IProps> = ({
@@ -55,7 +55,7 @@ const GenericEventListSummary: React.FC<IProps> = ({
     summaryMembers = [],
     summaryText,
     layout = Layout.Group,
-    'data-testid': testId,
+    "data-testid": testId,
 }) => {
     const [expanded, toggleExpanded] = useStateToggle(startExpanded);
 
@@ -66,7 +66,7 @@ const GenericEventListSummary: React.FC<IProps> = ({
         }
     }, [expanded]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    const eventIds = events.map((e) => e.getId()).join(',');
+    const eventIds = events.map((e) => e.getId()).join(",");
 
     // If we are only given few events then just pass them through
     if (events.length < threshold) {
@@ -125,7 +125,7 @@ const GenericEventListSummary: React.FC<IProps> = ({
                 onClick={toggleExpanded}
                 aria-expanded={expanded}
             >
-                { expanded ? _t('collapse') : _t('expand') }
+                { expanded ? _t("collapse") : _t("expand") }
             </AccessibleButton>
             { body }
         </li>

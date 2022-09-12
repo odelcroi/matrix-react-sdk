@@ -14,27 +14,27 @@
  limitations under the License.
  */
 
-import React, { HTMLAttributes, InputHTMLAttributes, ReactHTML, ReactNode } from 'react';
-import classnames from 'classnames';
+import React, { HTMLAttributes, InputHTMLAttributes, ReactHTML, ReactNode } from "react";
+import classnames from "classnames";
 
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 
 export type ButtonEvent = React.MouseEvent<Element> | React.KeyboardEvent<Element> | React.FormEvent<Element>;
 
-type AccessibleButtonKind = | 'primary'
-    | 'primary_outline'
-    | 'primary_sm'
-    | 'secondary'
-    | 'danger'
-    | 'danger_outline'
-    | 'danger_sm'
-    | 'link'
-    | 'link_inline'
-    | 'link_sm'
-    | 'confirm_sm'
-    | 'cancel_sm'
-    | 'icon';
+type AccessibleButtonKind = | "primary"
+    | "primary_outline"
+    | "primary_sm"
+    | "secondary"
+    | "danger"
+    | "danger_outline"
+    | "danger_sm"
+    | "link"
+    | "link_inline"
+    | "link_sm"
+    | "confirm_sm"
+    | "cancel_sm"
+    | "icon";
 
 /**
  * This type construct allows us to specifically pass those props down to the element we’re creating that the element
@@ -47,8 +47,8 @@ type AccessibleButtonKind = | 'primary'
 type DynamicHtmlElementProps<T extends keyof JSX.IntrinsicElements> =
     JSX.IntrinsicElements[T] extends HTMLAttributes<{}> ? DynamicElementProps<T> : DynamicElementProps<"div">;
 type DynamicElementProps<T extends keyof JSX.IntrinsicElements> =
-    Partial<Omit<JSX.IntrinsicElements[T], 'ref' | 'onClick' | 'onMouseDown' | 'onKeyUp' | 'onKeyDown'>>
-    & Omit<InputHTMLAttributes<Element>, 'onClick'>;
+    Partial<Omit<JSX.IntrinsicElements[T], "ref" | "onClick" | "onMouseDown" | "onKeyUp" | "onKeyDown">>
+    & Omit<InputHTMLAttributes<Element>, "onClick">;
 
 /**
  * children: React's magic prop. Represents all children given to the element.
@@ -168,8 +168,8 @@ export default function AccessibleButton<T extends keyof JSX.IntrinsicElements>(
 }
 
 AccessibleButton.defaultProps = {
-    element: 'div' as keyof ReactHTML,
-    role: 'button',
+    element: "div" as keyof ReactHTML,
+    role: "button",
     tabIndex: 0,
 };
 

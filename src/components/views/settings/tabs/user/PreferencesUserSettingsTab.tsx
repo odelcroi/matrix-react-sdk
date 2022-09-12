@@ -15,14 +15,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
 import { _t } from "../../../../../languageHandler";
 import { UseCase } from "../../../../../settings/enums/UseCase";
 import SettingsStore from "../../../../../settings/SettingsStore";
 import Field from "../../../elements/Field";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
-import SettingsFlag from '../../../elements/SettingsFlag';
+import SettingsFlag from "../../../elements/SettingsFlag";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import dis from "../../../../../dispatcher/dispatcher";
 import { UserTab } from "../../../dialogs/UserTab";
@@ -45,7 +45,7 @@ interface IState {
 
 export default class PreferencesUserSettingsTab extends React.Component<IProps, IState> {
     private static ROOM_LIST_SETTINGS = [
-        'breadcrumbs',
+        "breadcrumbs",
         "FTUE.userOnboardingButton",
     ];
 
@@ -54,7 +54,7 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
     ];
 
     private static KEYBINDINGS_SETTINGS = [
-        'ctrlFForSearch',
+        "ctrlFForSearch",
     ];
 
     private static PRESENCE_SETTINGS = [
@@ -63,49 +63,49 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
     ];
 
     private static COMPOSER_SETTINGS = [
-        'MessageComposerInput.autoReplaceEmoji',
-        'MessageComposerInput.useMarkdown',
-        'MessageComposerInput.suggestEmoji',
-        'MessageComposerInput.ctrlEnterToSend',
-        'MessageComposerInput.surroundWith',
-        'MessageComposerInput.showStickersButton',
-        'MessageComposerInput.insertTrailingColon',
+        "MessageComposerInput.autoReplaceEmoji",
+        "MessageComposerInput.useMarkdown",
+        "MessageComposerInput.suggestEmoji",
+        "MessageComposerInput.ctrlEnterToSend",
+        "MessageComposerInput.surroundWith",
+        "MessageComposerInput.showStickersButton",
+        "MessageComposerInput.insertTrailingColon",
     ];
 
     private static TIME_SETTINGS = [
-        'showTwelveHourTimestamps',
-        'alwaysShowTimestamps',
+        "showTwelveHourTimestamps",
+        "alwaysShowTimestamps",
     ];
 
     private static CODE_BLOCKS_SETTINGS = [
-        'enableSyntaxHighlightLanguageDetection',
-        'expandCodeByDefault',
-        'showCodeLineNumbers',
+        "enableSyntaxHighlightLanguageDetection",
+        "expandCodeByDefault",
+        "showCodeLineNumbers",
     ];
 
     private static IMAGES_AND_VIDEOS_SETTINGS = [
-        'urlPreviewsEnabled',
-        'autoplayGifs',
-        'autoplayVideo',
-        'showImages',
+        "urlPreviewsEnabled",
+        "autoplayGifs",
+        "autoplayVideo",
+        "showImages",
     ];
 
     private static TIMELINE_SETTINGS = [
-        'showTypingNotifications',
-        'showRedactions',
-        'showReadReceipts',
-        'showJoinLeaves',
-        'showDisplaynameChanges',
-        'showChatEffects',
-        'showAvatarChanges',
-        'Pill.shouldShowPillAvatar',
-        'TextualBody.enableBigEmoji',
-        'scrollToBottomOnMessageSent',
-        'useOnlyCurrentProfiles',
+        "showTypingNotifications",
+        "showRedactions",
+        "showReadReceipts",
+        "showJoinLeaves",
+        "showDisplaynameChanges",
+        "showChatEffects",
+        "showAvatarChanges",
+        "Pill.shouldShowPillAvatar",
+        "TextualBody.enableBigEmoji",
+        "scrollToBottomOnMessageSent",
+        "useOnlyCurrentProfiles",
     ];
 
     private static GENERAL_SETTINGS = [
-        'promptBeforeInviteUnknownUsers',
+        "promptBeforeInviteUnknownUsers",
         // Start automatically after startup (electron-only)
         // Autocomplete delay (niche text box)
     ];
@@ -116,11 +116,11 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
         this.state = {
             disablingReadReceiptsSupported: false,
             autocompleteDelay:
-                SettingsStore.getValueAt(SettingLevel.DEVICE, 'autocompleteDelay').toString(10),
+                SettingsStore.getValueAt(SettingLevel.DEVICE, "autocompleteDelay").toString(10),
             readMarkerInViewThresholdMs:
-                SettingsStore.getValueAt(SettingLevel.DEVICE, 'readMarkerInViewThresholdMs').toString(10),
+                SettingsStore.getValueAt(SettingLevel.DEVICE, "readMarkerInViewThresholdMs").toString(10),
             readMarkerOutOfViewThresholdMs:
-                SettingsStore.getValueAt(SettingLevel.DEVICE, 'readMarkerOutOfViewThresholdMs').toString(10),
+                SettingsStore.getValueAt(SettingLevel.DEVICE, "readMarkerOutOfViewThresholdMs").toString(10),
         };
     }
 
@@ -248,7 +248,7 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
                         name="Electron.enableHardwareAcceleration"
                         level={SettingLevel.PLATFORM}
                         hideIfCannotSet
-                        label={_t('Enable hardware acceleration (restart %(appName)s to take effect)', {
+                        label={_t("Enable hardware acceleration (restart %(appName)s to take effect)", {
                             appName: SdkConfig.get().brand,
                         })}
                     />
@@ -257,17 +257,17 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
                     <SettingsFlag name="Electron.warnBeforeExit" level={SettingLevel.PLATFORM} hideIfCannotSet />
 
                     <Field
-                        label={_t('Autocomplete delay (ms)')}
+                        label={_t("Autocomplete delay (ms)")}
                         type='number'
                         value={this.state.autocompleteDelay}
                         onChange={this.onAutocompleteDelayChange} />
                     <Field
-                        label={_t('Read Marker lifetime (ms)')}
+                        label={_t("Read Marker lifetime (ms)")}
                         type='number'
                         value={this.state.readMarkerInViewThresholdMs}
                         onChange={this.onReadMarkerInViewThresholdMs} />
                     <Field
-                        label={_t('Read Marker off-screen lifetime (ms)')}
+                        label={_t("Read Marker off-screen lifetime (ms)")}
                         type='number'
                         value={this.state.readMarkerOutOfViewThresholdMs}
                         onChange={this.onReadMarkerOutOfViewThresholdMs} />

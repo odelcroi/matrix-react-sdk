@@ -15,19 +15,19 @@ limitations under the License.
 */
 
 import React from "react";
-import { SERVICE_TYPES } from 'matrix-js-sdk/src/service-types';
-import { createClient, MatrixClient } from 'matrix-js-sdk/src/matrix';
+import { SERVICE_TYPES } from "matrix-js-sdk/src/service-types";
+import { createClient, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { MatrixClientPeg } from './MatrixClientPeg';
-import Modal from './Modal';
-import { _t } from './languageHandler';
-import { Service, startTermsFlow, TermsNotSignedError } from './Terms';
+import { MatrixClientPeg } from "./MatrixClientPeg";
+import Modal from "./Modal";
+import { _t } from "./languageHandler";
+import { Service, startTermsFlow, TermsNotSignedError } from "./Terms";
 import {
     doesAccountDataHaveIdentityServer,
     doesIdentityServerHaveTerms,
     setToDefaultIdentityServer,
-} from './utils/IdentityServerUtils';
+} from "./utils/IdentityServerUtils";
 import QuestionDialog from "./components/views/dialogs/QuestionDialog";
 import { abbreviateUrl } from "./utils/UrlUtils";
 

@@ -15,12 +15,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { RefObject } from 'react';
+import React, { RefObject } from "react";
 
 import { CATEGORY_HEADER_HEIGHT, EMOJI_HEIGHT, EMOJIS_PER_ROW } from "./EmojiPicker";
 import LazyRenderList from "../elements/LazyRenderList";
 import { DATA_BY_CATEGORY, IEmoji } from "../../../emoji";
-import Emoji from './Emoji';
+import Emoji from "./Emoji";
 
 const OVERFLOW_ROWS = 3;
 

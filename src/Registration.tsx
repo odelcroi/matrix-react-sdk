@@ -22,9 +22,9 @@ limitations under the License.
 
 import React from "react";
 
-import dis from './dispatcher/dispatcher';
-import Modal from './Modal';
-import { _t } from './languageHandler';
+import dis from "./dispatcher/dispatcher";
+import Modal from "./Modal";
+import { _t } from "./languageHandler";
 import QuestionDialog from "./components/views/dialogs/QuestionDialog";
 import { Action } from "./dispatcher/actions";
 
@@ -60,19 +60,19 @@ export async function startAnyRegistrationFlow(
                 key="start_login"
                 onClick={() => {
                     modal.close();
-                    dis.dispatch({ action: 'start_login', screenAfterLogin: options.screen_after });
+                    dis.dispatch({ action: "start_login", screenAfterLogin: options.screen_after });
                 }}
             >
-                { _t('Sign In') }
+                { _t("Sign In") }
             </button>,
         ],
         onFinished: (proceed) => {
             if (proceed) {
-                dis.dispatch({ action: 'start_registration', screenAfterLogin: options.screen_after });
+                dis.dispatch({ action: "start_registration", screenAfterLogin: options.screen_after });
             } else if (options.go_home_on_cancel) {
                 dis.dispatch({ action: Action.ViewHomePage });
             } else if (options.go_welcome_on_cancel) {
-                dis.dispatch({ action: 'view_welcome_page' });
+                dis.dispatch({ action: "view_welcome_page" });
             }
         },
     });

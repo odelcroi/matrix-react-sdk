@@ -38,7 +38,7 @@ import SdkConfig from "../../SdkConfig";
 import { getHomePageUrl } from "../../utils/pages";
 import { OwnProfileStore } from "../../stores/OwnProfileStore";
 import { UPDATE_EVENT } from "../../stores/AsyncStore";
-import BaseAvatar from '../views/avatars/BaseAvatar';
+import BaseAvatar from "../views/avatars/BaseAvatar";
 import { SettingLevel } from "../../settings/SettingLevel";
 import IconizedContextMenu, {
     IconizedContextMenuOption,
@@ -240,7 +240,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         const cli = MatrixClientPeg.get();
         if (!cli || !cli.isCryptoEnabled() || !(await cli.exportRoomKeys())?.length) {
             // log out without user prompt if they have no local megolm sessions
-            defaultDispatcher.dispatch({ action: 'logout' });
+            defaultDispatcher.dispatch({ action: "logout" });
         } else {
             Modal.createDialog(LogoutDialog);
         }
@@ -249,12 +249,12 @@ export default class UserMenu extends React.Component<IProps, IState> {
     };
 
     private onSignInClick = () => {
-        defaultDispatcher.dispatch({ action: 'start_login' });
+        defaultDispatcher.dispatch({ action: "start_login" });
         this.setState({ contextMenuPosition: null }); // also close the menu
     };
 
     private onRegisterClick = () => {
-        defaultDispatcher.dispatch({ action: 'start_registration' });
+        defaultDispatcher.dispatch({ action: "start_registration" });
         this.setState({ contextMenuPosition: null }); // also close the menu
     };
 

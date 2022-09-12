@@ -15,21 +15,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
 import { _t } from "../../../../../languageHandler";
 import SdkConfig from "../../../../../SdkConfig";
-import { MatrixClientPeg } from '../../../../../MatrixClientPeg';
+import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
 import SettingsStore from "../../../../../settings/SettingsStore";
-import SettingsFlag from '../../../elements/SettingsFlag';
-import Field from '../../../elements/Field';
+import SettingsFlag from "../../../elements/SettingsFlag";
+import Field from "../../../elements/Field";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
 import { UIFeature } from "../../../../../settings/UIFeature";
 import { Layout } from "../../../../../settings/enums/Layout";
 import LayoutSwitcher from "../../LayoutSwitcher";
-import FontScalingPanel from '../../FontScalingPanel';
-import ThemeChoicePanel from '../../ThemeChoicePanel';
+import FontScalingPanel from "../../FontScalingPanel";
+import ThemeChoicePanel from "../../ThemeChoicePanel";
 import ImageSizePanel from "../../ImageSizePanel";
 
 interface IProps {

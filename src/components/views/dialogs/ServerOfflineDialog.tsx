@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import * as React from 'react';
+import * as React from "react";
 
-import BaseDialog from './BaseDialog';
-import { _t } from '../../../languageHandler';
+import BaseDialog from "./BaseDialog";
+import { _t } from "../../../languageHandler";
 import { EchoStore } from "../../../stores/local-echo/EchoStore";
 import { formatTime } from "../../../DateUtils";
 import SettingsStore from "../../../settings/SettingsStore";

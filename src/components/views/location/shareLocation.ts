@@ -30,9 +30,9 @@ import { OwnBeaconStore } from "../../../stores/OwnBeaconStore";
 import { doMaybeLocalRoomAction } from "../../../utils/local-room";
 
 export enum LocationShareType {
-    Own = 'Own',
-    Pin = 'Pin',
-    Live = 'Live'
+    Own = "Own",
+    Pin = "Pin",
+    Live = "Live"
 }
 
 export type LocationShareProps = {
@@ -76,8 +76,8 @@ const getDefaultErrorParams = (shareType: LocationShareType, openMenu: () => voi
         description: _t("%(brand)s could not send your location. Please try again later.", {
             brand: SdkConfig.get().brand,
         }),
-        button: _t('Try again'),
-        cancelButton: _t('Cancel'),
+        button: _t("Try again"),
+        cancelButton: _t("Cancel"),
         onFinished: (tryAgain: boolean) => {
             if (tryAgain) {
                 openMenu();
@@ -88,7 +88,7 @@ const getDefaultErrorParams = (shareType: LocationShareType, openMenu: () => voi
 };
 
 const handleShareError = (error: Error, openMenu: () => void, shareType: LocationShareType): void => {
-    const { modalParams, errorMessage } = (error as MatrixError).errcode === 'M_FORBIDDEN' ?
+    const { modalParams, errorMessage } = (error as MatrixError).errcode === "M_FORBIDDEN" ?
         getPermissionsErrorParams(shareType) :
         getDefaultErrorParams(shareType, openMenu);
 
@@ -100,7 +100,7 @@ const handleShareError = (error: Error, openMenu: () => void, shareType: Locatio
 export const shareLiveLocation = (
     client: MatrixClient, roomId: string, displayName: string, openMenu: () => void,
 ): ShareLocationFn => async ({ timeout }) => {
-    const description = _t(`%(displayName)s's live location`, { displayName });
+    const description = _t("%(displayName)s's live location", { displayName });
     try {
         await OwnBeaconStore.instance.createLiveBeacon(
             roomId,

@@ -47,7 +47,7 @@ export class WidgetPermissionStore {
             location = MatrixClientPeg.get().getUserId();
         }
         if (kind === WidgetKind.Modal) {
-            location = '*MODAL*-' + location; // to guarantee differentiation from whatever spawned it
+            location = "*MODAL*-" + location; // to guarantee differentiation from whatever spawned it
         }
         if (!location) {
             throw new Error("Failed to determine a location to check the widget's OIDC state with");

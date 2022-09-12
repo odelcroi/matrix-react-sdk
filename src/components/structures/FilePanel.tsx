@@ -15,26 +15,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
-import { Filter } from 'matrix-js-sdk/src/filter';
+import React, { createRef } from "react";
+import { Filter } from "matrix-js-sdk/src/filter";
 import { EventTimelineSet, IRoomTimelineData } from "matrix-js-sdk/src/models/event-timeline-set";
 import { Direction } from "matrix-js-sdk/src/models/event-timeline";
 import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
-import { Room, RoomEvent } from 'matrix-js-sdk/src/models/room';
-import { TimelineWindow } from 'matrix-js-sdk/src/timeline-window';
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
+import { TimelineWindow } from "matrix-js-sdk/src/timeline-window";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { MatrixClientPeg } from '../../MatrixClientPeg';
+import { MatrixClientPeg } from "../../MatrixClientPeg";
 import EventIndexPeg from "../../indexing/EventIndexPeg";
-import { _t } from '../../languageHandler';
+import { _t } from "../../languageHandler";
 import SearchWarning, { WarningKind } from "../views/elements/SearchWarning";
 import BaseCard from "../views/right_panel/BaseCard";
-import ResizeNotifier from '../../utils/ResizeNotifier';
+import ResizeNotifier from "../../utils/ResizeNotifier";
 import TimelinePanel from "./TimelinePanel";
 import Spinner from "../views/elements/Spinner";
 import { Layout } from "../../settings/enums/Layout";
-import RoomContext, { TimelineRenderingType } from '../../contexts/RoomContext';
-import Measured from '../views/elements/Measured';
+import RoomContext, { TimelineRenderingType } from "../../contexts/RoomContext";
+import Measured from "../views/elements/Measured";
 
 interface IProps {
     roomId: string;
@@ -236,7 +236,7 @@ class FilePanel extends React.Component<IProps, IState> {
                 <div className="mx_RoomView_empty">
                     { _t("You must <a>register</a> to use this functionality",
                         {},
-                        { 'a': (sub) => <a href="#/register" key="sub">{ sub }</a> })
+                        { "a": (sub) => <a href="#/register" key="sub">{ sub }</a> })
                     }
                 </div>
             </BaseCard>;
@@ -252,8 +252,8 @@ class FilePanel extends React.Component<IProps, IState> {
         // wrap a TimelinePanel with the jump-to-event bits turned off.
 
         const emptyState = (<div className="mx_RightPanel_empty mx_FilePanel_empty">
-            <h2>{ _t('No files visible in this room') }</h2>
-            <p>{ _t('Attach files from chat or just drag and drop them anywhere in a room.') }</p>
+            <h2>{ _t("No files visible in this room") }</h2>
+            <p>{ _t("Attach files from chat or just drag and drop them anywhere in a room.") }</p>
         </div>);
 
         const isRoomEncrypted = this.noRoom ? false : MatrixClientPeg.get().isRoomEncrypted(this.props.roomId);

@@ -20,7 +20,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 
 import AccessibleButton from "../elements/AccessibleButton";
 import Modal from "../../../Modal";
-import QuestionDialog from './QuestionDialog';
+import QuestionDialog from "./QuestionDialog";
 import SdkConfig from "../../../SdkConfig";
 import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";

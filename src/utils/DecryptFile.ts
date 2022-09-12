@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 // Pull in the encryption lib so that we can decrypt attachments.
-import encrypt from 'matrix-encrypt-attachment';
+import encrypt from "matrix-encrypt-attachment";
 
 import { mediaFromContent } from "../customisations/Media";
 import { IEncryptedFile, IMediaEventInfo } from "../customisations/models/IMediaEventContent";
@@ -49,7 +49,7 @@ export function decryptFile(
         // they introduce XSS attacks if the Blob URI is viewed directly in the
         // browser (e.g. by copying the URI into a new tab or window.)
         // See warning at top of file.
-        let mimetype = info?.mimetype ? info.mimetype.split(";")[0].trim() : '';
+        let mimetype = info?.mimetype ? info.mimetype.split(";")[0].trim() : "";
         mimetype = getBlobSafeMimeType(mimetype);
 
         return new Blob([dataArray], { type: mimetype });

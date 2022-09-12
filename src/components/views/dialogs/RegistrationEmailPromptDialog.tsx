@@ -17,7 +17,7 @@ limitations under the License.
 import * as React from "react";
 import { useRef, useState } from "react";
 
-import { _t, _td } from '../../../languageHandler';
+import { _t, _td } from "../../../languageHandler";
 import { IDialogProps } from "./IDialogProps";
 import Field from "../elements/Field";
 import BaseDialog from "./BaseDialog";

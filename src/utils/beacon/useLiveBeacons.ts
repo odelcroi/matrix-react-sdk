@@ -28,7 +28,7 @@ import { useEventEmitterState } from "../../hooks/useEventEmitter";
  *
  * Beacons are removed from array when they become inactive
  */
-export const useLiveBeacons = (roomId: Room['roomId'], matrixClient: MatrixClient): Beacon[] => {
+export const useLiveBeacons = (roomId: Room["roomId"], matrixClient: MatrixClient): Beacon[] => {
     const room = matrixClient.getRoom(roomId);
 
     const liveBeacons = useEventEmitterState(

@@ -63,7 +63,7 @@ const FilteredList = ({ children, query, onChange }: IProps) => {
 
     return <>
         <Field
-            label={_t('Filter results')}
+            label={_t("Filter results")}
             autoFocus={true}
             size={64}
             type="text"
@@ -72,7 +72,7 @@ const FilteredList = ({ children, query, onChange }: IProps) => {
             onChange={ev => onChange(ev.target.value)}
             className="mx_TextInputDialog_input mx_DevTools_RoomStateExplorer_query"
             // force re-render so that autoFocus is applied when this component is re-used
-            key={children?.[0]?.key ?? ''}
+            key={children?.[0]?.key ?? ""}
         />
 
         { filteredChildren.length < 1

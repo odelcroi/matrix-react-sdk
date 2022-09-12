@@ -18,10 +18,10 @@ limitations under the License.
 
 import { IRequestMsisdnTokenResponse, IRequestTokenResponse } from "matrix-js-sdk/src/matrix";
 
-import { MatrixClientPeg } from './MatrixClientPeg';
-import Modal from './Modal';
-import { _t } from './languageHandler';
-import IdentityAuthClient from './IdentityAuthClient';
+import { MatrixClientPeg } from "./MatrixClientPeg";
+import Modal from "./Modal";
+import { _t } from "./languageHandler";
+import IdentityAuthClient from "./IdentityAuthClient";
 import { SSOAuthEntry } from "./components/views/auth/InteractiveAuthEntryComponents";
 import InteractiveAuthDialog from "./components/views/dialogs/InteractiveAuthDialog";
 
@@ -62,8 +62,8 @@ export default class AddThreepid {
             this.sessionId = res.sid;
             return res;
         }, function(err) {
-            if (err.errcode === 'M_THREEPID_IN_USE') {
-                err.message = _t('This email address is already in use');
+            if (err.errcode === "M_THREEPID_IN_USE") {
+                err.message = _t("This email address is already in use");
             } else if (err.httpStatus) {
                 err.message = err.message + ` (Status ${err.httpStatus})`;
             }
@@ -90,8 +90,8 @@ export default class AddThreepid {
                 this.sessionId = res.sid;
                 return res;
             }, function(err) {
-                if (err.errcode === 'M_THREEPID_IN_USE') {
-                    err.message = _t('This email address is already in use');
+                if (err.errcode === "M_THREEPID_IN_USE") {
+                    err.message = _t("This email address is already in use");
                 } else if (err.httpStatus) {
                     err.message = err.message + ` (Status ${err.httpStatus})`;
                 }
@@ -118,8 +118,8 @@ export default class AddThreepid {
             this.submitUrl = res.submit_url;
             return res;
         }, function(err) {
-            if (err.errcode === 'M_THREEPID_IN_USE') {
-                err.message = _t('This phone number is already in use');
+            if (err.errcode === "M_THREEPID_IN_USE") {
+                err.message = _t("This phone number is already in use");
             } else if (err.httpStatus) {
                 err.message = err.message + ` (Status ${err.httpStatus})`;
             }
@@ -147,8 +147,8 @@ export default class AddThreepid {
                 this.sessionId = res.sid;
                 return res;
             }, function(err) {
-                if (err.errcode === 'M_THREEPID_IN_USE') {
-                    err.message = _t('This phone number is already in use');
+                if (err.errcode === "M_THREEPID_IN_USE") {
+                    err.message = _t("This phone number is already in use");
                 } else if (err.httpStatus) {
                     err.message = err.message + ` (Status ${err.httpStatus})`;
                 }
@@ -228,7 +228,7 @@ export default class AddThreepid {
             }
         } catch (err) {
             if (err.httpStatus === 401) {
-                err.message = _t('Failed to verify email address: make sure you clicked the link in the email');
+                err.message = _t("Failed to verify email address: make sure you clicked the link in the email");
             } else if (err.httpStatus) {
                 err.message += ` (Status ${err.httpStatus})`;
             }

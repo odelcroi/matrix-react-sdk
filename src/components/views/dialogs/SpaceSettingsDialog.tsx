@@ -14,23 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useMemo } from 'react';
+import React, { useMemo } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 
-import { _t, _td } from '../../../languageHandler';
+import { _t, _td } from "../../../languageHandler";
 import { IDialogProps } from "./IDialogProps";
 import BaseDialog from "./BaseDialog";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { useDispatcher } from "../../../hooks/useDispatcher";
 import TabbedView, { Tab } from "../../structures/TabbedView";
-import SpaceSettingsGeneralTab from '../spaces/SpaceSettingsGeneralTab';
+import SpaceSettingsGeneralTab from "../spaces/SpaceSettingsGeneralTab";
 import SpaceSettingsVisibilityTab from "../spaces/SpaceSettingsVisibilityTab";
 import SettingsStore from "../../../settings/SettingsStore";
 import { UIFeature } from "../../../settings/UIFeature";
 import AdvancedRoomSettingsTab from "../settings/tabs/room/AdvancedRoomSettingsTab";
 import RolesRoomSettingsTab from "../settings/tabs/room/RolesRoomSettingsTab";
-import { Action } from '../../../dispatcher/actions';
+import { Action } from "../../../dispatcher/actions";
 
 export enum SpaceSettingsTab {
     General = "SPACE_GENERAL_TAB",

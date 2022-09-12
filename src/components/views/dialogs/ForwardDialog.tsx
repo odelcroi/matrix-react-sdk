@@ -35,7 +35,7 @@ import { avatarUrlForUser } from "../../../Avatar";
 import EventTile from "../rooms/EventTile";
 import SearchBox from "../../structures/SearchBox";
 import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
-import { Alignment } from '../elements/Tooltip';
+import { Alignment } from "../elements/Tooltip";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
 import { StaticNotificationState } from "../../../stores/notifications/StaticNotificationState";

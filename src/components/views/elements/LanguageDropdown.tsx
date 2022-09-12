@@ -15,9 +15,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
-import * as languageHandler from '../../../languageHandler';
+import * as languageHandler from "../../../languageHandler";
 import SettingsStore from "../../../settings/SettingsStore";
 import { _t } from "../../../languageHandler";
 import Spinner from "./Spinner";
@@ -46,7 +46,7 @@ export default class LanguageDropdown extends React.Component<IProps, IState> {
         super(props);
 
         this.state = {
-            searchQuery: '',
+            searchQuery: "",
             langs: null,
         };
     }
@@ -60,7 +60,7 @@ export default class LanguageDropdown extends React.Component<IProps, IState> {
             });
             this.setState({ langs });
         }).catch(() => {
-            this.setState({ langs: ['en'] });
+            this.setState({ langs: ["en"] });
         });
 
         if (!this.props.value) {

@@ -32,8 +32,8 @@ const TOAST_KEY = "update";
  * dialog ([element-version]-react-[react-sdk-version]-js-[js-sdk-version])
  */
 function checkVersion(ver) {
-    const parts = ver.split('-');
-    return parts.length === 5 && parts[1] === 'react' && parts[3] === 'js';
+    const parts = ver.split("-");
+    return parts.length === 5 && parts[1] === "react" && parts[3] === "js";
 }
 
 function installUpdate() {

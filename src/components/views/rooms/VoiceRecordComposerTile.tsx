@@ -161,7 +161,7 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
                 // Clear reply_to_event as we put the message into the queue
                 // if the send fails, retry will handle resending.
                 defaultDispatcher.dispatch({
-                    action: 'reply_to_event',
+                    action: "reply_to_event",
                     event: null,
                     context: this.context.timelineRenderingType,
                 });

@@ -14,16 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactElement, SyntheticEvent, useContext } from 'react';
-import classNames from 'classnames';
-import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
-import { IEventRelation } from 'matrix-js-sdk/src/models/event';
+import React, { ReactElement, SyntheticEvent, useContext } from "react";
+import classNames from "classnames";
+import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { IEventRelation } from "matrix-js-sdk/src/models/event";
 
-import { _t } from '../../../languageHandler';
-import { CollapsibleButton } from '../rooms/CollapsibleButton';
+import { _t } from "../../../languageHandler";
+import { CollapsibleButton } from "../rooms/CollapsibleButton";
 import { aboveLeftOf, useContextMenu, AboveLeftOf } from "../../structures/ContextMenu";
 import { OverflowMenuContext } from "../rooms/MessageComposerButtons";
-import LocationShareMenu from './LocationShareMenu';
+import LocationShareMenu from "./LocationShareMenu";
 
 interface IProps {
     roomId: string;

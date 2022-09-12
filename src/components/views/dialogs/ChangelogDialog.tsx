@@ -15,10 +15,10 @@ Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
  limitations under the License.
  */
 
-import React from 'react';
-import request from 'browser-request';
+import React from "react";
+import request from "browser-request";
 
-import { _t } from '../../../languageHandler';
+import { _t } from "../../../languageHandler";
 import QuestionDialog from "./QuestionDialog";
 import Spinner from "../elements/Spinner";
 
@@ -28,7 +28,7 @@ interface IProps {
     onFinished: (success: boolean) => void;
 }
 
-const REPOS = ['vector-im/element-web', 'matrix-org/matrix-react-sdk', 'matrix-org/matrix-js-sdk'];
+const REPOS = ["vector-im/element-web", "matrix-org/matrix-react-sdk", "matrix-org/matrix-js-sdk"];
 
 export default class ChangelogDialog extends React.Component<IProps> {
     constructor(props) {
@@ -38,8 +38,8 @@ export default class ChangelogDialog extends React.Component<IProps> {
     }
 
     public componentDidMount() {
-        const version = this.props.newVersion.split('-');
-        const version2 = this.props.version.split('-');
+        const version = this.props.newVersion.split("-");
+        const version2 = this.props.version.split("-");
         if (version == null || version2 == null) return;
         // parse versions of form: [vectorversion]-react-[react-sdk-version]-js-[js-sdk-version]
         for (let i=0; i<REPOS.length; i++) {
@@ -60,7 +60,7 @@ export default class ChangelogDialog extends React.Component<IProps> {
         return (
             <li key={commit.sha} className="mx_ChangelogDialog_li">
                 <a href={commit.html_url} target="_blank" rel="noreferrer noopener">
-                    { commit.commit.message.split('\n')[0] }
+                    { commit.commit.message.split("\n")[0] }
                 </a>
             </li>
         );

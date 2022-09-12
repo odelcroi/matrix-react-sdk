@@ -14,19 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ComponentProps, createRef } from 'react';
-import { AllHtmlEntities } from 'html-entities';
-import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
-import { IPreviewUrlResponse } from 'matrix-js-sdk/src/client';
+import React, { ComponentProps, createRef } from "react";
+import { AllHtmlEntities } from "html-entities";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { IPreviewUrlResponse } from "matrix-js-sdk/src/client";
 
-import { linkifyElement } from '../../../HtmlUtils';
+import { linkifyElement } from "../../../HtmlUtils";
 import SettingsStore from "../../../settings/SettingsStore";
 import Modal from "../../../Modal";
 import * as ImageUtils from "../../../ImageUtils";
 import { mediaFromMxc } from "../../../customisations/Media";
-import ImageView from '../elements/ImageView';
-import LinkWithTooltip from '../elements/LinkWithTooltip';
-import PlatformPeg from '../../../PlatformPeg';
+import ImageView from "../elements/ImageView";
+import LinkWithTooltip from "../elements/LinkWithTooltip";
+import PlatformPeg from "../../../PlatformPeg";
 
 interface IProps {
     link: string;
@@ -98,7 +98,7 @@ export default class LinkPreviewWidget extends React.Component<IProps> {
         const imageMaxHeight = 100;
         if (image && image.startsWith("mxc://")) {
             // We deliberately don't want a square here, so use the source HTTP thumbnail function
-            image = mediaFromMxc(image).getThumbnailOfSourceHttp(imageMaxWidth, imageMaxHeight, 'scale');
+            image = mediaFromMxc(image).getThumbnailOfSourceHttp(imageMaxWidth, imageMaxHeight, "scale");
         }
 
         let thumbHeight = imageMaxHeight;

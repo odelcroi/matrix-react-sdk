@@ -15,11 +15,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, HTMLProps } from 'react';
-import { throttle } from 'lodash';
-import classNames from 'classnames';
+import React, { createRef, HTMLProps } from "react";
+import { throttle } from "lodash";
+import classNames from "classnames";
 
-import AccessibleButton from '../../components/views/elements/AccessibleButton';
+import AccessibleButton from "../../components/views/elements/AccessibleButton";
 import { getKeyBindingsManager } from "../../KeyBindingsManager";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 

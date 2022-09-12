@@ -15,14 +15,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, KeyboardEvent } from 'react';
-import classNames from 'classnames';
+import React, { createRef, KeyboardEvent } from "react";
+import classNames from "classnames";
 import { flatMap } from "lodash";
-import { Room } from 'matrix-js-sdk/src/models/room';
+import { Room } from "matrix-js-sdk/src/models/room";
 
-import Autocompleter, { ICompletion, ISelectionRange, IProviderCompletions } from '../../../autocomplete/Autocompleter';
+import Autocompleter, { ICompletion, ISelectionRange, IProviderCompletions } from "../../../autocomplete/Autocompleter";
 import SettingsStore from "../../../settings/SettingsStore";
-import RoomContext from '../../../contexts/RoomContext';
+import RoomContext from "../../../contexts/RoomContext";
 
 const MAX_PROVIDER_MATCHES = 20;
 
@@ -281,7 +281,7 @@ export default class Autocomplete extends React.PureComponent<IProps, IState> {
         const renderedCompletions = this.state.completions.map((completionResult, i) => {
             const completions = completionResult.completions.map((completion, j) => {
                 const selected = position === this.state.selectionOffset;
-                const className = classNames('mx_Autocomplete_Completion', { selected });
+                const className = classNames("mx_Autocomplete_Completion", { selected });
                 const componentPosition = position;
                 position++;
 

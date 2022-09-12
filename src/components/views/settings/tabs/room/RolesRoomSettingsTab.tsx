@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { RoomState, RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
@@ -26,9 +26,9 @@ import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import Modal from "../../../../../Modal";
 import { compare } from "../../../../../utils/strings";
-import ErrorDialog from '../../../dialogs/ErrorDialog';
+import ErrorDialog from "../../../dialogs/ErrorDialog";
 import PowerSelector from "../../../elements/PowerSelector";
-import SettingsFieldset from '../../SettingsFieldset';
+import SettingsFieldset from "../../SettingsFieldset";
 import SettingsStore from "../../../../../settings/SettingsStore";
 
 interface IEventShowOpts {
@@ -82,8 +82,8 @@ export class BannedUser extends React.Component<IBannedUserProps> {
         MatrixClientPeg.get().unban(this.props.member.roomId, this.props.member.userId).catch((err) => {
             logger.error("Failed to unban: " + err);
             Modal.createDialog(ErrorDialog, {
-                title: _t('Error'),
-                description: _t('Failed to unban'),
+                title: _t("Error"),
+                description: _t("Failed to unban"),
             });
         });
     };
@@ -97,7 +97,7 @@ export class BannedUser extends React.Component<IBannedUserProps> {
                     kind='danger_sm'
                     onClick={this.onUnbanClick}
                 >
-                    { _t('Unban') }
+                    { _t("Unban") }
                 </AccessibleButton>
             );
         }
@@ -108,7 +108,7 @@ export class BannedUser extends React.Component<IBannedUserProps> {
                 { unbanButton }
                 <span title={_t("Banned by %(displayName)s", { displayName: this.props.by })}>
                     <strong>{ this.props.member.name }</strong> { userId }
-                    { this.props.reason ? " " + _t('Reason') + ": " + this.props.reason : "" }
+                    { this.props.reason ? " " + _t("Reason") + ": " + this.props.reason : "" }
                 </span>
             </li>
         );
@@ -151,7 +151,7 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
     private onPowerLevelsChanged = (value: number, powerLevelKey: string) => {
         const client = MatrixClientPeg.get();
         const room = client.getRoom(this.props.roomId);
-        const plEvent = room.currentState.getStateEvents(EventType.RoomPowerLevels, '');
+        const plEvent = room.currentState.getStateEvents(EventType.RoomPowerLevels, "");
         let plContent = plEvent ? (plEvent.getContent() || {}) : {};
 
         // Clone the power levels just in case
@@ -164,7 +164,7 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
             plContent["events"] = Object.assign({}, plContent["events"] || {});
             plContent["events"][powerLevelKey.slice(eventsLevelPrefix.length)] = value;
         } else {
-            const keyPath = powerLevelKey.split('.');
+            const keyPath = powerLevelKey.split(".");
             let parentObj;
             let currentObj = plContent;
             for (const key of keyPath) {
@@ -181,7 +181,7 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
             logger.error(e);
 
             Modal.createDialog(ErrorDialog, {
-                title: _t('Error changing power level requirement'),
+                title: _t("Error changing power level requirement"),
                 description: _t(
                     "An error occurred changing the room's power level requirements. Ensure you have sufficient " +
                     "permissions and try again.",
@@ -193,21 +193,21 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
     private onUserPowerLevelChanged = (value: number, powerLevelKey: string) => {
         const client = MatrixClientPeg.get();
         const room = client.getRoom(this.props.roomId);
-        const plEvent = room.currentState.getStateEvents(EventType.RoomPowerLevels, '');
+        const plEvent = room.currentState.getStateEvents(EventType.RoomPowerLevels, "");
         let plContent = plEvent ? (plEvent.getContent() || {}) : {};
 
         // Clone the power levels just in case
         plContent = Object.assign({}, plContent);
 
         // powerLevelKey should be a user ID
-        if (!plContent['users']) plContent['users'] = {};
-        plContent['users'][powerLevelKey] = value;
+        if (!plContent["users"]) plContent["users"] = {};
+        plContent["users"][powerLevelKey] = value;
 
         client.sendStateEvent(this.props.roomId, EventType.RoomPowerLevels, plContent).catch(e => {
             logger.error(e);
 
             Modal.createDialog(ErrorDialog, {
-                title: _t('Error changing power level'),
+                title: _t("Error changing power level"),
                 description: _t(
                     "An error occurred changing the user's power level. Ensure you have sufficient " +
                     "permissions and try again.",
@@ -221,7 +221,7 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
         const room = client.getRoom(this.props.roomId);
         const isSpaceRoom = room.isSpaceRoom();
 
-        const plEvent = room.currentState.getStateEvents(EventType.RoomPowerLevels, '');
+        const plEvent = room.currentState.getStateEvents(EventType.RoomPowerLevels, "");
         const plContent = plEvent ? (plEvent.getContent() || {}) : {};
         const canChangeLevels = room.currentState.mayClientSendStateEvent(EventType.RoomPowerLevels, client);
 
@@ -252,37 +252,37 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
 
         const powerLevelDescriptors: Record<string, IPowerLevelDescriptor> = {
             "users_default": {
-                desc: _t('Default role'),
+                desc: _t("Default role"),
                 defaultValue: 0,
             },
             "events_default": {
-                desc: _t('Send messages'),
+                desc: _t("Send messages"),
                 defaultValue: 0,
                 hideForSpace: true,
             },
             "invite": {
-                desc: _t('Invite users'),
+                desc: _t("Invite users"),
                 defaultValue: 0,
             },
             "state_default": {
-                desc: _t('Change settings'),
+                desc: _t("Change settings"),
                 defaultValue: 50,
             },
             "kick": {
-                desc: _t('Remove users'),
+                desc: _t("Remove users"),
                 defaultValue: 50,
             },
             "ban": {
-                desc: _t('Ban users'),
+                desc: _t("Ban users"),
                 defaultValue: 50,
             },
             "redact": {
-                desc: _t('Remove messages sent by others'),
+                desc: _t("Remove messages sent by others"),
                 defaultValue: 50,
                 hideForSpace: true,
             },
             "notifications.room": {
-                desc: _t('Notify everyone'),
+                desc: _t("Notify everyone"),
                 defaultValue: 50,
                 hideForSpace: true,
             },
@@ -307,7 +307,7 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
             parseIntWithDefault(plContent.events_default, powerLevelDescriptors.events_default.defaultValue),
         );
 
-        let privilegedUsersSection = <div>{ _t('No users have specific privileges in this room') }</div>;
+        let privilegedUsersSection = <div>{ _t("No users have specific privileges in this room") }</div>;
         let mutedUsersSection;
         if (Object.keys(userLevels).length) {
             const privilegedUsers = [];
@@ -352,13 +352,13 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
 
             if (privilegedUsers.length) {
                 privilegedUsersSection =
-                <SettingsFieldset legend={_t('Privileged Users')}>
+                <SettingsFieldset legend={_t("Privileged Users")}>
                     { privilegedUsers }
                 </SettingsFieldset>;
             }
             if (mutedUsers.length) {
                 mutedUsersSection =
-                    <SettingsFieldset legend={_t('Muted Users')}>
+                    <SettingsFieldset legend={_t("Muted Users")}>
                         { mutedUsers }
                     </SettingsFieldset>;
             }
@@ -369,7 +369,7 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
         if (banned.length) {
             const canBanUsers = currentUserLevel >= banLevel;
             bannedUsersSection =
-                <SettingsFieldset legend={_t('Banned users')}>
+                <SettingsFieldset legend={_t("Banned users")}>
                     <ul>
                         { banned.map((member) => {
                             const banEvent = member.events.member.getContent();
@@ -396,7 +396,7 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
                 return null;
             }
 
-            const keyPath = key.split('.');
+            const keyPath = key.split(".");
             let currentObj = plContent;
             for (const prop of keyPath) {
                 if (currentObj === undefined) {
@@ -460,8 +460,8 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
                     legend={_t("Permissions")}
                     description={
                         isSpaceRoom
-                            ? _t('Select the roles required to change various parts of the space')
-                            : _t('Select the roles required to change various parts of the room')
+                            ? _t("Select the roles required to change various parts of the space")
+                            : _t("Select the roles required to change various parts of the room")
                     }
                 >
                     { powerSelectors }

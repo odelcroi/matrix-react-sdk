@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
+import React, { createRef } from "react";
 
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
@@ -47,15 +47,15 @@ interface IState {
 export default class EditableText extends React.Component<IProps, IState> {
     // we track value as an JS object field rather than in React state
     // as React doesn't play nice with contentEditable.
-    public value = '';
+    public value = "";
     private placeholder = false;
     private editableDiv = createRef<HTMLDivElement>();
 
     public static defaultProps: Partial<IProps> = {
         onValueChanged() {},
-        initialValue: '',
-        label: '',
-        placeholder: '',
+        initialValue: "",
+        label: "",
+        placeholder: "",
         editable: true,
         className: "mx_EditableText",
         placeholderClassName: "mx_EditableText_placeholder",
@@ -94,7 +94,7 @@ export default class EditableText extends React.Component<IProps, IState> {
             this.editableDiv.current.setAttribute("class", this.props.className
                 + " " + this.props.placeholderClassName);
             this.placeholder = true;
-            this.value = '';
+            this.value = "";
         } else {
             this.editableDiv.current.textContent = this.value;
             this.editableDiv.current.setAttribute("class", this.props.className);

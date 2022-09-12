@@ -14,23 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useContext } from 'react';
-import { Room, Beacon } from 'matrix-js-sdk/src/matrix';
-import { LocationAssetType } from 'matrix-js-sdk/src/@types/location';
+import React, { useContext } from "react";
+import { Room, Beacon } from "matrix-js-sdk/src/matrix";
+import { LocationAssetType } from "matrix-js-sdk/src/@types/location";
 
-import { OwnBeaconStore, OwnBeaconStoreEvent } from '../../../stores/OwnBeaconStore';
-import { useEventEmitterState } from '../../../hooks/useEventEmitter';
-import OwnBeaconStatus from './OwnBeaconStatus';
-import { BeaconDisplayStatus } from './displayStatus';
-import MatrixClientContext from '../../../contexts/MatrixClientContext';
-import MemberAvatar from '../avatars/MemberAvatar';
-import StyledLiveBeaconIcon from './StyledLiveBeaconIcon';
+import { OwnBeaconStore, OwnBeaconStoreEvent } from "../../../stores/OwnBeaconStore";
+import { useEventEmitterState } from "../../../hooks/useEventEmitter";
+import OwnBeaconStatus from "./OwnBeaconStatus";
+import { BeaconDisplayStatus } from "./displayStatus";
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import MemberAvatar from "../avatars/MemberAvatar";
+import StyledLiveBeaconIcon from "./StyledLiveBeaconIcon";
 
 interface Props {
-    roomId: Room['roomId'];
+    roomId: Room["roomId"];
 }
 
-const useOwnBeacon = (roomId: Room['roomId']): Beacon | undefined => {
+const useOwnBeacon = (roomId: Room["roomId"]): Beacon | undefined => {
     const ownBeacon = useEventEmitterState(
         OwnBeaconStore.instance,
         OwnBeaconStoreEvent.LivenessChange,

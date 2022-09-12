@@ -15,23 +15,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
-import { UserTrustLevel } from 'matrix-js-sdk/src/crypto/CrossSigning';
+import { UserTrustLevel } from "matrix-js-sdk/src/crypto/CrossSigning";
 
 import dis from "../../../dispatcher/dispatcher";
-import { _t } from '../../../languageHandler';
+import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { Action } from "../../../dispatcher/actions";
 import EntityTile, { PowerStatus } from "./EntityTile";
 import MemberAvatar from "./../avatars/MemberAvatar";
 import DisambiguatedProfile from "../messages/DisambiguatedProfile";
-import UserIdentifierCustomisations from '../../../customisations/UserIdentifier';
+import UserIdentifierCustomisations from "../../../customisations/UserIdentifier";
 
 interface IProps {
     member: RoomMember;

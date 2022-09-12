@@ -14,16 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 
-import Modal from '../../../Modal';
-import { _t } from '../../../languageHandler';
+import Modal from "../../../Modal";
+import { _t } from "../../../languageHandler";
 import { upgradeRoom } from "../../../utils/RoomUpgrade";
 import { IDialogProps } from "./IDialogProps";
 import BaseDialog from "./BaseDialog";
-import ErrorDialog from './ErrorDialog';
-import DialogButtons from '../elements/DialogButtons';
+import ErrorDialog from "./ErrorDialog";
+import DialogButtons from "../elements/DialogButtons";
 import Spinner from "../elements/Spinner";
 
 interface IProps extends IDialogProps {
@@ -71,7 +71,7 @@ export default class RoomUpgradeDialog extends React.Component<IProps, IState> {
             buttons = <Spinner />;
         } else {
             buttons = <DialogButtons
-                primaryButton={_t('Upgrade this room to version %(version)s', { version: this.targetVersion })}
+                primaryButton={_t("Upgrade this room to version %(version)s", { version: this.targetVersion })}
                 primaryButtonClass="danger"
                 hasCancel={true}
                 onPrimaryButtonClick={this.onUpgradeClick}

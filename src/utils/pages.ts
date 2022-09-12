@@ -17,7 +17,7 @@ limitations under the License.
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { IConfigOptions } from "../IConfigOptions";
-import { getEmbeddedPagesWellKnown } from '../utils/WellKnownUtils';
+import { getEmbeddedPagesWellKnown } from "../utils/WellKnownUtils";
 import { SnakedObject } from "./SnakedObject";
 
 export function getHomePageUrl(appConfig: IConfigOptions): string | null {

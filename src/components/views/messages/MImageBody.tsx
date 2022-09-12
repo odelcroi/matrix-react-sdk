@@ -15,30 +15,30 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ComponentProps, createRef } from 'react';
+import React, { ComponentProps, createRef } from "react";
 import { Blurhash } from "react-blurhash";
-import classNames from 'classnames';
-import { CSSTransition, SwitchTransition } from 'react-transition-group';
+import classNames from "classnames";
+import { CSSTransition, SwitchTransition } from "react-transition-group";
 import { logger } from "matrix-js-sdk/src/logger";
 import { ClientEvent, ClientEventHandlerMap } from "matrix-js-sdk/src/client";
 
-import MFileBody from './MFileBody';
-import Modal from '../../../Modal';
-import { _t } from '../../../languageHandler';
+import MFileBody from "./MFileBody";
+import Modal from "../../../Modal";
+import { _t } from "../../../languageHandler";
 import SettingsStore from "../../../settings/SettingsStore";
-import Spinner from '../elements/Spinner';
+import Spinner from "../elements/Spinner";
 import { Media, mediaFromContent } from "../../../customisations/Media";
 import { BLURHASH_FIELD, createThumbnail } from "../../../utils/image-media";
-import { IMediaEventContent } from '../../../customisations/models/IMediaEventContent';
-import ImageView from '../elements/ImageView';
+import { IMediaEventContent } from "../../../customisations/models/IMediaEventContent";
+import ImageView from "../elements/ImageView";
 import { IBodyProps } from "./IBodyProps";
 import { ImageSize, suggestedSize as suggestedImageSize } from "../../../settings/enums/ImageSize";
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
-import { blobIsAnimated, mayBeAnimated } from '../../../utils/Image';
+import { blobIsAnimated, mayBeAnimated } from "../../../utils/Image";
 import { presentableTextForFile } from "../../../utils/FileUtils";
-import { createReconnectedListener } from '../../../utils/connection';
-import MediaProcessingError from './shared/MediaProcessingError';
+import { createReconnectedListener } from "../../../utils/connection";
+import MediaProcessingError from "./shared/MediaProcessingError";
 
 enum Placeholder {
     NoImage,
@@ -103,7 +103,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
             const httpUrl = this.state.contentUrl;
             const params: Omit<ComponentProps<typeof ImageView>, "onFinished"> = {
                 src: httpUrl,
-                name: content.body?.length > 0 ? content.body : _t('Attachment'),
+                name: content.body?.length > 0 ? content.body : _t("Attachment"),
                 mxEvent: this.props.mxEvent,
                 permalinkCreator: this.props.permalinkCreator,
             };
@@ -201,7 +201,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         if (info?.mimetype === "image/svg+xml" && media.hasThumbnail) {
             // Special-case to return clientside sender-generated thumbnails for SVGs, if any,
             // given we deliberately don't thumbnail them serverside to prevent billion lol attacks and similar.
-            return media.getThumbnailHttp(thumbWidth, thumbHeight, 'scale');
+            return media.getThumbnailHttp(thumbWidth, thumbHeight, "scale");
         }
 
         // we try to download the correct resolution for hi-res images (like retina screenshots).
@@ -397,7 +397,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
                 } else {
                     imageElement = (
                         <img
-                            style={{ display: 'none' }}
+                            style={{ display: "none" }}
                             src={thumbUrl}
                             ref={this.image}
                             alt={content.body}
@@ -425,8 +425,8 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         let gifLabel: JSX.Element;
 
         if (!this.props.forExport && !this.state.imgLoaded) {
-            const classes = classNames('mx_MImageBody_placeholder', {
-                'mx_MImageBody_placeholder--blurhash': this.props.mxEvent.getContent().info?.[BLURHASH_FIELD],
+            const classes = classNames("mx_MImageBody_placeholder", {
+                "mx_MImageBody_placeholder--blurhash": this.props.mxEvent.getContent().info?.[BLURHASH_FIELD],
             });
 
             placeholder = <div className={classes}>
@@ -595,8 +595,8 @@ interface PlaceholderIProps {
 export class HiddenImagePlaceholder extends React.PureComponent<PlaceholderIProps> {
     render() {
         const maxWidth = this.props.maxWidth ? this.props.maxWidth + "px" : null;
-        let className = 'mx_HiddenImagePlaceholder';
-        if (this.props.hover) className += ' mx_HiddenImagePlaceholder_hover';
+        let className = "mx_HiddenImagePlaceholder";
+        if (this.props.hover) className += " mx_HiddenImagePlaceholder_hover";
         return (
             <div className={className} style={{ maxWidth: `min(100%, ${maxWidth}px)` }}>
                 <div className='mx_HiddenImagePlaceholder_button'>

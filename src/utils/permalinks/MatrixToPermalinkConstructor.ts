@@ -52,7 +52,7 @@ export default class MatrixToPermalinkConstructor extends PermalinkConstructor {
     }
 
     encodeServerCandidates(candidates: string[]) {
-        if (!candidates || candidates.length === 0) return '';
+        if (!candidates || candidates.length === 0) return "";
         return `?via=${candidates.map(c => encodeURIComponent(c)).join("&via=")}`;
     }
 
@@ -66,10 +66,10 @@ export default class MatrixToPermalinkConstructor extends PermalinkConstructor {
         const parts = fullUrl.substring(`${baseUrl}/#/`.length).split("/");
 
         const entity = parts[0];
-        if (entity[0] === '@') {
+        if (entity[0] === "@") {
             // Probably a user, no further parsing needed.
             return PermalinkParts.forUser(entity);
-        } else if (entity[0] === '#' || entity[0] === '!') {
+        } else if (entity[0] === "#" || entity[0] === "!") {
             if (parts.length === 1) { // room without event permalink
                 const [roomId, query=""] = entity.split("?");
                 const via = query.split(/&?via=/g).filter(p => !!p);
@@ -77,12 +77,12 @@ export default class MatrixToPermalinkConstructor extends PermalinkConstructor {
             }
 
             // rejoin the rest because v3 events can have slashes (annoyingly)
-            const eventIdAndQuery = parts.length > 1 ? parts.slice(1).join('/') : "";
+            const eventIdAndQuery = parts.length > 1 ? parts.slice(1).join("/") : "";
             const [eventId, query=""] = eventIdAndQuery.split("?");
             const via = query.split(/&?via=/g).filter(p => !!p);
 
             return PermalinkParts.forEvent(entity, eventId, via);
-        } else if (entity[0] === '+') {
+        } else if (entity[0] === "+") {
             return PermalinkParts.forGroup(entity);
         } else {
             throw new Error("Unknown entity type in permalink");

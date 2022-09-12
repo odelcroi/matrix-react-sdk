@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
-import { _t } from '../../../languageHandler';
+import { _t } from "../../../languageHandler";
 import SettingsStore from "../../../settings/SettingsStore";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import BaseDialog from "./BaseDialog";
@@ -55,7 +55,7 @@ export default class AskInviteAnywayDialog extends React.Component<IProps> {
         return (
             <BaseDialog className='mx_RetryInvitesDialog'
                 onFinished={this.onGiveUpClicked}
-                title={_t('The following users may not exist')}
+                title={_t("The following users may not exist")}
                 contentId='mx_Dialog_content'
             >
                 <div id='mx_Dialog_content'>
@@ -68,13 +68,13 @@ export default class AskInviteAnywayDialog extends React.Component<IProps> {
 
                 <div className="mx_Dialog_buttons">
                     <button onClick={this.onGiveUpClicked}>
-                        { _t('Close') }
+                        { _t("Close") }
                     </button>
                     <button onClick={this.onInviteNeverWarnClicked}>
-                        { _t('Invite anyway and never warn me again') }
+                        { _t("Invite anyway and never warn me again") }
                     </button>
                     <button onClick={this.onInviteClicked} autoFocus={true}>
-                        { _t('Invite anyway') }
+                        { _t("Invite anyway") }
                     </button>
                 </div>
             </BaseDialog>

@@ -20,7 +20,7 @@ import { configure } from "enzyme";
 import "blob-polyfill"; // https://github.com/jsdom/jsdom/issues/2555
 
 // Enable the jest & enzyme mocks
-require('jest-fetch-mock').enableMocks();
+require("jest-fetch-mock").enableMocks();
 configure({ adapter: new Adapter() });
 
 // Very carefully enable the mocks for everything else in

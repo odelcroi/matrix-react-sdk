@@ -29,7 +29,7 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import ScrollableBaseModal, { IScrollableBaseState } from "../dialogs/ScrollableBaseModal";
 import { IDialogProps } from "../dialogs/IDialogProps";
 import QuestionDialog from "../dialogs/QuestionDialog";
-import Modal from '../../../Modal';
+import Modal from "../../../Modal";
 import { _t } from "../../../languageHandler";
 import { arrayFastClone, arraySeed } from "../../../utils/arrays";
 import Field from "./Field";
@@ -181,8 +181,8 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
                 title: _t("Failed to post poll"),
                 description: _t(
                     "Sorry, the poll you tried to create was not posted."),
-                button: _t('Try again'),
-                cancelButton: _t('Cancel'),
+                button: _t("Try again"),
+                cancelButton: _t("Cancel"),
                 onFinished: (tryAgain: boolean) => {
                     if (!tryAgain) {
                         this.cancel();

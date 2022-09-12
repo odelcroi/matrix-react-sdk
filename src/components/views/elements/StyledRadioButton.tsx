@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import classnames from 'classnames';
+import React from "react";
+import classnames from "classnames";
 
 interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
     inputRef?: React.RefObject<HTMLInputElement>;
@@ -31,14 +31,14 @@ interface IState {
 
 export default class StyledRadioButton extends React.PureComponent<IProps, IState> {
     public static readonly defaultProps = {
-        className: '',
+        className: "",
         childrenInLabel: true,
     };
 
     public render() {
         const { children, className, disabled, outlined, childrenInLabel, inputRef, ...otherProps } = this.props;
         const _className = classnames(
-            'mx_StyledRadioButton',
+            "mx_StyledRadioButton",
             className,
             {
                 "mx_StyledRadioButton_disabled": disabled,

@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import classNames from "classnames";
 
-import SdkConfig from '../../../SdkConfig';
+import SdkConfig from "../../../SdkConfig";
 import AuthPage from "./AuthPage";
 import { _td } from "../../../languageHandler";
 import SettingsStore from "../../../settings/SettingsStore";
@@ -41,7 +41,7 @@ export default class Welcome extends React.PureComponent<IProps> {
             pageUrl = pagesConfig.get("welcome_url");
         }
         if (!pageUrl) {
-            pageUrl = 'welcome.html';
+            pageUrl = "welcome.html";
         }
 
         return (

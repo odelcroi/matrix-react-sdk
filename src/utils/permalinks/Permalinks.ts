@@ -280,7 +280,7 @@ export function makeRoomPermalink(roomId: string): string {
 
     // If the roomId isn't actually a room ID, don't try to list the servers.
     // Aliases are already routable, and don't need extra information.
-    if (roomId[0] !== '!') return getPermalinkConstructor().forRoom(roomId, []);
+    if (roomId[0] !== "!") return getPermalinkConstructor().forRoom(roomId, []);
 
     const client = MatrixClientPeg.get();
     const room = client.getRoom(roomId);
@@ -314,16 +314,16 @@ export function tryTransformEntityToPermalink(entity: string): string {
     if (!entity) return null;
 
     // Check to see if it is a bare entity for starters
-    if (entity[0] === '#' || entity[0] === '!') return makeRoomPermalink(entity);
-    if (entity[0] === '@') return makeUserPermalink(entity);
-    if (entity[0] === '+') return makeGroupPermalink(entity);
+    if (entity[0] === "#" || entity[0] === "!") return makeRoomPermalink(entity);
+    if (entity[0] === "@") return makeUserPermalink(entity);
+    if (entity[0] === "+") return makeGroupPermalink(entity);
 
     if (entity.slice(0, 7) === "matrix:") {
         try {
             const permalinkParts = parsePermalink(entity);
             if (permalinkParts) {
                 if (permalinkParts.roomIdOrAlias) {
-                    const eventIdPart = permalinkParts.eventId ? `/${permalinkParts.eventId}` : '';
+                    const eventIdPart = permalinkParts.eventId ? `/${permalinkParts.eventId}` : "";
                     let pl = matrixtoBaseUrl + `/#/${permalinkParts.roomIdOrAlias}${eventIdPart}`;
                     if (permalinkParts.viaServers.length > 0) {
                         pl += new MatrixToPermalinkConstructor().encodeServerCandidates(permalinkParts.viaServers);
@@ -371,7 +371,7 @@ export function tryTransformPermalinkToLocalHref(permalink: string): string {
         const permalinkParts = parsePermalink(permalink);
         if (permalinkParts) {
             if (permalinkParts.roomIdOrAlias) {
-                const eventIdPart = permalinkParts.eventId ? `/${permalinkParts.eventId}` : '';
+                const eventIdPart = permalinkParts.eventId ? `/${permalinkParts.eventId}` : "";
                 permalink = `#/room/${permalinkParts.roomIdOrAlias}${eventIdPart}`;
                 if (permalinkParts.viaServers.length > 0) {
                     permalink += new MatrixToPermalinkConstructor().encodeServerCandidates(permalinkParts.viaServers);
@@ -399,7 +399,7 @@ export function getPrimaryPermalinkEntity(permalink: string): string {
             if (m) {
                 // A bit of a hack, but it gets the job done
                 const handler = new ElementPermalinkConstructor("http://localhost");
-                const entityInfo = m[1].split('#').slice(1).join('#');
+                const entityInfo = m[1].split("#").slice(1).join("#");
                 permalinkParts = handler.parsePermalink(`http://localhost/#${entityInfo}`);
             }
         }

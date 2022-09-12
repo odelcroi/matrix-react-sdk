@@ -15,26 +15,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { MatrixClient } from 'matrix-js-sdk/src/client';
+import React from "react";
+import { MatrixClient } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixError } from 'matrix-js-sdk/src/matrix';
+import { MatrixError } from "matrix-js-sdk/src/matrix";
 
-import * as Email from '../../../email';
-import { looksValid as phoneNumberLooksValid } from '../../../phonenumber';
-import Modal from '../../../Modal';
-import { _t, _td } from '../../../languageHandler';
-import SdkConfig from '../../../SdkConfig';
-import { SAFE_LOCALPART_REGEX } from '../../../Registration';
-import withValidation, { IValidationResult } from '../elements/Validation';
-import { ValidatedServerConfig } from '../../../utils/ValidatedServerConfig';
+import * as Email from "../../../email";
+import { looksValid as phoneNumberLooksValid } from "../../../phonenumber";
+import Modal from "../../../Modal";
+import { _t, _td } from "../../../languageHandler";
+import SdkConfig from "../../../SdkConfig";
+import { SAFE_LOCALPART_REGEX } from "../../../Registration";
+import withValidation, { IValidationResult } from "../elements/Validation";
+import { ValidatedServerConfig } from "../../../utils/ValidatedServerConfig";
 import EmailField from "./EmailField";
 import PassphraseField from "./PassphraseField";
-import Field from '../elements/Field';
-import RegistrationEmailPromptDialog from '../dialogs/RegistrationEmailPromptDialog';
+import Field from "../elements/Field";
+import RegistrationEmailPromptDialog from "../dialogs/RegistrationEmailPromptDialog";
 import CountryDropdown from "./CountryDropdown";
 import PassphraseConfirmField from "./PassphraseConfirmField";
-import { PosthogAnalytics } from '../../../PosthogAnalytics';
+import { PosthogAnalytics } from "../../../PosthogAnalytics";
 
 enum RegistrationField {
     Email = "field_email",
@@ -126,7 +126,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
             return;
         }
 
-        if (this.state.email === '') {
+        if (this.state.email === "") {
             if (this.showEmail()) {
                 Modal.createDialog(RegistrationEmailPromptDialog, {
                     onFinished: async (confirmed: boolean, email?: string) => {
@@ -268,7 +268,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
             {
                 key: "required",
                 test(this: RegistrationForm, { value, allowEmpty }) {
-                    return allowEmpty || !this.authStepIsRequired('m.login.email.identity') || !!value;
+                    return allowEmpty || !this.authStepIsRequired("m.login.email.identity") || !!value;
                 },
                 invalid: () => _t("Enter email address (required on this homeserver)"),
             },
@@ -325,7 +325,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
             {
                 key: "required",
                 test(this: RegistrationForm, { value, allowEmpty }) {
-                    return allowEmpty || !this.authStepIsRequired('m.login.msisdn') || !!value;
+                    return allowEmpty || !this.authStepIsRequired("m.login.msisdn") || !!value;
                 },
                 invalid: () => _t("Enter phone number (required on this homeserver)"),
             },
@@ -425,7 +425,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
     }
 
     private showEmail() {
-        if (!this.authStepIsUsed('m.login.email.identity')) {
+        if (!this.authStepIsUsed("m.login.email.identity")) {
             return false;
         }
         return true;
@@ -433,7 +433,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
 
     private showPhoneNumber() {
         const threePidLogin = !SdkConfig.get().disable_3pid_login;
-        if (!threePidLogin || !this.authStepIsUsed('m.login.msisdn')) {
+        if (!threePidLogin || !this.authStepIsUsed("m.login.msisdn")) {
             return false;
         }
         return true;
@@ -443,7 +443,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
         if (!this.showEmail()) {
             return null;
         }
-        const emailLabel = this.authStepIsRequired('m.login.email.identity') ?
+        const emailLabel = this.authStepIsRequired("m.login.email.identity") ?
             _td("Email") :
             _td("Email (optional)");
         return <EmailField
@@ -483,7 +483,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
         if (!this.showPhoneNumber()) {
             return null;
         }
-        const phoneLabel = this.authStepIsRequired('m.login.msisdn') ?
+        const phoneLabel = this.authStepIsRequired("m.login.msisdn") ?
             _t("Phone") :
             _t("Phone (optional)");
         const phoneCountry = <CountryDropdown

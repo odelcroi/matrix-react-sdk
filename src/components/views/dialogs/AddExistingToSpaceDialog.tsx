@@ -21,7 +21,7 @@ import { sleep } from "matrix-js-sdk/src/utils";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { _t, _td } from '../../../languageHandler';
+import { _t, _td } from "../../../languageHandler";
 import BaseDialog from "./BaseDialog";
 import Dropdown from "../elements/Dropdown";
 import SearchBox from "../../structures/SearchBox";

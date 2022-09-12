@@ -53,7 +53,7 @@ describe("<PinnedMessagesCard />", () => {
     cli.relations.mockResolvedValue({ originalEvent: {} as unknown as MatrixEvent, events: [] });
 
     const mkRoom = (localPins: MatrixEvent[], nonLocalPins: MatrixEvent[]): Room => {
-        const room = mkStubRoom("!room:example.org", 'room', cli);
+        const room = mkStubRoom("!room:example.org", "room", cli);
         // Deferred since we may be adding or removing pins later
         const pins = () => [...localPins, ...nonLocalPins];
 
@@ -64,8 +64,8 @@ describe("<PinnedMessagesCard />", () => {
             content: {
                 pinned: pins().map(e => e.getId()),
             },
-            user: '@user:example.org',
-            room: '!room:example.org',
+            user: "@user:example.org",
+            room: "!room:example.org",
         }));
 
         // Insert local pins into local timeline set

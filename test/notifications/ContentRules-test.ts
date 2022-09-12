@@ -57,7 +57,7 @@ const USERNAME_RULE = {
 describe("ContentRules", function() {
     describe("parseContentRules", function() {
         it("should handle there being no keyword rules", function() {
-            const rules = { 'global': { 'content': [
+            const rules = { "global": { "content": [
                 USERNAME_RULE,
             ] } };
             const parsed = ContentRules.parseContentRules(rules);
@@ -67,7 +67,7 @@ describe("ContentRules", function() {
         });
 
         it("should parse regular keyword notifications", function() {
-            const rules = { 'global': { 'content': [
+            const rules = { "global": { "content": [
                 NORMAL_RULE,
                 USERNAME_RULE,
             ] } };
@@ -80,7 +80,7 @@ describe("ContentRules", function() {
         });
 
         it("should parse loud keyword notifications", function() {
-            const rules = { 'global': { 'content': [
+            const rules = { "global": { "content": [
                 LOUD_RULE,
                 USERNAME_RULE,
             ] } };
@@ -93,7 +93,7 @@ describe("ContentRules", function() {
         });
 
         it("should parse mixed keyword notifications", function() {
-            const rules = { 'global': { 'content': [
+            const rules = { "global": { "content": [
                 LOUD_RULE,
                 NORMAL_RULE,
                 USERNAME_RULE,

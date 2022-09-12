@@ -18,7 +18,7 @@ import { DecryptionError } from "matrix-js-sdk/src/crypto/algorithms";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Error as ErrorEvent } from "@matrix-org/analytics-events/types/typescript/Error";
 
-import { PosthogAnalytics } from './PosthogAnalytics';
+import { PosthogAnalytics } from "./PosthogAnalytics";
 
 export class DecryptionFailure {
     public readonly ts: number;
@@ -47,14 +47,14 @@ export class DecryptionFailureTracker {
     }, (errorCode) => {
         // Map JS-SDK error codes to tracker codes for aggregation
         switch (errorCode) {
-            case 'MEGOLM_UNKNOWN_INBOUND_SESSION_ID':
-                return 'OlmKeysNotSentError';
-            case 'OLM_UNKNOWN_MESSAGE_INDEX':
-                return 'OlmIndexError';
+            case "MEGOLM_UNKNOWN_INBOUND_SESSION_ID":
+                return "OlmKeysNotSentError";
+            case "OLM_UNKNOWN_MESSAGE_INDEX":
+                return "OlmIndexError";
             case undefined:
-                return 'OlmUnspecifiedError';
+                return "OlmUnspecifiedError";
             default:
-                return 'UnknownError';
+                return "UnknownError";
         }
     });
 
@@ -108,12 +108,12 @@ export class DecryptionFailureTracker {
      * trackedErrorCode. If not provided, the `.code` of errors will be used.
      */
     private constructor(private readonly fn: TrackingFn, private readonly errorCodeMapFn: ErrCodeMapFn) {
-        if (!fn || typeof fn !== 'function') {
-            throw new Error('DecryptionFailureTracker requires tracking function');
+        if (!fn || typeof fn !== "function") {
+            throw new Error("DecryptionFailureTracker requires tracking function");
         }
 
-        if (typeof errorCodeMapFn !== 'function') {
-            throw new Error('DecryptionFailureTracker second constructor argument should be a function');
+        if (typeof errorCodeMapFn !== "function") {
+            throw new Error("DecryptionFailureTracker second constructor argument should be a function");
         }
     }
 

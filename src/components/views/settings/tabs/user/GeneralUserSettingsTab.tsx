@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import { SERVICE_TYPES } from "matrix-js-sdk/src/service-types";
 import { IThreepid } from "matrix-js-sdk/src/@types/threepids";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -36,7 +36,7 @@ import dis from "../../../../../dispatcher/dispatcher";
 import { Policies, Service, startTermsFlow } from "../../../../../Terms";
 import IdentityAuthClient from "../../../../../IdentityAuthClient";
 import { abbreviateUrl } from "../../../../../utils/UrlUtils";
-import { getThreepidsWithBindStatus } from '../../../../../boundThreepids';
+import { getThreepidsWithBindStatus } from "../../../../../boundThreepids";
 import Spinner from "../../../elements/Spinner";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
 import { UIFeature } from "../../../../../settings/UIFeature";
@@ -117,12 +117,12 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         const serverSupportsSeparateAddAndBind = await cli.doesServerSupportSeparateAddAndBind();
 
         const capabilities = await cli.getCapabilities(); // this is cached
-        const changePasswordCap = capabilities['m.change_password'];
+        const changePasswordCap = capabilities["m.change_password"];
 
         // You can change your password so long as the capability isn't explicitly disabled. The implicit
         // behaviour is you can change your password when the capability is missing or has not-false as
         // the enabled flag value.
-        const canChangePassword = !changePasswordCap || changePasswordCap['enabled'] !== false;
+        const canChangePassword = !changePasswordCap || changePasswordCap["enabled"] !== false;
 
         this.setState({ serverSupportsSeparateAddAndBind, canChangePassword });
 
@@ -149,7 +149,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
     }
 
     private onAction = (payload: ActionPayload): void => {
-        if (payload.action === 'id_server_changed') {
+        if (payload.action === "id_server_changed") {
             this.setState({ haveIdServer: Boolean(MatrixClientPeg.get().getIdentityServerUrl()) });
             this.getThreepidState();
         }
@@ -178,13 +178,13 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
             const idServerUrl = MatrixClientPeg.get().getIdentityServerUrl();
             logger.warn(
                 `Unable to reach identity server at ${idServerUrl} to check ` +
-                `for 3PIDs bindings in Settings`,
+                "for 3PIDs bindings in Settings",
             );
             logger.warn(e);
         }
         this.setState({
-            emails: threepids.filter((a) => a.medium === 'email'),
-            msisdns: threepids.filter((a) => a.medium === 'msisdn'),
+            emails: threepids.filter((a) => a.medium === "email"),
+            msisdns: threepids.filter((a) => a.medium === "msisdn"),
             loading3pids: false,
         });
     }
@@ -228,7 +228,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         } catch (e) {
             logger.warn(
                 `Unable to reach identity server at ${idServerUrl} to check ` +
-                `for terms in Settings`,
+                "for terms in Settings",
             );
             logger.warn(e);
         }

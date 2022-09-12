@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
-import { formatDate } from '../../../../DateUtils';
-import { _t } from '../../../../languageHandler';
-import Heading from '../../typography/Heading';
-import { DeviceVerificationStatusCard } from './DeviceVerificationStatusCard';
-import { DeviceWithVerification } from './types';
+import { formatDate } from "../../../../DateUtils";
+import { _t } from "../../../../languageHandler";
+import Heading from "../../typography/Heading";
+import { DeviceVerificationStatusCard } from "./DeviceVerificationStatusCard";
+import { DeviceWithVerification } from "./types";
 
 interface Props {
     device: DeviceWithVerification;
@@ -35,17 +35,17 @@ const DeviceDetails: React.FC<Props> = ({ device }) => {
     const metadata: MetadataTable[] = [
         {
             values: [
-                { label: _t('Session ID'), value: device.device_id },
+                { label: _t("Session ID"), value: device.device_id },
                 {
-                    label: _t('Last activity'),
+                    label: _t("Last activity"),
                     value: device.last_seen_ts && formatDate(new Date(device.last_seen_ts)),
                 },
             ],
         },
         {
-            heading: _t('Device'),
+            heading: _t("Device"),
             values: [
-                { label: _t('IP address'), value: device.last_seen_ip },
+                { label: _t("IP address"), value: device.last_seen_ip },
             ],
         },
     ];
@@ -55,7 +55,7 @@ const DeviceDetails: React.FC<Props> = ({ device }) => {
             <DeviceVerificationStatusCard device={device} />
         </section>
         <section className='mx_DeviceDetails_section'>
-            <p className='mx_DeviceDetails_sectionHeading'>{ _t('Session details') }</p>
+            <p className='mx_DeviceDetails_sectionHeading'>{ _t("Session details") }</p>
             { metadata.map(({ heading, values }, index) => <table
                 className='mxDeviceDetails_metadataTable'
                 key={index}

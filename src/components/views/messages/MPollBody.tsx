@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import classNames from 'classnames';
+import React from "react";
+import classNames from "classnames";
 import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
-import { Relations, RelationsEvent } from 'matrix-js-sdk/src/models/relations';
-import { MatrixClient } from 'matrix-js-sdk/src/matrix';
+import { Relations, RelationsEvent } from "matrix-js-sdk/src/models/relations";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import {
     M_POLL_END,
     M_POLL_KIND_DISCLOSED,
@@ -31,13 +31,13 @@ import {
 } from "matrix-events-sdk";
 import { RelatedRelations } from "matrix-js-sdk/src/models/related-relations";
 
-import { _t } from '../../../languageHandler';
-import Modal from '../../../Modal';
+import { _t } from "../../../languageHandler";
+import Modal from "../../../Modal";
 import { IBodyProps } from "./IBodyProps";
-import { formatCommaSeparatedList } from '../../../utils/FormattingUtils';
-import StyledRadioButton from '../elements/StyledRadioButton';
+import { formatCommaSeparatedList } from "../../../utils/FormattingUtils";
+import StyledRadioButton from "../elements/StyledRadioButton";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
-import ErrorDialog from '../dialogs/ErrorDialog';
+import ErrorDialog from "../dialogs/ErrorDialog";
 import { GetRelationsForEvent } from "../rooms/EventTile";
 import PollCreateDialog from "../elements/PollCreateDialog";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -198,7 +198,7 @@ export function launchPollEditor(mxEvent: MatrixEvent, getRelationsForEvent?: Ge
                 threadId: mxEvent.getThread()?.id ?? null,
                 editingMxEvent: mxEvent,
             },
-            'mx_CompoundDialog',
+            "mx_CompoundDialog",
             false, // isPriorityModal
             true,  // isStaticModal
         );

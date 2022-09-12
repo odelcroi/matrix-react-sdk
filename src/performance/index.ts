@@ -165,7 +165,7 @@ export default class PerformanceMonitor {
      * @returns {string} a compound of the name and identifier if present
      */
     private buildKey(name: string, id?: string): string {
-        const suffix = id ? `:${id}` : '';
+        const suffix = id ? `:${id}` : "";
         return `${name}${suffix}`;
     }
 }

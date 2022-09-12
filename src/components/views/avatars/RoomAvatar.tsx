@@ -14,22 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ComponentProps } from 'react';
-import { Room } from 'matrix-js-sdk/src/models/room';
-import { ResizeMethod } from 'matrix-js-sdk/src/@types/partials';
-import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import React, { ComponentProps } from "react";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { ResizeMethod } from "matrix-js-sdk/src/@types/partials";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import classNames from "classnames";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 
-import BaseAvatar from './BaseAvatar';
-import ImageView from '../elements/ImageView';
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import Modal from '../../../Modal';
-import * as Avatar from '../../../Avatar';
+import BaseAvatar from "./BaseAvatar";
+import ImageView from "../elements/ImageView";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import Modal from "../../../Modal";
+import * as Avatar from "../../../Avatar";
 import DMRoomMap from "../../../utils/DMRoomMap";
 import { mediaFromMxc } from "../../../customisations/Media";
-import { IOOBData } from '../../../stores/ThreepidInviteStore';
+import { IOOBData } from "../../../stores/ThreepidInviteStore";
 
 interface IProps extends Omit<ComponentProps<typeof BaseAvatar>, "name" | "idName" | "url" | "onClick"> {
     // Room may be left unset here, but if it is,
@@ -55,7 +55,7 @@ export default class RoomAvatar extends React.Component<IProps, IState> {
     public static defaultProps = {
         width: 36,
         height: 36,
-        resizeMethod: 'crop',
+        resizeMethod: "crop",
         oobData: {},
     };
 

@@ -17,18 +17,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 
-import { _t, _td } from '../../../languageHandler';
+import { _t, _td } from "../../../languageHandler";
 import SettingsStore from "../../../settings/SettingsStore";
 import dis from "../../../dispatcher/dispatcher";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { Action } from "../../../dispatcher/actions";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import SettingsFlag from "../elements/SettingsFlag";
-import SettingsFieldset from '../settings/SettingsFieldset';
-import AccessibleButton from '../elements/AccessibleButton';
+import SettingsFieldset from "../settings/SettingsFieldset";
+import AccessibleButton from "../elements/AccessibleButton";
 
 interface IProps {
     room: Room;
@@ -54,7 +54,7 @@ export default class UrlPreviewSettings extends React.Component<IProps> {
             if (accountEnabled) {
                 previewsForAccount = (
                     _t("You have <a>enabled</a> URL previews by default.", {}, {
-                        'a': (sub) => <AccessibleButton
+                        "a": (sub) => <AccessibleButton
                             kind='link_inline'
                             onClick={this.onClickUserSettings}>
                             { sub }
@@ -64,7 +64,7 @@ export default class UrlPreviewSettings extends React.Component<IProps> {
             } else {
                 previewsForAccount = (
                     _t("You have <a>disabled</a> URL previews by default.", {}, {
-                        'a': (sub) => <AccessibleButton
+                        "a": (sub) => <AccessibleButton
                             kind='link_inline'
                             onClick={this.onClickUserSettings}>
                             { sub }
@@ -100,15 +100,15 @@ export default class UrlPreviewSettings extends React.Component<IProps> {
         }
 
         const previewsForRoomAccount = ( // in an e2ee room we use a special key to enforce per-room opt-in
-            <SettingsFlag name={isEncrypted ? 'urlPreviewsEnabled_e2ee' : 'urlPreviewsEnabled'}
+            <SettingsFlag name={isEncrypted ? "urlPreviewsEnabled_e2ee" : "urlPreviewsEnabled"}
                 level={SettingLevel.ROOM_ACCOUNT}
                 roomId={roomId} />
         );
 
         const description = <>
             <p>
-                { _t('When someone puts a URL in their message, a URL preview can be shown to give more ' +
-                        'information about that link such as the title, description, and an image from the website.') }
+                { _t("When someone puts a URL in their message, a URL preview can be shown to give more " +
+                        "information about that link such as the title, description, and an image from the website.") }
             </p>
             <p>{ previewsForAccount }</p>
         </>;

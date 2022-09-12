@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 // eslint-disable-next-line deprecate/import
-import { mount, ReactWrapper, HTMLAttributes } from 'enzyme';
-import { MatrixClient } from 'matrix-js-sdk/src/client';
-import { Room } from 'matrix-js-sdk/src/matrix';
+import { mount, ReactWrapper, HTMLAttributes } from "enzyme";
+import { MatrixClient } from "matrix-js-sdk/src/client";
+import { Room } from "matrix-js-sdk/src/matrix";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { act } from "react-dom/test-utils";
-import { mocked } from 'jest-mock';
+import { mocked } from "jest-mock";
 
 import SpaceStore from "../../../../src/stores/spaces/SpaceStore";
 import { MetaSpace } from "../../../../src/stores/spaces";
@@ -32,12 +32,12 @@ import DMRoomMap from "../../../../src/utils/DMRoomMap";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import SettingsStore from "../../../../src/settings/SettingsStore";
 import { SettingLevel } from "../../../../src/settings/SettingLevel";
-import { shouldShowComponent } from '../../../../src/customisations/helpers/UIComponents';
-import { UIComponent } from '../../../../src/settings/UIFeature';
+import { shouldShowComponent } from "../../../../src/customisations/helpers/UIComponents";
+import { UIComponent } from "../../../../src/settings/UIFeature";
 
 const RoomListHeader = testUtils.wrapInMatrixClientContext(_RoomListHeader);
 
-jest.mock('../../../../src/customisations/helpers/UIComponents', () => ({
+jest.mock("../../../../src/customisations/helpers/UIComponents", () => ({
     shouldShowComponent: jest.fn(),
 }));
 
@@ -88,7 +88,7 @@ const setupPlusMenu = async (client: MatrixClient, testSpace: Room): Promise<Rea
 
 const checkIsDisabled = (menuItem: ReactWrapper<HTMLAttributes>): void => {
     expect(menuItem.props().disabled).toBeTruthy();
-    expect(menuItem.props()['aria-disabled']).toBeTruthy();
+    expect(menuItem.props()["aria-disabled"]).toBeTruthy();
 };
 
 const checkMenuLabels = (items: ReactWrapper<HTMLAttributes>, labelArray: Array<string>) => {
@@ -99,7 +99,7 @@ const checkMenuLabels = (items: ReactWrapper<HTMLAttributes>, labelArray: Array<
     };
 
     labelArray.forEach((label, index) => {
-        console.log('index', index, 'label', label);
+        console.log("index", index, "label", label);
         checkLabel(items.at(index), label);
     });
 };
@@ -191,9 +191,9 @@ describe("RoomListHeader", () => {
         expect(menu).toHaveLength(0);
     });
 
-    describe('UIComponents', () => {
-        describe('Main menu', () => {
-            it('does not render Add Space when user does not have permission to add spaces', async () => {
+    describe("UIComponents", () => {
+        describe("Main menu", () => {
+            it("does not render Add Space when user does not have permission to add spaces", async () => {
                 // User does not have permission to add spaces, anywhere
                 blockUIComponent(UIComponent.CreateSpaces);
 
@@ -212,7 +212,7 @@ describe("RoomListHeader", () => {
                 ]);
             });
 
-            it('does not render Add Room when user does not have permission to add rooms', async () => {
+            it("does not render Add Room when user does not have permission to add rooms", async () => {
                 // User does not have permission to add rooms
                 blockUIComponent(UIComponent.CreateRooms);
 
@@ -232,8 +232,8 @@ describe("RoomListHeader", () => {
             });
         });
 
-        describe('Plus menu', () => {
-            it('does not render Add Space when user does not have permission to add spaces', async () => {
+        describe("Plus menu", () => {
+            it("does not render Add Space when user does not have permission to add spaces", async () => {
                 // User does not have permission to add spaces, anywhere
                 blockUIComponent(UIComponent.CreateSpaces);
 
@@ -251,7 +251,7 @@ describe("RoomListHeader", () => {
                 ]);
             });
 
-            it('disables Add Room when user does not have permission to add rooms', async () => {
+            it("disables Add Room when user does not have permission to add rooms", async () => {
                 // User does not have permission to add rooms
                 blockUIComponent(UIComponent.CreateRooms);
 
@@ -274,8 +274,8 @@ describe("RoomListHeader", () => {
         });
     });
 
-    describe('adding children to space', () => {
-        it('if user cannot add children to space, MainMenu adding buttons are hidden', async () => {
+    describe("adding children to space", () => {
+        it("if user cannot add children to space, MainMenu adding buttons are hidden", async () => {
             const testSpace = setupSpace(client);
             mocked(testSpace.currentState.maySendStateEvent).mockImplementation(
                 (stateEventType, userId) => stateEventType !== EventType.SpaceChild);
@@ -294,7 +294,7 @@ describe("RoomListHeader", () => {
             ]);
         });
 
-        it('if user cannot add children to space, PlusMenu add buttons are disabled', async () => {
+        it("if user cannot add children to space, PlusMenu add buttons are disabled", async () => {
             const testSpace = setupSpace(client);
             mocked(testSpace.currentState.maySendStateEvent).mockImplementation(
                 (stateEventType, userId) => stateEventType !== EventType.SpaceChild);

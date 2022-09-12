@@ -17,7 +17,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import {
     CallError,
     CallErrorCode,
@@ -27,19 +27,19 @@ import {
     CallType,
     MatrixCall,
 } from "matrix-js-sdk/src/webrtc/call";
-import { logger } from 'matrix-js-sdk/src/logger';
-import EventEmitter from 'events';
+import { logger } from "matrix-js-sdk/src/logger";
+import EventEmitter from "events";
 import { RuleId, TweakName, Tweaks } from "matrix-js-sdk/src/@types/PushRules";
-import { PushProcessor } from 'matrix-js-sdk/src/pushprocessor';
+import { PushProcessor } from "matrix-js-sdk/src/pushprocessor";
 import { SyncState } from "matrix-js-sdk/src/sync";
 import { CallEventHandlerEvent } from "matrix-js-sdk/src/webrtc/callEventHandler";
 
-import { MatrixClientPeg } from './MatrixClientPeg';
-import Modal from './Modal';
-import { _t } from './languageHandler';
-import dis from './dispatcher/dispatcher';
-import WidgetUtils from './utils/WidgetUtils';
-import SettingsStore from './settings/SettingsStore';
+import { MatrixClientPeg } from "./MatrixClientPeg";
+import Modal from "./Modal";
+import { _t } from "./languageHandler";
+import dis from "./dispatcher/dispatcher";
+import WidgetUtils from "./utils/WidgetUtils";
+import SettingsStore from "./settings/SettingsStore";
 import { WidgetType } from "./widgets/WidgetType";
 import { SettingLevel } from "./settings/SettingLevel";
 import QuestionDialog from "./components/views/dialogs/QuestionDialog";
@@ -48,33 +48,33 @@ import WidgetStore from "./stores/WidgetStore";
 import { WidgetMessagingStore } from "./stores/widgets/WidgetMessagingStore";
 import { ElementWidgetActions } from "./stores/widgets/ElementWidgetActions";
 import { UIFeature } from "./settings/UIFeature";
-import { Action } from './dispatcher/actions';
-import VoipUserMapper from './VoipUserMapper';
-import { addManagedHybridWidget, isManagedHybridWidgetEnabled } from './widgets/ManagedHybrid';
-import SdkConfig from './SdkConfig';
-import { ensureDMExists } from './createRoom';
-import { Container, WidgetLayoutStore } from './stores/widgets/WidgetLayoutStore';
-import IncomingLegacyCallToast, { getIncomingLegacyCallToastKey } from './toasts/IncomingLegacyCallToast';
-import ToastStore from './stores/ToastStore';
-import Resend from './Resend';
+import { Action } from "./dispatcher/actions";
+import VoipUserMapper from "./VoipUserMapper";
+import { addManagedHybridWidget, isManagedHybridWidgetEnabled } from "./widgets/ManagedHybrid";
+import SdkConfig from "./SdkConfig";
+import { ensureDMExists } from "./createRoom";
+import { Container, WidgetLayoutStore } from "./stores/widgets/WidgetLayoutStore";
+import IncomingLegacyCallToast, { getIncomingLegacyCallToastKey } from "./toasts/IncomingLegacyCallToast";
+import ToastStore from "./stores/ToastStore";
+import Resend from "./Resend";
 import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
 import { KIND_CALL_TRANSFER } from "./components/views/dialogs/InviteDialogTypes";
 import { OpenInviteDialogPayload } from "./dispatcher/payloads/OpenInviteDialogPayload";
-import { findDMForUser } from './utils/dm/findDMForUser';
-import { getJoinedNonFunctionalMembers } from './utils/room/getJoinedNonFunctionalMembers';
+import { findDMForUser } from "./utils/dm/findDMForUser";
+import { getJoinedNonFunctionalMembers } from "./utils/room/getJoinedNonFunctionalMembers";
 
-export const PROTOCOL_PSTN = 'm.protocol.pstn';
-export const PROTOCOL_PSTN_PREFIXED = 'im.vector.protocol.pstn';
-export const PROTOCOL_SIP_NATIVE = 'im.vector.protocol.sip_native';
-export const PROTOCOL_SIP_VIRTUAL = 'im.vector.protocol.sip_virtual';
+export const PROTOCOL_PSTN = "m.protocol.pstn";
+export const PROTOCOL_PSTN_PREFIXED = "im.vector.protocol.pstn";
+export const PROTOCOL_SIP_NATIVE = "im.vector.protocol.sip_native";
+export const PROTOCOL_SIP_VIRTUAL = "im.vector.protocol.sip_virtual";
 
 const CHECK_PROTOCOLS_ATTEMPTS = 3;
 
 enum AudioID {
-    Ring = 'ringAudio',
-    Ringback = 'ringbackAudio',
-    CallEnd = 'callendAudio',
-    Busy = 'busyAudio',
+    Ring = "ringAudio",
+    Ringback = "ringbackAudio",
+    CallEnd = "callendAudio",
+    Busy = "busyAudio",
 }
 
 interface ThirdpartyLookupResponseFields {
@@ -162,12 +162,12 @@ export default class LegacyCallHandler extends EventEmitter {
         // end up causing the audio elements with our ring/ringback etc
         // audio clips in to play.
         if (navigator.mediaSession) {
-            navigator.mediaSession.setActionHandler('play', function() {});
-            navigator.mediaSession.setActionHandler('pause', function() {});
-            navigator.mediaSession.setActionHandler('seekbackward', function() {});
-            navigator.mediaSession.setActionHandler('seekforward', function() {});
-            navigator.mediaSession.setActionHandler('previoustrack', function() {});
-            navigator.mediaSession.setActionHandler('nexttrack', function() {});
+            navigator.mediaSession.setActionHandler("play", function() {});
+            navigator.mediaSession.setActionHandler("pause", function() {});
+            navigator.mediaSession.setActionHandler("seekbackward", function() {});
+            navigator.mediaSession.setActionHandler("seekforward", function() {});
+            navigator.mediaSession.setActionHandler("previoustrack", function() {});
+            navigator.mediaSession.setActionHandler("nexttrack", function() {});
         }
 
         if (SettingsStore.getValue(UIFeature.Voip)) {
@@ -270,11 +270,11 @@ export default class LegacyCallHandler extends EventEmitter {
         try {
             return await MatrixClientPeg.get().getThirdpartyUser(
                 this.pstnSupportPrefixed ? PROTOCOL_PSTN_PREFIXED : PROTOCOL_PSTN, {
-                    'm.id.phone': phoneNumber,
+                    "m.id.phone": phoneNumber,
                 },
             );
         } catch (e) {
-            logger.warn('Failed to lookup user from phone number', e);
+            logger.warn("Failed to lookup user from phone number", e);
             return Promise.resolve([]);
         }
     }
@@ -283,11 +283,11 @@ export default class LegacyCallHandler extends EventEmitter {
         try {
             return await MatrixClientPeg.get().getThirdpartyUser(
                 PROTOCOL_SIP_VIRTUAL, {
-                    'native_mxid': nativeMxid,
+                    "native_mxid": nativeMxid,
                 },
             );
         } catch (e) {
-            logger.warn('Failed to query SIP identity for user', e);
+            logger.warn("Failed to query SIP identity for user", e);
             return Promise.resolve([]);
         }
     }
@@ -296,11 +296,11 @@ export default class LegacyCallHandler extends EventEmitter {
         try {
             return await MatrixClientPeg.get().getThirdpartyUser(
                 PROTOCOL_SIP_NATIVE, {
-                    'virtual_mxid': virtualMxid,
+                    "virtual_mxid": virtualMxid,
                 },
             );
         } catch (e) {
-            logger.warn('Failed to query identity for SIP user', e);
+            logger.warn("Failed to query identity for SIP user", e);
             return Promise.resolve([]);
         }
     }
@@ -477,7 +477,7 @@ export default class LegacyCallHandler extends EventEmitter {
             }
 
             Modal.createDialog(ErrorDialog, {
-                title: _t('Call Failed'),
+                title: _t("Call Failed"),
                 description: err.message,
             });
         });
@@ -553,7 +553,7 @@ export default class LegacyCallHandler extends EventEmitter {
         const mappedRoomId = this.roomIdForCall(call);
         this.setCallState(call, newState);
         dis.dispatch({
-            action: 'call_state',
+            action: "call_state",
             room_id: mappedRoomId,
             state: newState,
         });
@@ -650,7 +650,7 @@ export default class LegacyCallHandler extends EventEmitter {
             return;
         }
         logger.debug("Local candidates:");
-        for (const cand of stats.filter(item => item.type === 'local-candidate')) {
+        for (const cand of stats.filter(item => item.type === "local-candidate")) {
             const address = cand.address || cand.ip; // firefox uses 'address', chrome uses 'ip'
             logger.debug(
                 `${cand.id} - type: ${cand.candidateType}, address: ${address}, port: ${cand.port}, ` +
@@ -658,7 +658,7 @@ export default class LegacyCallHandler extends EventEmitter {
             );
         }
         logger.debug("Remote candidates:");
-        for (const cand of stats.filter(item => item.type === 'remote-candidate')) {
+        for (const cand of stats.filter(item => item.type === "remote-candidate")) {
             const address = cand.address || cand.ip; // firefox uses 'address', chrome uses 'ip'
             logger.debug(
                 `${cand.id} - type: ${cand.candidateType}, address: ${address}, port: ${cand.port}, ` +
@@ -666,7 +666,7 @@ export default class LegacyCallHandler extends EventEmitter {
             );
         }
         logger.debug("Candidate pairs:");
-        for (const pair of stats.filter(item => item.type === 'candidate-pair')) {
+        for (const pair of stats.filter(item => item.type === "candidate-pair")) {
             logger.debug(
                 `${pair.localCandidateId} / ${pair.remoteCandidateId} - state: ${pair.state}, ` +
                 `nominated: ${pair.nominated}, ` +
@@ -677,12 +677,12 @@ export default class LegacyCallHandler extends EventEmitter {
         }
 
         logger.debug("Outbound RTP:");
-        for (const s of stats.filter(item => item.type === 'outbound-rtp')) {
+        for (const s of stats.filter(item => item.type === "outbound-rtp")) {
             logger.debug(s);
         }
 
         logger.debug("Inbound RTP:");
-        for (const s of stats.filter(item => item.type === 'inbound-rtp')) {
+        for (const s of stats.filter(item => item.type === "inbound-rtp")) {
             logger.debug(s);
         }
     }
@@ -736,8 +736,8 @@ export default class LegacyCallHandler extends EventEmitter {
                     null, { code },
                 ) }</p>
             </div>,
-            button: _t('Try using turn.matrix.org'),
-            cancelButton: _t('OK'),
+            button: _t("Try using turn.matrix.org"),
+            cancelButton: _t("OK"),
             onFinished: (allow) => {
                 SettingsStore.setValue("fallbackICEServerAllowed", null, SettingLevel.DEVICE, allow);
                 cli.setFallbackICEServerAllowed(allow);
@@ -798,7 +798,7 @@ export default class LegacyCallHandler extends EventEmitter {
             this.addCallForRoom(roomId, call);
         } catch (e) {
             Modal.createDialog(ErrorDialog, {
-                title: _t('Already in call'),
+                title: _t("Already in call"),
                 description: _t("You're already in a call with this person."),
             });
             return;
@@ -813,7 +813,7 @@ export default class LegacyCallHandler extends EventEmitter {
 
         if (type === CallType.Voice) {
             call.placeVoiceCall();
-        } else if (type === 'video') {
+        } else if (type === "video") {
             call.placeVideoCall();
         } else {
             logger.error("Unknown conf call type: " + type);
@@ -830,16 +830,16 @@ export default class LegacyCallHandler extends EventEmitter {
         // if the runtime env doesn't do VoIP, whine.
         if (!MatrixClientPeg.get().supportsVoip()) {
             Modal.createDialog(ErrorDialog, {
-                title: _t('Calls are unsupported'),
-                description: _t('You cannot place calls in this browser.'),
+                title: _t("Calls are unsupported"),
+                description: _t("You cannot place calls in this browser."),
             });
             return;
         }
 
         if (MatrixClientPeg.get().getSyncState() === SyncState.Error) {
             Modal.createDialog(ErrorDialog, {
-                title: _t('Connectivity to the server has been lost'),
-                description: _t('You cannot place calls without a connection to the server.'),
+                title: _t("Connectivity to the server has been lost"),
+                description: _t("You cannot place calls without a connection to the server."),
             });
             return;
         }
@@ -847,7 +847,7 @@ export default class LegacyCallHandler extends EventEmitter {
         // don't allow > 2 calls to be placed.
         if (this.getAllActiveCalls().length > 1) {
             Modal.createDialog(ErrorDialog, {
-                title: _t('Too Many Calls'),
+                title: _t("Too Many Calls"),
                 description: _t("You've reached the maximum number of simultaneous calls."),
             });
             return;
@@ -865,7 +865,7 @@ export default class LegacyCallHandler extends EventEmitter {
         const members = getJoinedNonFunctionalMembers(room);
         if (members.length <= 1) {
             Modal.createDialog(ErrorDialog, {
-                description: _t('You cannot place a call with yourself.'),
+                description: _t("You cannot place a call with yourself."),
             });
         } else if (members.length === 2) {
             logger.info(`Place ${type} call in ${roomId}`);
@@ -910,7 +910,7 @@ export default class LegacyCallHandler extends EventEmitter {
 
         if (this.getAllActiveCalls().length > 1) {
             Modal.createDialog(ErrorDialog, {
-                title: _t('Too Many Calls'),
+                title: _t("Too Many Calls"),
                 description: _t("You've reached the maximum number of simultaneous calls."),
             });
             return;
@@ -1007,8 +1007,8 @@ export default class LegacyCallHandler extends EventEmitter {
             } catch (e) {
                 logger.log("Failed to transfer call", e);
                 Modal.createDialog(ErrorDialog, {
-                    title: _t('Transfer Failed'),
-                    description: _t('Failed to transfer call'),
+                    title: _t("Transfer Failed"),
+                    description: _t("Failed to transfer call"),
                 });
             }
         }
@@ -1045,7 +1045,7 @@ export default class LegacyCallHandler extends EventEmitter {
         const client = MatrixClientPeg.get();
         logger.info(`Place conference call in ${roomId}`);
 
-        dis.dispatch({ action: 'appsDrawer', show: true });
+        dis.dispatch({ action: "appsDrawer", show: true });
 
         // Prevent double clicking the call button
         const widget = WidgetStore.instance.getApps(roomId).find(app => WidgetType.JITSI.matches(app.type));
@@ -1056,12 +1056,12 @@ export default class LegacyCallHandler extends EventEmitter {
         }
 
         try {
-            await WidgetUtils.addJitsiWidget(roomId, type, 'Jitsi', false);
-            logger.log('Jitsi widget added');
+            await WidgetUtils.addJitsiWidget(roomId, type, "Jitsi", false);
+            logger.log("Jitsi widget added");
         } catch (e) {
-            if (e.errcode === 'M_FORBIDDEN') {
+            if (e.errcode === "M_FORBIDDEN") {
                 Modal.createDialog(ErrorDialog, {
-                    title: _t('Permission Required'),
+                    title: _t("Permission Required"),
                     description: _t("You do not have permission to start a conference call in this room"),
                 });
             }

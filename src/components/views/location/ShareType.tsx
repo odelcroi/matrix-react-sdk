@@ -14,17 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { HTMLAttributes, useContext } from 'react';
+import React, { HTMLAttributes, useContext } from "react";
 
-import MatrixClientContext from '../../../contexts/MatrixClientContext';
-import { _t } from '../../../languageHandler';
-import { OwnProfileStore } from '../../../stores/OwnProfileStore';
-import BaseAvatar from '../avatars/BaseAvatar';
-import AccessibleButton from '../elements/AccessibleButton';
-import Heading from '../typography/Heading';
-import { Icon as LocationIcon } from '../../../../res/img/element-icons/location.svg';
-import { LocationShareType } from './shareLocation';
-import StyledLiveBeaconIcon from '../beacon/StyledLiveBeaconIcon';
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import { _t } from "../../../languageHandler";
+import { OwnProfileStore } from "../../../stores/OwnProfileStore";
+import BaseAvatar from "../avatars/BaseAvatar";
+import AccessibleButton from "../elements/AccessibleButton";
+import Heading from "../typography/Heading";
+import { Icon as LocationIcon } from "../../../../res/img/element-icons/location.svg";
+import { LocationShareType } from "./shareLocation";
+import StyledLiveBeaconIcon from "../beacon/StyledLiveBeaconIcon";
 
 const UserAvatar = () => {
     const matrixClient = useContext(MatrixClientContext);
@@ -72,9 +72,9 @@ const ShareType: React.FC<Props> = ({
     setShareType, enabledShareTypes,
 }) => {
     const labels = {
-        [LocationShareType.Own]: _t('My current location'),
-        [LocationShareType.Live]: _t('My live location'),
-        [LocationShareType.Pin]: _t('Drop a Pin'),
+        [LocationShareType.Own]: _t("My current location"),
+        [LocationShareType.Live]: _t("My live location"),
+        [LocationShareType.Pin]: _t("Drop a Pin"),
     };
     return <div className='mx_ShareType'>
         <LocationIcon className='mx_ShareType_badge' />

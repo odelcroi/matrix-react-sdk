@@ -68,8 +68,8 @@ export default class TypingStore {
         // No typing notifications for local rooms
         if (isLocalRoom(roomId)) return;
 
-        if (!SettingsStore.getValue('sendTypingNotifications')) return;
-        if (SettingsStore.getValue('lowBandwidth')) return;
+        if (!SettingsStore.getValue("sendTypingNotifications")) return;
+        if (SettingsStore.getValue("lowBandwidth")) return;
         // Disable typing notification for threads for the initial launch
         // before we figure out a better user experience for them
         if (SettingsStore.getValue("feature_thread") && threadId) return;

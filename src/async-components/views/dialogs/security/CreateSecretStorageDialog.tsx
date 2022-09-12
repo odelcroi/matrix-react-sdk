@@ -15,8 +15,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
-import FileSaver from 'file-saver';
+import React, { createRef } from "react";
+import FileSaver from "file-saver";
 import { logger } from "matrix-js-sdk/src/logger";
 import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
 import { TrustInfo } from "matrix-js-sdk/src/crypto/backup";
@@ -24,14 +24,14 @@ import { CrossSigningKeys } from "matrix-js-sdk/src/matrix";
 import { IRecoveryKey } from "matrix-js-sdk/src/crypto/api";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 
-import { MatrixClientPeg } from '../../../../MatrixClientPeg';
-import { _t, _td } from '../../../../languageHandler';
-import Modal from '../../../../Modal';
-import { promptForBackupPassphrase } from '../../../../SecurityManager';
+import { MatrixClientPeg } from "../../../../MatrixClientPeg";
+import { _t, _td } from "../../../../languageHandler";
+import Modal from "../../../../Modal";
+import { promptForBackupPassphrase } from "../../../../SecurityManager";
 import { copyNode } from "../../../../utils/strings";
 import { SSOAuthEntry } from "../../../../components/views/auth/InteractiveAuthEntryComponents";
 import PassphraseField from "../../../../components/views/auth/PassphraseField";
-import StyledRadioButton from '../../../../components/views/elements/StyledRadioButton';
+import StyledRadioButton from "../../../../components/views/elements/StyledRadioButton";
 import AccessibleButton from "../../../../components/views/elements/AccessibleButton";
 import DialogButtons from "../../../../components/views/elements/DialogButtons";
 import InlineSpinner from "../../../../components/views/elements/InlineSpinner";
@@ -40,7 +40,7 @@ import {
     getSecureBackupSetupMethods,
     isSecureBackupRequired,
     SecureBackupSetupMethod,
-} from '../../../../utils/WellKnownUtils';
+} from "../../../../utils/WellKnownUtils";
 import SecurityCustomisations from "../../../../customisations/Security";
 import { IDialogProps } from "../../../../components/views/dialogs/IDialogProps";
 import Field from "../../../../components/views/elements/Field";
@@ -129,9 +129,9 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
 
         this.state = {
             phase: Phase.Loading,
-            passPhrase: '',
+            passPhrase: "",
             passPhraseValid: false,
-            passPhraseConfirm: '',
+            passPhraseConfirm: "",
             copied: false,
             downloaded: false,
             setPassphrase: false,
@@ -208,7 +208,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                 return;
             }
             const canUploadKeysWithPasswordOnly = error.data.flows.some(f => {
-                return f.stages.length === 1 && f.stages[0] === 'm.login.password';
+                return f.stages.length === 1 && f.stages[0] === "m.login.password";
             });
             this.setState({
                 canUploadKeysWithPasswordOnly,
@@ -265,9 +265,9 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
 
     private onDownloadClick = (): void => {
         const blob = new Blob([this.recoveryKey.encodedPrivateKey], {
-            type: 'text/plain;charset=us-ascii',
+            type: "text/plain;charset=us-ascii",
         });
-        FileSaver.saveAs(blob, 'security-key.txt');
+        FileSaver.saveAs(blob, "security-key.txt");
 
         this.setState({
             downloaded: true,
@@ -277,9 +277,9 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
     private doBootstrapUIAuth = async (makeRequest: (authData: any) => Promise<{}>): Promise<void> => {
         if (this.state.canUploadKeysWithPasswordOnly && this.state.accountPassword) {
             await makeRequest({
-                type: 'm.login.password',
+                type: "m.login.password",
                 identifier: {
-                    type: 'm.id.user',
+                    type: "m.id.user",
                     user: MatrixClientPeg.get().getUserId(),
                 },
                 // TODO: Remove `user` once servers support proper UIA
@@ -367,7 +367,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
         } catch (e) {
             if (this.state.canUploadKeysWithPasswordOnly && e.httpStatus === 401 && e.data.flows) {
                 this.setState({
-                    accountPassword: '',
+                    accountPassword: "",
                     accountPasswordCorrect: false,
                     phase: Phase.Migrate,
                 });
@@ -451,9 +451,9 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
 
     private onSetAgainClick = (): void => {
         this.setState({
-            passPhrase: '',
+            passPhrase: "",
             passPhraseValid: false,
-            passPhraseConfirm: '',
+            passPhraseConfirm: "",
             phase: Phase.Passphrase,
         });
     };
@@ -591,7 +591,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                 primaryDisabled={this.state.canUploadKeysWithPasswordOnly && !this.state.accountPassword}
             >
                 <button type="button" className="danger" onClick={this.onCancelClick}>
-                    { _t('Skip') }
+                    { _t("Skip") }
                 </button>
             </DialogButtons>
         </form>;
@@ -621,7 +621,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
             </div>
 
             <DialogButtons
-                primaryButton={_t('Continue')}
+                primaryButton={_t("Continue")}
                 onPrimaryButtonClick={this.onPassPhraseNextClick}
                 hasCancel={false}
                 disabled={!this.state.passPhraseValid}
@@ -680,7 +680,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                 </div>
             </div>
             <DialogButtons
-                primaryButton={_t('Continue')}
+                primaryButton={_t("Continue")}
                 onPrimaryButtonClick={this.onPassPhraseConfirmNextClick}
                 hasCancel={false}
                 disabled={this.state.passPhrase !== this.state.passPhraseConfirm}
@@ -754,7 +754,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
         return <div>
             <p>{ _t("Unable to query secret storage status") }</p>
             <div className="mx_Dialog_buttons">
-                <DialogButtons primaryButton={_t('Retry')}
+                <DialogButtons primaryButton={_t("Retry")}
                     onPrimaryButtonClick={this.onLoadRetryClick}
                     hasCancel={this.state.canSkip}
                     onCancel={this.onCancel}
@@ -771,11 +771,11 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
             <p>{ _t(
                 "You can also set up Secure Backup & manage your keys in Settings.",
             ) }</p>
-            <DialogButtons primaryButton={_t('Go back')}
+            <DialogButtons primaryButton={_t("Go back")}
                 onPrimaryButtonClick={this.onGoBackClick}
                 hasCancel={false}
             >
-                <button type="button" className="danger" onClick={this.onCancel}>{ _t('Cancel') }</button>
+                <button type="button" className="danger" onClick={this.onCancel}>{ _t("Cancel") }</button>
             </DialogButtons>
         </div>;
     }
@@ -783,21 +783,21 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
     private titleForPhase(phase: Phase): string {
         switch (phase) {
             case Phase.ChooseKeyPassphrase:
-                return _t('Set up Secure Backup');
+                return _t("Set up Secure Backup");
             case Phase.Migrate:
-                return _t('Upgrade your encryption');
+                return _t("Upgrade your encryption");
             case Phase.Passphrase:
-                return _t('Set a Security Phrase');
+                return _t("Set a Security Phrase");
             case Phase.PassphraseConfirm:
-                return _t('Confirm Security Phrase');
+                return _t("Confirm Security Phrase");
             case Phase.ConfirmSkip:
-                return _t('Are you sure?');
+                return _t("Are you sure?");
             case Phase.ShowKey:
-                return _t('Save your Security Key');
+                return _t("Save your Security Key");
             case Phase.Storing:
-                return _t('Setting up keys');
+                return _t("Setting up keys");
             default:
-                return '';
+                return "";
         }
     }
 
@@ -807,7 +807,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
             content = <div>
                 <p>{ _t("Unable to set up secret storage") }</p>
                 <div className="mx_Dialog_buttons">
-                    <DialogButtons primaryButton={_t('Retry')}
+                    <DialogButtons primaryButton={_t("Retry")}
                         onPrimaryButtonClick={this.bootstrapSecretStorage}
                         hasCancel={this.state.canSkip}
                         onCancel={this.onCancel}
@@ -851,18 +851,18 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
             case Phase.Passphrase:
             case Phase.PassphraseConfirm:
                 titleClass = [
-                    'mx_CreateSecretStorageDialog_titleWithIcon',
-                    'mx_CreateSecretStorageDialog_securePhraseTitle',
+                    "mx_CreateSecretStorageDialog_titleWithIcon",
+                    "mx_CreateSecretStorageDialog_securePhraseTitle",
                 ];
                 break;
             case Phase.ShowKey:
                 titleClass = [
-                    'mx_CreateSecretStorageDialog_titleWithIcon',
-                    'mx_CreateSecretStorageDialog_secureBackupTitle',
+                    "mx_CreateSecretStorageDialog_titleWithIcon",
+                    "mx_CreateSecretStorageDialog_secureBackupTitle",
                 ];
                 break;
             case Phase.ChooseKeyPassphrase:
-                titleClass = 'mx_CreateSecretStorageDialog_centeredTitle';
+                titleClass = "mx_CreateSecretStorageDialog_centeredTitle";
                 break;
         }
 

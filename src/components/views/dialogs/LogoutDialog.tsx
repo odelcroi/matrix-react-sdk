@@ -15,15 +15,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ComponentType } from 'react';
+import React, { ComponentType } from "react";
 import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import Modal from '../../../Modal';
-import dis from '../../../dispatcher/dispatcher';
-import { _t } from '../../../languageHandler';
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import RestoreKeyBackupDialog from './security/RestoreKeyBackupDialog';
+import Modal from "../../../Modal";
+import dis from "../../../dispatcher/dispatcher";
+import { _t } from "../../../languageHandler";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import RestoreKeyBackupDialog from "./security/RestoreKeyBackupDialog";
 import QuestionDialog from "./QuestionDialog";
 import BaseDialog from "./BaseDialog";
 import Spinner from "../elements/Spinner";
@@ -82,7 +82,7 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
     private onExportE2eKeysClicked = (): void => {
         Modal.createDialogAsync(
             import(
-                '../../../async-components/views/dialogs/security/ExportE2eKeysDialog'
+                "../../../async-components/views/dialogs/security/ExportE2eKeysDialog"
             ) as unknown as Promise<ComponentType<{}>>,
             {
                 matrixClient: MatrixClientPeg.get(),
@@ -92,7 +92,7 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
 
     private onFinished = (confirmed: boolean): void => {
         if (confirmed) {
-            dis.dispatch({ action: 'logout' });
+            dis.dispatch({ action: "logout" });
         }
         // close dialog
         this.props.onFinished(confirmed);
@@ -118,7 +118,7 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
     };
 
     private onLogoutConfirm = (): void => {
-        dis.dispatch({ action: 'logout' });
+        dis.dispatch({ action: "logout" });
 
         // close dialog
         this.props.onFinished(true);

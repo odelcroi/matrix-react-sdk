@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import classNames from 'classnames';
-import React from 'react';
+import classNames from "classnames";
+import React from "react";
 
-import { Icon as VerifiedIcon } from '../../../../../res/img/e2e/verified.svg';
-import { Icon as UnverifiedIcon } from '../../../../../res/img/e2e/warning.svg';
-import { Icon as InactiveIcon } from '../../../../../res/img/element-icons/settings/inactive.svg';
-import { DeviceSecurityVariation } from './types';
+import { Icon as VerifiedIcon } from "../../../../../res/img/e2e/verified.svg";
+import { Icon as UnverifiedIcon } from "../../../../../res/img/e2e/warning.svg";
+import { Icon as InactiveIcon } from "../../../../../res/img/element-icons/settings/inactive.svg";
+import { DeviceSecurityVariation } from "./types";
 interface Props {
     variation: DeviceSecurityVariation;
     heading: string;
@@ -36,7 +36,7 @@ const VariationIcon: Record<DeviceSecurityVariation, React.FC<React.SVGProps<SVG
 
 const DeviceSecurityIcon: React.FC<{ variation: DeviceSecurityVariation }> = ({ variation }) => {
     const Icon = VariationIcon[variation];
-    return <div className={classNames('mx_DeviceSecurityCard_icon', variation)}>
+    return <div className={classNames("mx_DeviceSecurityCard_icon", variation)}>
         <Icon height={16} width={16} />
     </div>;
 };

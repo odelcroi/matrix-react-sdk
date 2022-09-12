@@ -14,23 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 // eslint-disable-next-line deprecate/import
 import { shallow, mount } from "enzyme";
-import 'focus-visible'; // to fix context menus
+import "focus-visible"; // to fix context menus
 
 import {
     ThreadFilterType,
     ThreadPanelHeader,
     ThreadPanelHeaderFilterOptionItem,
-} from '../../../src/components/structures/ThreadPanel';
-import { ContextMenuButton } from '../../../src/accessibility/context_menu/ContextMenuButton';
-import ContextMenu from '../../../src/components/structures/ContextMenu';
-import { _t } from '../../../src/languageHandler';
+} from "../../../src/components/structures/ThreadPanel";
+import { ContextMenuButton } from "../../../src/accessibility/context_menu/ContextMenuButton";
+import ContextMenu from "../../../src/components/structures/ContextMenu";
+import { _t } from "../../../src/languageHandler";
 
-describe('ThreadPanel', () => {
-    describe('Header', () => {
-        it('expect that All filter for ThreadPanelHeader properly renders Show: All threads', () => {
+describe("ThreadPanel", () => {
+    describe("Header", () => {
+        it("expect that All filter for ThreadPanelHeader properly renders Show: All threads", () => {
             const wrapper = shallow(
                 <ThreadPanelHeader
                     empty={false}
@@ -40,7 +40,7 @@ describe('ThreadPanel', () => {
             expect(wrapper).toMatchSnapshot();
         });
 
-        it('expect that My filter for ThreadPanelHeader properly renders Show: My threads', () => {
+        it("expect that My filter for ThreadPanelHeader properly renders Show: My threads", () => {
             const wrapper = shallow(
                 <ThreadPanelHeader
                     empty={false}
@@ -50,7 +50,7 @@ describe('ThreadPanel', () => {
             expect(wrapper).toMatchSnapshot();
         });
 
-        it('expect that ThreadPanelHeader properly opens a context menu when clicked on the button', () => {
+        it("expect that ThreadPanelHeader properly opens a context menu when clicked on the button", () => {
             const wrapper = mount(
                 <ThreadPanelHeader
                     empty={false}
@@ -61,22 +61,22 @@ describe('ThreadPanel', () => {
             expect(found).not.toBe(undefined);
             expect(found).not.toBe(null);
             expect(wrapper.exists(ContextMenu)).toEqual(false);
-            found.simulate('click');
+            found.simulate("click");
             expect(wrapper.exists(ContextMenu)).toEqual(true);
         });
 
-        it('expect that ThreadPanelHeader has the correct option selected in the context menu', () => {
+        it("expect that ThreadPanelHeader has the correct option selected in the context menu", () => {
             const wrapper = mount(
                 <ThreadPanelHeader
                     empty={false}
                     filterOption={ThreadFilterType.All}
                     setFilterOption={() => undefined} />,
             );
-            wrapper.find(ContextMenuButton).simulate('click');
+            wrapper.find(ContextMenuButton).simulate("click");
             const found = wrapper.find(ThreadPanelHeaderFilterOptionItem);
             expect(found.length).toEqual(2);
-            const foundButton = found.find('[aria-checked=true]').first();
-            expect(foundButton.text()).toEqual(`${_t("All threads")}${_t('Shows all threads from current room')}`);
+            const foundButton = found.find("[aria-checked=true]").first();
+            expect(foundButton.text()).toEqual(`${_t("All threads")}${_t("Shows all threads from current room")}`);
             expect(foundButton).toMatchSnapshot();
         });
     });

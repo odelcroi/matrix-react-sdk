@@ -14,15 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
-import { Room } from 'matrix-js-sdk/src/models/room';
-import { RoomStateEvent } from 'matrix-js-sdk/src/models/room-state';
+import React from "react";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 
-import Modal from '../../../Modal';
-import { _t } from '../../../languageHandler';
-import RoomUpgradeDialog from '../dialogs/RoomUpgradeDialog';
-import AccessibleButton from '../elements/AccessibleButton';
+import Modal from "../../../Modal";
+import { _t } from "../../../languageHandler";
+import RoomUpgradeDialog from "../dialogs/RoomUpgradeDialog";
+import AccessibleButton from "../elements/AccessibleButton";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 
 interface IProps {

@@ -16,25 +16,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
+import React, { createRef } from "react";
 import FocusLock from "react-focus-lock";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
-import { _t } from '../../../languageHandler';
+import { _t } from "../../../languageHandler";
 import AccessibleTooltipButton from "./AccessibleTooltipButton";
 import MemberAvatar from "../avatars/MemberAvatar";
 import { ContextMenuTooltipButton } from "../../../accessibility/context_menu/ContextMenuTooltipButton";
 import MessageContextMenu from "../context_menus/MessageContextMenu";
-import { aboveLeftOf } from '../../structures/ContextMenu';
+import { aboveLeftOf } from "../../structures/ContextMenu";
 import MessageTimestamp from "../messages/MessageTimestamp";
 import SettingsStore from "../../../settings/SettingsStore";
 import { formatFullDate } from "../../../DateUtils";
-import dis from '../../../dispatcher/dispatcher';
-import { Action } from '../../../dispatcher/actions';
+import dis from "../../../dispatcher/dispatcher";
+import { Action } from "../../../dispatcher/actions";
 import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
 import { normalizeWheelEvent } from "../../../utils/Mouse";
-import { IDialogProps } from '../dialogs/IDialogProps';
-import UIStore from '../../../stores/UIStore';
+import { IDialogProps } from "../dialogs/IDialogProps";
+import UIStore from "../../../stores/UIStore";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
@@ -134,7 +134,7 @@ export default class ImageView extends React.Component<IProps, IState> {
     componentDidMount() {
         // We have to use addEventListener() because the listener
         // needs to be passive in order to work with Chromium
-        this.focusLock.current.addEventListener('wheel', this.onWheel, { passive: false });
+        this.focusLock.current.addEventListener("wheel", this.onWheel, { passive: false });
         // We want to recalculate zoom whenever the window's size changes
         window.addEventListener("resize", this.recalculateZoom);
         // After the image loads for the first time we want to calculate the zoom
@@ -142,7 +142,7 @@ export default class ImageView extends React.Component<IProps, IState> {
     }
 
     componentWillUnmount() {
-        this.focusLock.current.removeEventListener('wheel', this.onWheel);
+        this.focusLock.current.removeEventListener("wheel", this.onWheel);
         window.removeEventListener("resize", this.recalculateZoom);
         this.image.current.removeEventListener("load", this.imageLoaded);
     }

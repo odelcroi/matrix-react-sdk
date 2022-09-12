@@ -36,7 +36,7 @@ const CopyableText: React.FC<IProps> = ({ children, getTextToCopy, border=true, 
     const onCopyClickInternal = async (e: ButtonEvent) => {
         e.preventDefault();
         const successful = await copyPlaintext(getTextToCopy());
-        setTooltip(successful ? _t('Copied!') : _t('Failed to copy'));
+        setTooltip(successful ? _t("Copied!") : _t("Failed to copy"));
     };
 
     const onHideTooltip = () => {

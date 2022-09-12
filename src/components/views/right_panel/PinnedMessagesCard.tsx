@@ -17,13 +17,13 @@ limitations under the License.
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { EventType, RelationType } from 'matrix-js-sdk/src/@types/event';
+import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 
-import { Icon as ContextMenuIcon } from '../../../../res/img/element-icons/context-menu.svg';
+import { Icon as ContextMenuIcon } from "../../../../res/img/element-icons/context-menu.svg";
 import { Icon as EmojiIcon } from "../../../../res/img/element-icons/room/message-bar/emoji.svg";
-import { Icon as ReplyIcon } from '../../../../res/img/element-icons/room/message-bar/reply.svg';
+import { Icon as ReplyIcon } from "../../../../res/img/element-icons/room/message-bar/reply.svg";
 import { _t } from "../../../languageHandler";
 import BaseCard from "./BaseCard";
 import Spinner from "../elements/Spinner";
@@ -35,7 +35,7 @@ import PinnedEventTile from "../rooms/PinnedEventTile";
 import { useRoomState } from "../../../hooks/useRoomState";
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import { ReadPinsEventId } from "./types";
-import Heading from '../typography/Heading';
+import Heading from "../typography/Heading";
 import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
 
 interface IProps {

@@ -14,18 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { render } from '@testing-library/react';
+import React from "react";
+import { render } from "@testing-library/react";
 
-import { tooltipifyLinks } from '../../src/utils/tooltipify';
-import PlatformPeg from '../../src/PlatformPeg';
-import BasePlatform from '../../src/BasePlatform';
+import { tooltipifyLinks } from "../../src/utils/tooltipify";
+import PlatformPeg from "../../src/PlatformPeg";
+import BasePlatform from "../../src/BasePlatform";
 
-describe('tooltipify', () => {
-    jest.spyOn(PlatformPeg, 'get')
+describe("tooltipify", () => {
+    jest.spyOn(PlatformPeg, "get")
         .mockReturnValue({ needsUrlTooltips: () => true } as unknown as BasePlatform);
 
-    it('does nothing for empty element', () => {
+    it("does nothing for empty element", () => {
         const { container: root } = render(<div />);
         const originalHtml = root.outerHTML;
         const containers: Element[] = [];
@@ -34,7 +34,7 @@ describe('tooltipify', () => {
         expect(root.outerHTML).toEqual(originalHtml);
     });
 
-    it('wraps single anchor', () => {
+    it("wraps single anchor", () => {
         const { container: root } = render(<div><a href="/foo">click</a></div>);
         const containers: Element[] = [];
         tooltipifyLinks([root], [], containers);
@@ -45,7 +45,7 @@ describe('tooltipify', () => {
         expect(tooltip).toBeDefined();
     });
 
-    it('ignores node', () => {
+    it("ignores node", () => {
         const { container: root } = render(<div><a href="/foo">click</a></div>);
         const originalHtml = root.outerHTML;
         const containers: Element[] = [];

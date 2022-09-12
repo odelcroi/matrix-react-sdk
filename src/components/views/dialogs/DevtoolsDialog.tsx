@@ -15,9 +15,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import { _t, _td } from '../../../languageHandler';
+import { _t, _td } from "../../../languageHandler";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import BaseDialog from "./BaseDialog";
 import { TimelineEventEditor } from "./devtools/Event";
@@ -26,11 +26,11 @@ import VerificationExplorer from "./devtools/VerificationExplorer";
 import SettingExplorer from "./devtools/SettingExplorer";
 import { RoomStateExplorer } from "./devtools/RoomState";
 import BaseTool, { DevtoolsContext, IDevtoolsProps } from "./devtools/BaseTool";
-import WidgetExplorer from './devtools/WidgetExplorer';
+import WidgetExplorer from "./devtools/WidgetExplorer";
 import { AccountDataExplorer, RoomAccountDataExplorer } from "./devtools/AccountData";
 import SettingsFlag from "../elements/SettingsFlag";
 import { SettingLevel } from "../../../settings/SettingLevel";
-import ServerInfo from './devtools/ServerInfo';
+import ServerInfo from "./devtools/ServerInfo";
 
 enum Category {
     Room,

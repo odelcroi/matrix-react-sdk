@@ -56,7 +56,7 @@ describe("Room Directory", () => {
         // Publish into the public rooms directory
         cy.contains(".mx_SettingsFieldset", "Published Addresses").within(() => {
             cy.get("#canonicalAlias").find(":selected").should("contain", "#gaming:localhost");
-            cy.get(`[aria-label="Publish this room to the public in localhost's room directory?"]`).click()
+            cy.get("[aria-label=\"Publish this room to the public in localhost's room directory?\"]").click()
                 .should("have.attr", "aria-checked", "true");
         });
 
@@ -98,6 +98,6 @@ describe("Room Directory", () => {
         cy.get(".mx_RoomDirectory_dialogWrapper").percySnapshotElement("Room Directory - filtered one result");
         cy.get("@resultRow").find(".mx_AccessibleButton").contains("Join").click();
 
-        cy.url().should('contain', `/#/room/#test1234:localhost`);
+        cy.url().should("contain", "/#/room/#test1234:localhost");
     });
 });

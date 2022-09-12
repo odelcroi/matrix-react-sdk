@@ -19,17 +19,17 @@ import { _t } from "../../languageHandler";
 // These are in their own file because of circular imports being a problem.
 export enum RightPanelPhases {
     // Room stuff
-    RoomMemberList = 'RoomMemberList',
-    FilePanel = 'FilePanel',
-    NotificationPanel = 'NotificationPanel',
-    RoomMemberInfo = 'RoomMemberInfo',
-    EncryptionPanel = 'EncryptionPanel',
-    RoomSummary = 'RoomSummary',
-    Widget = 'Widget',
+    RoomMemberList = "RoomMemberList",
+    FilePanel = "FilePanel",
+    NotificationPanel = "NotificationPanel",
+    RoomMemberInfo = "RoomMemberInfo",
+    EncryptionPanel = "EncryptionPanel",
+    RoomSummary = "RoomSummary",
+    Widget = "Widget",
     PinnedMessages = "PinnedMessages",
     Timeline = "Timeline",
 
-    Room3pidMemberInfo = 'Room3pidMemberInfo',
+    Room3pidMemberInfo = "Room3pidMemberInfo",
 
     // Space stuff
     SpaceMemberList = "SpaceMemberList",

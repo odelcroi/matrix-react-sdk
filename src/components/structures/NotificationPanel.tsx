@@ -17,7 +17,7 @@ limitations under the License.
 import React from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { _t } from '../../languageHandler';
+import { _t } from "../../languageHandler";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import BaseCard from "../views/right_panel/BaseCard";
 import TimelinePanel from "./TimelinePanel";
@@ -57,7 +57,7 @@ export default class NotificationPanel extends React.PureComponent<IProps, IStat
     render() {
         const emptyState = (<div className="mx_RightPanel_empty mx_NotificationPanel_empty">
             <h2>{ _t("You're all caught up") }</h2>
-            <p>{ _t('You have no visible notifications.') }</p>
+            <p>{ _t("You have no visible notifications.") }</p>
         </div>);
 
         let content;

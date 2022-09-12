@@ -147,7 +147,7 @@ export class ThreepidMember extends Member {
     // better type support in the react-sdk we can use this trick to determine the kind
     // of 3PID we're dealing with, if any.
     get isEmail(): boolean {
-        return this.id.includes('@');
+        return this.id.includes("@");
     }
 
     // These next class members are for the Member interface

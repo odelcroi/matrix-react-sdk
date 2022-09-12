@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import classNames from 'classnames';
+import React from "react";
+import classNames from "classnames";
 
-import { Icon as WarningBadge } from '../../../../res/img/element-icons/warning-badge.svg';
-import { _t } from '../../../languageHandler';
-import { getLocationShareErrorMessage, LocationShareError } from '../../../utils/location';
-import AccessibleButton from '../elements/AccessibleButton';
-import Heading from '../typography/Heading';
+import { Icon as WarningBadge } from "../../../../res/img/element-icons/warning-badge.svg";
+import { _t } from "../../../languageHandler";
+import { getLocationShareErrorMessage, LocationShareError } from "../../../utils/location";
+import AccessibleButton from "../elements/AccessibleButton";
+import Heading from "../typography/Heading";
 
 export interface MapErrorProps {
     error: LocationShareError;
@@ -39,11 +39,11 @@ export const MapError: React.FC<MapErrorProps> = ({
     onClick,
 }) => (
     <div data-test-id='map-rendering-error'
-        className={classNames('mx_MapError', className, { 'mx_MapError_isMinimised': isMinimised })}
+        className={classNames("mx_MapError", className, { "mx_MapError_isMinimised": isMinimised })}
         onClick={onClick}
     >
         <WarningBadge className='mx_MapError_icon' />
-        <Heading className='mx_MapError_heading' size='h3'>{ _t('Unable to load map') }</Heading>
+        <Heading className='mx_MapError_heading' size='h3'>{ _t("Unable to load map") }</Heading>
         <p className='mx_MapError_message'>
             { getLocationShareErrorMessage(error) }
         </p>
@@ -53,7 +53,7 @@ export const MapError: React.FC<MapErrorProps> = ({
                 kind='primary'
                 onClick={onFinished}
             >
-                { _t('OK') }
+                { _t("OK") }
             </AccessibleButton>
         }
     </div>

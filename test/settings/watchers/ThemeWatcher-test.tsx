@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import SettingsStore from '../../../src/settings/SettingsStore';
-import ThemeWatcher from '../../../src/settings/watchers/ThemeWatcher';
-import { SettingLevel } from '../../../src/settings/SettingLevel';
+import SettingsStore from "../../../src/settings/SettingsStore";
+import ThemeWatcher from "../../../src/settings/watchers/ThemeWatcher";
+import { SettingLevel } from "../../../src/settings/SettingLevel";
 
 function makeMatchMedia(values: any) {
     class FakeMediaQueryList {
@@ -61,8 +61,8 @@ function makeGetValueAt(values: any) {
     };
 }
 
-describe('ThemeWatcher', function() {
-    it('should choose a light theme by default', () => {
+describe("ThemeWatcher", function() {
+    it("should choose a light theme by default", () => {
         // Given no system settings
         global.matchMedia = makeMatchMedia({});
 
@@ -71,7 +71,7 @@ describe('ThemeWatcher', function() {
         expect(themeWatcher.getEffectiveTheme()).toBe("light");
     });
 
-    it('should choose default theme if system settings are inconclusive', () => {
+    it("should choose default theme if system settings are inconclusive", () => {
         // Given no system settings but we asked to use them
         global.matchMedia = makeMatchMedia({});
         SettingsStore.getValue = makeGetValue({
@@ -84,7 +84,7 @@ describe('ThemeWatcher', function() {
         expect(themeWatcher.getEffectiveTheme()).toBe("light");
     });
 
-    it('should choose a dark theme if that is selected', () => {
+    it("should choose a dark theme if that is selected", () => {
         // Given system says light high contrast but theme is set to dark
         global.matchMedia = makeMatchMedia({
             "(prefers-contrast: more)": true,
@@ -97,7 +97,7 @@ describe('ThemeWatcher', function() {
         expect(themeWatcher.getEffectiveTheme()).toBe("dark");
     });
 
-    it('should choose a light theme if that is selected', () => {
+    it("should choose a light theme if that is selected", () => {
         // Given system settings say dark high contrast but theme set to light
         global.matchMedia = makeMatchMedia({
             "(prefers-contrast: more)": true,
@@ -110,7 +110,7 @@ describe('ThemeWatcher', function() {
         expect(themeWatcher.getEffectiveTheme()).toBe("light");
     });
 
-    it('should choose a light-high-contrast theme if that is selected', () => {
+    it("should choose a light-high-contrast theme if that is selected", () => {
         // Given system settings say dark and theme set to light-high-contrast
         global.matchMedia = makeMatchMedia({ "(prefers-color-scheme: dark)": true });
         SettingsStore.getValueAt = makeGetValueAt({ "theme": "light-high-contrast" });
@@ -120,7 +120,7 @@ describe('ThemeWatcher', function() {
         expect(themeWatcher.getEffectiveTheme()).toBe("light-high-contrast");
     });
 
-    it('should choose a light theme if system prefers it (via default)', () => {
+    it("should choose a light theme if system prefers it (via default)", () => {
         // Given system prefers lightness, even though we did not
         // click "Use system theme" or choose a theme explicitly
         global.matchMedia = makeMatchMedia({ "(prefers-color-scheme: light)": true });
@@ -132,7 +132,7 @@ describe('ThemeWatcher', function() {
         expect(themeWatcher.getEffectiveTheme()).toBe("light");
     });
 
-    it('should choose a dark theme if system prefers it (via default)', () => {
+    it("should choose a dark theme if system prefers it (via default)", () => {
         // Given system prefers darkness, even though we did not
         // click "Use system theme" or choose a theme explicitly
         global.matchMedia = makeMatchMedia({ "(prefers-color-scheme: dark)": true });
@@ -144,7 +144,7 @@ describe('ThemeWatcher', function() {
         expect(themeWatcher.getEffectiveTheme()).toBe("dark");
     });
 
-    it('should choose a light theme if system prefers it (explicit)', () => {
+    it("should choose a light theme if system prefers it (explicit)", () => {
         // Given system prefers lightness
         global.matchMedia = makeMatchMedia({ "(prefers-color-scheme: light)": true });
         SettingsStore.getValueAt = makeGetValueAt({ "use_system_theme": true });
@@ -155,7 +155,7 @@ describe('ThemeWatcher', function() {
         expect(themeWatcher.getEffectiveTheme()).toBe("light");
     });
 
-    it('should choose a dark theme if system prefers it (explicit)', () => {
+    it("should choose a dark theme if system prefers it (explicit)", () => {
         // Given system prefers darkness
         global.matchMedia = makeMatchMedia({ "(prefers-color-scheme: dark)": true });
         SettingsStore.getValueAt = makeGetValueAt({ "use_system_theme": true });
@@ -166,7 +166,7 @@ describe('ThemeWatcher', function() {
         expect(themeWatcher.getEffectiveTheme()).toBe("dark");
     });
 
-    it('should choose a high-contrast theme if system prefers it', () => {
+    it("should choose a high-contrast theme if system prefers it", () => {
         // Given system prefers high contrast and light
         global.matchMedia = makeMatchMedia({
             "(prefers-contrast: more)": true,
@@ -180,7 +180,7 @@ describe('ThemeWatcher', function() {
         expect(themeWatcher.getEffectiveTheme()).toBe("light-high-contrast");
     });
 
-    it('should not choose a high-contrast theme if not available', () => {
+    it("should not choose a high-contrast theme if not available", () => {
         // Given system prefers high contrast and dark, but we don't (yet)
         // have a high-contrast dark theme
         global.matchMedia = makeMatchMedia({

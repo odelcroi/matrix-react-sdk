@@ -14,29 +14,29 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { act, fireEvent, render } from '@testing-library/react';
+import React from "react";
+import { act, fireEvent, render } from "@testing-library/react";
 
-import { FilteredDeviceList } from '../../../../../src/components/views/settings/devices/FilteredDeviceList';
-import { DeviceSecurityVariation } from '../../../../../src/components/views/settings/devices/types';
-import { flushPromises, mockPlatformPeg } from '../../../../test-utils';
+import { FilteredDeviceList } from "../../../../../src/components/views/settings/devices/FilteredDeviceList";
+import { DeviceSecurityVariation } from "../../../../../src/components/views/settings/devices/types";
+import { flushPromises, mockPlatformPeg } from "../../../../test-utils";
 
 mockPlatformPeg();
 
 const MS_DAY = 86400000;
-describe('<FilteredDeviceList />', () => {
+describe("<FilteredDeviceList />", () => {
     const newDevice = {
-        device_id: 'new',
+        device_id: "new",
         last_seen_ts: Date.now() - 500,
-        last_seen_ip: '123.456.789',
-        display_name: 'My Device',
+        last_seen_ip: "123.456.789",
+        display_name: "My Device",
         isVerified: true,
     };
-    const unverifiedNoMetadata = { device_id: 'unverified-no-metadata', isVerified: false };
-    const verifiedNoMetadata = { device_id: 'verified-no-metadata', isVerified: true };
-    const hundredDaysOld = { device_id: '100-days-old', isVerified: true, last_seen_ts: Date.now() - (MS_DAY * 100) };
+    const unverifiedNoMetadata = { device_id: "unverified-no-metadata", isVerified: false };
+    const verifiedNoMetadata = { device_id: "verified-no-metadata", isVerified: true };
+    const hundredDaysOld = { device_id: "100-days-old", isVerified: true, last_seen_ts: Date.now() - (MS_DAY * 100) };
     const hundredDaysOldUnverified = {
-        device_id: 'unverified-100-days-old',
+        device_id: "unverified-100-days-old",
         isVerified: false,
         last_seen_ts: Date.now() - (MS_DAY * 100),
     };
@@ -55,17 +55,17 @@ describe('<FilteredDeviceList />', () => {
     const getComponent = (props = {}) =>
         (<FilteredDeviceList {...defaultProps} {...props} />);
 
-    it('renders devices in correct order', () => {
+    it("renders devices in correct order", () => {
         const { container } = render(getComponent());
-        const tiles = container.querySelectorAll('.mx_DeviceTile');
-        expect(tiles[0].getAttribute('data-testid')).toEqual(`device-tile-${newDevice.device_id}`);
-        expect(tiles[1].getAttribute('data-testid')).toEqual(`device-tile-${hundredDaysOld.device_id}`);
-        expect(tiles[2].getAttribute('data-testid')).toEqual(`device-tile-${hundredDaysOldUnverified.device_id}`);
-        expect(tiles[3].getAttribute('data-testid')).toEqual(`device-tile-${unverifiedNoMetadata.device_id}`);
-        expect(tiles[4].getAttribute('data-testid')).toEqual(`device-tile-${verifiedNoMetadata.device_id}`);
+        const tiles = container.querySelectorAll(".mx_DeviceTile");
+        expect(tiles[0].getAttribute("data-testid")).toEqual(`device-tile-${newDevice.device_id}`);
+        expect(tiles[1].getAttribute("data-testid")).toEqual(`device-tile-${hundredDaysOld.device_id}`);
+        expect(tiles[2].getAttribute("data-testid")).toEqual(`device-tile-${hundredDaysOldUnverified.device_id}`);
+        expect(tiles[3].getAttribute("data-testid")).toEqual(`device-tile-${unverifiedNoMetadata.device_id}`);
+        expect(tiles[4].getAttribute("data-testid")).toEqual(`device-tile-${verifiedNoMetadata.device_id}`);
     });
 
-    it('updates list order when devices change', () => {
+    it("updates list order when devices change", () => {
         const updatedOldDevice = { ...hundredDaysOld, last_seen_ts: new Date().getTime() };
         const updatedDevices = {
             [hundredDaysOld.device_id]: updatedOldDevice,
@@ -75,19 +75,19 @@ describe('<FilteredDeviceList />', () => {
 
         rerender(getComponent({ devices: updatedDevices }));
 
-        const tiles = container.querySelectorAll('.mx_DeviceTile');
+        const tiles = container.querySelectorAll(".mx_DeviceTile");
         expect(tiles.length).toBe(2);
-        expect(tiles[0].getAttribute('data-testid')).toEqual(`device-tile-${hundredDaysOld.device_id}`);
-        expect(tiles[1].getAttribute('data-testid')).toEqual(`device-tile-${newDevice.device_id}`);
+        expect(tiles[0].getAttribute("data-testid")).toEqual(`device-tile-${hundredDaysOld.device_id}`);
+        expect(tiles[1].getAttribute("data-testid")).toEqual(`device-tile-${newDevice.device_id}`);
     });
 
-    it('displays no results message when there are no devices', () => {
+    it("displays no results message when there are no devices", () => {
         const { container } = render(getComponent({ devices: {} }));
 
-        expect(container.getElementsByClassName('mx_FilteredDeviceList_noResults')).toMatchSnapshot();
+        expect(container.getElementsByClassName("mx_FilteredDeviceList_noResults")).toMatchSnapshot();
     });
 
-    describe('filtering', () => {
+    describe("filtering", () => {
         const setFilter = async (
             container: HTMLElement,
             option: DeviceSecurityVariation | string,
@@ -101,32 +101,32 @@ describe('<FilteredDeviceList />', () => {
             fireEvent.click(container.querySelector(`#device-list-filter__${option}`) as Element);
         });
 
-        it('does not display filter description when filter is falsy', () => {
+        it("does not display filter description when filter is falsy", () => {
             const { container } = render(getComponent({ filter: undefined }));
-            const tiles = container.querySelectorAll('.mx_DeviceTile');
-            expect(container.getElementsByClassName('mx_FilteredDeviceList_securityCard').length).toBeFalsy();
+            const tiles = container.querySelectorAll(".mx_DeviceTile");
+            expect(container.getElementsByClassName("mx_FilteredDeviceList_securityCard").length).toBeFalsy();
             expect(tiles.length).toEqual(5);
         });
 
-        it('updates filter when prop changes', () => {
+        it("updates filter when prop changes", () => {
             const { container, rerender } = render(getComponent({ filter: DeviceSecurityVariation.Verified }));
-            const tiles = container.querySelectorAll('.mx_DeviceTile');
+            const tiles = container.querySelectorAll(".mx_DeviceTile");
             expect(tiles.length).toEqual(3);
-            expect(tiles[0].getAttribute('data-testid')).toEqual(`device-tile-${newDevice.device_id}`);
-            expect(tiles[1].getAttribute('data-testid')).toEqual(`device-tile-${hundredDaysOld.device_id}`);
-            expect(tiles[2].getAttribute('data-testid')).toEqual(`device-tile-${verifiedNoMetadata.device_id}`);
+            expect(tiles[0].getAttribute("data-testid")).toEqual(`device-tile-${newDevice.device_id}`);
+            expect(tiles[1].getAttribute("data-testid")).toEqual(`device-tile-${hundredDaysOld.device_id}`);
+            expect(tiles[2].getAttribute("data-testid")).toEqual(`device-tile-${verifiedNoMetadata.device_id}`);
 
             rerender(getComponent({ filter: DeviceSecurityVariation.Inactive }));
 
-            const rerenderedTiles = container.querySelectorAll('.mx_DeviceTile');
+            const rerenderedTiles = container.querySelectorAll(".mx_DeviceTile");
             expect(rerenderedTiles.length).toEqual(2);
-            expect(rerenderedTiles[0].getAttribute('data-testid')).toEqual(`device-tile-${hundredDaysOld.device_id}`);
-            expect(rerenderedTiles[1].getAttribute('data-testid')).toEqual(
+            expect(rerenderedTiles[0].getAttribute("data-testid")).toEqual(`device-tile-${hundredDaysOld.device_id}`);
+            expect(rerenderedTiles[1].getAttribute("data-testid")).toEqual(
                 `device-tile-${hundredDaysOldUnverified.device_id}`,
             );
         });
 
-        it('calls onFilterChange handler', async () => {
+        it("calls onFilterChange handler", async () => {
             const onFilterChange = jest.fn();
             const { container } = render(getComponent({ onFilterChange }));
             await setFilter(container, DeviceSecurityVariation.Verified);
@@ -134,10 +134,10 @@ describe('<FilteredDeviceList />', () => {
             expect(onFilterChange).toHaveBeenCalledWith(DeviceSecurityVariation.Verified);
         });
 
-        it('calls onFilterChange handler correctly when setting filter to All', async () => {
+        it("calls onFilterChange handler correctly when setting filter to All", async () => {
             const onFilterChange = jest.fn();
             const { container } = render(getComponent({ onFilterChange, filter: DeviceSecurityVariation.Verified }));
-            await setFilter(container, 'ALL');
+            await setFilter(container, "ALL");
 
             // filter is cleared
             expect(onFilterChange).toHaveBeenCalledWith(undefined);
@@ -147,11 +147,11 @@ describe('<FilteredDeviceList />', () => {
             [DeviceSecurityVariation.Verified, [newDevice, hundredDaysOld, verifiedNoMetadata]],
             [DeviceSecurityVariation.Unverified, [hundredDaysOldUnverified, unverifiedNoMetadata]],
             [DeviceSecurityVariation.Inactive, [hundredDaysOld, hundredDaysOldUnverified]],
-        ])('filters correctly for %s', (filter, expectedDevices) => {
+        ])("filters correctly for %s", (filter, expectedDevices) => {
             const { container } = render(getComponent({ filter }));
-            expect(container.getElementsByClassName('mx_FilteredDeviceList_securityCard')).toMatchSnapshot();
-            const tileDeviceIds = [...container.querySelectorAll('.mx_DeviceTile')]
-                .map(tile => tile.getAttribute('data-testid'));
+            expect(container.getElementsByClassName("mx_FilteredDeviceList_securityCard")).toMatchSnapshot();
+            const tileDeviceIds = [...container.querySelectorAll(".mx_DeviceTile")]
+                .map(tile => tile.getAttribute("data-testid"));
             expect(tileDeviceIds).toEqual(expectedDevices.map(device => `device-tile-${device.device_id}`));
         });
 
@@ -159,13 +159,13 @@ describe('<FilteredDeviceList />', () => {
             [DeviceSecurityVariation.Verified],
             [DeviceSecurityVariation.Unverified],
             [DeviceSecurityVariation.Inactive],
-        ])('renders no results correctly for %s', (filter) => {
+        ])("renders no results correctly for %s", (filter) => {
             const { container } = render(getComponent({ filter, devices: {} }));
-            expect(container.getElementsByClassName('mx_FilteredDeviceList_securityCard').length).toBeFalsy();
-            expect(container.getElementsByClassName('mx_FilteredDeviceList_noResults')).toMatchSnapshot();
+            expect(container.getElementsByClassName("mx_FilteredDeviceList_securityCard").length).toBeFalsy();
+            expect(container.getElementsByClassName("mx_FilteredDeviceList_noResults")).toMatchSnapshot();
         });
 
-        it('clears filter from no results message', () => {
+        it("clears filter from no results message", () => {
             const onFilterChange = jest.fn();
             const { getByTestId } = render(getComponent({
                 onFilterChange,
@@ -175,23 +175,23 @@ describe('<FilteredDeviceList />', () => {
                 },
             }));
             act(() => {
-                fireEvent.click(getByTestId('devices-clear-filter-btn'));
+                fireEvent.click(getByTestId("devices-clear-filter-btn"));
             });
 
             expect(onFilterChange).toHaveBeenCalledWith(undefined);
         });
     });
 
-    describe('device details', () => {
-        it('renders expanded devices with device details', () => {
+    describe("device details", () => {
+        it("renders expanded devices with device details", () => {
             const expandedDeviceIds = [newDevice.device_id, hundredDaysOld.device_id];
             const { container, getByTestId } = render(getComponent({ expandedDeviceIds }));
-            expect(container.getElementsByClassName('mx_DeviceDetails').length).toBeTruthy();
+            expect(container.getElementsByClassName("mx_DeviceDetails").length).toBeTruthy();
             expect(getByTestId(`device-detail-${newDevice.device_id}`)).toBeTruthy();
             expect(getByTestId(`device-detail-${hundredDaysOld.device_id}`)).toBeTruthy();
         });
 
-        it('clicking toggle calls onDeviceExpandToggle', () => {
+        it("clicking toggle calls onDeviceExpandToggle", () => {
             const onDeviceExpandToggle = jest.fn();
             const { getByTestId } = render(getComponent({ onDeviceExpandToggle }));
 

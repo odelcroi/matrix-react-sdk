@@ -14,20 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { ISecretStorageKeyInfo } from 'matrix-js-sdk/src/crypto/api';
+import React from "react";
+import { ISecretStorageKeyInfo } from "matrix-js-sdk/src/crypto/api";
 import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
 import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { _t } from '../../../languageHandler';
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import Modal from '../../../Modal';
-import VerificationRequestDialog from '../../views/dialogs/VerificationRequestDialog';
-import { SetupEncryptionStore, Phase } from '../../../stores/SetupEncryptionStore';
+import { _t } from "../../../languageHandler";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import Modal from "../../../Modal";
+import VerificationRequestDialog from "../../views/dialogs/VerificationRequestDialog";
+import { SetupEncryptionStore, Phase } from "../../../stores/SetupEncryptionStore";
 import EncryptionPanel from "../../views/right_panel/EncryptionPanel";
-import AccessibleButton from '../../views/elements/AccessibleButton';
-import Spinner from '../../views/elements/Spinner';
+import AccessibleButton from "../../views/elements/AccessibleButton";
+import Spinner from "../../views/elements/Spinner";
 
 function keyHasPassphrase(keyInfo: ISecretStorageKeyInfo): boolean {
     return Boolean(

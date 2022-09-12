@@ -54,11 +54,11 @@ async function cfgDirFromTemplate(template: string): Promise<SynapseConfig> {
     if (!stats?.isDirectory) {
         throw new Error(`No such template: ${template}`);
     }
-    const tempDir = await fse.mkdtemp(path.join(os.tmpdir(), 'react-sdk-synapsedocker-'));
+    const tempDir = await fse.mkdtemp(path.join(os.tmpdir(), "react-sdk-synapsedocker-"));
 
     // copy the contents of the template dir, omitting homeserver.yaml as we'll template that
     console.log(`Copy ${templateDir} -> ${tempDir}`);
-    await fse.copy(templateDir, tempDir, { filter: f => path.basename(f) !== 'homeserver.yaml' });
+    await fse.copy(templateDir, tempDir, { filter: f => path.basename(f) !== "homeserver.yaml" });
 
     const registrationSecret = randB64Bytes(16);
     const macaroonSecret = randB64Bytes(16);
@@ -101,7 +101,7 @@ async function synapseStart(template: string): Promise<SynapseInstance> {
 
     const synapseId = await dockerRun({
         image: "matrixdotorg/synapse:develop",
-        containerName: `react-sdk-cypress-synapse`,
+        containerName: "react-sdk-cypress-synapse",
         params: [
             "--rm",
             "-v", `${synCfg.configDir}:/data`,

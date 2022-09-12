@@ -14,18 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ClipboardEvent, createRef, KeyboardEvent } from 'react';
-import EMOJI_REGEX from 'emojibase-regex';
-import { IContent, MatrixEvent, IEventRelation } from 'matrix-js-sdk/src/models/event';
-import { DebouncedFunc, throttle } from 'lodash';
+import React, { ClipboardEvent, createRef, KeyboardEvent } from "react";
+import EMOJI_REGEX from "emojibase-regex";
+import { IContent, MatrixEvent, IEventRelation } from "matrix-js-sdk/src/models/event";
+import { DebouncedFunc, throttle } from "lodash";
 import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
-import { Room } from 'matrix-js-sdk/src/models/room';
+import { Room } from "matrix-js-sdk/src/models/room";
 import { Composer as ComposerEvent } from "@matrix-org/analytics-events/types/typescript/Composer";
-import { THREAD_RELATION_TYPE } from 'matrix-js-sdk/src/models/thread';
+import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 
-import dis from '../../../dispatcher/dispatcher';
-import EditorModel from '../../../editor/model';
+import dis from "../../../dispatcher/dispatcher";
+import EditorModel from "../../../editor/model";
 import {
     containsEmote,
     htmlSerializeIfNeeded,
@@ -34,37 +34,37 @@ import {
     stripPrefix,
     textSerialize,
     unescapeMessage,
-} from '../../../editor/serialize';
+} from "../../../editor/serialize";
 import BasicMessageComposer, { REGEX_EMOTICON } from "./BasicMessageComposer";
-import { CommandPartCreator, Part, PartCreator, SerializedPart } from '../../../editor/parts';
-import { findEditableEvent } from '../../../utils/EventUtils';
+import { CommandPartCreator, Part, PartCreator, SerializedPart } from "../../../editor/parts";
+import { findEditableEvent } from "../../../utils/EventUtils";
 import SendHistoryManager from "../../../SendHistoryManager";
-import { CommandCategories } from '../../../SlashCommands';
-import ContentMessages from '../../../ContentMessages';
+import { CommandCategories } from "../../../SlashCommands";
+import ContentMessages from "../../../ContentMessages";
 import { withMatrixClientHOC, MatrixClientProps } from "../../../contexts/MatrixClientContext";
 import { Action } from "../../../dispatcher/actions";
 import { containsEmoji } from "../../../effects/utils";
-import { CHAT_EFFECTS } from '../../../effects';
+import { CHAT_EFFECTS } from "../../../effects";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import { getKeyBindingsManager } from '../../../KeyBindingsManager';
-import SettingsStore from '../../../settings/SettingsStore';
+import { getKeyBindingsManager } from "../../../KeyBindingsManager";
+import SettingsStore from "../../../settings/SettingsStore";
 import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import { decorateStartSendingTime, sendRoundTripMetric } from "../../../sendTimePerformanceMetrics";
-import RoomContext, { TimelineRenderingType } from '../../../contexts/RoomContext';
+import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import DocumentPosition from "../../../editor/position";
 import { ComposerType } from "../../../dispatcher/payloads/ComposerInsertPayload";
 import { getSlashCommand, isSlashCommand, runSlashCommand, shouldSendAnyway } from "../../../editor/commands";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { PosthogAnalytics } from "../../../PosthogAnalytics";
-import { addReplyToMessageContent } from '../../../utils/Reply';
-import { doMaybeLocalRoomAction } from '../../../utils/local-room';
+import { addReplyToMessageContent } from "../../../utils/Reply";
+import { doMaybeLocalRoomAction } from "../../../utils/local-room";
 
 // Merges favouring the given relation
 export function attachRelation(content: IContent, relation?: IEventRelation): void {
     if (relation) {
-        content['m.relates_to'] = {
-            ...(content['m.relates_to'] || {}),
+        content["m.relates_to"] = {
+            ...(content["m.relates_to"] || {}),
             ...relation,
         };
     }
@@ -234,7 +234,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 break;
             case KeyBindingAction.CancelReplyOrEdit:
                 dis.dispatch({
-                    action: 'reply_to_event',
+                    action: "reply_to_event",
                     event: null,
                     context: this.context.timelineRenderingType,
                 });
@@ -266,7 +266,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         }
         const { parts, replyEventId } = this.sendHistoryManager.getItem(delta);
         dis.dispatch({
-            action: 'reply_to_event',
+            action: "reply_to_event",
             event: replyEventId ? this.props.room.findEventById(replyEventId) : null,
             context: this.context.timelineRenderingType,
         });
@@ -332,7 +332,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         PosthogAnalytics.instance.trackEvent<ComposerEvent>(posthogEvent);
 
         // Replace emoticon at the end of the message
-        if (SettingsStore.getValue('MessageComposerInput.autoReplaceEmoji')) {
+        if (SettingsStore.getValue("MessageComposerInput.autoReplaceEmoji")) {
             const indexOfLastPart = model.parts.length - 1;
             const positionInLastPart = model.parts[indexOfLastPart].text.length;
             this.editorRef.current?.replaceEmoticon(
@@ -412,7 +412,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 // Clear reply_to_event as we put the message into the queue
                 // if the send fails, retry will handle resending.
                 dis.dispatch({
-                    action: 'reply_to_event',
+                    action: "reply_to_event",
                     event: null,
                     context: this.context.timelineRenderingType,
                 });
@@ -461,7 +461,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         const parts = this.restoreStoredEditorState(partCreator) || [];
         this.model = new EditorModel(parts, partCreator);
         this.dispatcherRef = dis.register(this.onAction);
-        this.sendHistoryManager = new SendHistoryManager(this.props.room.roomId, 'mx_cider_history_');
+        this.sendHistoryManager = new SendHistoryManager(this.props.room.roomId, "mx_cider_history_");
     }
 
     private get editorStateKey() {
@@ -489,7 +489,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 const parts: Part[] = serializedParts.map(p => partCreator.deserializePart(p));
                 if (replyEventId) {
                     dis.dispatch({
-                        action: 'reply_to_event',
+                        action: "reply_to_event",
                         event: this.props.room.findEventById(replyEventId),
                         context: this.context.timelineRenderingType,
                     });
@@ -521,7 +521,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         if (this.props.disabled) return;
 
         switch (payload.action) {
-            case 'reply_to_event':
+            case "reply_to_event":
             case Action.FocusSendMessageComposer:
                 if ((payload.context ?? TimelineRenderingType.Room) === this.context.timelineRenderingType) {
                     this.editorRef.current?.focus();

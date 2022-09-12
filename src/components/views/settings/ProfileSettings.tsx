@@ -14,23 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
+import React, { createRef } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import Field from "../elements/Field";
-import { getHostingLink } from '../../../utils/HostingLink';
+import { getHostingLink } from "../../../utils/HostingLink";
 import { OwnProfileStore } from "../../../stores/OwnProfileStore";
 import Modal from "../../../Modal";
 import ErrorDialog from "../dialogs/ErrorDialog";
 import { mediaFromMxc } from "../../../customisations/Media";
-import AccessibleButton from '../elements/AccessibleButton';
-import AvatarSetting from './AvatarSetting';
-import ExternalLink from '../elements/ExternalLink';
-import UserIdentifierCustomisations from '../../../customisations/UserIdentifier';
+import AccessibleButton from "../elements/AccessibleButton";
+import AvatarSetting from "./AvatarSetting";
+import ExternalLink from "../elements/ExternalLink";
+import UserIdentifierCustomisations from "../../../customisations/UserIdentifier";
 import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
-import PosthogTrackers from '../../../PosthogTrackers';
+import PosthogTrackers from "../../../PosthogTrackers";
 
 interface IState {
     userId?: string;
@@ -160,7 +160,7 @@ export default class ProfileSettings extends React.Component<{}, IState> {
     };
 
     public render(): JSX.Element {
-        const hostingSignupLink = getHostingLink('user-settings');
+        const hostingSignupLink = getHostingLink("user-settings");
         let hostingSignup = null;
         if (hostingSignupLink) {
             hostingSignup = <span>

@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
+import React, { createRef } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { _t } from '../../../languageHandler';
+import { _t } from "../../../languageHandler";
 
-const DIV_ID = 'mx_recaptcha';
+const DIV_ID = "mx_recaptcha";
 
 interface ICaptchaFormProps {
     sitePublicKey: string;
@@ -59,9 +59,9 @@ export default class CaptchaForm extends React.Component<ICaptchaFormProps, ICap
         } else {
             logger.log("Loading recaptcha script...");
             window.mxOnRecaptchaLoaded = () => { this.onCaptchaLoaded(); };
-            const scriptTag = document.createElement('script');
+            const scriptTag = document.createElement("script");
             scriptTag.setAttribute(
-                'src', `https://www.recaptcha.net/recaptcha/api.js?onload=mxOnRecaptchaLoaded&render=explicit`,
+                "src", "https://www.recaptcha.net/recaptcha/api.js?onload=mxOnRecaptchaLoaded&render=explicit",
             );
             this.recaptchaContainer.current.appendChild(scriptTag);
         }
@@ -75,7 +75,7 @@ export default class CaptchaForm extends React.Component<ICaptchaFormProps, ICap
     private isRecaptchaReady(): boolean {
         return typeof window !== "undefined" &&
             typeof global.grecaptcha !== "undefined" &&
-            typeof global.grecaptcha.render === 'function';
+            typeof global.grecaptcha.render === "function";
     }
 
     private renderRecaptcha(divId: string) {

@@ -18,7 +18,7 @@ limitations under the License.
 import React from "react";
 import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
 
-import { MatrixClientPeg } from '../../../../MatrixClientPeg';
+import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import dis from "../../../../dispatcher/dispatcher";
 import { _t } from "../../../../languageHandler";
 import Modal from "../../../../Modal";

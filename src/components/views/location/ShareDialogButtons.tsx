@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
-import AccessibleButton from '../elements/AccessibleButton';
-import { Icon as BackIcon } from '../../../../res/img/element-icons/caret-left.svg';
-import { Icon as CloseIcon } from '../../../../res/img/element-icons/cancel-rounded.svg';
+import AccessibleButton from "../elements/AccessibleButton";
+import { Icon as BackIcon } from "../../../../res/img/element-icons/caret-left.svg";
+import { Icon as CloseIcon } from "../../../../res/img/element-icons/cancel-rounded.svg";
 
 interface Props {
     onCancel: () => void;

@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import { IGeneratedSas } from "matrix-js-sdk/src/crypto/verification/SAS";
 import { DeviceInfo } from "matrix-js-sdk/src//crypto/deviceinfo";
 
-import { _t, _td } from '../../../languageHandler';
+import { _t, _td } from "../../../languageHandler";
 import { PendingActionSpinner } from "../right_panel/EncryptionInfo";
 import AccessibleButton from "../elements/AccessibleButton";
-import { fixupColorFonts } from '../../../utils/FontManager';
+import { fixupColorFonts } from "../../../utils/FontManager";
 
 interface IProps {
     pending?: boolean;
@@ -113,7 +113,7 @@ export default class VerificationShowSas extends React.Component<IProps, IState>
             return <div>
                 { _t("Unable to find a supported verification method.") }
                 <AccessibleButton kind="primary" onClick={this.props.onCancel}>
-                    { _t('Cancel') }
+                    { _t("Cancel") }
                 </AccessibleButton>
             </div>;
         }
@@ -125,8 +125,8 @@ export default class VerificationShowSas extends React.Component<IProps, IState>
             // logged out during verification
             if (this.props.device) {
                 text = _t("Waiting for you to verify on your other device, %(deviceName)s (%(deviceId)s)…", {
-                    deviceName: this.props.device ? this.props.device.getDisplayName() : '',
-                    deviceId: this.props.device ? this.props.device.deviceId : '',
+                    deviceName: this.props.device ? this.props.device.getDisplayName() : "",
+                    deviceId: this.props.device ? this.props.device.deviceId : "",
                 });
             } else {
                 text = _t("Waiting for you to verify on your other device…");

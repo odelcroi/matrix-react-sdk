@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from 'matrix-js-sdk/src/models/room';
-import React from 'react';
+import { Room } from "matrix-js-sdk/src/models/room";
+import React from "react";
 
-import { _t } from '../../../../languageHandler';
-import RoomAvatar from '../../avatars/RoomAvatar';
-import AccessibleTooltipButton from '../../elements/AccessibleTooltipButton';
+import { _t } from "../../../../languageHandler";
+import RoomAvatar from "../../avatars/RoomAvatar";
+import AccessibleTooltipButton from "../../elements/AccessibleTooltipButton";
 
 interface LegacyCallControlsProps {
     onExpand?: () => void;

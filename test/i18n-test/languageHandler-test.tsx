@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
 import {
     _t,
@@ -23,62 +23,62 @@ import {
     setLanguage,
     setMissingEntryGenerator,
     substitute,
-} from '../../src/languageHandler';
-import { stubClient } from '../test-utils';
+} from "../../src/languageHandler";
+import { stubClient } from "../test-utils";
 
-describe('languageHandler', function() {
+describe("languageHandler", function() {
     /*
       See /__mocks__/browser-request.js/ for how we are stubbing out translations
       to provide fixture data for these tests
      */
-    const basicString = 'Rooms';
-    const selfClosingTagSub = 'Accept <policyLink /> to continue:';
-    const textInTagSub = '<a>Upgrade</a> to your own domain';
-    const plurals = 'and %(count)s others...';
-    const variableSub = 'You are now ignoring %(userId)s';
+    const basicString = "Rooms";
+    const selfClosingTagSub = "Accept <policyLink /> to continue:";
+    const textInTagSub = "<a>Upgrade</a> to your own domain";
+    const plurals = "and %(count)s others...";
+    const variableSub = "You are now ignoring %(userId)s";
 
     type TestCase = [string, string, Record<string, unknown>, Record<string, unknown>, TranslatedString];
     const testCasesEn: TestCase[] = [
         // description of the test case, translationString, variables, tags, expected result
-        ['translates a basic string', basicString, {}, undefined, 'Rooms'],
+        ["translates a basic string", basicString, {}, undefined, "Rooms"],
         [
-            'handles plurals when count is 0',
+            "handles plurals when count is 0",
             plurals,
             { count: 0 },
             undefined,
-            'and 0 others...',
+            "and 0 others...",
         ],
         [
-            'handles plurals when count is 1',
+            "handles plurals when count is 1",
             plurals,
             { count: 1 },
             undefined,
-            'and one other...',
+            "and one other...",
         ],
         [
-            'handles plurals when count is not 1',
+            "handles plurals when count is not 1",
             plurals,
             { count: 2 },
             undefined,
-            'and 2 others...',
+            "and 2 others...",
         ],
         [
-            'handles simple variable substitution',
+            "handles simple variable substitution",
             variableSub,
-            { userId: 'foo' },
+            { userId: "foo" },
             undefined,
-            'You are now ignoring foo',
+            "You are now ignoring foo",
         ],
         [
-            'handles simple tag substitution',
+            "handles simple tag substitution",
             selfClosingTagSub,
             {},
-            { 'policyLink': () => 'foo' },
-            'Accept foo to continue:',
+            { "policyLink": () => "foo" },
+            "Accept foo to continue:",
         ],
-        ['handles text in tags', textInTagSub, {}, { 'a': (sub) => `x${sub}x` }, 'xUpgradex to your own domain'],
+        ["handles text in tags", textInTagSub, {}, { "a": (sub) => `x${sub}x` }, "xUpgradex to your own domain"],
         [
-            'handles variable substitution with React function component',
+            "handles variable substitution with React function component",
             variableSub,
             { userId: () => <i>foo</i> },
             undefined,
@@ -86,7 +86,7 @@ describe('languageHandler', function() {
             <span>You are now ignoring <i>foo</i></span>,
         ],
         [
-            'handles variable substitution with react node',
+            "handles variable substitution with react node",
             variableSub,
             { userId: <i>foo</i> },
             undefined,
@@ -94,27 +94,27 @@ describe('languageHandler', function() {
             <span>You are now ignoring <i>foo</i></span>,
         ],
         [
-            'handles tag substitution with React function component',
+            "handles tag substitution with React function component",
             selfClosingTagSub,
             {},
-            { 'policyLink': () => <i>foo</i> },
+            { "policyLink": () => <i>foo</i> },
             // eslint-disable-next-line react/jsx-key
             <span>Accept <i>foo</i> to continue:</span>,
         ],
     ];
 
-    describe('when translations exist in language', () => {
+    describe("when translations exist in language", () => {
         beforeEach(function(done) {
             stubClient();
 
-            setLanguage('en').then(done);
+            setLanguage("en").then(done);
             setMissingEntryGenerator(key => key.split("|", 2)[1]);
         });
 
-        it('translates a string to german', function(done) {
-            setLanguage('de').then(function() {
+        it("translates a string to german", function(done) {
+            setLanguage("de").then(function() {
                 const translated = _t(basicString);
-                expect(translated).toBe('Räume');
+                expect(translated).toBe("Räume");
             }).then(done);
         });
 
@@ -122,62 +122,62 @@ describe('languageHandler', function() {
             expect(_t(translationString, variables, tags)).toEqual(result);
         });
 
-        it('replacements in the wrong order', function() {
-            const text = '%(var1)s %(var2)s';
-            expect(_t(text, { var2: 'val2', var1: 'val1' })).toBe('val1 val2');
+        it("replacements in the wrong order", function() {
+            const text = "%(var1)s %(var2)s";
+            expect(_t(text, { var2: "val2", var1: "val1" })).toBe("val1 val2");
         });
 
-        it('multiple replacements of the same variable', function() {
-            const text = '%(var1)s %(var1)s';
-            expect(substitute(text, { var1: 'val1' })).toBe('val1 val1');
+        it("multiple replacements of the same variable", function() {
+            const text = "%(var1)s %(var1)s";
+            expect(substitute(text, { var1: "val1" })).toBe("val1 val1");
         });
 
-        it('multiple replacements of the same tag', function() {
-            const text = '<a>Click here</a> to join the discussion! <a>or here</a>';
-            expect(substitute(text, {}, { 'a': (sub) => `x${sub}x` }))
-                .toBe('xClick herex to join the discussion! xor herex');
+        it("multiple replacements of the same tag", function() {
+            const text = "<a>Click here</a> to join the discussion! <a>or here</a>";
+            expect(substitute(text, {}, { "a": (sub) => `x${sub}x` }))
+                .toBe("xClick herex to join the discussion! xor herex");
         });
     });
 
-    describe('for a non-en language', () => {
+    describe("for a non-en language", () => {
         beforeEach(async () => {
             stubClient();
-            await setLanguage('lv');
+            await setLanguage("lv");
             // counterpart doesnt expose any way to restore default config
             // missingEntryGenerator is mocked in the root setup file
             // reset to default here
             const counterpartDefaultMissingEntryGen =
-                function(key) { return 'missing translation: ' + key; };
+                function(key) { return "missing translation: " + key; };
             setMissingEntryGenerator(counterpartDefaultMissingEntryGen);
         });
 
         // mocked lv has only `"Uploading %(filename)s and %(count)s others|one"`
-        const lvExistingPlural = 'Uploading %(filename)s and %(count)s others';
-        const lvNonExistingPlural = '%(spaceName)s and %(count)s others';
+        const lvExistingPlural = "Uploading %(filename)s and %(count)s others";
+        const lvNonExistingPlural = "%(spaceName)s and %(count)s others";
 
-        describe('pluralization', () => {
+        describe("pluralization", () => {
             const pluralCases = [
                 [
-                    'falls back when plural string exists but not for for count',
+                    "falls back when plural string exists but not for for count",
                     lvExistingPlural,
-                    { count: 2, filename: 'test.txt' },
+                    { count: 2, filename: "test.txt" },
                     undefined,
-                    'Uploading test.txt and 2 others',
+                    "Uploading test.txt and 2 others",
                 ],
                 [
-                    'falls back when plural string does not exists at all',
+                    "falls back when plural string does not exists at all",
                     lvNonExistingPlural,
-                    { count: 2, spaceName: 'test' },
+                    { count: 2, spaceName: "test" },
                     undefined,
-                    'test and 2 others',
+                    "test and 2 others",
                 ],
             ] as TestCase[];
 
-            describe('_t', () => {
-                it('translated correctly when plural string exists for count', () => {
+            describe("_t", () => {
+                it("translated correctly when plural string exists for count", () => {
                     expect(_t(
                         lvExistingPlural,
-                        { count: 1, filename: 'test.txt' }, undefined)).toEqual('Качване на test.txt и 1 друг');
+                        { count: 1, filename: "test.txt" }, undefined)).toEqual("Качване на test.txt и 1 друг");
                 });
                 it.each(pluralCases)(
                     "%s",
@@ -187,11 +187,11 @@ describe('languageHandler', function() {
                 );
             });
 
-            describe('_tDom()', () => {
-                it('translated correctly when plural string exists for count', () => {
+            describe("_tDom()", () => {
+                it("translated correctly when plural string exists for count", () => {
                     expect(_tDom(
                         lvExistingPlural,
-                        { count: 1, filename: 'test.txt' }, undefined)).toEqual('Качване на test.txt и 1 друг');
+                        { count: 1, filename: "test.txt" }, undefined)).toEqual("Качване на test.txt и 1 друг");
                 });
                 it.each(pluralCases)(
                     "%s and translates with fallback locale, attributes fallback locale",
@@ -202,8 +202,8 @@ describe('languageHandler', function() {
             });
         });
 
-        describe('when a translation string does not exist in active language', () => {
-            describe('_t', () => {
+        describe("when a translation string does not exist in active language", () => {
+            describe("_t", () => {
                 it.each(testCasesEn)(
                     "%s and translates with fallback locale",
                     async (_d, translationString, variables, tags, result) => {
@@ -212,7 +212,7 @@ describe('languageHandler', function() {
                 );
             });
 
-            describe('_tDom()', () => {
+            describe("_tDom()", () => {
                 it.each(testCasesEn)(
                     "%s and translates with fallback locale, attributes fallback locale",
                     async (_d, translationString, variables, tags, result) => {
@@ -223,13 +223,13 @@ describe('languageHandler', function() {
         });
     });
 
-    describe('when languages dont load', () => {
-        it('_t', async () => {
+    describe("when languages dont load", () => {
+        it("_t", async () => {
             const STRING_NOT_IN_THE_DICTIONARY = "a string that isn't in the translations dictionary";
             expect(_t(STRING_NOT_IN_THE_DICTIONARY, {}, undefined)).toEqual(STRING_NOT_IN_THE_DICTIONARY);
         });
 
-        it('_tDom', async () => {
+        it("_tDom", async () => {
             const STRING_NOT_IN_THE_DICTIONARY = "a string that isn't in the translations dictionary";
             expect(_tDom(STRING_NOT_IN_THE_DICTIONARY, {}, undefined)).toEqual(
                 <span lang="en">{ STRING_NOT_IN_THE_DICTIONARY }</span>);

@@ -18,7 +18,7 @@ import React, { useCallback, useEffect } from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import { ButtonEvent } from "../elements/AccessibleButton";
-import dis from '../../../dispatcher/dispatcher';
+import dis from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
 import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
 import { copyPlaintext } from "../../../utils/strings";

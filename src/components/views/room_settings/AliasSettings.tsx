@@ -19,7 +19,7 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import EditableItemList from "../elements/EditableItemList";
-import { _t } from '../../../languageHandler';
+import { _t } from "../../../languageHandler";
 import Field from "../elements/Field";
 import Spinner from "../elements/Spinner";
 import ErrorDialog from "../dialogs/ErrorDialog";
@@ -231,7 +231,7 @@ export default class AliasSettings extends React.Component<IProps, IState> {
         if (!alias || alias.length === 0) return; // ignore attempts to create blank aliases
 
         const localDomain = this.context.getDomain();
-        if (!alias.includes(':')) alias += ':' + localDomain;
+        if (!alias.includes(":")) alias += ":" + localDomain;
 
         this.context.createAlias(alias, this.props.roomId).then(() => {
             this.setState({
@@ -339,9 +339,9 @@ export default class AliasSettings extends React.Component<IProps, IState> {
                 disabled={this.state.updatingCanonicalAlias || !this.props.canSetCanonicalAlias}
                 element='select'
                 id='canonicalAlias'
-                label={_t('Main address')}
+                label={_t("Main address")}
             >
-                <option value="" key="unset">{ _t('not specified') }</option>
+                <option value="" key="unset">{ _t("not specified") }</option>
                 {
                     this.getAliases().map((alias, i) => {
                         if (alias === this.state.canonicalAlias) found = true;
@@ -353,7 +353,7 @@ export default class AliasSettings extends React.Component<IProps, IState> {
                     })
                 }
                 {
-                    found || !this.state.canonicalAlias ? '' :
+                    found || !this.state.canonicalAlias ? "" :
                         <option value={this.state.canonicalAlias} key='arbitrary'>
                             { this.state.canonicalAlias }
                         </option>
@@ -377,7 +377,7 @@ export default class AliasSettings extends React.Component<IProps, IState> {
                 noItemsLabel={isSpaceRoom
                     ? _t("This space has no local addresses")
                     : _t("This room has no local addresses")}
-                placeholder={_t('Local address')}
+                placeholder={_t("Local address")}
                 domain={localDomain}
             />);
         }
@@ -426,9 +426,9 @@ export default class AliasSettings extends React.Component<IProps, IState> {
                         onItemAdded={this.onAltAliasAdded}
                         onItemRemoved={this.onAltAliasDeleted}
                         suggestionsListId="mx_AliasSettings_altRecommendations"
-                        itemsLabel={_t('Other published addresses:')}
-                        noItemsLabel={_t('No other published addresses yet, add one below')}
-                        placeholder={_t('New published address (e.g. #alias:server)')}
+                        itemsLabel={_t("Other published addresses:")}
+                        noItemsLabel={_t("No other published addresses yet, add one below")}
+                        placeholder={_t("New published address (e.g. #alias:server)")}
                         roomId={this.props.roomId}
                     />
                 </SettingsFieldset>
@@ -441,7 +441,7 @@ export default class AliasSettings extends React.Component<IProps, IState> {
                         : _t("Set addresses for this room so users can find this room " +
                         "through your homeserver (%(localDomain)s)", { localDomain })}>
                     <details onToggle={this.onLocalAliasesToggled} open={this.state.detailsOpen}>
-                        <summary>{ this.state.detailsOpen ? _t('Show less') : _t("Show more") }</summary>
+                        <summary>{ this.state.detailsOpen ? _t("Show less") : _t("Show more") }</summary>
                         { localAliasesList }
                     </details>
                 </SettingsFieldset>

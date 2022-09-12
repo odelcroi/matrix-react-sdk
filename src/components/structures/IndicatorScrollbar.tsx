@@ -50,8 +50,8 @@ export default class IndicatorScrollbar<
         super(props);
 
         this.state = {
-            leftIndicatorOffset: '0',
-            rightIndicatorOffset: '0',
+            leftIndicatorOffset: "0",
+            rightIndicatorOffset: "0",
         };
     }
 
@@ -114,10 +114,10 @@ export default class IndicatorScrollbar<
         if (this.props.trackHorizontalOverflow) {
             this.setState({
                 // Offset from absolute position of the container
-                leftIndicatorOffset: hasLeftOverflow ? `${this.scrollElement.scrollLeft}px` : '0',
+                leftIndicatorOffset: hasLeftOverflow ? `${this.scrollElement.scrollLeft}px` : "0",
 
                 // Negative because we're coming from the right
-                rightIndicatorOffset: hasRightOverflow ? `-${this.scrollElement.scrollLeft}px` : '0',
+                rightIndicatorOffset: hasRightOverflow ? `-${this.scrollElement.scrollLeft}px` : "0",
             });
         }
     };

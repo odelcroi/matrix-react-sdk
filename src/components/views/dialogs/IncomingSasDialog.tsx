@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import { IGeneratedSas, ISasEvent, SasEvent } from "matrix-js-sdk/src/crypto/verification/SAS";
 import { VerificationBase, VerificationEvent } from "matrix-js-sdk/src/crypto/verification/Base";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import { _t } from '../../../languageHandler';
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { _t } from "../../../languageHandler";
 import { mediaFromMxc } from "../../../customisations/Media";
 import VerificationComplete from "../verification/VerificationComplete";
 import VerificationCancelled from "../verification/VerificationCancelled";
@@ -80,7 +80,7 @@ export default class IncomingSasDialog extends React.Component<IProps, IState> {
 
     public componentWillUnmount(): void {
         if (this.state.phase !== PHASE_CANCELLED && this.state.phase !== PHASE_VERIFIED) {
-            this.props.verifier.cancel(new Error('User cancel'));
+            this.props.verifier.cancel(new Error("User cancel"));
         }
         this.props.verifier.removeListener(SasEvent.ShowSas, this.onVerifierShowSas);
     }
@@ -207,7 +207,7 @@ export default class IncomingSasDialog extends React.Component<IProps, IState> {
                 { profile }
                 { isSelf ? selfDetailText : userDetailText }
                 <DialogButtons
-                    primaryButton={_t('Continue')}
+                    primaryButton={_t("Continue")}
                     hasCancel={true}
                     onPrimaryButtonClick={this.onContinueClick}
                     onCancel={this.onCancelClick}

@@ -19,8 +19,8 @@ import { AutoDiscovery } from "matrix-js-sdk/src/autodiscovery";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import AutoDiscoveryUtils from "../../../utils/AutoDiscoveryUtils";
-import BaseDialog from './BaseDialog';
-import { _t } from '../../../languageHandler';
+import BaseDialog from "./BaseDialog";
+import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
 import SdkConfig from "../../../SdkConfig";
 import Field from "../elements/Field";

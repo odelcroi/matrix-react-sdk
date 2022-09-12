@@ -14,22 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, SyntheticEvent, MouseEvent, ReactNode } from 'react';
-import ReactDOM from 'react-dom';
-import highlight from 'highlight.js';
+import React, { createRef, SyntheticEvent, MouseEvent, ReactNode } from "react";
+import ReactDOM from "react-dom";
+import highlight from "highlight.js";
 import { MsgType } from "matrix-js-sdk/src/@types/event";
 import { isEventLike, LegacyMsgType, M_MESSAGE, MessageEvent } from "matrix-events-sdk";
 
-import * as HtmlUtils from '../../../HtmlUtils';
-import { formatDate } from '../../../DateUtils';
-import Modal from '../../../Modal';
-import dis from '../../../dispatcher/dispatcher';
-import { _t } from '../../../languageHandler';
-import * as ContextMenu from '../../structures/ContextMenu';
-import { ChevronFace, toRightOf } from '../../structures/ContextMenu';
+import * as HtmlUtils from "../../../HtmlUtils";
+import { formatDate } from "../../../DateUtils";
+import Modal from "../../../Modal";
+import dis from "../../../dispatcher/dispatcher";
+import { _t } from "../../../languageHandler";
+import * as ContextMenu from "../../structures/ContextMenu";
+import { ChevronFace, toRightOf } from "../../structures/ContextMenu";
 import SettingsStore from "../../../settings/SettingsStore";
-import { pillifyLinks, unmountPills } from '../../../utils/pillify';
-import { tooltipifyLinks, unmountTooltips } from '../../../utils/tooltipify';
+import { pillifyLinks, unmountPills } from "../../../utils/pillify";
+import { tooltipifyLinks, unmountTooltips } from "../../../utils/tooltipify";
 import { IntegrationManagers } from "../../../integrations/IntegrationManagers";
 import { isPermalinkHost, tryTransformPermalinkToLocalHref } from "../../../utils/permalinks/Permalinks";
 import { copyPlaintext } from "../../../utils/strings";
@@ -41,13 +41,13 @@ import GenericTextContextMenu from "../context_menus/GenericTextContextMenu";
 import Spoiler from "../elements/Spoiler";
 import QuestionDialog from "../dialogs/QuestionDialog";
 import MessageEditHistoryDialog from "../dialogs/MessageEditHistoryDialog";
-import EditMessageComposer from '../rooms/EditMessageComposer';
-import LinkPreviewGroup from '../rooms/LinkPreviewGroup';
+import EditMessageComposer from "../rooms/EditMessageComposer";
+import LinkPreviewGroup from "../rooms/LinkPreviewGroup";
 import { IBodyProps } from "./IBodyProps";
 import RoomContext from "../../../contexts/RoomContext";
-import AccessibleButton from '../elements/AccessibleButton';
+import AccessibleButton from "../elements/AccessibleButton";
 import { options as linkifyOpts } from "../../../linkify-matrix";
-import { getParentEventId } from '../../../utils/Reply';
+import { getParentEventId } from "../../../utils/Reply";
 
 const MAX_HIGHLIGHT_LENGTH = 4096;
 
@@ -195,7 +195,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
             const { close } = ContextMenu.createMenu(GenericTextContextMenu, {
                 ...toRightOf(buttonRect, 0),
                 chevronFace: ChevronFace.None,
-                message: successful ? _t('Copied!') : _t('Failed to copy'),
+                message: successful ? _t("Copied!") : _t("Failed to copy"),
             });
             button.onmouseleave = close;
         };
@@ -224,16 +224,16 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
     private addLineNumbers(pre: HTMLPreElement): void {
         // Calculate number of lines in pre
         const number = pre.innerHTML.replace(/\n(<\/code>)?$/, "").split(/\n/).length;
-        const lineNumbers = document.createElement('span');
-        lineNumbers.className = 'mx_EventTile_lineNumbers';
+        const lineNumbers = document.createElement("span");
+        lineNumbers.className = "mx_EventTile_lineNumbers";
         // Iterate through lines starting with 1 (number of the first line is 1)
         for (let i = 1; i <= number; i++) {
-            const s = document.createElement('span');
+            const s = document.createElement("span");
             s.textContent = i.toString();
             lineNumbers.appendChild(s);
         }
         pre.prepend(lineNumbers);
-        pre.append(document.createElement('span'));
+        pre.append(document.createElement("span"));
     }
 
     private highlightCode(code: HTMLElement): void {
@@ -248,8 +248,8 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
 
         let advertisedLang;
         for (const cl of code.className.split(/\s+/)) {
-            if (cl.startsWith('language-')) {
-                const maybeLang = cl.split('-', 2)[1];
+            if (cl.startsWith("language-")) {
+                const maybeLang = cl.split("-", 2)[1];
                 if (highlight.getLanguage(maybeLang)) {
                     advertisedLang = maybeLang;
                     break;
@@ -336,7 +336,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         let node = nodes[0];
         while (node) {
             if (node.tagName === "SPAN" && typeof node.getAttribute("data-mx-spoiler") === "string") {
-                const spoilerContainer = document.createElement('span');
+                const spoilerContainer = document.createElement("span");
 
                 const reason = node.getAttribute("data-mx-spoiler");
                 node.removeAttribute("data-mx-spoiler"); // we don't want to recurse
@@ -501,7 +501,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
                     const left = (window.screen.width - width) / 2;
                     const top = (window.screen.height - height) / 2;
                     const features = `height=${height}, width=${width}, top=${top}, left=${left},`;
-                    const wnd = window.open(completeUrl, '_blank', features);
+                    const wnd = window.open(completeUrl, "_blank", features);
                     wnd.opener = null;
                 },
             });
@@ -584,7 +584,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
                     msgtype: MsgType.Text,
                 }, this.props.highlights, {
                     disableBigEmoji: isEmote
-                        || !SettingsStore.getValue<boolean>('TextualBody.enableBigEmoji'),
+                        || !SettingsStore.getValue<boolean>("TextualBody.enableBigEmoji"),
                     // Part of Replies fallback support
                     stripReplyFallback: stripReply,
                     ref: this.contentRef,
@@ -597,7 +597,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
             isNotice = content.msgtype === MsgType.Notice;
             body = HtmlUtils.bodyToHtml(content, this.props.highlights, {
                 disableBigEmoji: isEmote
-                    || !SettingsStore.getValue<boolean>('TextualBody.enableBigEmoji'),
+                    || !SettingsStore.getValue<boolean>("TextualBody.enableBigEmoji"),
                 // Part of Replies fallback support
                 stripReplyFallback: stripReply,
                 ref: this.contentRef,

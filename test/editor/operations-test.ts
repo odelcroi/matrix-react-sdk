@@ -24,7 +24,7 @@ import {
     toggleInlineFormat,
 } from "../../src/editor/operations";
 import { Formatting } from "../../src/components/views/rooms/MessageComposerFormatBar";
-import { longestBacktickSequence } from '../../src/editor/deserialize';
+import { longestBacktickSequence } from "../../src/editor/deserialize";
 
 const SERIALIZED_NEWLINE = { "text": "\n", "type": "newline" };
 
@@ -112,8 +112,8 @@ describe("editor/operations: formatting operations", () => {
             expect(model.serializeParts()).toEqual([{ "text": "hello _world_!", "type": "plain" }]);
         });
 
-        describe('escape backticks', () => {
-            it('works for escaping backticks in between texts', () => {
+        describe("escape backticks", () => {
+            it("works for escaping backticks in between texts", () => {
                 const renderer = createRenderer();
                 const pc = createPartCreator();
                 const model = new EditorModel([
@@ -130,7 +130,7 @@ describe("editor/operations: formatting operations", () => {
                 expect(model.serializeParts()).toEqual([{ "text": "``hello ` world``!", "type": "plain" }]);
             });
 
-            it('escapes longer backticks in between text', () => {
+            it("escapes longer backticks in between text", () => {
                 const renderer = createRenderer();
                 const pc = createPartCreator();
                 const model = new EditorModel([
@@ -147,7 +147,7 @@ describe("editor/operations: formatting operations", () => {
                 expect(model.serializeParts()).toEqual([{ "text": "````hello```world````", "type": "plain" }]);
             });
 
-            it('escapes non-consecutive with varying length backticks in between text', () => {
+            it("escapes non-consecutive with varying length backticks in between text", () => {
                 const renderer = createRenderer();
                 const pc = createPartCreator();
                 const model = new EditorModel([
@@ -163,7 +163,7 @@ describe("editor/operations: formatting operations", () => {
                 expect(model.serializeParts()).toEqual([{ "text": "````hell```o`w`o``rld````", "type": "plain" }]);
             });
 
-            it('untoggles correctly if its already formatted', () => {
+            it("untoggles correctly if its already formatted", () => {
                 const renderer = createRenderer();
                 const pc = createPartCreator();
                 const model = new EditorModel([
@@ -178,7 +178,7 @@ describe("editor/operations: formatting operations", () => {
                 formatRangeAsCode(range);
                 expect(model.serializeParts()).toEqual([{ "text": "hello``world", "type": "plain" }]);
             });
-            it('untoggles correctly it contains varying length of backticks between text', () => {
+            it("untoggles correctly it contains varying length of backticks between text", () => {
                 const renderer = createRenderer();
                 const pc = createPartCreator();
                 const model = new EditorModel([
@@ -195,7 +195,7 @@ describe("editor/operations: formatting operations", () => {
             });
         });
 
-        it('works for parts of words', () => {
+        it("works for parts of words", () => {
             const renderer = createRenderer();
             const pc = createPartCreator();
             const model = new EditorModel([
@@ -211,7 +211,7 @@ describe("editor/operations: formatting operations", () => {
             expect(model.serializeParts()).toEqual([{ "text": "hello w*orl*d!", "type": "plain" }]);
         });
 
-        it('works for around pills', () => {
+        it("works for around pills", () => {
             const renderer = createRenderer();
             const pc = createPartCreator();
             const model = new EditorModel([
@@ -237,7 +237,7 @@ describe("editor/operations: formatting operations", () => {
             ]);
         });
 
-        it('works for a paragraph', () => {
+        it("works for a paragraph", () => {
             const renderer = createRenderer();
             const pc = createPartCreator();
             const model = new EditorModel([
@@ -263,7 +263,7 @@ describe("editor/operations: formatting operations", () => {
             ]);
         });
 
-        it('works for a paragraph with spurious breaks around it in selected range', () => {
+        it("works for a paragraph with spurious breaks around it in selected range", () => {
             const renderer = createRenderer();
             const pc = createPartCreator();
             const model = new EditorModel([
@@ -300,7 +300,7 @@ describe("editor/operations: formatting operations", () => {
             ]);
         });
 
-        it('works for multiple paragraph', () => {
+        it("works for multiple paragraph", () => {
             const renderer = createRenderer();
             const pc = createPartCreator();
             const model = new EditorModel([
@@ -343,7 +343,7 @@ describe("editor/operations: formatting operations", () => {
             ]);
         });
 
-        it('format word at caret position at beginning of new line without previous selection', () => {
+        it("format word at caret position at beginning of new line without previous selection", () => {
             const renderer = createRenderer();
             const pc = createPartCreator();
             const model = new EditorModel([
@@ -389,7 +389,7 @@ describe("editor/operations: formatting operations", () => {
             ]);
         });
 
-        it('caret resets correctly to current line when untoggling formatting while caret at line end', () => {
+        it("caret resets correctly to current line when untoggling formatting while caret at line end", () => {
             const renderer = createRenderer();
             const pc = createPartCreator();
             const model = new EditorModel([
@@ -418,7 +418,7 @@ describe("editor/operations: formatting operations", () => {
             ]);
         });
 
-        it('format link in front of new line part', () => {
+        it("format link in front of new line part", () => {
             const renderer = createRenderer();
             const pc = createPartCreator();
             const model = new EditorModel([
@@ -455,7 +455,7 @@ describe("editor/operations: formatting operations", () => {
             ]);
         });
 
-        it('format multi line code', () => {
+        it("format multi line code", () => {
             const renderer = createRenderer();
             const pc = createPartCreator();
             const model = new EditorModel([
@@ -500,7 +500,7 @@ describe("editor/operations: formatting operations", () => {
             ]);
         });
 
-        it('does not format pure white space', () => {
+        it("does not format pure white space", () => {
             const renderer = createRenderer();
             const pc = createPartCreator();
             const model = new EditorModel([

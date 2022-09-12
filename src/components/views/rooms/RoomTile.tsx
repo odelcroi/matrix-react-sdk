@@ -22,7 +22,7 @@ import classNames from "classnames";
 import type { Call } from "../../../models/Call";
 import { RovingTabIndexWrapper } from "../../../accessibility/RovingTabIndex";
 import AccessibleButton, { ButtonEvent } from "../../views/elements/AccessibleButton";
-import defaultDispatcher from '../../../dispatcher/dispatcher';
+import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
 import { _t } from "../../../languageHandler";
 import { ChevronFace, ContextMenuTooltipButton } from "../../structures/ContextMenu";
@@ -348,14 +348,14 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
 
     public render(): React.ReactElement {
         const classes = classNames({
-            'mx_RoomTile': true,
-            'mx_RoomTile_selected': this.state.selected,
-            'mx_RoomTile_hasMenuOpen': !!(this.state.generalMenuPosition || this.state.notificationsMenuPosition),
-            'mx_RoomTile_minimized': this.props.isMinimized,
+            "mx_RoomTile": true,
+            "mx_RoomTile_selected": this.state.selected,
+            "mx_RoomTile_hasMenuOpen": !!(this.state.generalMenuPosition || this.state.notificationsMenuPosition),
+            "mx_RoomTile_minimized": this.props.isMinimized,
         });
 
         let name = this.props.room.name;
-        if (typeof name !== 'string') name = '';
+        if (typeof name !== "string") name = "";
         name = name.replace(":", ":\u200b"); // add a zero-width space to allow linewrapping after the colon
 
         let badge: React.ReactNode;

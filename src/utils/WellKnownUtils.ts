@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { IClientWellKnown } from 'matrix-js-sdk/src/client';
-import { UnstableValue } from 'matrix-js-sdk/src/NamespacedValue';
+import { IClientWellKnown } from "matrix-js-sdk/src/client";
+import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
 
-import { MatrixClientPeg } from '../MatrixClientPeg';
+import { MatrixClientPeg } from "../MatrixClientPeg";
 
 const CALL_BEHAVIOUR_WK_KEY = "io.element.call_behaviour";
 const E2EE_WK_KEY = "io.element.e2ee";

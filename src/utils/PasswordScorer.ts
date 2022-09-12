@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import zxcvbn, { ZXCVBNFeedbackWarning } from 'zxcvbn';
+import zxcvbn, { ZXCVBNFeedbackWarning } from "zxcvbn";
 
-import { MatrixClientPeg } from '../MatrixClientPeg';
-import { _t, _td } from '../languageHandler';
+import { MatrixClientPeg } from "../MatrixClientPeg";
+import { _t, _td } from "../languageHandler";
 
 const ZXCVBN_USER_INPUTS = [
-    'riot',
-    'matrix',
+    "riot",
+    "matrix",
 ];
 
 // Translations for zxcvbn's suggestion strings
@@ -73,8 +73,8 @@ export function scorePassword(password: string) {
 
     let zxcvbnResult = zxcvbn(password, userInputs);
     // Work around https://github.com/dropbox/zxcvbn/issues/216
-    if (password.includes(' ')) {
-        const resultNoSpaces = zxcvbn(password.replace(/ /g, ''), userInputs);
+    if (password.includes(" ")) {
+        const resultNoSpaces = zxcvbn(password.replace(/ /g, ""), userInputs);
         if (resultNoSpaces.score < zxcvbnResult.score) zxcvbnResult = resultNoSpaces;
     }
 

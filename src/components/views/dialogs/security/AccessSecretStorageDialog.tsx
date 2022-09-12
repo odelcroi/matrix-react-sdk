@@ -15,15 +15,15 @@ limitations under the License.
 */
 
 import { debounce } from "lodash";
-import classNames from 'classnames';
-import React, { ChangeEvent, FormEvent } from 'react';
+import classNames from "classnames";
+import React, { ChangeEvent, FormEvent } from "react";
 import { ISecretStorageKeyInfo } from "matrix-js-sdk/src/crypto/api";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { MatrixClientPeg } from '../../../../MatrixClientPeg';
-import Field from '../../elements/Field';
-import AccessibleButton from '../../elements/AccessibleButton';
-import { _t } from '../../../../languageHandler';
+import { MatrixClientPeg } from "../../../../MatrixClientPeg";
+import Field from "../../elements/Field";
+import AccessibleButton from "../../elements/AccessibleButton";
+import { _t } from "../../../../languageHandler";
 import { IDialogProps } from "../IDialogProps";
 import { accessSecretStorage } from "../../../../SecurityManager";
 import Modal from "../../../../Modal";
@@ -71,7 +71,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
             recoveryKeyCorrect: null,
             recoveryKeyFileError: null,
             forceRecoveryKey: false,
-            passPhrase: '',
+            passPhrase: "",
             keyMatches: null,
             resetting: false,
         };
@@ -95,7 +95,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
     }, VALIDATION_THROTTLE_MS);
 
     private async validateRecoveryKey() {
-        if (this.state.recoveryKey === '') {
+        if (this.state.recoveryKey === "") {
             this.setState({
                 recoveryKeyValid: null,
                 recoveryKeyCorrect: null,
@@ -165,7 +165,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                     recoveryKeyFileError: true,
                     recoveryKeyCorrect: false,
                     recoveryKeyValid: false,
-                    recoveryKey: '',
+                    recoveryKey: "",
                 });
             }
         }
@@ -264,7 +264,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
         } else if (this.state.recoveryKeyValid) {
             return _t("Wrong Security Key");
         } else if (this.state.recoveryKeyValid === null) {
-            return '';
+            return "";
         } else {
             return _t("Invalid Security Key");
         }
@@ -294,13 +294,13 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
         let titleClass;
         if (this.state.resetting) {
             title = _t("Reset everything");
-            titleClass = ['mx_AccessSecretStorageDialog_titleWithIcon mx_AccessSecretStorageDialog_resetBadge'];
+            titleClass = ["mx_AccessSecretStorageDialog_titleWithIcon mx_AccessSecretStorageDialog_resetBadge"];
             content = <div>
                 <p>{ _t("Only do this if you have no other device to complete verification with.") }</p>
                 <p>{ _t("If you reset everything, you will restart with no trusted sessions, no trusted users, and "
                     + "might not be able to see past messages.") }</p>
                 <DialogButtons
-                    primaryButton={_t('Reset')}
+                    primaryButton={_t("Reset")}
                     onPrimaryButtonClick={this.onConfirmResetAllClick}
                     hasCancel={true}
                     onCancel={this.onCancel}
@@ -310,7 +310,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
             </div>;
         } else if (hasPassphrase && !this.state.forceRecoveryKey) {
             title = _t("Security Phrase");
-            titleClass = ['mx_AccessSecretStorageDialog_titleWithIcon mx_AccessSecretStorageDialog_securePhraseTitle'];
+            titleClass = ["mx_AccessSecretStorageDialog_titleWithIcon mx_AccessSecretStorageDialog_securePhraseTitle"];
 
             let keyStatus;
             if (this.state.keyMatches === false) {
@@ -350,7 +350,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                     />
                     { keyStatus }
                     <DialogButtons
-                        primaryButton={_t('Continue')}
+                        primaryButton={_t("Continue")}
                         onPrimaryButtonClick={this.onPassPhraseNext}
                         hasCancel={true}
                         onCancel={this.onCancel}
@@ -362,12 +362,12 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
             </div>;
         } else {
             title = _t("Security Key");
-            titleClass = ['mx_AccessSecretStorageDialog_titleWithIcon mx_AccessSecretStorageDialog_secureBackupTitle'];
+            titleClass = ["mx_AccessSecretStorageDialog_titleWithIcon mx_AccessSecretStorageDialog_secureBackupTitle"];
 
             const feedbackClasses = classNames({
-                'mx_AccessSecretStorageDialog_recoveryKeyFeedback': true,
-                'mx_AccessSecretStorageDialog_recoveryKeyFeedback--valid': this.state.recoveryKeyCorrect === true,
-                'mx_AccessSecretStorageDialog_recoveryKeyFeedback--invalid': this.state.recoveryKeyCorrect === false,
+                "mx_AccessSecretStorageDialog_recoveryKeyFeedback": true,
+                "mx_AccessSecretStorageDialog_recoveryKeyFeedback--valid": this.state.recoveryKeyCorrect === true,
+                "mx_AccessSecretStorageDialog_recoveryKeyFeedback--invalid": this.state.recoveryKeyCorrect === false,
             });
             const recoveryKeyFeedback = <div className={feedbackClasses}>
                 { this.getKeyValidationText() }
@@ -387,7 +387,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                             <Field
                                 type="password"
                                 id="mx_securityKey"
-                                label={_t('Security Key')}
+                                label={_t("Security Key")}
                                 value={this.state.recoveryKey}
                                 onChange={this.onRecoveryKeyChange}
                                 forceValidity={this.state.recoveryKeyCorrect}
@@ -414,7 +414,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                     </div>
                     { recoveryKeyFeedback }
                     <DialogButtons
-                        primaryButton={_t('Continue')}
+                        primaryButton={_t("Continue")}
                         onPrimaryButtonClick={this.onRecoveryKeyNext}
                         hasCancel={true}
                         cancelButton={_t("Go Back")}

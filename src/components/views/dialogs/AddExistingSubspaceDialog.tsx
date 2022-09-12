@@ -17,7 +17,7 @@ limitations under the License.
 import React, { useState } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 
-import { _t } from '../../../languageHandler';
+import { _t } from "../../../languageHandler";
 import BaseDialog from "./BaseDialog";
 import AccessibleButton from "../elements/AccessibleButton";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";

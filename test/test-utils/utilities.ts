@@ -38,15 +38,15 @@ export function untilDispatch(waitForAction: DispatcherAction): Promise<ActionPa
 
 export const findByAttr = (attr: string) => (component: ReactWrapper, value: string) =>
     component.find(`[${attr}="${value}"]`);
-export const findByTestId = findByAttr('data-test-id');
-export const findById = findByAttr('id');
-export const findByAriaLabel = findByAttr('aria-label');
+export const findByTestId = findByAttr("data-test-id");
+export const findById = findByAttr("id");
+export const findByAriaLabel = findByAttr("aria-label");
 
 const findByTagAndAttr = (attr: string) =>
     (component: ReactWrapper, value: string, tag: string) =>
         component.find(`${tag}[${attr}="${value}"]`);
 
-export const findByTagAndTestId = findByTagAndAttr('data-test-id');
+export const findByTagAndTestId = findByTagAndAttr("data-test-id");
 
 export const flushPromises = async () => await new Promise(resolve => setTimeout(resolve));
 
@@ -93,6 +93,6 @@ export function waitForUpdate(inst: React.Component, updates = 1): Promise<void>
  * that also checks timestamps
  */
 export const advanceDateAndTime = (ms: number) => {
-    jest.spyOn(global.Date, 'now').mockReturnValue(Date.now() + ms);
+    jest.spyOn(global.Date, "now").mockReturnValue(Date.now() + ms);
     jest.advanceTimersByTime(ms);
 };

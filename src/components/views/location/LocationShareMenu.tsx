@@ -14,23 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { SyntheticEvent, useContext, useState } from 'react';
-import { Room } from 'matrix-js-sdk/src/models/room';
-import { IEventRelation } from 'matrix-js-sdk/src/models/event';
+import React, { SyntheticEvent, useContext, useState } from "react";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { IEventRelation } from "matrix-js-sdk/src/models/event";
 
-import MatrixClientContext from '../../../contexts/MatrixClientContext';
-import ContextMenu, { AboveLeftOf } from '../../structures/ContextMenu';
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import ContextMenu, { AboveLeftOf } from "../../structures/ContextMenu";
 import LocationPicker, { ILocationPickerProps } from "./LocationPicker";
-import { shareLiveLocation, shareLocation, LocationShareType } from './shareLocation';
-import SettingsStore from '../../../settings/SettingsStore';
-import ShareDialogButtons from './ShareDialogButtons';
-import ShareType from './ShareType';
-import { OwnProfileStore } from '../../../stores/OwnProfileStore';
-import { EnableLiveShare } from './EnableLiveShare';
-import { useFeatureEnabled } from '../../../hooks/useSettings';
-import { SettingLevel } from '../../../settings/SettingLevel';
+import { shareLiveLocation, shareLocation, LocationShareType } from "./shareLocation";
+import SettingsStore from "../../../settings/SettingsStore";
+import ShareDialogButtons from "./ShareDialogButtons";
+import ShareType from "./ShareType";
+import { OwnProfileStore } from "../../../stores/OwnProfileStore";
+import { EnableLiveShare } from "./EnableLiveShare";
+import { useFeatureEnabled } from "../../../hooks/useSettings";
+import { SettingLevel } from "../../../settings/SettingLevel";
 
-type Props = Omit<ILocationPickerProps, 'onChoose' | 'shareType'> & {
+type Props = Omit<ILocationPickerProps, "onChoose" | "shareType"> & {
     onFinished: (ev?: SyntheticEvent) => void;
     menuPosition: AboveLeftOf;
     openMenu: () => void;

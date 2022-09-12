@@ -14,17 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import { mocked } from "jest-mock";
 import { MatrixClient, MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
-import { render, screen } from '@testing-library/react';
+import { render, screen } from "@testing-library/react";
 
 import EncryptionEvent from "../../../../src/components/views/messages/EncryptionEvent";
 import { createTestClient, mkMessage } from "../../../test-utils";
-import { MatrixClientPeg } from '../../../../src/MatrixClientPeg';
-import { LocalRoom } from '../../../../src/models/LocalRoom';
-import DMRoomMap from '../../../../src/utils/DMRoomMap';
-import MatrixClientContext from '../../../../src/contexts/MatrixClientContext';
+import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
+import { LocalRoom } from "../../../../src/models/LocalRoom";
+import DMRoomMap from "../../../../src/utils/DMRoomMap";
+import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 
 const renderEncryptionEvent = (client: MatrixClient, event: MatrixEvent) => {
     render(<MatrixClientContext.Provider value={client}>

@@ -19,7 +19,7 @@ import { act } from "react-dom/test-utils";
 import { sleep } from "matrix-js-sdk/src/utils";
 import { ISendEventResponse, MatrixClient, MsgType } from "matrix-js-sdk/src/matrix";
 // eslint-disable-next-line deprecate/import
-import { mount } from 'enzyme';
+import { mount } from "enzyme";
 import { mocked } from "jest-mock";
 
 import SendMessageComposer, {
@@ -34,8 +34,8 @@ import { createPartCreator, createRenderer } from "../../../editor/mock";
 import { createTestClient, mkEvent, mkStubRoom } from "../../../test-utils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import defaultDispatcher from "../../../../src/dispatcher/dispatcher";
-import DocumentOffset from '../../../../src/editor/offset';
-import { Layout } from '../../../../src/settings/enums/Layout';
+import DocumentOffset from "../../../../src/editor/offset";
+import { Layout } from "../../../../src/settings/enums/Layout";
 import { IRoomState } from "../../../../src/components/structures/RoomView";
 import { RoomPermalinkCreator } from "../../../../src/utils/permalinks/Permalinks";
 import { mockPlatformPeg } from "../../../test-utils/platform";
@@ -54,7 +54,7 @@ const WrapWithProviders: React.FC<{
     </RoomContext.Provider>
 </MatrixClientContext.Provider>;
 
-describe('<SendMessageComposer/>', () => {
+describe("<SendMessageComposer/>", () => {
     const defaultRoomContext: IRoomState = {
         roomLoading: true,
         peekLoading: false,
@@ -167,12 +167,12 @@ describe('<SendMessageComposer/>', () => {
 
     describe("functions correctly mounted", () => {
         const mockClient = createTestClient();
-        jest.spyOn(MatrixClientPeg, 'get').mockReturnValue(mockClient);
-        const mockRoom = mkStubRoom('myfakeroom', 'myfakeroom', mockClient) as any;
+        jest.spyOn(MatrixClientPeg, "get").mockReturnValue(mockClient);
+        const mockRoom = mkStubRoom("myfakeroom", "myfakeroom", mockClient) as any;
         const mockEvent = mkEvent({
             type: "m.room.message",
-            room: 'myfakeroom',
-            user: 'myfakeuser',
+            room: "myfakeroom",
+            user: "myfakeuser",
             content: { "msgtype": "m.text", "body": "Replying to this" },
             event: true,
         });
@@ -197,7 +197,7 @@ describe('<SendMessageComposer/>', () => {
                     getData: type => type === "text/plain" ? text : undefined,
                 },
             };
-            wrapper.find('[role="textbox"]').simulate('paste', pasteEvent);
+            wrapper.find('[role="textbox"]').simulate("paste", pasteEvent);
             wrapper.update();
         });
 
@@ -269,7 +269,7 @@ describe('<SendMessageComposer/>', () => {
             expect(localStorage.getItem(key)).toBeNull();
 
             // ensure the right state was persisted to localStorage
-            window.dispatchEvent(new Event('beforeunload'));
+            window.dispatchEvent(new Event("beforeunload"));
             expect(JSON.parse(localStorage.getItem(key))).toStrictEqual({
                 parts: [{ "type": "plain", "text": "Hello World" }],
             });
@@ -301,7 +301,7 @@ describe('<SendMessageComposer/>', () => {
             });
         });
 
-        it('correctly sets the editorStateKey for threads', () => {
+        it("correctly sets the editorStateKey for threads", () => {
             const relation = {
                 rel_type: "m.thread",
                 event_id: "myFakeThreadId",
@@ -311,7 +311,7 @@ describe('<SendMessageComposer/>', () => {
             const instance = wrapper.find(SendMessageComposerClass).instance();
             // @ts-ignore
             const key = instance.editorStateKey;
-            expect(key).toEqual('mx_cider_state_myfakeroom_myFakeThreadId');
+            expect(key).toEqual("mx_cider_state_myfakeroom_myFakeThreadId");
         });
 
         it("correctly sends a message", () => {

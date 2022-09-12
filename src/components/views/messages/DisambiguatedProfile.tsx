@@ -15,11 +15,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
-import classNames from 'classnames';
+import React from "react";
+import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import classNames from "classnames";
 
-import { getUserNameColorClass } from '../../../utils/FormattingUtils';
+import { getUserNameColorClass } from "../../../utils/FormattingUtils";
 import UserIdentifier from "../../../customisations/UserIdentifier";
 
 interface IProps {

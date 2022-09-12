@@ -15,8 +15,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { NumberSize, Resizable } from 're-resizable';
+import React from "react";
+import { NumberSize, Resizable } from "re-resizable";
 import { Direction } from "re-resizable/lib/resizer";
 
 import ResizeNotifier from "../../utils/ResizeNotifier";

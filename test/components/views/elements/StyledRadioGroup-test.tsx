@@ -14,49 +14,49 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 // eslint-disable-next-line deprecate/import
-import { mount } from 'enzyme';
+import { mount } from "enzyme";
 import { act } from "react-dom/test-utils";
 
 import StyledRadioGroup from "../../../../src/components/views/elements/StyledRadioGroup";
 
-describe('<StyledRadioGroup />', () => {
+describe("<StyledRadioGroup />", () => {
     const optionA = {
-        value: 'Anteater',
+        value: "Anteater",
         label: <span>Anteater label</span>,
-        description: 'anteater description',
-        className: 'a-class',
+        description: "anteater description",
+        className: "a-class",
     };
     const optionB = {
-        value: 'Badger',
+        value: "Badger",
         label: <span>Badger label</span>,
     };
     const optionC = {
-        value: 'Canary',
+        value: "Canary",
         label: <span>Canary label</span>,
         description: <span>Canary description</span>,
     };
     const defaultDefinitions = [optionA, optionB, optionC];
     const defaultProps = {
-        name: 'test',
-        className: 'test-class',
+        name: "test",
+        className: "test-class",
         definitions: defaultDefinitions,
         onChange: jest.fn(),
     };
     const getComponent = (props = {}) => mount(<StyledRadioGroup {...defaultProps} {...props} />);
 
     const getInputByValue = (component, value) => component.find(`input[value="${value}"]`);
-    const getCheckedInput = component => component.find('input[checked=true]');
+    const getCheckedInput = component => component.find("input[checked=true]");
 
-    it('renders radios correctly when no value is provided', () => {
+    it("renders radios correctly when no value is provided", () => {
         const component = getComponent();
 
         expect(component).toMatchSnapshot();
         expect(getCheckedInput(component).length).toBeFalsy();
     });
 
-    it('selects correct button when value is provided', () => {
+    it("selects correct button when value is provided", () => {
         const component = getComponent({
             value: optionC.value,
         });
@@ -64,7 +64,7 @@ describe('<StyledRadioGroup />', () => {
         expect(getCheckedInput(component).at(0).props().value).toEqual(optionC.value);
     });
 
-    it('selects correct buttons when definitions have checked prop', () => {
+    it("selects correct buttons when definitions have checked prop", () => {
         const definitions = [
             { ...optionA, checked: true },
             optionB,
@@ -80,7 +80,7 @@ describe('<StyledRadioGroup />', () => {
         expect(getInputByValue(component, optionC.value).props().checked).toBeFalsy();
     });
 
-    it('disables individual buttons based on definition.disabled', () => {
+    it("disables individual buttons based on definition.disabled", () => {
         const definitions = [
             optionA,
             { ...optionB, disabled: true },
@@ -92,14 +92,14 @@ describe('<StyledRadioGroup />', () => {
         expect(getInputByValue(component, optionC.value).props().disabled).toBeTruthy();
     });
 
-    it('disables all buttons with disabled prop', () => {
+    it("disables all buttons with disabled prop", () => {
         const component = getComponent({ disabled: true });
         expect(getInputByValue(component, optionA.value).props().disabled).toBeTruthy();
         expect(getInputByValue(component, optionB.value).props().disabled).toBeTruthy();
         expect(getInputByValue(component, optionC.value).props().disabled).toBeTruthy();
     });
 
-    it('calls onChange on click', () => {
+    it("calls onChange on click", () => {
         const onChange = jest.fn();
         const component = getComponent({
             value: optionC.value,
@@ -107,7 +107,7 @@ describe('<StyledRadioGroup />', () => {
         });
 
         act(() => {
-            getInputByValue(component, optionB.value).simulate('change');
+            getInputByValue(component, optionB.value).simulate("change");
         });
 
         expect(onChange).toHaveBeenCalledWith(optionB.value);

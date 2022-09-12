@@ -14,13 +14,13 @@
  limitations under the License.
  */
 
-import React from 'react';
+import React from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { MsgType } from "matrix-js-sdk/src/@types/event";
 
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import DisambiguatedProfile from "./DisambiguatedProfile";
-import RoomContext, { TimelineRenderingType } from '../../../contexts/RoomContext';
+import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import SettingsStore from "../../../settings/SettingsStore";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 

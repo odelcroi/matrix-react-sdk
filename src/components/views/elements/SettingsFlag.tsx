@@ -18,7 +18,7 @@ limitations under the License.
 import React from "react";
 
 import SettingsStore from "../../../settings/SettingsStore";
-import { _t } from '../../../languageHandler';
+import { _t } from "../../../languageHandler";
 import ToggleSwitch from "./ToggleSwitch";
 import StyledCheckbox from "./StyledCheckbox";
 import { SettingLevel } from "../../../settings/SettingLevel";

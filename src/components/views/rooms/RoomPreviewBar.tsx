@@ -20,17 +20,17 @@ import { MatrixError } from "matrix-js-sdk/src/http-api";
 import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
 import { IJoinRuleEventContent, JoinRule } from "matrix-js-sdk/src/@types/partials";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import classNames from 'classnames';
+import classNames from "classnames";
 import {
     RoomPreviewOpts,
     RoomViewLifecycle,
 } from "@matrix-org/react-sdk-module-api/lib/lifecycles/RoomViewLifecycle";
 
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import dis from '../../../dispatcher/dispatcher';
-import { _t } from '../../../languageHandler';
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import dis from "../../../dispatcher/dispatcher";
+import { _t } from "../../../languageHandler";
 import SdkConfig from "../../../SdkConfig";
-import IdentityAuthClient from '../../../IdentityAuthClient';
+import IdentityAuthClient from "../../../IdentityAuthClient";
 import InviteReason from "../elements/InviteReason";
 import { IOOBData } from "../../../stores/ThreepidInviteStore";
 import Spinner from "../elements/Spinner";
@@ -135,7 +135,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
                 // Gather the account 3PIDs
                 const account3pids = await MatrixClientPeg.get().getThreePids();
                 this.setState({
-                    accountEmails: account3pids.threepids.filter(b => b.medium === 'email').map(b => b.address),
+                    accountEmails: account3pids.threepids.filter(b => b.medium === "email").map(b => b.address),
                 });
                 // If we have an IS connected, use that to lookup the email and
                 // check the bound MXID.
@@ -146,7 +146,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
                 const authClient = new IdentityAuthClient();
                 const identityAccessToken = await authClient.getAccessToken();
                 const result = await MatrixClientPeg.get().lookupThreePid(
-                    'email',
+                    "email",
                     this.props.invitedEmail,
                     undefined /* callback */,
                     identityAccessToken,
@@ -201,7 +201,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
             }
             return MessageCase.Invite;
         } else if (this.props.error) {
-            if ((this.props.error as MatrixError).errcode == 'M_NOT_FOUND') {
+            if ((this.props.error as MatrixError).errcode == "M_NOT_FOUND") {
                 return MessageCase.RoomNotFound;
             } else {
                 return MessageCase.OtherError;
@@ -260,7 +260,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
 
     private makeScreenAfterLogin(): { screen: string, params: Record<string, any> } {
         return {
-            screen: 'room',
+            screen: "room",
             params: {
                 email: this.props.invitedEmail,
                 signurl: this.props.signUrl,
@@ -272,11 +272,11 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
     }
 
     private onLoginClick = () => {
-        dis.dispatch({ action: 'start_login', screenAfterLogin: this.makeScreenAfterLogin() });
+        dis.dispatch({ action: "start_login", screenAfterLogin: this.makeScreenAfterLogin() });
     };
 
     private onRegisterClick = () => {
-        dis.dispatch({ action: 'start_registration', screenAfterLogin: this.makeScreenAfterLogin() });
+        dis.dispatch({ action: "start_registration", screenAfterLogin: this.makeScreenAfterLogin() });
     };
 
     render() {

@@ -15,13 +15,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import * as Email from '../../../email';
-import AddThreepid from '../../../AddThreepid';
-import { _t } from '../../../languageHandler';
-import Modal from '../../../Modal';
+import * as Email from "../../../email";
+import AddThreepid from "../../../AddThreepid";
+import { _t } from "../../../languageHandler";
+import Modal from "../../../Modal";
 import Spinner from "../elements/Spinner";
 import ErrorDialog from "./ErrorDialog";
 import QuestionDialog from "./QuestionDialog";
@@ -50,7 +50,7 @@ export default class SetEmailDialog extends React.Component<IProps, IState> {
         super(props);
 
         this.state = {
-            emailAddress: '',
+            emailAddress: "",
             emailBusy: false,
         };
     }
@@ -78,7 +78,7 @@ export default class SetEmailDialog extends React.Component<IProps, IState> {
                     "Please check your email and click on the link it contains. Once this " +
                     "is done, click continue.",
                 ),
-                button: _t('Continue'),
+                button: _t("Continue"),
                 onFinished: this.onEmailDialogFinished,
             });
         }, (err) => {
@@ -109,13 +109,13 @@ export default class SetEmailDialog extends React.Component<IProps, IState> {
             this.props.onFinished(true);
         }, (err) => {
             this.setState({ emailBusy: false });
-            if (err.errcode == 'M_THREEPID_AUTH_FAILED') {
+            if (err.errcode == "M_THREEPID_AUTH_FAILED") {
                 const message = _t("Unable to verify email address.") + " " +
                     _t("Please check your email and click on the link it contains. Once this is done, click continue.");
                 Modal.createDialog(QuestionDialog, {
                     title: _t("Verification Pending"),
                     description: message,
-                    button: _t('Continue'),
+                    button: _t("Continue"),
                     onFinished: this.onEmailDialogFinished,
                 });
             } else {
@@ -145,7 +145,7 @@ export default class SetEmailDialog extends React.Component<IProps, IState> {
             >
                 <div className="mx_Dialog_content">
                     <p id='mx_Dialog_content'>
-                        { _t('This will allow you to reset your password and receive notifications.') }
+                        { _t("This will allow you to reset your password and receive notifications.") }
                     </p>
                     { emailInput }
                 </div>

@@ -15,21 +15,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import ReactTestUtils from 'react-dom/test-utils';
-import { createClient } from 'matrix-js-sdk/src/matrix';
-import { mocked } from 'jest-mock';
+import React from "react";
+import ReactDOM from "react-dom";
+import ReactTestUtils from "react-dom/test-utils";
+import { createClient } from "matrix-js-sdk/src/matrix";
+import { mocked } from "jest-mock";
 
-import SdkConfig, { DEFAULTS } from '../../../../src/SdkConfig';
+import SdkConfig, { DEFAULTS } from "../../../../src/SdkConfig";
 import { createTestClient, mkServerConfig } from "../../../test-utils";
 import Registration from "../../../../src/components/structures/auth/Registration";
 import RegistrationForm from "../../../../src/components/views/auth/RegistrationForm";
 
-jest.mock('matrix-js-sdk/src/matrix');
+jest.mock("matrix-js-sdk/src/matrix");
 jest.useFakeTimers();
 
-describe('Registration', function() {
+describe("Registration", function() {
     let parentDiv;
 
     beforeEach(function() {
@@ -37,7 +37,7 @@ describe('Registration', function() {
             ...DEFAULTS,
             disable_custom_urls: true,
         });
-        parentDiv = document.createElement('div');
+        parentDiv = document.createElement("div");
         document.body.appendChild(parentDiv);
         mocked(createClient).mockImplementation(() => createTestClient());
     });
@@ -49,7 +49,7 @@ describe('Registration', function() {
     });
 
     const defaultProps = {
-        defaultDeviceDisplayName: 'test-device-display-name',
+        defaultDeviceDisplayName: "test-device-display-name",
         serverConfig: mkServerConfig("https://matrix.org", "https://vector.im"),
         makeRegistrationUrl: jest.fn(),
         onLoggedIn: jest.fn(),
@@ -62,13 +62,13 @@ describe('Registration', function() {
         />, parentDiv) as React.Component<typeof Registration>;
     }
 
-    it('should show server picker', async function() {
+    it("should show server picker", async function() {
         const root = render();
         const selector = ReactTestUtils.findRenderedDOMComponentWithClass(root, "mx_ServerPicker");
         expect(selector).toBeTruthy();
     });
 
-    it('should show form when custom URLs disabled', async function() {
+    it("should show form when custom URLs disabled", async function() {
         const root = render();
 
         // Set non-empty flows & matrixClient to get past the loading spinner

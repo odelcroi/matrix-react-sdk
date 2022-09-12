@@ -258,7 +258,7 @@ describe("Spaces", () => {
         const axeOptions = {
             rules: {
                 // Disable this check as it triggers on nested roving tab index elements which are in practice fine
-                'nested-interactive': {
+                "nested-interactive": {
                     enabled: false,
                 },
             },

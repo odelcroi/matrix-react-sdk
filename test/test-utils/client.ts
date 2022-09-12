@@ -49,11 +49,11 @@ export const getMockClientWithEventEmitter = (
 ): MockedObject<MatrixClient> => {
     const mock = mocked(new MockClientWithEventEmitter(mockProperties) as unknown as MatrixClient);
 
-    jest.spyOn(MatrixClientPeg, 'get').mockReturnValue(mock);
+    jest.spyOn(MatrixClientPeg, "get").mockReturnValue(mock);
     return mock;
 };
 
-export const unmockClientPeg = () => jest.spyOn(MatrixClientPeg, 'get').mockRestore();
+export const unmockClientPeg = () => jest.spyOn(MatrixClientPeg, "get").mockRestore();
 
 /**
  * Returns basic mocked client methods related to the current user
@@ -63,10 +63,10 @@ export const unmockClientPeg = () => jest.spyOn(MatrixClientPeg, 'get').mockRest
     });
  * ```
  */
-export const mockClientMethodsUser = (userId = '@alice:domain') => ({
+export const mockClientMethodsUser = (userId = "@alice:domain") => ({
     getUserId: jest.fn().mockReturnValue(userId),
     isGuest: jest.fn().mockReturnValue(false),
-    mxcUrlToHttp: jest.fn().mockReturnValue('mock-mxcUrlToHttp'),
+    mxcUrlToHttp: jest.fn().mockReturnValue("mock-mxcUrlToHttp"),
     credentials: { userId },
     getThreePids: jest.fn().mockResolvedValue({ threepids: [] }),
     getAccessToken: jest.fn(),

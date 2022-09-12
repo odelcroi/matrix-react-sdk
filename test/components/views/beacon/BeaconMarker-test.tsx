@@ -14,36 +14,36 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 // eslint-disable-next-line deprecate/import
-import { mount } from 'enzyme';
-import maplibregl from 'maplibre-gl';
-import { act } from 'react-dom/test-utils';
+import { mount } from "enzyme";
+import maplibregl from "maplibre-gl";
+import { act } from "react-dom/test-utils";
 import {
     Beacon,
     Room,
     RoomMember,
     MatrixEvent,
     getBeaconInfoIdentifier,
-} from 'matrix-js-sdk/src/matrix';
+} from "matrix-js-sdk/src/matrix";
 
-import BeaconMarker from '../../../../src/components/views/beacon/BeaconMarker';
-import MatrixClientContext from '../../../../src/contexts/MatrixClientContext';
+import BeaconMarker from "../../../../src/components/views/beacon/BeaconMarker";
+import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import {
     getMockClientWithEventEmitter,
     makeBeaconEvent,
     makeBeaconInfoEvent,
     makeRoomWithStateEvents,
-} from '../../../test-utils';
-import { TILE_SERVER_WK_KEY } from '../../../../src/utils/WellKnownUtils';
+} from "../../../test-utils";
+import { TILE_SERVER_WK_KEY } from "../../../../src/utils/WellKnownUtils";
 
-describe('<BeaconMarker />', () => {
+describe("<BeaconMarker />", () => {
     // 14.03.2022 16:15
     const now = 1647270879403;
     // stable date for snapshots
-    jest.spyOn(global.Date, 'now').mockReturnValue(now);
-    const roomId = '!room:server';
-    const aliceId = '@alice:server';
+    jest.spyOn(global.Date, "now").mockReturnValue(now);
+    const roomId = "!room:server";
+    const aliceId = "@alice:server";
 
     const aliceMember = new RoomMember(roomId, aliceId);
 
@@ -51,7 +51,7 @@ describe('<BeaconMarker />', () => {
 
     const mockClient = getMockClientWithEventEmitter({
         getClientWellKnown: jest.fn().mockReturnValue({
-            [TILE_SERVER_WK_KEY.name]: { map_style_url: 'maps.com' },
+            [TILE_SERVER_WK_KEY.name]: { map_style_url: "maps.com" },
         }),
         getUserId: jest.fn().mockReturnValue(aliceId),
         getRoom: jest.fn(),
@@ -62,26 +62,26 @@ describe('<BeaconMarker />', () => {
     // as we update room state
     const setupRoom = (stateEvents: MatrixEvent[] = []): Room => {
         const room1 = makeRoomWithStateEvents(stateEvents, { roomId, mockClient });
-        jest.spyOn(room1, 'getMember').mockReturnValue(aliceMember);
+        jest.spyOn(room1, "getMember").mockReturnValue(aliceMember);
         return room1;
     };
 
     const defaultEvent = makeBeaconInfoEvent(aliceId,
         roomId,
         { isLive: true },
-        '$alice-room1-1',
+        "$alice-room1-1",
     );
     const notLiveEvent = makeBeaconInfoEvent(aliceId,
         roomId,
         { isLive: false },
-        '$alice-room1-2',
+        "$alice-room1-2",
     );
 
     const location1 = makeBeaconEvent(
-        aliceId, { beaconInfoId: defaultEvent.getId(), geoUri: 'geo:51,41', timestamp: now + 1 },
+        aliceId, { beaconInfoId: defaultEvent.getId(), geoUri: "geo:51,41", timestamp: now + 1 },
     );
     const location2 = makeBeaconEvent(
-        aliceId, { beaconInfoId: defaultEvent.getId(), geoUri: 'geo:52,42', timestamp: now + 10000 },
+        aliceId, { beaconInfoId: defaultEvent.getId(), geoUri: "geo:52,42", timestamp: now + 10000 },
     );
 
     const defaultProps = {
@@ -99,21 +99,21 @@ describe('<BeaconMarker />', () => {
         jest.clearAllMocks();
     });
 
-    it('renders nothing when beacon is not live', () => {
+    it("renders nothing when beacon is not live", () => {
         const room = setupRoom([notLiveEvent]);
         const beacon = room.currentState.beacons.get(getBeaconInfoIdentifier(notLiveEvent));
         const component = getComponent({ beacon });
         expect(component.html()).toBe(null);
     });
 
-    it('renders nothing when beacon has no location', () => {
+    it("renders nothing when beacon has no location", () => {
         const room = setupRoom([defaultEvent]);
         const beacon = room.currentState.beacons.get(getBeaconInfoIdentifier(defaultEvent));
         const component = getComponent({ beacon });
         expect(component.html()).toBe(null);
     });
 
-    it('renders marker when beacon has location', () => {
+    it("renders marker when beacon has location", () => {
         const room = setupRoom([defaultEvent]);
         const beacon = room.currentState.beacons.get(getBeaconInfoIdentifier(defaultEvent));
         beacon.addLocations([location1]);
@@ -121,12 +121,12 @@ describe('<BeaconMarker />', () => {
         expect(component).toMatchSnapshot();
     });
 
-    it('updates with new locations', () => {
+    it("updates with new locations", () => {
         const room = setupRoom([defaultEvent]);
         const beacon = room.currentState.beacons.get(getBeaconInfoIdentifier(defaultEvent));
         beacon.addLocations([location1]);
         const component = getComponent({ beacon });
-        expect(component.find('SmartMarker').props()['geoUri']).toEqual('geo:51,41');
+        expect(component.find("SmartMarker").props()["geoUri"]).toEqual("geo:51,41");
 
         act(() => {
             beacon.addLocations([location2]);
@@ -134,6 +134,6 @@ describe('<BeaconMarker />', () => {
         component.setProps({});
 
         // updated to latest location
-        expect(component.find('SmartMarker').props()['geoUri']).toEqual('geo:52,42');
+        expect(component.find("SmartMarker").props()["geoUri"]).toEqual("geo:52,42");
     });
 });

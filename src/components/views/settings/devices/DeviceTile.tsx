@@ -16,7 +16,7 @@ limitations under the License.
 
 import React, { Fragment } from "react";
 
-import { Icon as InactiveIcon } from '../../../../../res/img/element-icons/settings/inactive.svg';
+import { Icon as InactiveIcon } from "../../../../../res/img/element-icons/settings/inactive.svg";
 import { _t } from "../../../../languageHandler";
 import { formatDate, formatRelativeTime } from "../../../../DateUtils";
 import TooltipTarget from "../../elements/TooltipTarget";
@@ -65,11 +65,11 @@ const getInactiveMetadata = (device: DeviceWithVerification): { id: string, valu
     if (!isInactive) {
         return undefined;
     }
-    return { id: 'inactive', value: (
+    return { id: "inactive", value: (
         <>
             <InactiveIcon className="mx_DeviceTile_inactiveIcon" />
             {
-                _t('Inactive for %(inactiveAgeDays)s+ days', { inactiveAgeDays: INACTIVE_DEVICE_AGE_DAYS }) +
+                _t("Inactive for %(inactiveAgeDays)s+ days", { inactiveAgeDays: INACTIVE_DEVICE_AGE_DAYS }) +
                 ` (${formatLastActivity(device.last_seen_ts)})`
             }
         </>),
@@ -82,15 +82,15 @@ const DeviceMetadata: React.FC<{ value: string | React.ReactNode, id: string }> 
 
 const DeviceTile: React.FC<DeviceTileProps> = ({ device, children, onClick }) => {
     const inactive = getInactiveMetadata(device);
-    const lastActivity = device.last_seen_ts && `${_t('Last activity')} ${formatLastActivity(device.last_seen_ts)}`;
-    const verificationStatus = device.isVerified ? _t('Verified') : _t('Unverified');
+    const lastActivity = device.last_seen_ts && `${_t("Last activity")} ${formatLastActivity(device.last_seen_ts)}`;
+    const verificationStatus = device.isVerified ? _t("Verified") : _t("Unverified");
     // if device is inactive, don't display last activity or verificationStatus
     const metadata = inactive
-        ? [inactive, { id: 'lastSeenIp', value: device.last_seen_ip }]
+        ? [inactive, { id: "lastSeenIp", value: device.last_seen_ip }]
         : [
-            { id: 'isVerified', value: verificationStatus },
-            { id: 'lastActivity', value: lastActivity },
-            { id: 'lastSeenIp', value: device.last_seen_ip },
+            { id: "isVerified", value: verificationStatus },
+            { id: "lastActivity", value: lastActivity },
+            { id: "lastSeenIp", value: device.last_seen_ip },
         ];
 
     return <div className="mx_DeviceTile" data-testid={`device-tile-${device.device_id}`}>
@@ -99,12 +99,10 @@ const DeviceTile: React.FC<DeviceTileProps> = ({ device, children, onClick }) =>
             <DeviceTileName device={device} />
             <div className="mx_DeviceTile_metadata">
                 { metadata.map(({ id, value }, index) =>
-                    !!value
-                        ? <Fragment key={id}>
-                            { !!index && ' · ' }
-                            <DeviceMetadata id={id} value={value} />
-                        </Fragment>
-                        : null,
+                    <Fragment key={id}>
+                        { !!index && " · " }
+                        <DeviceMetadata id={id} value={value} />
+                    </Fragment>,
                 ) }
             </div>
         </div>

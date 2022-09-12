@@ -63,7 +63,7 @@ declare global {
 Cypress.Commands.add("openSpotlightDialog", (
     options?: Partial<Loggable & Timeoutable & Withinable & Shadow>,
 ): Chainable<JQuery<HTMLElement>> => {
-    cy.get('.mx_RoomSearch_spotlightTrigger', options).click({ force: true });
+    cy.get(".mx_RoomSearch_spotlightTrigger", options).click({ force: true });
     return cy.spotlightDialog(options);
 });
 
@@ -185,7 +185,7 @@ describe("Spotlight", () => {
                     });
                 }),
             ).then(() =>
-                cy.get('.mx_RoomSublist_skeletonUI').should('not.exist'),
+                cy.get(".mx_RoomSublist_skeletonUI").should("not.exist"),
             );
         });
     });
@@ -409,7 +409,7 @@ describe("Spotlight", () => {
             cy.get(".mx_SpotlightDialog_startGroupChat").should("contain", "Start a group chat");
             cy.get(".mx_SpotlightDialog_startGroupChat").click();
         }).then(() => {
-            cy.get('[role=dialog]').should("contain", "Direct Messages");
+            cy.get("[role=dialog]").should("contain", "Direct Messages");
         });
     });
 

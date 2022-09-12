@@ -234,7 +234,7 @@ describe("Threads", () => {
             .realHover().find(".mx_MessageActionBar_threadButton").click();
         cy.get(".mx_ThreadView_timelinePanelWrapper").should("have.length", 1);
 
-        cy.openMessageComposerOptions(true).find(`[aria-label="Voice Message"]`).click();
+        cy.openMessageComposerOptions(true).find("[aria-label=\"Voice Message\"]").click();
         cy.wait(3000);
         cy.getComposer(true).find(".mx_MessageComposer_sendMessage").click();
 

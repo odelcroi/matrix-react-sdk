@@ -20,7 +20,7 @@ import { Visibility } from "matrix-js-sdk/src/@types/partials";
 import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
 import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import DirectoryCustomisations from '../../../customisations/Directory';
+import DirectoryCustomisations from "../../../customisations/Directory";
 
 interface IProps {
     roomId: string;
@@ -59,7 +59,7 @@ export default class RoomPublishSetting extends React.PureComponent<IProps, ISta
     componentDidMount() {
         const client = MatrixClientPeg.get();
         client.getRoomDirectoryVisibility(this.props.roomId).then((result => {
-            this.setState({ isRoomPublished: result.visibility === 'public' });
+            this.setState({ isRoomPublished: result.visibility === "public" });
         }));
     }
 

@@ -29,22 +29,22 @@ import { MatrixClientPeg } from "../../src/MatrixClientPeg";
 import { IExportOptions, ExportType, ExportFormat } from "../../src/utils/exportUtils/exportUtils";
 import PlainTextExporter from "../../src/utils/exportUtils/PlainTextExport";
 import HTMLExporter from "../../src/utils/exportUtils/HtmlExport";
-import * as TestUtilsMatrix from '../test-utils';
-import { stubClient } from '../test-utils';
+import * as TestUtilsMatrix from "../test-utils";
+import { stubClient } from "../test-utils";
 
 let client: MatrixClient;
 
 const MY_USER_ID = "@me:here";
 
 function generateRoomId() {
-    return '!' + Math.random().toString().slice(2, 10) + ':domain';
+    return "!" + Math.random().toString().slice(2, 10) + ":domain";
 }
 
 interface ITestContent extends IContent {
     expectedText: string;
 }
 
-describe('export', function() {
+describe("export", function() {
     stubClient();
     client = MatrixClientPeg.get();
     client.getUserId = () => {
@@ -180,12 +180,12 @@ describe('export', function() {
                     getAvatarUrl: () => {
                         return "avatar.jpeg";
                     },
-                    getMxcAvatarUrl: () => 'mxc://avatar.url/image.png',
+                    getMxcAvatarUrl: () => "mxc://avatar.url/image.png",
                 } as unknown as RoomMember,
                 ts: ts0 + i*1000,
-                mship: 'join',
-                prevMship: 'join',
-                name: 'A user',
+                mship: "join",
+                prevMship: "join",
+                name: "A user",
             }));
         }
         // emote
@@ -208,7 +208,7 @@ describe('export', function() {
 
     const events: MatrixEvent[] = mkEvents();
 
-    it('checks if the export format is valid', function() {
+    it("checks if the export format is valid", function() {
         function isValidFormat(format: string): boolean {
             const options: string[] = Object.values(ExportFormat);
             return options.includes(format);
@@ -240,30 +240,30 @@ describe('export', function() {
     });
 
     const invalidExportOptions: [string, IExportOptions][] = [
-        ['numberOfMessages exceeds max', {
+        ["numberOfMessages exceeds max", {
             numberOfMessages: 10 ** 9,
             maxSize: 1024 * 1024 * 1024,
             attachmentsIncluded: false,
         }],
-        ['maxSize exceeds 8GB', {
+        ["maxSize exceeds 8GB", {
             numberOfMessages: -1,
             maxSize: 8001 * 1024 * 1024,
             attachmentsIncluded: false,
         }],
-        ['maxSize is less than 1mb', {
+        ["maxSize is less than 1mb", {
             numberOfMessages: 0,
             maxSize: 0,
             attachmentsIncluded: false,
         }],
     ];
-    it.each(invalidExportOptions)('%s', (_d, options) => {
+    it.each(invalidExportOptions)("%s", (_d, options) => {
         expect(
             () =>
                 new PlainTextExporter(mockRoom, ExportType.Beginning, options, null),
         ).toThrowError("Invalid export options");
     });
 
-    it('tests the file extension splitter', function() {
+    it("tests the file extension splitter", function() {
         const exporter = new PlainTextExporter(mockRoom, ExportType.Beginning, mockExportOptions, null);
         const fileNameWithExtensions = {
             "": ["", ""],
@@ -277,7 +277,7 @@ describe('export', function() {
         }
     });
 
-    it('checks if the reply regex executes correctly', function() {
+    it("checks if the reply regex executes correctly", function() {
         const eventContents: ITestContent[] = [
             {
                 "msgtype": "m.text",

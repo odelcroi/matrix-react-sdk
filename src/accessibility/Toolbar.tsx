@@ -39,7 +39,7 @@ const Toolbar: React.FC<IProps> = ({ children, ...props }) => {
         switch (action) {
             case KeyBindingAction.ArrowUp:
             case KeyBindingAction.ArrowDown:
-                if (target.hasAttribute('aria-haspopup')) {
+                if (target.hasAttribute("aria-haspopup")) {
                     target.click();
                 }
                 break;

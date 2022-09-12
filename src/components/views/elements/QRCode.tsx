@@ -27,7 +27,7 @@ interface IProps extends QRCodeRenderersOptions {
 }
 
 const defaultOptions: QRCodeToDataURLOptions = {
-    errorCorrectionLevel: 'L', // we want it as trivial-looking as possible
+    errorCorrectionLevel: "L", // we want it as trivial-looking as possible
 };
 
 const QRCode: React.FC<IProps> = ({ data, className, ...options }) => {

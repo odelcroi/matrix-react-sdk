@@ -73,17 +73,17 @@ describe("Hidden Read Receipts Setting Migration", () => {
         cy.stopSynapse(synapse);
     });
 
-    it('should not migrate the lack of a labs flag', () => {
+    it("should not migrate the lack of a labs flag", () => {
         seedLabs(synapse, null);
         testForVal(null);
     });
 
-    it('should migrate labsHiddenRR=false as sendRR=true', () => {
+    it("should migrate labsHiddenRR=false as sendRR=true", () => {
         seedLabs(synapse, false);
         testForVal(true);
     });
 
-    it('should migrate labsHiddenRR=true as sendRR=false', () => {
+    it("should migrate labsHiddenRR=true as sendRR=false", () => {
         seedLabs(synapse, true);
         testForVal(false);
     });

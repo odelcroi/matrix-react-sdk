@@ -14,22 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 import { Optional } from "matrix-events-sdk";
 
-import { _t } from '../../../languageHandler';
-import dis from '../../../dispatcher/dispatcher';
-import * as Lifecycle from '../../../Lifecycle';
-import Modal from '../../../Modal';
+import { _t } from "../../../languageHandler";
+import dis from "../../../dispatcher/dispatcher";
+import * as Lifecycle from "../../../Lifecycle";
+import Modal from "../../../Modal";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { ISSOFlow, LoginFlow, sendLoginRequest } from "../../../Login";
 import AuthPage from "../../views/auth/AuthPage";
 import { SSO_HOMESERVER_URL_KEY, SSO_ID_SERVER_URL_KEY } from "../../../BasePlatform";
 import SSOButtons from "../../views/elements/SSOButtons";
-import ConfirmWipeDeviceDialog from '../../views/dialogs/ConfirmWipeDeviceDialog';
-import Field from '../../views/elements/Field';
-import AccessibleButton from '../../views/elements/AccessibleButton';
+import ConfirmWipeDeviceDialog from "../../views/dialogs/ConfirmWipeDeviceDialog";
+import Field from "../../views/elements/Field";
+import AccessibleButton from "../../views/elements/AccessibleButton";
 import Spinner from "../../views/elements/Spinner";
 import AuthHeader from "../../views/auth/AuthHeader";
 import AuthBody from "../../views/auth/AuthBody";
@@ -113,7 +113,7 @@ export default class SoftLogout extends React.Component<IProps, IState> {
 
     private async initLogin() {
         const queryParams = this.props.realQueryParams;
-        const hasAllParams = queryParams && queryParams['loginToken'];
+        const hasAllParams = queryParams && queryParams["loginToken"];
         if (hasAllParams) {
             this.setState({ loginView: LoginView.Loading });
             this.trySsoLogin();
@@ -137,7 +137,7 @@ export default class SoftLogout extends React.Component<IProps, IState> {
     };
 
     private onForgotPassword = () => {
-        dis.dispatch({ action: 'start_password_recovery' });
+        dis.dispatch({ action: "start_password_recovery" });
     };
 
     private onPasswordLogin = async (ev) => {
@@ -187,7 +187,7 @@ export default class SoftLogout extends React.Component<IProps, IState> {
         const isUrl = localStorage.getItem(SSO_ID_SERVER_URL_KEY) || MatrixClientPeg.get().getIdentityServerUrl();
         const loginType = "m.login.token";
         const loginParams = {
-            token: this.props.realQueryParams['loginToken'],
+            token: this.props.realQueryParams["loginToken"],
             device_id: MatrixClientPeg.get().getDeviceId(),
         };
 

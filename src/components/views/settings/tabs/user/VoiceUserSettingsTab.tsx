@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../../../languageHandler";
@@ -26,18 +26,18 @@ import AccessibleButton from "../../../elements/AccessibleButton";
 import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
 import Modal from "../../../../../Modal";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
-import SettingsFlag from '../../../elements/SettingsFlag';
-import ErrorDialog from '../../../dialogs/ErrorDialog';
+import SettingsFlag from "../../../elements/SettingsFlag";
+import ErrorDialog from "../../../dialogs/ErrorDialog";
 
 const getDefaultDevice = (devices: Array<Partial<MediaDeviceInfo>>) => {
     // Note we're looking for a device with deviceId 'default' but adding a device
     // with deviceId == the empty string: this is because Chrome gives us a device
     // with deviceId 'default', so we're looking for this, not the one we are adding.
-    if (!devices.some((i) => i.deviceId === 'default')) {
-        devices.unshift({ deviceId: '', label: _t('Default Device') });
-        return '';
+    if (!devices.some((i) => i.deviceId === "default")) {
+        devices.unshift({ deviceId: "", label: _t("Default Device") });
+        return "";
     } else {
-        return 'default';
+        return "default";
     }
 };
 
@@ -104,9 +104,9 @@ export default class VoiceUserSettingsTab extends React.Component<{}, IState> {
             logger.log("Failed to list userMedia devices", error);
             const brand = SdkConfig.get().brand;
             Modal.createDialog(ErrorDialog, {
-                title: _t('No media permissions'),
+                title: _t("No media permissions"),
                 description: _t(
-                    'You may need to manually permit %(brand)s to access your microphone/webcam',
+                    "You may need to manually permit %(brand)s to access your microphone/webcam",
                     { brand },
                 ),
             });
@@ -168,15 +168,15 @@ export default class VoiceUserSettingsTab extends React.Component<{}, IState> {
         } else if (this.state.mediaDevices) {
             speakerDropdown = (
                 this.renderDropdown(MediaDeviceKindEnum.AudioOutput, _t("Audio Output")) ||
-                <p>{ _t('No Audio Outputs detected') }</p>
+                <p>{ _t("No Audio Outputs detected") }</p>
             );
             microphoneDropdown = (
                 this.renderDropdown(MediaDeviceKindEnum.AudioInput, _t("Microphone")) ||
-                <p>{ _t('No Microphones detected') }</p>
+                <p>{ _t("No Microphones detected") }</p>
             );
             webcamDropdown = (
                 this.renderDropdown(MediaDeviceKindEnum.VideoInput, _t("Camera")) ||
-                <p>{ _t('No Webcams detected') }</p>
+                <p>{ _t("No Webcams detected") }</p>
             );
         }
 

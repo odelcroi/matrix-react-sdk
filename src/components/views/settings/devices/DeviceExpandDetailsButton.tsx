@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import classNames from 'classnames';
-import React from 'react';
+import classNames from "classnames";
+import React from "react";
 
-import { Icon as CaretIcon } from '../../../../../res/img/feather-customised/dropdown-arrow.svg';
-import { _t } from '../../../../languageHandler';
-import AccessibleButton from '../../elements/AccessibleButton';
+import { Icon as CaretIcon } from "../../../../../res/img/feather-customised/dropdown-arrow.svg";
+import { _t } from "../../../../languageHandler";
+import AccessibleButton from "../../elements/AccessibleButton";
 
 interface Props {
     isExpanded: boolean;
@@ -29,9 +29,9 @@ interface Props {
 const DeviceExpandDetailsButton: React.FC<Props> = ({ isExpanded, onClick, ...rest }) => {
     return <AccessibleButton
         {...rest}
-        aria-label={_t('Toggle device details')}
+        aria-label={_t("Toggle device details")}
         kind='icon'
-        className={classNames('mx_DeviceExpandDetailsButton', {
+        className={classNames("mx_DeviceExpandDetailsButton", {
             mx_DeviceExpandDetailsButton_expanded: isExpanded,
         })}
         onClick={onClick}

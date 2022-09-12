@@ -44,15 +44,15 @@ limitations under the License.
  *                      list ops)
  */
 
-import { MatrixClient } from 'matrix-js-sdk/src/matrix';
-import { EventType } from 'matrix-js-sdk/src/@types/event';
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
+import { EventType } from "matrix-js-sdk/src/@types/event";
 import {
     MSC3575Filter,
     MSC3575List,
     SlidingSync,
-} from 'matrix-js-sdk/src/sliding-sync';
+} from "matrix-js-sdk/src/sliding-sync";
 import { logger } from "matrix-js-sdk/src/logger";
-import { IDeferred, defer } from 'matrix-js-sdk/src/utils';
+import { IDeferred, defer } from "matrix-js-sdk/src/utils";
 
 // how long to long poll for
 const SLIDING_SYNC_TIMEOUT_MS = 20 * 1000;

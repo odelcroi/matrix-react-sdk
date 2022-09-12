@@ -15,12 +15,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import classnames from 'classnames';
-import { MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
-import React from 'react';
-import { CallFeed, CallFeedEvent } from 'matrix-js-sdk/src/webrtc/callFeed';
-import { logger } from 'matrix-js-sdk/src/logger';
-import { SDPStreamMetadataPurpose } from 'matrix-js-sdk/src/webrtc/callEventTypes';
+import classnames from "classnames";
+import { MatrixCall } from "matrix-js-sdk/src/webrtc/call";
+import React from "react";
+import { CallFeed, CallFeedEvent } from "matrix-js-sdk/src/webrtc/callFeed";
+import { logger } from "matrix-js-sdk/src/logger";
+import { SDPStreamMetadataPurpose } from "matrix-js-sdk/src/webrtc/callEventTypes";
 
 import SettingsStore from "../../../settings/SettingsStore";
 import MemberAvatar from "../avatars/MemberAvatar";
@@ -90,12 +90,12 @@ export default class VideoFeed extends React.PureComponent<IProps, IState> {
 
     private setElementRef = (element: HTMLVideoElement): void => {
         if (!element) {
-            this.element?.removeEventListener('resize', this.onResize);
+            this.element?.removeEventListener("resize", this.onResize);
             return;
         }
 
         this.element = element;
-        element.addEventListener('resize', this.onResize);
+        element.addEventListener("resize", this.onResize);
     };
 
     private updateFeed(oldFeed: CallFeed, newFeed: CallFeed) {
@@ -139,7 +139,7 @@ export default class VideoFeed extends React.PureComponent<IProps, IState> {
             await element.play();
         } catch (e) {
             logger.info(
-                `Failed to play media element with feed for userId ` +
+                "Failed to play media element with feed for userId " +
                 `${this.props.feed.userId} with purpose ${this.props.feed.purpose}`, e,
             );
         }
@@ -225,7 +225,7 @@ export default class VideoFeed extends React.PureComponent<IProps, IState> {
                 mx_VideoFeed_video_mirror: (
                     this.props.feed.isLocal() &&
                     this.props.feed.purpose === SDPStreamMetadataPurpose.Usermedia &&
-                    SettingsStore.getValue('VideoView.flipVideoHorizontally')
+                    SettingsStore.getValue("VideoView.flipVideoHorizontally")
                 ),
             });
 

@@ -15,12 +15,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, RefObject } from 'react';
+import React, { createRef, RefObject } from "react";
 import classNames from "classnames";
 
 import AccessibleButton from "../elements/AccessibleButton";
-import { _t } from '../../../languageHandler';
-import { PosthogScreenTracker } from '../../../PosthogTrackers';
+import { _t } from "../../../languageHandler";
+import { PosthogScreenTracker } from "../../../PosthogTrackers";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import SearchWarning, { WarningKind } from "../elements/SearchWarning";

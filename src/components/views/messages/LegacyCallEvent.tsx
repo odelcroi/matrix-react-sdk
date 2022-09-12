@@ -14,20 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
+import React, { createRef } from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { CallErrorCode, CallState } from 'matrix-js-sdk/src/webrtc/call';
-import classNames from 'classnames';
+import { CallErrorCode, CallState } from "matrix-js-sdk/src/webrtc/call";
+import classNames from "classnames";
 
-import { _t } from '../../../languageHandler';
-import MemberAvatar from '../avatars/MemberAvatar';
+import { _t } from "../../../languageHandler";
+import MemberAvatar from "../avatars/MemberAvatar";
 import LegacyCallEventGrouper, {
     LegacyCallEventGrouperEvent,
     CustomCallState,
-} from '../../structures/LegacyCallEventGrouper';
-import AccessibleButton from '../elements/AccessibleButton';
-import InfoTooltip, { InfoTooltipKind } from '../elements/InfoTooltip';
-import AccessibleTooltipButton from '../elements/AccessibleTooltipButton';
+} from "../../structures/LegacyCallEventGrouper";
+import AccessibleButton from "../elements/AccessibleButton";
+import InfoTooltip, { InfoTooltipKind } from "../elements/InfoTooltip";
+import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { formatCallTime } from "../../../DateUtils";
 import Clock from "../audio_messages/Clock";
 
@@ -211,7 +211,7 @@ export default class LegacyCallEvent extends React.PureComponent<IProps, IState>
             } else if (hangupReason === CallErrorCode.UserBusy) {
                 reason = _t("The user you called is busy.");
             } else {
-                reason = _t('Unknown failure: %(reason)s', { reason: hangupReason });
+                reason = _t("Unknown failure: %(reason)s", { reason: hangupReason });
             }
 
             return (

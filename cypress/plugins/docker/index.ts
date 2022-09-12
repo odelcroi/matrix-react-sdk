@@ -66,7 +66,7 @@ export function dockerExec(args: {
         childProcess.execFile("docker", [
             "exec", args.containerId,
             ...args.params,
-        ], { encoding: 'utf8' }, (err, stdout, stderr) => {
+        ], { encoding: "utf8" }, (err, stdout, stderr) => {
             if (err) {
                 console.log(stdout);
                 console.log(stderr);
@@ -92,7 +92,7 @@ export async function dockerLogs(args: {
             args.containerId,
         ], {
             stdio: ["ignore", stdoutFile, stderrFile],
-        }).once('close', resolve);
+        }).once("close", resolve);
     });
 
     if (args.stdoutFile) await fse.close(<number>stdoutFile);
@@ -103,7 +103,7 @@ export function dockerStop(args: {
     containerId: string;
 }): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-        childProcess.execFile('docker', [
+        childProcess.execFile("docker", [
             "stop",
             args.containerId,
         ], err => {
@@ -117,7 +117,7 @@ export function dockerRm(args: {
     containerId: string;
 }): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-        childProcess.execFile('docker', [
+        childProcess.execFile("docker", [
             "rm",
             args.containerId,
         ], err => {
@@ -131,7 +131,7 @@ export function dockerIp(args: {
     containerId: string;
 }): Promise<string> {
     return new Promise<string>((resolve, reject) => {
-        childProcess.execFile('docker', [
+        childProcess.execFile("docker", [
             "inspect",
             "-f", "{{ .NetworkSettings.IPAddress }}",
             args.containerId,

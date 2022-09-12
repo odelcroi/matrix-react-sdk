@@ -14,25 +14,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
-import { CallEvent, CallState, MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
-import { EventSubscription } from 'fbemitter';
+import React, { createRef } from "react";
+import { CallEvent, CallState, MatrixCall } from "matrix-js-sdk/src/webrtc/call";
+import { EventSubscription } from "fbemitter";
 import { logger } from "matrix-js-sdk/src/logger";
-import classNames from 'classnames';
+import classNames from "classnames";
 import { Room } from "matrix-js-sdk/src/models/room";
 
 import LegacyCallView from "./LegacyCallView";
-import { RoomViewStore } from '../../../stores/RoomViewStore';
-import LegacyCallHandler, { LegacyCallHandlerEvent } from '../../../LegacyCallHandler';
+import { RoomViewStore } from "../../../stores/RoomViewStore";
+import LegacyCallHandler, { LegacyCallHandlerEvent } from "../../../LegacyCallHandler";
 import PersistentApp from "../elements/PersistentApp";
 import SettingsStore from "../../../settings/SettingsStore";
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import PictureInPictureDragger from './PictureInPictureDragger';
-import dis from '../../../dispatcher/dispatcher';
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import PictureInPictureDragger from "./PictureInPictureDragger";
+import dis from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
-import { Container, WidgetLayoutStore } from '../../../stores/widgets/WidgetLayoutStore';
-import LegacyCallViewHeader from './LegacyCallView/LegacyCallViewHeader';
-import ActiveWidgetStore, { ActiveWidgetStoreEvent } from '../../../stores/ActiveWidgetStore';
+import { Container, WidgetLayoutStore } from "../../../stores/widgets/WidgetLayoutStore";
+import LegacyCallViewHeader from "./LegacyCallView/LegacyCallViewHeader";
+import ActiveWidgetStore, { ActiveWidgetStoreEvent } from "../../../stores/ActiveWidgetStore";
 import WidgetStore, { IApp } from "../../../stores/WidgetStore";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
@@ -256,7 +256,7 @@ export default class PipView extends React.Component<IProps, IState> {
             WidgetLayoutStore.instance.moveToContainer(room, app, Container.Center);
         } else {
             dis.dispatch({
-                action: 'video_fullscreen',
+                action: "video_fullscreen",
                 fullscreen: true,
             });
         }
@@ -340,7 +340,7 @@ export default class PipView extends React.Component<IProps, IState> {
                     <PersistentApp
                         persistentWidgetId={this.state.persistentWidgetId}
                         persistentRoomId={roomId}
-                        pointerEvents={this.state.moving ? 'none' : undefined}
+                        pointerEvents={this.state.moving ? "none" : undefined}
                         movePersistedElement={this.movePersistedElement}
                     />
                 </div>;

@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { render } from '@testing-library/react';
+import React from "react";
+import { render } from "@testing-library/react";
 
-import DeviceDetails from '../../../../../src/components/views/settings/devices/DeviceDetails';
+import DeviceDetails from "../../../../../src/components/views/settings/devices/DeviceDetails";
 
-describe('<DeviceDetails />', () => {
+describe("<DeviceDetails />", () => {
     const baseDevice = {
-        device_id: 'my-device',
+        device_id: "my-device",
         isVerified: false,
     };
     const defaultProps = {
@@ -36,23 +36,23 @@ describe('<DeviceDetails />', () => {
         jest.setSystemTime(now);
     });
 
-    it('renders device without metadata', () => {
+    it("renders device without metadata", () => {
         const { container } = render(getComponent());
         expect(container).toMatchSnapshot();
     });
 
-    it('renders device with metadata', () => {
+    it("renders device with metadata", () => {
         const device = {
             ...baseDevice,
-            display_name: 'My Device',
-            last_seen_ip: '123.456.789',
+            display_name: "My Device",
+            last_seen_ip: "123.456.789",
             last_seen_ts: now - 60000000,
         };
         const { container } = render(getComponent({ device }));
         expect(container).toMatchSnapshot();
     });
 
-    it('renders a verified device', () => {
+    it("renders a verified device", () => {
         const device = {
             ...baseDevice,
             isVerified: true,

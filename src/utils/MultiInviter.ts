@@ -21,8 +21,8 @@ import { MatrixClient } from "matrix-js-sdk/src/client";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { HistoryVisibility } from "matrix-js-sdk/src/@types/partials";
 
-import { MatrixClientPeg } from '../MatrixClientPeg';
-import { AddressType, getAddressType } from '../UserAddress';
+import { MatrixClientPeg } from "../MatrixClientPeg";
+import { AddressType, getAddressType } from "../UserAddress";
 import { _t } from "../languageHandler";
 import Modal from "../Modal";
 import SettingsStore from "../settings/SettingsStore";
@@ -38,7 +38,7 @@ interface IError {
     errcode: string;
 }
 
-const UNKNOWN_PROFILE_ERRORS = ['M_NOT_FOUND', 'M_USER_NOT_FOUND', 'M_PROFILE_UNDISCLOSED', 'M_PROFILE_NOT_FOUND'];
+const UNKNOWN_PROFILE_ERRORS = ["M_NOT_FOUND", "M_USER_NOT_FOUND", "M_PROFILE_UNDISCLOSED", "M_PROFILE_NOT_FOUND"];
 
 export type CompletionStates = Record<string, InviteState>;
 
@@ -92,8 +92,8 @@ export default class MultiInviter {
             if (getAddressType(addr) === null) {
                 this.completionStates[addr] = InviteState.Error;
                 this.errors[addr] = {
-                    errcode: 'M_INVALID',
-                    errorText: _t('Unrecognised address'),
+                    errcode: "M_INVALID",
+                    errorText: _t("Unrecognised address"),
                 };
             }
         }
@@ -134,7 +134,7 @@ export default class MultiInviter {
         if (!this.busy) return;
 
         this.canceled = true;
-        this.deferred.reject(new Error('canceled'));
+        this.deferred.reject(new Error("canceled"));
     }
 
     public getCompletionState(addr: string): InviteState {
@@ -174,10 +174,10 @@ export default class MultiInviter {
                     // The error handling during the invitation process covers any API.
                     // Some errors must to me mapped from profile API errors to more specific ones to avoid collisions.
                     switch (err.errcode) {
-                        case 'M_FORBIDDEN':
-                            throw new MatrixError({ errcode: 'M_PROFILE_UNDISCLOSED' });
-                        case 'M_NOT_FOUND':
-                            throw new MatrixError({ errcode: 'M_USER_NOT_FOUND' });
+                        case "M_FORBIDDEN":
+                            throw new MatrixError({ errcode: "M_PROFILE_UNDISCLOSED" });
+                        case "M_NOT_FOUND":
+                            throw new MatrixError({ errcode: "M_USER_NOT_FOUND" });
                         default:
                             throw err;
                     }
@@ -186,7 +186,7 @@ export default class MultiInviter {
 
             return this.matrixClient.invite(roomId, addr, undefined, this.reason);
         } else {
-            throw new Error('Unsupported address');
+            throw new Error("Unsupported address");
         }
     }
 
@@ -219,9 +219,9 @@ export default class MultiInviter {
                 switch (err.errcode) {
                     case "M_FORBIDDEN":
                         if (isSpace) {
-                            errorText = _t('You do not have permission to invite people to this space.');
+                            errorText = _t("You do not have permission to invite people to this space.");
                         } else {
-                            errorText = _t('You do not have permission to invite people to this room.');
+                            errorText = _t("You do not have permission to invite people to this room.");
                         }
                         fatal = true;
                         break;
@@ -273,7 +273,7 @@ export default class MultiInviter {
                 }
 
                 if (!errorText) {
-                    errorText = _t('Unknown server error');
+                    errorText = _t("Unknown server error");
                 }
 
                 this.completionStates[address] = InviteState.Error;

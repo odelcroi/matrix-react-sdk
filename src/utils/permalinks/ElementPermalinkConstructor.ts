@@ -48,11 +48,11 @@ export default class ElementPermalinkConstructor extends PermalinkConstructor {
     }
 
     forEntity(entityId: string): string {
-        if (entityId[0] === '!' || entityId[0] === '#') {
+        if (entityId[0] === "!" || entityId[0] === "#") {
             return this.forRoom(entityId);
-        } else if (entityId[0] === '@') {
+        } else if (entityId[0] === "@") {
             return this.forUser(entityId);
-        } else if (entityId[0] === '+') {
+        } else if (entityId[0] === "+") {
             return this.forGroup(entityId);
         } else throw new Error("Unrecognized entity");
     }
@@ -63,7 +63,7 @@ export default class ElementPermalinkConstructor extends PermalinkConstructor {
     }
 
     encodeServerCandidates(candidates?: string[]) {
-        if (!candidates || candidates.length === 0) return '';
+        if (!candidates || candidates.length === 0) return "";
         return `?via=${candidates.map(c => encodeURIComponent(c)).join("&via=")}`;
     }
 
@@ -99,15 +99,15 @@ export default class ElementPermalinkConstructor extends PermalinkConstructor {
 
         const entityType = parts[0];
         const entity = parts[1];
-        if (entityType === 'user') {
+        if (entityType === "user") {
             // Probably a user, no further parsing needed.
             return PermalinkParts.forUser(entity);
-        } else if (entityType === 'room') {
+        } else if (entityType === "room") {
             // Rejoin the rest because v3 events can have slashes (annoyingly)
-            const eventId = parts.length > 2 ? parts.slice(2).join('/') : "";
+            const eventId = parts.length > 2 ? parts.slice(2).join("/") : "";
             const via = query.split(/&?via=/).filter(p => !!p);
             return PermalinkParts.forEvent(entity, eventId, via);
-        } else if (entityType === 'group') {
+        } else if (entityType === "group") {
             return PermalinkParts.forGroup(entity);
         } else {
             throw new Error("Unknown entity type in permalink");

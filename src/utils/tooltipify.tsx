@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import ReactDOM from 'react-dom';
+import ReactDOM from "react-dom";
 
 import PlatformPeg from "../PlatformPeg";
 import LinkWithTooltip from "../components/views/elements/LinkWithTooltip";

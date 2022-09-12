@@ -180,7 +180,7 @@ const DmAuxButton = ({ tabIndex, dispatcher = defaultDispatcher }: IAuxButtonPro
         return <AccessibleTooltipButton
             tabIndex={tabIndex}
             onClick={(e) => {
-                dispatcher.dispatch({ action: 'view_create_chat' });
+                dispatcher.dispatch({ action: "view_create_chat" });
                 PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuCreateChatItem", e);
             }}
             className="mx_RoomSublist_auxButton"

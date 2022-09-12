@@ -39,7 +39,7 @@ export const getBindingsByCategory = (category: CategoryName): KeyBinding[] => {
 const messageComposerBindings = (): KeyBinding[] => {
     const bindings = getBindingsByCategory(CategoryName.COMPOSER);
 
-    if (SettingsStore.getValue('MessageComposerInput.ctrlEnterToSend')) {
+    if (SettingsStore.getValue("MessageComposerInput.ctrlEnterToSend")) {
         bindings.push({
             action: KeyBindingAction.SendMessage,
             keyCombo: {
@@ -128,7 +128,7 @@ const roomListBindings = (): KeyBinding[] => {
 const roomBindings = (): KeyBinding[] => {
     const bindings = getBindingsByCategory(CategoryName.ROOM);
 
-    if (SettingsStore.getValue('ctrlFForSearch')) {
+    if (SettingsStore.getValue("ctrlFForSearch")) {
         bindings.push({
             action: KeyBindingAction.SearchInRoom,
             keyCombo: {

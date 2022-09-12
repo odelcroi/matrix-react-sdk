@@ -15,27 +15,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import classNames from 'classnames';
-import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
-import { Room } from 'matrix-js-sdk/src/models/room';
-import { Relations } from 'matrix-js-sdk/src/models/relations';
-import { MatrixClient } from 'matrix-js-sdk/src/client';
+import React from "react";
+import classNames from "classnames";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { Relations } from "matrix-js-sdk/src/models/relations";
+import { MatrixClient } from "matrix-js-sdk/src/client";
 
-import { _t } from '../../../languageHandler';
-import dis from '../../../dispatcher/dispatcher';
+import { _t } from "../../../languageHandler";
+import dis from "../../../dispatcher/dispatcher";
 import { makeUserPermalink, RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
 import SettingsStore from "../../../settings/SettingsStore";
 import { Layout } from "../../../settings/enums/Layout";
 import { getUserNameColorClass } from "../../../utils/FormattingUtils";
 import { Action } from "../../../dispatcher/actions";
-import Spinner from './Spinner';
+import Spinner from "./Spinner";
 import ReplyTile from "../rooms/ReplyTile";
-import Pill, { PillType } from './Pill';
-import AccessibleButton, { ButtonEvent } from './AccessibleButton';
-import { getParentEventId, shouldDisplayReply } from '../../../utils/Reply';
+import Pill, { PillType } from "./Pill";
+import AccessibleButton, { ButtonEvent } from "./AccessibleButton";
+import { getParentEventId, shouldDisplayReply } from "../../../utils/Reply";
 import RoomContext from "../../../contexts/RoomContext";
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
 /**
  * This number is based on the previous behavior - if we have message of height
@@ -116,9 +116,9 @@ export default class ReplyChain extends React.Component<IProps, IState> {
 
     private trySetExpandableQuotes() {
         if (this.props.isQuoteExpanded === undefined && this.blockquoteRef.current) {
-            const el: HTMLElement | null = this.blockquoteRef.current.querySelector('.mx_EventTile_body');
+            const el: HTMLElement | null = this.blockquoteRef.current.querySelector(".mx_EventTile_body");
             if (el) {
-                const code: HTMLElement | null = el.querySelector('code');
+                const code: HTMLElement | null = el.querySelector("code");
                 const isCodeEllipsisShown = code ? code.offsetHeight >= SHOW_EXPAND_QUOTE_PIXELS : false;
                 const isElipsisShown = el.offsetHeight >= SHOW_EXPAND_QUOTE_PIXELS || isCodeEllipsisShown;
                 if (isElipsisShown) {
@@ -206,8 +206,8 @@ export default class ReplyChain extends React.Component<IProps, IState> {
         if (this.state.err) {
             header = <blockquote className="mx_ReplyChain mx_ReplyChain_error">
                 {
-                    _t('Unable to load event that was replied to, ' +
-                        'it either does not exist or you do not have permission to view it.')
+                    _t("Unable to load event that was replied to, " +
+                        "it either does not exist or you do not have permission to view it.")
                 }
             </blockquote>;
         } else if (this.state.loadedEv && shouldDisplayReply(this.state.events[0])) {
@@ -215,8 +215,8 @@ export default class ReplyChain extends React.Component<IProps, IState> {
             const room = this.matrixClient.getRoom(ev.getRoomId());
             header = <blockquote className={`mx_ReplyChain ${this.getReplyChainColorClass(ev)}`}>
                 {
-                    _t('<a>In reply to</a> <pill>', {}, {
-                        'a': (sub) => (
+                    _t("<a>In reply to</a> <pill>", {}, {
+                        "a": (sub) => (
                             <AccessibleButton
                                 kind="link_inline"
                                 className="mx_ReplyChain_show"
@@ -225,7 +225,7 @@ export default class ReplyChain extends React.Component<IProps, IState> {
                                 { sub }
                             </AccessibleButton>
                         ),
-                        'pill': (
+                        "pill": (
                             <Pill
                                 type={PillType.UserMention}
                                 room={room}
@@ -254,12 +254,12 @@ export default class ReplyChain extends React.Component<IProps, IState> {
         const { isQuoteExpanded } = this.props;
         const evTiles = this.state.events.map((ev) => {
             const classname = classNames({
-                'mx_ReplyChain': true,
+                "mx_ReplyChain": true,
                 [this.getReplyChainColorClass(ev)]: true,
                 // We don't want to add the class if it's undefined, it should only be expanded/collapsed when it's true/false
-                'mx_ReplyChain--expanded': isQuoteExpanded === true,
+                "mx_ReplyChain--expanded": isQuoteExpanded === true,
                 // We don't want to add the class if it's undefined, it should only be expanded/collapsed when it's true/false
-                'mx_ReplyChain--collapsed': isQuoteExpanded === false,
+                "mx_ReplyChain--collapsed": isQuoteExpanded === false,
             });
             return (
                 <blockquote ref={this.blockquoteRef} className={classname} key={ev.getId()}>

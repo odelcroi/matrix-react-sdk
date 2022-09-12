@@ -25,7 +25,7 @@ export const makeThreadEvent = ({ rootEventId, replyToEventId, ...props }: Messa
     relatesTo: {
         event_id: rootEventId,
         rel_type: "m.thread",
-        ['m.in_reply_to']: {
+        ["m.in_reply_to"]: {
             event_id: replyToEventId,
         },
     },
@@ -53,7 +53,7 @@ export const makeThreadEvents = ({
         user: authorId,
         event: true,
         room: roomId,
-        msg: 'root event message ' + Math.random(),
+        msg: "root event message " + Math.random(),
         ts,
     });
 

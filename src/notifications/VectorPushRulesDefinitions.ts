@@ -17,7 +17,7 @@ limitations under the License.
 import { IAnnotatedPushRule, PushRuleAction } from "matrix-js-sdk/src/@types/PushRules";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { _td } from '../languageHandler';
+import { _td } from "../languageHandler";
 import { StandardActions } from "./StandardActions";
 import { PushRuleVectorState, VectorState } from "./PushRuleVectorState";
 import { NotificationUtils } from "./NotificationUtils";
@@ -69,7 +69,7 @@ class VectorPushRuleDefinition {
             }
         }
 
-        logger.error(`Cannot translate rule actions into Vector rule state. ` +
+        logger.error("Cannot translate rule actions into Vector rule state. " +
             `Rule: ${JSON.stringify(rule)}, ` +
             `Expected: ${JSON.stringify(this.vectorStateToActions)}`);
         return undefined;

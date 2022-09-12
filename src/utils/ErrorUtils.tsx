@@ -17,7 +17,7 @@ limitations under the License.
 import React, { ReactNode } from "react";
 import { MatrixError } from "matrix-js-sdk/src/http-api";
 
-import { _t, _td, Tags, TranslatedString } from '../languageHandler';
+import { _t, _td, Tags, TranslatedString } from "../languageHandler";
 
 /**
  * Produce a translated error message for a
@@ -40,7 +40,7 @@ export function messageForResourceLimitError(
     extraTranslations?: Tags,
 ): TranslatedString {
     let errString = strings[limitType];
-    if (errString === undefined) errString = strings[''];
+    if (errString === undefined) errString = strings[""];
 
     const linkSub = sub => {
         if (adminContact) {
@@ -50,29 +50,29 @@ export function messageForResourceLimitError(
         }
     };
 
-    if (errString.includes('<a>')) {
-        return _t(errString, {}, Object.assign({ 'a': linkSub }, extraTranslations));
+    if (errString.includes("<a>")) {
+        return _t(errString, {}, Object.assign({ "a": linkSub }, extraTranslations));
     } else {
         return _t(errString, {}, extraTranslations);
     }
 }
 
 export function messageForSyncError(err: MatrixError): ReactNode {
-    if (err.errcode === 'M_RESOURCE_LIMIT_EXCEEDED') {
+    if (err.errcode === "M_RESOURCE_LIMIT_EXCEEDED") {
         const limitError = messageForResourceLimitError(
             err.data.limit_type,
             err.data.admin_contact,
             {
-                'monthly_active_user': _td("This homeserver has hit its Monthly Active User limit."),
-                'hs_blocked': _td("This homeserver has been blocked by its administrator."),
-                '': _td("This homeserver has exceeded one of its resource limits."),
+                "monthly_active_user": _td("This homeserver has hit its Monthly Active User limit."),
+                "hs_blocked": _td("This homeserver has been blocked by its administrator."),
+                "": _td("This homeserver has exceeded one of its resource limits."),
             },
         );
         const adminContact = messageForResourceLimitError(
             err.data.limit_type,
             err.data.admin_contact,
             {
-                '': _td("Please <a>contact your service administrator</a> to continue using the service."),
+                "": _td("Please <a>contact your service administrator</a> to continue using the service."),
             },
         );
         return <div>

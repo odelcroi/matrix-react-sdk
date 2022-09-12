@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from "react";
 
-import QuestionDialog from './QuestionDialog';
-import { _t } from '../../../languageHandler';
+import QuestionDialog from "./QuestionDialog";
+import { _t } from "../../../languageHandler";
 import Field from "../elements/Field";
 import AccessibleButton from "../elements/AccessibleButton";
 import SdkConfig from "../../../SdkConfig";
@@ -62,8 +62,8 @@ const FeedbackDialog: React.FC<IProps> = (props: IProps) => {
             }
 
             Modal.createDialog(InfoDialog, {
-                title: _t('Feedback sent'),
-                description: _t('Thank you!'),
+                title: _t("Feedback sent"),
+                description: _t("Thank you!"),
             });
         }
         props.onFinished();

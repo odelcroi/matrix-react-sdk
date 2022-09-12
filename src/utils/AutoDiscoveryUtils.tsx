@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactNode } from 'react';
+import React, { ReactNode } from "react";
 import { AutoDiscovery } from "matrix-js-sdk/src/autodiscovery";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t, _td, newTranslatableError } from "../languageHandler";
 import { makeType } from "./TypeUtils";
-import SdkConfig from '../SdkConfig';
-import { ValidatedServerConfig } from './ValidatedServerConfig';
+import SdkConfig from "../SdkConfig";
+import { ValidatedServerConfig } from "./ValidatedServerConfig";
 
 const LIVELINESS_DISCOVERY_ERRORS: string[] = [
     AutoDiscovery.ERROR_INVALID_HOMESERVER,
@@ -150,7 +150,7 @@ export default class AutoDiscoveryUtils {
         };
 
         if (identityUrl) {
-            wellknownConfig['m.identity_server'] = {
+            wellknownConfig["m.identity_server"] = {
                 base_url: identityUrl,
             };
         }
@@ -191,8 +191,8 @@ export default class AutoDiscoveryUtils {
             throw newTranslatableError(_td("Unexpected error resolving homeserver configuration"));
         }
 
-        const hsResult = discoveryResult['m.homeserver'];
-        const isResult = discoveryResult['m.identity_server'];
+        const hsResult = discoveryResult["m.homeserver"];
+        const isResult = discoveryResult["m.identity_server"];
 
         const defaultConfig = SdkConfig.get("validated_server_config");
 
@@ -203,7 +203,7 @@ export default class AutoDiscoveryUtils {
         // lack of identity server provided by the discovery method), we intentionally do not
         // validate it. This has already been validated and this helps some off-the-grid usage
         // of Element.
-        let preferredIdentityUrl = defaultConfig && defaultConfig['isUrl'];
+        let preferredIdentityUrl = defaultConfig && defaultConfig["isUrl"];
         if (isResult && isResult.state === AutoDiscovery.SUCCESS) {
             preferredIdentityUrl = isResult["base_url"];
         } else if (isResult && isResult.state !== AutoDiscovery.PROMPT) {

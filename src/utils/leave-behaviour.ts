@@ -39,7 +39,7 @@ import { bulkSpaceBehaviour } from "./space";
 export async function leaveRoomBehaviour(roomId: string, retry = true, spinner = true) {
     let spinnerModal: IHandle<any>;
     if (spinner) {
-        spinnerModal = Modal.createDialog(Spinner, null, 'mx_Dialog_spinner');
+        spinnerModal = Modal.createDialog(Spinner, null, "mx_Dialog_spinner");
     }
 
     const cli = MatrixClientPeg.get();
@@ -107,7 +107,7 @@ export async function leaveRoomBehaviour(roomId: string, retry = true, spinner =
             const err = roomErr[1]; // [0] is the roomId
             let message = _t("Unexpected server error trying to leave the room");
             if (err.errcode && err.message) {
-                if (err.errcode === 'M_CANNOT_LEAVE_SERVER_NOTICE_ROOM') {
+                if (err.errcode === "M_CANNOT_LEAVE_SERVER_NOTICE_ROOM") {
                     Modal.createDialog(ErrorDialog, {
                         title: _t("Can't leave Server Notices room"),
                         description: _t(
@@ -119,7 +119,7 @@ export async function leaveRoomBehaviour(roomId: string, retry = true, spinner =
                 }
                 message = results[roomId].message;
             }
-            messages.push(message, React.createElement('BR')); // createElement to avoid using a tsx file in utils
+            messages.push(message, React.createElement("BR")); // createElement to avoid using a tsx file in utils
         }
         Modal.createDialog(ErrorDialog, {
             title: _t("Error leaving room"),

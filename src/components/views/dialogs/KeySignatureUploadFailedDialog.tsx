@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef } from "react";
 
-import { _t } from '../../../languageHandler';
-import SdkConfig from '../../../SdkConfig';
+import { _t } from "../../../languageHandler";
+import SdkConfig from "../../../SdkConfig";
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
 import Spinner from "../elements/Spinner";

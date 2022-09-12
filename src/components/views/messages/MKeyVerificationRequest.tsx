@@ -14,18 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { MatrixEvent } from 'matrix-js-sdk/src/matrix';
+import React from "react";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { VerificationRequestEvent } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import { _t } from '../../../languageHandler';
-import { getNameForEventRoom, userLabelForEventRoom } from '../../../utils/KeyVerificationStateObserver';
-import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { _t } from "../../../languageHandler";
+import { getNameForEventRoom, userLabelForEventRoom } from "../../../utils/KeyVerificationStateObserver";
+import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePhases";
 import EventTileBubble from "./EventTileBubble";
-import AccessibleButton from '../elements/AccessibleButton';
-import RightPanelStore from '../../../stores/right-panel/RightPanelStore';
+import AccessibleButton from "../elements/AccessibleButton";
+import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 
 interface IProps {
     mxEvent: MatrixEvent;

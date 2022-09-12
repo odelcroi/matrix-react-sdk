@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
-import classNames from 'classnames';
+import React, { createRef } from "react";
+import classNames from "classnames";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
+import { MatrixCall } from "matrix-js-sdk/src/webrtc/call";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { Icon as InfoIcon } from "../../../../res/img/element-icons/info.svg";
@@ -45,21 +45,21 @@ import RoomListStore from "../../../stores/room-list/RoomListStore";
 import SettingsStore from "../../../settings/SettingsStore";
 import { UIFeature } from "../../../settings/UIFeature";
 import { mediaFromMxc } from "../../../customisations/Media";
-import BaseAvatar from '../avatars/BaseAvatar';
+import BaseAvatar from "../avatars/BaseAvatar";
 import { SearchResultAvatar } from "../avatars/SearchResultAvatar";
-import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
-import { selectText } from '../../../utils/strings';
-import Field from '../elements/Field';
-import TabbedView, { Tab, TabLocation } from '../../structures/TabbedView';
-import Dialpad from '../voip/DialPad';
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
+import { selectText } from "../../../utils/strings";
+import Field from "../elements/Field";
+import TabbedView, { Tab, TabLocation } from "../../structures/TabbedView";
+import Dialpad from "../voip/DialPad";
 import QuestionDialog from "./QuestionDialog";
 import Spinner from "../elements/Spinner";
 import BaseDialog from "./BaseDialog";
 import DialPadBackspaceButton from "../elements/DialPadBackspaceButton";
 import LegacyCallHandler from "../../../LegacyCallHandler";
-import UserIdentifierCustomisations from '../../../customisations/UserIdentifier';
+import UserIdentifierCustomisations from "../../../customisations/UserIdentifier";
 import CopyableText from "../elements/CopyableText";
-import { ScreenName } from '../../../PosthogTrackers';
+import { ScreenName } from "../../../PosthogTrackers";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import {
@@ -69,8 +69,8 @@ import {
     startDmOnFirstMessage,
     ThreepidMember,
 } from "../../../utils/direct-messages";
-import { AnyInviteKind, KIND_CALL_TRANSFER, KIND_DM, KIND_INVITE } from './InviteDialogTypes';
-import Modal from '../../../Modal';
+import { AnyInviteKind, KIND_CALL_TRANSFER, KIND_DM, KIND_INVITE } from "./InviteDialogTypes";
+import Modal from "../../../Modal";
 import dis from "../../../dispatcher/dispatcher";
 
 // we have a number of types defined from the Matrix spec which can't reasonably be altered here.
@@ -86,8 +86,8 @@ const INITIAL_ROOMS_SHOWN = 3; // Number of rooms to show at first
 const INCREMENT_ROOMS_SHOWN = 5; // Number of rooms to add when 'show more' is clicked
 
 enum TabId {
-    UserDirectory = 'users',
-    DialPad = 'dialpad',
+    UserDirectory = "users",
+    DialPad = "dialpad",
 }
 
 class DMUserTile extends React.PureComponent<IDMUserTileProps> {
@@ -112,7 +112,7 @@ class DMUserTile extends React.PureComponent<IDMUserTileProps> {
                 >
                     <img
                         src={require("../../../../res/img/icon-pill-remove.svg").default}
-                        alt={_t('Remove')}
+                        alt={_t("Remove")}
                         width={8}
                         height={8}
                     />
@@ -166,20 +166,20 @@ class DMRoomTile extends React.PureComponent<IDMRoomTileProps> {
             // Push any text we missed (first bit/middle of text)
             if (ii > i) {
                 // Push any text we aren't highlighting (middle of text match, or beginning of text)
-                result.push(<span key={i + 'begin'}>{ str.substring(i, ii) }</span>);
+                result.push(<span key={i + "begin"}>{ str.substring(i, ii) }</span>);
             }
 
             i = ii; // copy over ii only if we have a match (to preserve i for end-of-text matching)
 
             // Highlight the word the user entered
             const substr = str.substring(i, filterStr.length + i);
-            result.push(<span className='mx_InviteDialog_tile--room_highlight' key={i + 'bold'}>{ substr }</span>);
+            result.push(<span className='mx_InviteDialog_tile--room_highlight' key={i + "bold"}>{ substr }</span>);
             i += substr.length;
         }
 
         // Push any text we missed (end of text)
         if (i < str.length) {
-            result.push(<span key={i + 'end'}>{ str.substring(i) }</span>);
+            result.push(<span key={i + "end"}>{ str.substring(i) }</span>);
         }
 
         return result;
@@ -308,10 +308,10 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
         if (props.roomId) {
             const room = MatrixClientPeg.get().getRoom(props.roomId);
             if (!room) throw new Error("Room ID given to InviteDialog does not look like a room");
-            room.getMembersWithMembership('invite').forEach(m => alreadyInvited.add(m.userId));
-            room.getMembersWithMembership('join').forEach(m => alreadyInvited.add(m.userId));
+            room.getMembersWithMembership("invite").forEach(m => alreadyInvited.add(m.userId));
+            room.getMembersWithMembership("join").forEach(m => alreadyInvited.add(m.userId));
             // add banned users, so we don't try to invite them
-            room.getMembersWithMembership('ban').forEach(m => alreadyInvited.add(m.userId));
+            room.getMembersWithMembership("ban").forEach(m => alreadyInvited.add(m.userId));
         }
 
         this.state = {
@@ -326,7 +326,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
             canUseIdentityServer: !!MatrixClientPeg.get().getIdentityServerUrl(),
             tryingIdentityServer: false,
             consultFirst: false,
-            dialPadValue: '',
+            dialPadValue: "",
             currentTabId: TabId.UserDirectory,
 
             // These two flags are used for the 'Go' button to communicate what is going on.
@@ -435,10 +435,10 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
 
     private convertFilter(): Member[] {
         // Check to see if there's anything to convert first
-        if (!this.state.filterText || !this.state.filterText.includes('@')) return this.state.targets || [];
+        if (!this.state.filterText || !this.state.filterText.includes("@")) return this.state.targets || [];
 
         let newMember: Member;
-        if (this.state.filterText.startsWith('@')) {
+        if (this.state.filterText.startsWith("@")) {
             // Assume mxid
             newMember = new DirectoryMember({ user_id: this.state.filterText, display_name: null, avatar_url: null });
         } else if (SettingsStore.getValue(UIFeature.IdentityServer)) {
@@ -446,7 +446,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
             newMember = new ThreepidMember(this.state.filterText);
         }
         const newTargets = [...(this.state.targets || []), newMember];
-        this.setState({ targets: newTargets, filterText: '' });
+        this.setState({ targets: newTargets, filterText: "" });
         return newTargets;
     }
 
@@ -578,7 +578,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
 
             // While we're here, try and autocomplete a search result for the mxid itself
             // if there's no matches (and the input looks like a mxid).
-            if (term[0] === '@' && term.indexOf(':') > 1) {
+            if (term[0] === "@" && term.indexOf(":") > 1) {
                 try {
                     const profile = await MatrixClientPeg.get().getProfileInfo(term);
                     if (profile) {
@@ -587,8 +587,8 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                         // top so it is most obviously presented to the user.
                         r.results.splice(0, 0, {
                             user_id: term,
-                            display_name: profile['displayname'],
-                            avatar_url: profile['avatar_url'],
+                            display_name: profile["displayname"],
+                            avatar_url: profile["avatar_url"],
                         });
                     }
                 } catch (e) {
@@ -624,7 +624,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
             this.setState({ tryingIdentityServer: true });
             return;
         }
-        if (term.indexOf('@') > 0 && Email.looksValid(term) && SettingsStore.getValue(UIFeature.IdentityServer)) {
+        if (term.indexOf("@") > 0 && Email.looksValid(term) && SettingsStore.getValue(UIFeature.IdentityServer)) {
             // Start off by suggesting the plain email while we try and resolve it
             // to a real account.
             this.setState({
@@ -637,7 +637,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                 if (term !== this.state.filterText) return; // abandon hope
 
                 const lookup = await MatrixClientPeg.get().lookupThreePid(
-                    'email',
+                    "email",
                     term,
                     undefined, // callback
                     token,
@@ -761,12 +761,12 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                 continue;
             }
 
-            if (address.indexOf('@') > 0 && Email.looksValid(address)) {
+            if (address.indexOf("@") > 0 && Email.looksValid(address)) {
                 toAdd.push(new ThreepidMember(address));
                 continue;
             }
 
-            if (address[0] !== '@') {
+            if (address[0] !== "@") {
                 failed.push(address); // not a user ID
                 continue;
             }
@@ -790,12 +790,12 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
 
         if (failed.length > 0) {
             Modal.createDialog(QuestionDialog, {
-                title: _t('Failed to find the following users'),
+                title: _t("Failed to find the following users"),
                 description: _t(
                     "The following users might not exist or are invalid, and cannot be invited: %(csvNames)s",
                     { csvNames: failed.join(", ") },
                 ),
-                button: _t('OK'),
+                button: _t("OK"),
             });
         }
 
@@ -828,14 +828,14 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
     };
 
     private renderSection(kind: "recents"|"suggestions") {
-        let sourceMembers = kind === 'recents' ? this.state.recents : this.state.suggestions;
-        let showNum = kind === 'recents' ? this.state.numRecentsShown : this.state.numSuggestionsShown;
-        const showMoreFn = kind === 'recents' ? this.showMoreRecents.bind(this) : this.showMoreSuggestions.bind(this);
-        const lastActive = (m) => kind === 'recents' ? m.lastActive : null;
-        let sectionName = kind === 'recents' ? _t("Recent Conversations") : _t("Suggestions");
+        let sourceMembers = kind === "recents" ? this.state.recents : this.state.suggestions;
+        let showNum = kind === "recents" ? this.state.numRecentsShown : this.state.numSuggestionsShown;
+        const showMoreFn = kind === "recents" ? this.showMoreRecents.bind(this) : this.showMoreSuggestions.bind(this);
+        const lastActive = (m) => kind === "recents" ? m.lastActive : null;
+        let sectionName = kind === "recents" ? _t("Recent Conversations") : _t("Suggestions");
 
         if (this.props.kind === KIND_INVITE) {
-            sectionName = kind === 'recents' ? _t("Recently Direct Messaged") : _t("Suggestions");
+            sectionName = kind === "recents" ? _t("Recently Direct Messaged") : _t("Suggestions");
         }
 
         // Mix in the server results if we have any, but only if we're searching. We track the additional
@@ -844,7 +844,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
         let priorityAdditionalMembers = []; // Shows up before our own suggestions, higher quality
         let otherAdditionalMembers = []; // Shows up after our own suggestions, lower quality
         const hasMixins = this.state.serverResultsMixin || this.state.threepidResultsMixin;
-        if (this.state.filterText && hasMixins && kind === 'suggestions') {
+        if (this.state.filterText && hasMixins && kind === "suggestions") {
             // We don't want to duplicate members though, so just exclude anyone we've already seen.
             // The type of u is a pain to define but members of both mixins have the 'userId' property
             const notAlreadyExists = (u: any): boolean => {
@@ -1062,7 +1062,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
         const identityServersEnabled = SettingsStore.getValue(UIFeature.IdentityServer);
 
         const hasSelection = this.state.targets.length > 0
-            || (this.state.filterText && this.state.filterText.includes('@'));
+            || (this.state.filterText && this.state.filterText.includes("@"));
 
         const cli = MatrixClientPeg.get();
         const userId = cli.getUserId();
@@ -1180,7 +1180,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                     kind="primary"
                     onClick={this.transferCall}
                     className='mx_InviteDialog_transferButton'
-                    disabled={!hasSelection && this.state.dialPadValue === ''}
+                    disabled={!hasSelection && this.state.dialPadValue === ""}
                 >
                     { _t("Transfer") }
                 </AccessibleButton>
@@ -1211,8 +1211,8 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
             { this.renderIdentityServerWarning() }
             <div className='error'>{ this.state.errorText }</div>
             <div className='mx_InviteDialog_userSections'>
-                { this.renderSection('recents') }
-                { this.renderSection('suggestions') }
+                { this.renderSection("recents") }
+                { this.renderSection("suggestions") }
                 { extraSection }
             </div>
             { footer }
@@ -1222,7 +1222,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
         if (this.props.kind === KIND_CALL_TRANSFER) {
             const tabs = [];
             tabs.push(new Tab(
-                TabId.UserDirectory, _td("User Directory"), 'mx_InviteDialog_userDirectoryIcon', usersSection,
+                TabId.UserDirectory, _td("User Directory"), "mx_InviteDialog_userDirectoryIcon", usersSection,
             ));
 
             const backspaceButton = (
@@ -1262,7 +1262,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                     onDeletePress={this.onDeletePress}
                 />
             </div>;
-            tabs.push(new Tab(TabId.DialPad, _td("Dial pad"), 'mx_InviteDialog_dialPadIcon', dialPadSection));
+            tabs.push(new Tab(TabId.DialPad, _td("Dial pad"), "mx_InviteDialog_dialPadIcon", dialPadSection));
             dialogContent = <React.Fragment>
                 <TabbedView
                     tabs={tabs}

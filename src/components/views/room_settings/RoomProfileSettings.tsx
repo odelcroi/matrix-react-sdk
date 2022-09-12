@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
+import React, { createRef } from "react";
 import classNames from "classnames";
 
 import { _t } from "../../../languageHandler";
@@ -23,7 +23,7 @@ import Field from "../elements/Field";
 import { mediaFromMxc } from "../../../customisations/Media";
 import AccessibleButton from "../elements/AccessibleButton";
 import AvatarSetting from "../settings/AvatarSetting";
-import { htmlSerializeFromMdIfNeeded } from '../../../editor/serialize';
+import { htmlSerializeFromMdIfNeeded } from "../../../editor/serialize";
 import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
 
 interface IProps {
@@ -60,10 +60,10 @@ export default class RoomProfileSettings extends React.Component<IProps, IState>
         if (avatarUrl) avatarUrl = mediaFromMxc(avatarUrl).getSquareThumbnailHttp(96);
 
         const topicEvent = room.currentState.getStateEvents("m.room.topic", "");
-        const topic = topicEvent && topicEvent.getContent() ? topicEvent.getContent()['topic'] : '';
+        const topic = topicEvent && topicEvent.getContent() ? topicEvent.getContent()["topic"] : "";
 
-        const nameEvent = room.currentState.getStateEvents('m.room.name', '');
-        const name = nameEvent && nameEvent.getContent() ? nameEvent.getContent()['name'] : '';
+        const nameEvent = room.currentState.getStateEvents("m.room.name", "");
+        const name = nameEvent && nameEvent.getContent() ? nameEvent.getContent()["name"] : "";
 
         this.state = {
             originalDisplayName: name,
@@ -74,9 +74,9 @@ export default class RoomProfileSettings extends React.Component<IProps, IState>
             originalTopic: topic,
             topic: topic,
             profileFieldsTouched: {},
-            canSetName: room.currentState.maySendStateEvent('m.room.name', client.getUserId()),
-            canSetTopic: room.currentState.maySendStateEvent('m.room.topic', client.getUserId()),
-            canSetAvatar: room.currentState.maySendStateEvent('m.room.avatar', client.getUserId()),
+            canSetName: room.currentState.maySendStateEvent("m.room.name", client.getUserId()),
+            canSetTopic: room.currentState.maySendStateEvent("m.room.topic", client.getUserId()),
+            canSetAvatar: room.currentState.maySendStateEvent("m.room.avatar", client.getUserId()),
         };
     }
 
@@ -135,12 +135,12 @@ export default class RoomProfileSettings extends React.Component<IProps, IState>
 
         if (this.state.avatarFile) {
             const uri = await client.uploadContent(this.state.avatarFile);
-            await client.sendStateEvent(this.props.roomId, 'm.room.avatar', { url: uri }, '');
+            await client.sendStateEvent(this.props.roomId, "m.room.avatar", { url: uri }, "");
             newState.avatarUrl = mediaFromMxc(uri).getSquareThumbnailHttp(96);
             newState.originalAvatarUrl = newState.avatarUrl;
             newState.avatarFile = null;
         } else if (this.state.originalAvatarUrl !== this.state.avatarUrl) {
-            await client.sendStateEvent(this.props.roomId, 'm.room.avatar', {}, '');
+            await client.sendStateEvent(this.props.roomId, "m.room.avatar", {}, "");
         }
 
         if (this.state.originalTopic !== this.state.topic) {

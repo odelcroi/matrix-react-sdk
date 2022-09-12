@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import classNames from "classnames";
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren } from "react";
 
 interface Props {
     flex?: boolean;

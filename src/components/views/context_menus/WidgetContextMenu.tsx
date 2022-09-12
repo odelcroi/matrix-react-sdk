@@ -70,7 +70,7 @@ const WidgetContextMenu: React.FC<IProps> = ({
                 // XXX: won't i18n well, but looks like widget api only support 'message'?
                 const message = err.message || _t("Unable to start audio streaming.");
                 Modal.createDialog(ErrorDialog, {
-                    title: _t('Failed to start livestream'),
+                    title: _t("Failed to start livestream"),
                     description: message,
                 });
             }
@@ -105,7 +105,7 @@ const WidgetContextMenu: React.FC<IProps> = ({
         const onSnapshotClick = () => {
             widgetMessaging?.takeScreenshot().then(data => {
                 dis.dispatch({
-                    action: 'picture_snapshot',
+                    action: "picture_snapshot",
                     file: data.screenshot,
                 });
             }).catch(err => {

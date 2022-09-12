@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import { decode } from "blurhash";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { _t } from '../../../languageHandler';
+import { _t } from "../../../languageHandler";
 import SettingsStore from "../../../settings/SettingsStore";
-import InlineSpinner from '../elements/InlineSpinner';
+import InlineSpinner from "../elements/InlineSpinner";
 import { mediaFromContent } from "../../../customisations/Media";
 import { BLURHASH_FIELD } from "../../../utils/image-media";
 import { IMediaEventContent } from "../../../customisations/models/IMediaEventContent";
@@ -28,7 +28,7 @@ import { IBodyProps } from "./IBodyProps";
 import MFileBody from "./MFileBody";
 import { ImageSize, suggestedSize as suggestedVideoSize } from "../../../settings/enums/ImageSize";
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
-import MediaProcessingError from './shared/MediaProcessingError';
+import MediaProcessingError from "./shared/MediaProcessingError";
 
 interface IState {
     decryptedUrl?: string;

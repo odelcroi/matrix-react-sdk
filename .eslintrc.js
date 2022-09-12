@@ -19,7 +19,6 @@ module.exports = {
         "no-constant-condition": "off",
         "prefer-promise-reject-errors": "off",
         "no-async-promise-executor": "off",
-        "quotes": "off",
         "no-extra-boolean-cast": "off",
 
         // Bind or arrow functions in props causes performance issues (but we
@@ -103,7 +102,6 @@ module.exports = {
             rules: {
                 // Things we do that break the ideal style
                 "prefer-promise-reject-errors": "off",
-                "quotes": "off",
                 "no-extra-boolean-cast": "off",
 
                 // Remove Babel things manually due to override limitations

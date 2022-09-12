@@ -79,7 +79,7 @@ describe("Linkify", () => {
             "</a></div></div>",
         );
 
-        wrapper.find('div').at(0).simulate('click');
+        wrapper.find("div").at(0).simulate("click");
 
         expect(wrapper.html()).toBe(
             "<div><div>" +

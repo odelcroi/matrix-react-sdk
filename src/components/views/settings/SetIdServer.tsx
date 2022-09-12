@@ -14,23 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import url from 'url';
-import React from 'react';
+import url from "url";
+import React from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import Modal from '../../../Modal';
+import Modal from "../../../Modal";
 import dis from "../../../dispatcher/dispatcher";
-import { getThreepidsWithBindStatus } from '../../../boundThreepids';
+import { getThreepidsWithBindStatus } from "../../../boundThreepids";
 import IdentityAuthClient from "../../../IdentityAuthClient";
 import { abbreviateUrl, unabbreviateUrl } from "../../../utils/UrlUtils";
-import { getDefaultIdentityServerUrl, doesIdentityServerHaveTerms } from '../../../utils/IdentityServerUtils';
+import { getDefaultIdentityServerUrl, doesIdentityServerHaveTerms } from "../../../utils/IdentityServerUtils";
 import { timeout } from "../../../utils/promise";
-import { ActionPayload } from '../../../dispatcher/payloads';
-import InlineSpinner from '../elements/InlineSpinner';
-import AccessibleButton from '../elements/AccessibleButton';
-import Field from '../elements/Field';
+import { ActionPayload } from "../../../dispatcher/payloads";
+import InlineSpinner from "../elements/InlineSpinner";
+import AccessibleButton from "../elements/AccessibleButton";
+import Field from "../elements/Field";
 import QuestionDialog from "../dialogs/QuestionDialog";
 
 // We'll wait up to this long when checking for 3PID bindings on the IS.
@@ -45,12 +45,12 @@ const REACHABILITY_TIMEOUT = 10000; // ms
 async function checkIdentityServerUrl(u) {
     const parsedUrl = url.parse(u);
 
-    if (parsedUrl.protocol !== 'https:') return _t("Identity server URL must be HTTPS");
+    if (parsedUrl.protocol !== "https:") return _t("Identity server URL must be HTTPS");
 
     // XXX: duplicated logic from js-sdk but it's quite tied up in the validation logic in the
     // js-sdk so probably as easy to duplicate it than to separate it out so we can reuse it
     try {
-        const response = await fetch(u + '/_matrix/identity/api/v1');
+        const response = await fetch(u + "/_matrix/identity/api/v1");
         if (response.ok) {
             return null;
         } else if (response.status < 200 || response.status >= 300) {
@@ -85,7 +85,7 @@ export default class SetIdServer extends React.Component<IProps, IState> {
     constructor(props) {
         super(props);
 
-        let defaultIdServer = '';
+        let defaultIdServer = "";
         if (!MatrixClientPeg.get().getIdentityServerUrl() && getDefaultIdentityServerUrl()) {
             // If no identity server is configured but there's one in the config, prepopulate
             // the field to help the user.
@@ -153,7 +153,7 @@ export default class SetIdServer extends React.Component<IProps, IState> {
             busy: false,
             error: null,
             currentClientIdServer: fullUrl,
-            idServer: '',
+            idServer: "",
         });
     };
 
@@ -270,7 +270,7 @@ export default class SetIdServer extends React.Component<IProps, IState> {
             currentServerReachable = false;
             logger.warn(
                 `Unable to reach identity server at ${currentClientIdServer} to check ` +
-                `for 3PIDs during IS change flow`,
+                "for 3PIDs during IS change flow",
             );
             logger.warn(e);
         }
@@ -336,7 +336,7 @@ export default class SetIdServer extends React.Component<IProps, IState> {
             base_url: null, // clear
         });
 
-        let newFieldVal = '';
+        let newFieldVal = "";
         if (getDefaultIdentityServerUrl()) {
             // Prepopulate the client's default so the user at least has some idea of
             // a valid value they might enter

@@ -33,17 +33,17 @@ describe("Polls", () => {
     };
     const createPoll = ({ title, options }: CreatePollOptions) => {
         if (options.length < 2) {
-            throw new Error('Poll must have at least two options');
+            throw new Error("Poll must have at least two options");
         }
-        cy.get('.mx_PollCreateDialog').within((pollCreateDialog) => {
-            cy.get('#poll-topic-input').type(title);
+        cy.get(".mx_PollCreateDialog").within((pollCreateDialog) => {
+            cy.get("#poll-topic-input").type(title);
 
             options.forEach((option, index) => {
                 const optionId = `#pollcreate_option_${index}`;
 
                 // click 'add option' button if needed
                 if (pollCreateDialog.find(optionId).length === 0) {
-                    cy.get('.mx_PollCreateDialog_addOption').scrollIntoView().click();
+                    cy.get(".mx_PollCreateDialog_addOption").scrollIntoView().click();
                 }
                 cy.get(optionId).scrollIntoView().type(option);
             });
@@ -56,18 +56,18 @@ describe("Polls", () => {
     };
 
     const getPollOption = (pollId: string, optionText: string): Chainable<JQuery> => {
-        return getPollTile(pollId).contains('.mx_MPollBody_option .mx_StyledRadioButton', optionText);
+        return getPollTile(pollId).contains(".mx_MPollBody_option .mx_StyledRadioButton", optionText);
     };
 
     const expectPollOptionVoteCount = (pollId: string, optionText: string, votes: number): void => {
         getPollOption(pollId, optionText).within(() => {
-            cy.get('.mx_MPollBody_optionVoteCount').should('contain', `${votes} vote`);
+            cy.get(".mx_MPollBody_optionVoteCount").should("contain", `${votes} vote`);
         });
     };
 
     const botVoteForOption = (bot: MatrixClient, roomId: string, pollId: string, optionText: string): void => {
         getPollOption(pollId, optionText).within(ref => {
-            cy.get('input[type="radio"]').invoke('attr', 'value').then(optionId => {
+            cy.get('input[type="radio"]').invoke("attr", "value").then(optionId => {
                 const pollVote = PollResponseEvent.from([optionId], pollId).serialize();
                 bot.sendEvent(
                     roomId,
@@ -104,18 +104,18 @@ describe("Polls", () => {
         cy.createRoom({}).then(_roomId => {
             roomId = _roomId;
             cy.inviteUser(roomId, bot.getUserId());
-            cy.visit('/#/room/' + roomId);
+            cy.visit("/#/room/" + roomId);
         });
 
         cy.openMessageComposerOptions().within(() => {
             cy.get('[aria-label="Poll"]').click();
         });
 
-        cy.get('.mx_CompoundDialog').percySnapshotElement('Polls Composer');
+        cy.get(".mx_CompoundDialog").percySnapshotElement("Polls Composer");
 
         const pollParams = {
-            title: 'Does the polls feature work?',
-            options: ['Yes', 'No', 'Maybe'],
+            title: "Does the polls feature work?",
+            options: ["Yes", "No", "Maybe"],
         };
         createPoll(pollParams);
 
@@ -124,21 +124,21 @@ describe("Polls", () => {
             .invoke("attr", "data-scroll-tokens").as("pollId");
 
         cy.get<string>("@pollId").then(pollId => {
-            getPollTile(pollId).percySnapshotElement('Polls Timeline tile - no votes', { percyCSS: hideTimestampCSS });
+            getPollTile(pollId).percySnapshotElement("Polls Timeline tile - no votes", { percyCSS: hideTimestampCSS });
 
             // Bot votes 'Maybe' in the poll
             botVoteForOption(bot, roomId, pollId, pollParams.options[2]);
 
             // no votes shown until I vote, check bots vote has arrived
-            cy.get('.mx_MPollBody_totalVotes').should('contain', '1 vote cast');
+            cy.get(".mx_MPollBody_totalVotes").should("contain", "1 vote cast");
 
             // vote 'Maybe'
-            getPollOption(pollId, pollParams.options[2]).click('topLeft');
+            getPollOption(pollId, pollParams.options[2]).click("topLeft");
             // both me and bot have voted Maybe
             expectPollOptionVoteCount(pollId, pollParams.options[2], 2);
 
             // change my vote to 'Yes'
-            getPollOption(pollId, pollParams.options[0]).click('topLeft');
+            getPollOption(pollId, pollParams.options[0]).click("topLeft");
 
             // 1 vote for yes
             expectPollOptionVoteCount(pollId, pollParams.options[0], 1);
@@ -172,7 +172,7 @@ describe("Polls", () => {
             roomId = _roomId;
             cy.inviteUser(roomId, botBob.getUserId());
             cy.inviteUser(roomId, botCharlie.getUserId());
-            cy.visit('/#/room/' + roomId);
+            cy.visit("/#/room/" + roomId);
         });
 
         cy.openMessageComposerOptions().within(() => {
@@ -180,8 +180,8 @@ describe("Polls", () => {
         });
 
         const pollParams = {
-            title: 'Does the polls feature work?',
-            options: ['Yes', 'No', 'Maybe'],
+            title: "Does the polls feature work?",
+            options: ["Yes", "No", "Maybe"],
         };
         createPoll(pollParams);
 
@@ -205,22 +205,22 @@ describe("Polls", () => {
             botVoteForOption(botCharlie, roomId, pollId, pollParams.options[1]);
 
             // no votes shown until I vote, check votes have arrived in main tl
-            cy.get('.mx_RoomView_body .mx_MPollBody_totalVotes').should('contain', '2 votes cast');
+            cy.get(".mx_RoomView_body .mx_MPollBody_totalVotes").should("contain", "2 votes cast");
             // and thread view
-            cy.get('.mx_ThreadView .mx_MPollBody_totalVotes').should('contain', '2 votes cast');
+            cy.get(".mx_ThreadView .mx_MPollBody_totalVotes").should("contain", "2 votes cast");
 
-            cy.get('.mx_RoomView_body').within(() => {
+            cy.get(".mx_RoomView_body").within(() => {
                 // vote 'Maybe' in the main timeline poll
-                getPollOption(pollId, pollParams.options[2]).click('topLeft');
+                getPollOption(pollId, pollParams.options[2]).click("topLeft");
                 // both me and bob have voted Maybe
                 expectPollOptionVoteCount(pollId, pollParams.options[2], 2);
             });
 
-            cy.get('.mx_ThreadView').within(() => {
+            cy.get(".mx_ThreadView").within(() => {
                 // votes updated in thread view too
                 expectPollOptionVoteCount(pollId, pollParams.options[2], 2);
                 // change my vote to 'Yes'
-                getPollOption(pollId, pollParams.options[0]).click('topLeft');
+                getPollOption(pollId, pollParams.options[0]).click("topLeft");
             });
 
             // Bob updates vote to 'No'
@@ -237,11 +237,11 @@ describe("Polls", () => {
             };
 
             // check counts are correct in main timeline tile
-            cy.get('.mx_RoomView_body').within(() => {
+            cy.get(".mx_RoomView_body").within(() => {
                 expectVoteCounts();
             });
             // and in thread view tile
-            cy.get('.mx_ThreadView').within(() => {
+            cy.get(".mx_ThreadView").within(() => {
                 expectVoteCounts();
             });
         });

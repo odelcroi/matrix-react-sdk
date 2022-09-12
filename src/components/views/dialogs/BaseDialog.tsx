@@ -16,16 +16,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import FocusLock from 'react-focus-lock';
-import classNames from 'classnames';
+import React from "react";
+import FocusLock from "react-focus-lock";
+import classNames from "classnames";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 
-import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { _t } from "../../../languageHandler";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
-import Heading from '../typography/Heading';
+import Heading from "../typography/Heading";
 import { IDialogProps } from "./IDialogProps";
 import { PosthogScreenTracker, ScreenName } from "../../../PosthogTrackers";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
@@ -154,14 +154,14 @@ export default class BaseDialog extends React.Component<IProps> {
                     lockProps={lockProps}
                     className={classNames({
                         [this.props.className]: true,
-                        'mx_Dialog_fixedWidth': this.props.fixedWidth,
+                        "mx_Dialog_fixedWidth": this.props.fixedWidth,
                     })}
                 >
-                    <div className={classNames('mx_Dialog_header', {
-                        'mx_Dialog_headerWithButton': !!this.props.headerButton,
-                        'mx_Dialog_headerWithCancel': !!cancelButton,
+                    <div className={classNames("mx_Dialog_header", {
+                        "mx_Dialog_headerWithButton": !!this.props.headerButton,
+                        "mx_Dialog_headerWithCancel": !!cancelButton,
                     })}>
-                        <Heading size='h2' className={classNames('mx_Dialog_title', this.props.titleClass)} id='mx_BaseDialog_title'>
+                        <Heading size='h2' className={classNames("mx_Dialog_title", this.props.titleClass)} id='mx_BaseDialog_title'>
                             { headerImage }
                             { this.props.title }
                         </Heading>

@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
 import TabbedView, { Tab } from "../../structures/TabbedView";
 import { _t, _td } from "../../../languageHandler";
@@ -35,7 +35,7 @@ import BaseDialog from "./BaseDialog";
 import { IDialogProps } from "./IDialogProps";
 import SidebarUserSettingsTab from "../settings/tabs/user/SidebarUserSettingsTab";
 import KeyboardUserSettingsTab from "../settings/tabs/user/KeyboardUserSettingsTab";
-import SessionManagerTab from '../settings/tabs/user/SessionManagerTab';
+import SessionManagerTab from "../settings/tabs/user/SessionManagerTab";
 import { UserTab } from "./UserTab";
 
 interface IProps extends IDialogProps {

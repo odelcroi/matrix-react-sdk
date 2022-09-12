@@ -15,7 +15,7 @@
  limitations under the License.
  */
 
-import ICanvasEffect from '../ICanvasEffect';
+import ICanvasEffect from "../ICanvasEffect";
 
 export type FireworksOptions = {
     /**
@@ -76,7 +76,7 @@ export default class Fireworks implements ICanvasEffect {
             return;
         }
         this.isRunning = true;
-        this.context = canvas.getContext('2d');
+        this.context = canvas.getContext("2d");
         this.supportsAnimationFrame.call(window, this.updateWorld);
         if (timeout) {
             window.setTimeout(this.stop, timeout);
@@ -105,10 +105,10 @@ export default class Fireworks implements ICanvasEffect {
 
     private paint = () => {
         if (!this.context || !this.context.canvas) return;
-        this.context.globalCompositeOperation = 'destination-out';
+        this.context.globalCompositeOperation = "destination-out";
         this.context.fillStyle = "rgba(0,0,0,0.5)";
         this.context.fillRect(0, 0, this.context.canvas.width, this.context.canvas.height);
-        this.context.globalCompositeOperation = 'lighter';
+        this.context.globalCompositeOperation = "lighter";
         for (let i=0; i<this.particles.length; i++) {
             this.drawParticle(this.particles[i]);
         }

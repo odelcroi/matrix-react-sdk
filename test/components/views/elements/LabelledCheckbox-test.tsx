@@ -14,16 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 // eslint-disable-next-line deprecate/import
-import { mount } from 'enzyme';
+import { mount } from "enzyme";
 import { act } from "react-dom/test-utils";
 
 import LabelledCheckbox from "../../../../src/components/views/elements/LabelledCheckbox";
 
 // Fake random strings to give a predictable snapshot for checkbox IDs
 jest.mock(
-    'matrix-js-sdk/src/randomstring',
+    "matrix-js-sdk/src/randomstring",
     () => {
         return {
             randomString: () => "abdefghi",
@@ -31,17 +31,17 @@ jest.mock(
     },
 );
 
-describe('<LabelledCheckbox />', () => {
+describe("<LabelledCheckbox />", () => {
     type CompProps = React.ComponentProps<typeof LabelledCheckbox>;
     const getComponent = (props: CompProps) => mount(<LabelledCheckbox {...props} />);
     type CompClass = ReturnType<typeof getComponent>;
 
-    const getCheckbox = (component: CompClass) => component.find(`input[type="checkbox"]`);
-    const getLabel = (component: CompClass) => component.find(`.mx_LabelledCheckbox_label`);
-    const getByline = (component: CompClass) => component.find(`.mx_LabelledCheckbox_byline`);
+    const getCheckbox = (component: CompClass) => component.find("input[type=\"checkbox\"]");
+    const getLabel = (component: CompClass) => component.find(".mx_LabelledCheckbox_label");
+    const getByline = (component: CompClass) => component.find(".mx_LabelledCheckbox_byline");
 
-    const isChecked = (checkbox: ReturnType<typeof getCheckbox>) => checkbox.is(`[checked=true]`);
-    const isDisabled = (checkbox: ReturnType<typeof getCheckbox>) => checkbox.is(`[disabled=true]`);
+    const isChecked = (checkbox: ReturnType<typeof getCheckbox>) => checkbox.is("[checked=true]");
+    const isDisabled = (checkbox: ReturnType<typeof getCheckbox>) => checkbox.is("[disabled=true]");
     const getText = (span: ReturnType<typeof getLabel>) => span.length > 0 ? span.at(0).text() : null;
 
     test.each([null, "this is a byline"])(
@@ -64,7 +64,7 @@ describe('<LabelledCheckbox />', () => {
         },
     );
 
-    it('should support unchecked by default', () => {
+    it("should support unchecked by default", () => {
         const props: CompProps = {
             label: "Hello world",
             value: false,
@@ -75,7 +75,7 @@ describe('<LabelledCheckbox />', () => {
         expect(isChecked(getCheckbox(component))).toBe(false);
     });
 
-    it('should be possible to disable the checkbox', () => {
+    it("should be possible to disable the checkbox", () => {
         const props: CompProps = {
             label: "Hello world",
             value: false,
@@ -87,7 +87,7 @@ describe('<LabelledCheckbox />', () => {
         expect(isDisabled(getCheckbox(component))).toBe(true);
     });
 
-    it('should emit onChange calls', () => {
+    it("should emit onChange calls", () => {
         const props: CompProps = {
             label: "Hello world",
             value: false,
@@ -98,13 +98,13 @@ describe('<LabelledCheckbox />', () => {
         expect(props.onChange).not.toHaveBeenCalled();
 
         act(() => {
-            getCheckbox(component).simulate('change');
+            getCheckbox(component).simulate("change");
         });
 
         expect(props.onChange).toHaveBeenCalledTimes(1);
     });
 
-    it('should react to value and disabled prop changes', () => {
+    it("should react to value and disabled prop changes", () => {
         const props: CompProps = {
             label: "Hello world",
             value: false,

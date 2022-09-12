@@ -15,12 +15,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
-import dis from '../../../dispatcher/dispatcher';
-import { _t } from '../../../languageHandler';
-import SdkConfig from '../../../SdkConfig';
-import Modal from '../../../Modal';
+import dis from "../../../dispatcher/dispatcher";
+import { _t } from "../../../languageHandler";
+import SdkConfig from "../../../SdkConfig";
+import Modal from "../../../Modal";
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
 import QuestionDialog from "./QuestionDialog";
@@ -44,7 +44,7 @@ const CryptoStoreTooNewDialog: React.FC<IProps> = (props: IProps) => {
             focus: false,
             onFinished: (doLogout) => {
                 if (doLogout) {
-                    dis.dispatch({ action: 'logout' });
+                    dis.dispatch({ action: "logout" });
                     props.onFinished(true);
                 }
             },
@@ -68,12 +68,12 @@ const CryptoStoreTooNewDialog: React.FC<IProps> = (props: IProps) => {
         <div className="mx_Dialog_content" id='mx_Dialog_content'>
             { description }
         </div>
-        <DialogButtons primaryButton={_t('Continue With Encryption Disabled')}
+        <DialogButtons primaryButton={_t("Continue With Encryption Disabled")}
             hasCancel={false}
             onPrimaryButtonClick={props.onFinished}
         >
             <button onClick={_onLogoutClicked}>
-                { _t('Sign out') }
+                { _t("Sign out") }
             </button>
         </DialogButtons>
     </BaseDialog>);

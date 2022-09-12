@@ -16,24 +16,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
-import { CallEvent, CallState, MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
-import classNames from 'classnames';
-import { CallFeed } from 'matrix-js-sdk/src/webrtc/callFeed';
-import { SDPStreamMetadataPurpose } from 'matrix-js-sdk/src/webrtc/callEventTypes';
+import React, { createRef } from "react";
+import { CallEvent, CallState, MatrixCall } from "matrix-js-sdk/src/webrtc/call";
+import classNames from "classnames";
+import { CallFeed } from "matrix-js-sdk/src/webrtc/callFeed";
+import { SDPStreamMetadataPurpose } from "matrix-js-sdk/src/webrtc/callEventTypes";
 
-import dis from '../../../dispatcher/dispatcher';
-import LegacyCallHandler from '../../../LegacyCallHandler';
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import { _t, _td } from '../../../languageHandler';
-import VideoFeed from './VideoFeed';
+import dis from "../../../dispatcher/dispatcher";
+import LegacyCallHandler from "../../../LegacyCallHandler";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { _t, _td } from "../../../languageHandler";
+import VideoFeed from "./VideoFeed";
 import RoomAvatar from "../avatars/RoomAvatar";
-import AccessibleButton from '../elements/AccessibleButton';
-import { avatarUrlForMember } from '../../../Avatar';
+import AccessibleButton from "../elements/AccessibleButton";
+import { avatarUrlForMember } from "../../../Avatar";
 import DesktopCapturerSourcePicker from "../elements/DesktopCapturerSourcePicker";
-import Modal from '../../../Modal';
-import LegacyCallViewSidebar from './LegacyCallViewSidebar';
-import LegacyCallViewHeader from './LegacyCallView/LegacyCallViewHeader';
+import Modal from "../../../Modal";
+import LegacyCallViewSidebar from "./LegacyCallViewSidebar";
+import LegacyCallViewHeader from "./LegacyCallView/LegacyCallViewHeader";
 import LegacyCallViewButtons from "./LegacyCallView/LegacyCallViewButtons";
 import PlatformPeg from "../../../PlatformPeg";
 import { ActionPayload } from "../../../dispatcher/payloads";
@@ -132,7 +132,7 @@ export default class LegacyCallView extends React.Component<IProps, IState> {
 
     public componentDidMount(): void {
         this.dispatcherRef = dis.register(this.onAction);
-        document.addEventListener('keydown', this.onNativeKeyDown);
+        document.addEventListener("keydown", this.onNativeKeyDown);
     }
 
     public componentWillUnmount(): void {
@@ -171,7 +171,7 @@ export default class LegacyCallView extends React.Component<IProps, IState> {
 
     private onAction = (payload: ActionPayload): void => {
         switch (payload.action) {
-            case 'video_fullscreen': {
+            case "video_fullscreen": {
                 if (!this.contentWrapperRef.current) {
                     return;
                 }
@@ -272,7 +272,7 @@ export default class LegacyCallView extends React.Component<IProps, IState> {
 
     private onMaximizeClick = (): void => {
         dis.dispatch({
-            action: 'video_fullscreen',
+            action: "video_fullscreen",
             fullscreen: true,
         });
     };
@@ -423,7 +423,7 @@ export default class LegacyCallView extends React.Component<IProps, IState> {
 
         let text = isScreensharing
             ? _t("You are presenting")
-            : _t('%(sharerName)s is presenting', { sharerName });
+            : _t("%(sharerName)s is presenting", { sharerName });
         if (!sidebarShown) {
             text += " • " + (call.isLocalVideoMuted()
                 ? _t("Your camera is turned off")
@@ -463,7 +463,7 @@ export default class LegacyCallView extends React.Component<IProps, IState> {
             const containerClasses = classNames("mx_LegacyCallView_content", {
                 mx_LegacyCallView_content_hold: isOnHold,
             });
-            const backgroundAvatarUrl = avatarUrlForMember(call.getOpponentMember(), 1024, 1024, 'crop');
+            const backgroundAvatarUrl = avatarUrlForMember(call.getOpponentMember(), 1024, 1024, "crop");
 
             let holdTransferContent: React.ReactNode;
             if (transfereeCall) {
@@ -519,7 +519,7 @@ export default class LegacyCallView extends React.Component<IProps, IState> {
 
             return (
                 <div className={containerClasses} onMouseMove={this.onMouseMove}>
-                    <div className="mx_LegacyCallView_holdBackground" style={{ backgroundImage: 'url(' + backgroundAvatarUrl + ')' }} />
+                    <div className="mx_LegacyCallView_holdBackground" style={{ backgroundImage: "url(" + backgroundAvatarUrl + ")" }} />
                     { holdTransferContent }
                 </div>
             );

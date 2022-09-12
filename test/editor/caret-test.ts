@@ -18,9 +18,9 @@ import { getLineAndNodePosition } from "../../src/editor/caret";
 import EditorModel from "../../src/editor/model";
 import { createPartCreator } from "./mock";
 
-describe('editor/caret: DOM position for caret', function() {
-    describe('basic text handling', function() {
-        it('at end of single line', function() {
+describe("editor/caret: DOM position for caret", function() {
+    describe("basic text handling", function() {
+        it("at end of single line", function() {
             const pc = createPartCreator();
             const model = new EditorModel([
                 pc.plain("hello"),
@@ -31,7 +31,7 @@ describe('editor/caret: DOM position for caret', function() {
             expect(nodeIndex).toBe(0);
             expect(offset).toBe(5);
         });
-        it('at start of single line', function() {
+        it("at start of single line", function() {
             const pc = createPartCreator();
             const model = new EditorModel([
                 pc.plain("hello"),
@@ -42,7 +42,7 @@ describe('editor/caret: DOM position for caret', function() {
             expect(nodeIndex).toBe(0);
             expect(offset).toBe(0);
         });
-        it('at middle of single line', function() {
+        it("at middle of single line", function() {
             const pc = createPartCreator();
             const model = new EditorModel([
                 pc.plain("hello"),
@@ -54,8 +54,8 @@ describe('editor/caret: DOM position for caret', function() {
             expect(offset).toBe(2);
         });
     });
-    describe('handling line breaks', function() {
-        it('at end of last line', function() {
+    describe("handling line breaks", function() {
+        it("at end of last line", function() {
             const pc = createPartCreator();
             const model = new EditorModel([
                 pc.plain("hello"),
@@ -68,7 +68,7 @@ describe('editor/caret: DOM position for caret', function() {
             expect(nodeIndex).toBe(0);
             expect(offset).toBe(5);
         });
-        it('at start of last line', function() {
+        it("at start of last line", function() {
             const pc = createPartCreator();
             const model = new EditorModel([
                 pc.plain("hello"),
@@ -81,7 +81,7 @@ describe('editor/caret: DOM position for caret', function() {
             expect(nodeIndex).toBe(0);
             expect(offset).toBe(0);
         });
-        it('in empty line', function() {
+        it("in empty line", function() {
             const pc = createPartCreator();
             const model = new EditorModel([
                 pc.plain("hello"),
@@ -95,7 +95,7 @@ describe('editor/caret: DOM position for caret', function() {
             expect(nodeIndex).toBe(-1);
             expect(offset).toBe(0);
         });
-        it('after empty line', function() {
+        it("after empty line", function() {
             const pc = createPartCreator();
             const model = new EditorModel([
                 pc.plain("hello"),
@@ -110,8 +110,8 @@ describe('editor/caret: DOM position for caret', function() {
             expect(offset).toBe(0);
         });
     });
-    describe('handling non-editable parts and caret nodes', function() {
-        it('at start of non-editable part (with plain text around)', function() {
+    describe("handling non-editable parts and caret nodes", function() {
+        it("at start of non-editable part (with plain text around)", function() {
             const pc = createPartCreator();
             const model = new EditorModel([
                 pc.plain("hello"),
@@ -124,7 +124,7 @@ describe('editor/caret: DOM position for caret', function() {
             expect(nodeIndex).toBe(0);
             expect(offset).toBe(5);
         });
-        it('in middle of non-editable part (with plain text around)', function() {
+        it("in middle of non-editable part (with plain text around)", function() {
             const pc = createPartCreator();
             const model = new EditorModel([
                 pc.plain("hello"),
@@ -137,7 +137,7 @@ describe('editor/caret: DOM position for caret', function() {
             expect(nodeIndex).toBe(2);
             expect(offset).toBe(0);
         });
-        it('at start of non-editable part (without plain text around)', function() {
+        it("at start of non-editable part (without plain text around)", function() {
             const pc = createPartCreator();
             const model = new EditorModel([
                 pc.userPill("Alice", "@alice:hs.tld"),
@@ -149,7 +149,7 @@ describe('editor/caret: DOM position for caret', function() {
             expect(nodeIndex).toBe(0);
             expect(offset).toBe(0);
         });
-        it('in middle of non-editable part (without plain text around)', function() {
+        it("in middle of non-editable part (without plain text around)", function() {
             const pc = createPartCreator();
             const model = new EditorModel([
                 pc.userPill("Alice", "@alice:hs.tld"),
@@ -161,7 +161,7 @@ describe('editor/caret: DOM position for caret', function() {
             expect(nodeIndex).toBe(2);
             expect(offset).toBe(0);
         });
-        it('in middle of a first non-editable part, with another one following', function() {
+        it("in middle of a first non-editable part, with another one following", function() {
             const pc = createPartCreator();
             const model = new EditorModel([
                 pc.userPill("Alice", "@alice:hs.tld"),
@@ -174,7 +174,7 @@ describe('editor/caret: DOM position for caret', function() {
             expect(nodeIndex).toBe(2);
             expect(offset).toBe(0);
         });
-        it('in start of a second non-editable part, with another one before it', function() {
+        it("in start of a second non-editable part, with another one before it", function() {
             const pc = createPartCreator();
             const model = new EditorModel([
                 pc.userPill("Alice", "@alice:hs.tld"),
@@ -187,7 +187,7 @@ describe('editor/caret: DOM position for caret', function() {
             expect(nodeIndex).toBe(2);
             expect(offset).toBe(0);
         });
-        it('in middle of a second non-editable part, with another one before it', function() {
+        it("in middle of a second non-editable part, with another one before it", function() {
             const pc = createPartCreator();
             const model = new EditorModel([
                 pc.userPill("Alice", "@alice:hs.tld"),

@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 /// <reference types="cypress" />
-import { SnapshotOptions as PercySnapshotOptions } from '@percy/core';
+import { SnapshotOptions as PercySnapshotOptions } from "@percy/core";
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -46,7 +46,7 @@ Cypress.Commands.add("percySnapshotElement", { prevSubject: "element" }, (subjec
 
 function scope(documentClone: Document, selector: string): Document {
     const element = documentClone.querySelector(selector);
-    documentClone.querySelector('body').innerHTML = element.outerHTML;
+    documentClone.querySelector("body").innerHTML = element.outerHTML;
 
     return documentClone;
 }

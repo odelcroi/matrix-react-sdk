@@ -15,15 +15,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import classNames from 'classnames';
+import React from "react";
+import classNames from "classnames";
 import { Resizable } from "re-resizable";
 import { Room } from "matrix-js-sdk/src/models/room";
 
-import AppTile from '../elements/AppTile';
-import dis from '../../../dispatcher/dispatcher';
-import * as ScalarMessaging from '../../../ScalarMessaging';
-import WidgetUtils from '../../../utils/WidgetUtils';
+import AppTile from "../elements/AppTile";
+import dis from "../../../dispatcher/dispatcher";
+import * as ScalarMessaging from "../../../ScalarMessaging";
+import WidgetUtils from "../../../utils/WidgetUtils";
 import WidgetEchoStore from "../../../stores/WidgetEchoStore";
 import ResizeNotifier from "../../../utils/ResizeNotifier";
 import ResizeHandle from "../elements/ResizeHandle";
@@ -185,7 +185,7 @@ export default class AppsDrawer extends React.Component<IProps, IState> {
     }
 
     private onAction = (action: ActionPayload): void => {
-        const hideWidgetKey = this.props.room.roomId + '_hide_widget_drawer';
+        const hideWidgetKey = this.props.room.roomId + "_hide_widget_drawer";
         switch (action.action) {
             case "appsDrawer":
                 // Note: these booleans are awkward because localstorage is fundamentally
@@ -233,7 +233,7 @@ export default class AppsDrawer extends React.Component<IProps, IState> {
                 creatorUserId={app.creatorUserId}
                 widgetPageTitle={WidgetUtils.getWidgetDataTitle(app)}
                 waitForIframeLoad={app.waitForIframeLoad}
-                pointerEvents={this.isResizing() ? 'none' : undefined}
+                pointerEvents={this.isResizing() ? "none" : undefined}
             />);
         });
 

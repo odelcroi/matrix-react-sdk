@@ -14,16 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 
-import AutocompleteProvider from './AutocompleteProvider';
-import { _t } from '../languageHandler';
-import { MatrixClientPeg } from '../MatrixClientPeg';
-import { PillCompletion } from './Components';
+import AutocompleteProvider from "./AutocompleteProvider";
+import { _t } from "../languageHandler";
+import { MatrixClientPeg } from "../MatrixClientPeg";
+import { PillCompletion } from "./Components";
 import { ICompletion, ISelectionRange } from "./Autocompleter";
-import RoomAvatar from '../components/views/avatars/RoomAvatar';
-import { TimelineRenderingType } from '../contexts/RoomContext';
+import RoomAvatar from "../components/views/avatars/RoomAvatar";
+import { TimelineRenderingType } from "../contexts/RoomContext";
 
 const AT_ROOM_REGEX = /@\S*/g;
 
@@ -40,17 +40,17 @@ export default class NotifProvider extends AutocompleteProvider {
     ): Promise<ICompletion[]> {
         const client = MatrixClientPeg.get();
 
-        if (!this.room.currentState.mayTriggerNotifOfType('room', client.credentials.userId)) return [];
+        if (!this.room.currentState.mayTriggerNotifOfType("room", client.credentials.userId)) return [];
 
         const { command, range } = this.getCurrentCommand(query, selection, force);
         if (command?.[0].length > 1 &&
-            ['@room', '@channel', '@everyone', '@here'].some(c => c.startsWith(command[0]))
+            ["@room", "@channel", "@everyone", "@here"].some(c => c.startsWith(command[0]))
         ) {
             return [{
-                completion: '@room',
-                completionId: '@room',
+                completion: "@room",
+                completionId: "@room",
                 type: "at-room",
-                suffix: ' ',
+                suffix: " ",
                 component: (
                     <PillCompletion title="@room" description={_t("Notify the whole room")}>
                         <RoomAvatar width={24} height={24} room={this.room} />
@@ -63,7 +63,7 @@ export default class NotifProvider extends AutocompleteProvider {
     }
 
     getName() {
-        return '❗️ ' + _t('Room Notification');
+        return "❗️ " + _t("Room Notification");
     }
 
     renderCompletions(completions: React.ReactNode[]): React.ReactNode {

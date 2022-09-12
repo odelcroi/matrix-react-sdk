@@ -14,15 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixClient } from 'matrix-js-sdk/src/client';
-import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
-import { Room } from 'matrix-js-sdk/src/models/room';
-import { EventTimeline } from 'matrix-js-sdk/src/models/event-timeline';
+import { MatrixClient } from "matrix-js-sdk/src/client";
+import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { EventTimeline } from "matrix-js-sdk/src/models/event-timeline";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 
-import { _t } from '../../../languageHandler';
+import { _t } from "../../../languageHandler";
 import dis from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
 import { IDialogProps } from "./IDialogProps";

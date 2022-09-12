@@ -55,7 +55,7 @@ describe("RovingTabIndex", () => {
             { () => <div><span>Test</span></div> }
         </RovingTabIndexProvider>);
         expect(container.textContent).toBe("Test");
-        expect(container.innerHTML).toBe('<div><span>Test</span></div>');
+        expect(container.innerHTML).toBe("<div><span>Test</span></div>");
     });
 
     it("RovingTabIndexProvider works as expected with useRovingTabIndex", () => {

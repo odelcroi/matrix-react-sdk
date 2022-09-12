@@ -14,23 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 // eslint-disable-next-line deprecate/import
-import { mount, ReactWrapper } from 'enzyme';
-import { Room, PendingEventOrdering, MatrixEvent, MatrixClient } from 'matrix-js-sdk/src/matrix';
+import { mount, ReactWrapper } from "enzyme";
+import { Room, PendingEventOrdering, MatrixEvent, MatrixClient } from "matrix-js-sdk/src/matrix";
 
-import * as TestUtils from '../../../test-utils';
-import { MatrixClientPeg } from '../../../../src/MatrixClientPeg';
-import DMRoomMap from '../../../../src/utils/DMRoomMap';
-import RoomHeader from '../../../../src/components/views/rooms/RoomHeader';
-import { SearchScope } from '../../../../src/components/views/rooms/SearchBar';
-import { E2EStatus } from '../../../../src/utils/ShieldUtils';
-import { mkEvent } from '../../../test-utils';
+import * as TestUtils from "../../../test-utils";
+import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
+import DMRoomMap from "../../../../src/utils/DMRoomMap";
+import RoomHeader from "../../../../src/components/views/rooms/RoomHeader";
+import { SearchScope } from "../../../../src/components/views/rooms/SearchBar";
+import { E2EStatus } from "../../../../src/utils/ShieldUtils";
+import { mkEvent } from "../../../test-utils";
 import { IRoomState } from "../../../../src/components/structures/RoomView";
-import RoomContext from '../../../../src/contexts/RoomContext';
+import RoomContext from "../../../../src/contexts/RoomContext";
 
-describe('RoomHeader', () => {
-    it('shows the room avatar in a room with only ourselves', () => {
+describe("RoomHeader", () => {
+    it("shows the room avatar in a room with only ourselves", () => {
         // When we render a non-DM room with 1 person in it
         const room = createRoom({ name: "X Room", isDm: false, userIds: [] });
         const rendered = render(room);
@@ -44,7 +44,7 @@ describe('RoomHeader', () => {
         expect(image.prop("src")).toEqual("data:image/png;base64,00");
     });
 
-    it('shows the room avatar in a room with 2 people', () => {
+    it("shows the room avatar in a room with 2 people", () => {
         // When we render a non-DM room with 2 people in it
         const room = createRoom(
             { name: "Y Room", isDm: false, userIds: ["other"] });
@@ -59,7 +59,7 @@ describe('RoomHeader', () => {
         expect(image.prop("src")).toEqual("data:image/png;base64,00");
     });
 
-    it('shows the room avatar in a room with >2 people', () => {
+    it("shows the room avatar in a room with >2 people", () => {
         // When we render a non-DM room with 3 people in it
         const room = createRoom({ name: "Z Room", isDm: false, userIds: ["other1", "other2"] });
         const rendered = render(room);
@@ -73,7 +73,7 @@ describe('RoomHeader', () => {
         expect(image.prop("src")).toEqual("data:image/png;base64,00");
     });
 
-    it('shows the room avatar in a DM with only ourselves', () => {
+    it("shows the room avatar in a DM with only ourselves", () => {
         // When we render a non-DM room with 1 person in it
         const room = createRoom({ name: "Z Room", isDm: true, userIds: [] });
         const rendered = render(room);
@@ -87,7 +87,7 @@ describe('RoomHeader', () => {
         expect(image.prop("src")).toEqual("data:image/png;base64,00");
     });
 
-    it('shows the user avatar in a DM with 2 people', () => {
+    it("shows the user avatar in a DM with 2 people", () => {
         // Note: this is the interesting case - this is the ONLY
         //       time we should use the user's avatar.
 
@@ -103,7 +103,7 @@ describe('RoomHeader', () => {
         expect(rendered.find(".mx_BaseAvatar_initial")).toHaveLength(0);
     });
 
-    it('shows the room avatar in a DM with >2 people', () => {
+    it("shows the room avatar in a DM with >2 people", () => {
         // When we render a DM room with 3 people in it
         const room = createRoom({
             name: "Z Room", isDm: true, userIds: ["other1", "other2"] });
@@ -179,7 +179,7 @@ function createRoom(info: IRoomCreationInfo) {
     TestUtils.stubClient();
     const client: MatrixClient = MatrixClientPeg.get();
 
-    const roomId = '!1234567890:domain';
+    const roomId = "!1234567890:domain";
     const userId = client.getUserId();
     if (info.isDm) {
         client.getAccountData = (eventType) => {

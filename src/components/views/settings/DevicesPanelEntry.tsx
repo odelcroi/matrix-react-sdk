@@ -14,21 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { IMyDevice } from 'matrix-js-sdk/src/client';
+import React from "react";
+import { IMyDevice } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import { _t } from '../../../languageHandler';
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
+import { _t } from "../../../languageHandler";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import AccessibleButton from "../elements/AccessibleButton";
 import Field from "../elements/Field";
 import Modal from "../../../Modal";
-import SetupEncryptionDialog from '../dialogs/security/SetupEncryptionDialog';
-import VerificationRequestDialog from '../../views/dialogs/VerificationRequestDialog';
-import LogoutDialog from '../dialogs/LogoutDialog';
-import DeviceTile from './devices/DeviceTile';
-import SelectableDeviceTile from './devices/SelectableDeviceTile';
+import SetupEncryptionDialog from "../dialogs/security/SetupEncryptionDialog";
+import VerificationRequestDialog from "../../views/dialogs/VerificationRequestDialog";
+import LogoutDialog from "../dialogs/LogoutDialog";
+import DeviceTile from "./devices/DeviceTile";
+import SelectableDeviceTile from "./devices/SelectableDeviceTile";
 
 interface IProps {
     device: IMyDevice;
@@ -114,7 +114,7 @@ export default class DevicesPanelEntry extends React.Component<IProps, IState> {
     };
 
     public render(): JSX.Element {
-        let iconClass = '';
+        let iconClass = "";
         let verifyButton: JSX.Element;
         if (this.props.verified !== null) {
             iconClass = this.props.verified ? "mx_E2EIcon_verified" : "mx_E2EIcon_warning";

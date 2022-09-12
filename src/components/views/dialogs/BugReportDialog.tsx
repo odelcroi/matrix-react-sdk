@@ -17,21 +17,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
-import SdkConfig from '../../../SdkConfig';
-import Modal from '../../../Modal';
-import { _t } from '../../../languageHandler';
-import sendBugReport, { downloadBugReport } from '../../../rageshake/submit-rageshake';
+import SdkConfig from "../../../SdkConfig";
+import Modal from "../../../Modal";
+import { _t } from "../../../languageHandler";
+import sendBugReport, { downloadBugReport } from "../../../rageshake/submit-rageshake";
 import AccessibleButton from "../elements/AccessibleButton";
 import QuestionDialog from "./QuestionDialog";
 import BaseDialog from "./BaseDialog";
-import Field from '../elements/Field';
+import Field from "../elements/Field";
 import Spinner from "../elements/Spinner";
 import DialogButtons from "../elements/DialogButtons";
 import { sendSentryReport } from "../../../sentry";
-import defaultDispatcher from '../../../dispatcher/dispatcher';
-import { Action } from '../../../dispatcher/actions';
+import defaultDispatcher from "../../../dispatcher/dispatcher";
+import { Action } from "../../../dispatcher/actions";
 
 interface IProps {
     onFinished: (success: boolean) => void;
@@ -96,8 +96,8 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
         }
 
         const userText =
-            (this.state.text.length > 0 ? this.state.text + '\n\n': '') + 'Issue: ' +
-            (this.state.issueUrl.length > 0 ? this.state.issueUrl : 'No issue link given');
+            (this.state.text.length > 0 ? this.state.text + "\n\n": "") + "Issue: " +
+            (this.state.issueUrl.length > 0 ? this.state.issueUrl : "No issue link given");
 
         this.setState({ busy: true, progress: null, err: null });
         this.sendProgressCallback(_t("Preparing to send logs"));
@@ -111,8 +111,8 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
             if (!this.unmounted) {
                 this.props.onFinished(false);
                 Modal.createDialog(QuestionDialog, {
-                    title: _t('Logs sent'),
-                    description: _t('Thank you!'),
+                    title: _t("Logs sent"),
+                    description: _t("Thank you!"),
                     hasCancelButton: false,
                 });
             }
@@ -205,7 +205,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
             <BaseDialog
                 className="mx_BugReportDialog"
                 onFinished={this.onCancel}
-                title={_t('Submit debug logs')}
+                title={_t("Submit debug logs")}
                 contentId='mx_Dialog_content'
             >
                 <div className="mx_Dialog_content" id='mx_Dialog_content'>

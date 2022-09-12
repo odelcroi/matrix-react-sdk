@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import classNames from 'classnames';
+import React from "react";
+import classNames from "classnames";
 
-import { _t } from '../../../languageHandler';
-import SdkConfig from '../../../SdkConfig';
-import { ValidatedServerConfig } from '../../../utils/ValidatedServerConfig';
+import { _t } from "../../../languageHandler";
+import SdkConfig from "../../../SdkConfig";
+import { ValidatedServerConfig } from "../../../utils/ValidatedServerConfig";
 import AccessibleButton from "../elements/AccessibleButton";
 import withValidation, { IValidationResult } from "../elements/Validation";
 import Field from "../elements/Field";
@@ -99,7 +99,7 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
             return;
         }
 
-        let username = ''; // XXX: Synapse breaks if you send null here:
+        let username = ""; // XXX: Synapse breaks if you send null here:
         let phoneCountry = null;
         let phoneNumber = null;
 
@@ -390,7 +390,7 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
         if (!SdkConfig.get().disable_3pid_login) {
             loginType = (
                 <div className="mx_Login_type_container">
-                    <label className="mx_Login_type_label">{ _t('Sign in with') }</label>
+                    <label className="mx_Login_type_label">{ _t("Sign in with") }</label>
                     <Field
                         element="select"
                         value={this.state.loginType}
@@ -398,16 +398,16 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
                         disabled={this.props.busy}
                     >
                         <option key={LoginField.MatrixId} value={LoginField.MatrixId}>
-                            { _t('Username') }
+                            { _t("Username") }
                         </option>
                         <option
                             key={LoginField.Email}
                             value={LoginField.Email}
                         >
-                            { _t('Email address') }
+                            { _t("Email address") }
                         </option>
                         <option key={LoginField.Password} value={LoginField.Password}>
-                            { _t('Phone') }
+                            { _t("Phone") }
                         </option>
                     </Field>
                 </div>
@@ -425,7 +425,7 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
                         autoComplete="current-password"
                         type="password"
                         name="password"
-                        label={_t('Password')}
+                        label={_t("Password")}
                         value={this.state.password}
                         onChange={this.onPasswordChanged}
                         disabled={this.props.busy}
@@ -436,7 +436,7 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
                     { forgotPasswordJsx }
                     { !this.props.busy && <input className="mx_Login_submit"
                         type="submit"
-                        value={_t('Sign in')}
+                        value={_t("Sign in")}
                         disabled={this.props.disableSubmit}
                     /> }
                 </form>

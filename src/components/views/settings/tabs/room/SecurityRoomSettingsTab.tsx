@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import { GuestAccess, HistoryVisibility, JoinRule } from "matrix-js-sdk/src/@types/partials";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
-import { EventType } from 'matrix-js-sdk/src/@types/event';
+import { EventType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { Icon as WarningIcon } from "../../../../../../res/img/warning.svg";
@@ -26,18 +26,18 @@ import { _t } from "../../../../../languageHandler";
 import LabelledToggleSwitch from "../../../elements/LabelledToggleSwitch";
 import Modal from "../../../../../Modal";
 import QuestionDialog from "../../../dialogs/QuestionDialog";
-import StyledRadioGroup from '../../../elements/StyledRadioGroup';
+import StyledRadioGroup from "../../../elements/StyledRadioGroup";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
 import SettingsStore from "../../../../../settings/SettingsStore";
 import { UIFeature } from "../../../../../settings/UIFeature";
 import AccessibleButton from "../../../elements/AccessibleButton";
-import SettingsFlag from '../../../elements/SettingsFlag';
-import createRoom, { IOpts } from '../../../../../createRoom';
-import CreateRoomDialog from '../../../dialogs/CreateRoomDialog';
+import SettingsFlag from "../../../elements/SettingsFlag";
+import createRoom, { IOpts } from "../../../../../createRoom";
+import CreateRoomDialog from "../../../dialogs/CreateRoomDialog";
 import JoinRuleSettings from "../../JoinRuleSettings";
 import ErrorDialog from "../../../dialogs/ErrorDialog";
-import SettingsFieldset from '../../SettingsFieldset';
-import ExternalLink from '../../../elements/ExternalLink';
+import SettingsFieldset from "../../SettingsFieldset";
+import ExternalLink from "../../../elements/ExternalLink";
 import PosthogTrackers from "../../../../../PosthogTrackers";
 import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
 
@@ -66,12 +66,12 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
         this.state = {
             guestAccess: this.pullContentPropertyFromEvent<GuestAccess>(
                 state.getStateEvents(EventType.RoomGuestAccess, ""),
-                'guest_access',
+                "guest_access",
                 GuestAccess.Forbidden,
             ),
             history: this.pullContentPropertyFromEvent<HistoryVisibility>(
                 state.getStateEvents(EventType.RoomHistoryVisibility, ""),
-                'history_visibility',
+                "history_visibility",
                 HistoryVisibility.Shared,
             ),
             hasAliases: false, // async loaded in componentDidMount
@@ -106,7 +106,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
     private onEncryptionChange = async () => {
         if (this.context.getRoom(this.props.roomId)?.getJoinRule() === JoinRule.Public) {
             const dialog = Modal.createDialog(QuestionDialog, {
-                title: _t('Are you sure you want to add encryption to this public room?'),
+                title: _t("Are you sure you want to add encryption to this public room?"),
                 description: <div>
                     <p> { _t(
                         "<b>It's not recommended to add encryption to public rooms.</b> " +
@@ -139,7 +139,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
         }
 
         Modal.createDialog(QuestionDialog, {
-            title: _t('Enable encryption?'),
+            title: _t("Enable encryption?"),
             description: _t(
                 "Once enabled, encryption for a room cannot be disabled. Messages sent in an encrypted " +
                 "room cannot be seen by the server, only by the participants of the room. Enabling encryption " +
@@ -312,15 +312,15 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
         const options = [
             {
                 value: HistoryVisibility.Shared,
-                label: _t('Members only (since the point in time of selecting this option)'),
+                label: _t("Members only (since the point in time of selecting this option)"),
             },
             {
                 value: HistoryVisibility.Invited,
-                label: _t('Members only (since they were invited)'),
+                label: _t("Members only (since they were invited)"),
             },
             {
                 value: HistoryVisibility.Joined,
-                label: _t('Members only (since they joined)'),
+                label: _t("Members only (since they joined)"),
             },
         ];
 
@@ -332,8 +332,8 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
             });
         }
 
-        const description = _t('Changes to who can read history will only apply to future messages in this room. ' +
-        'The visibility of existing history will be unchanged.');
+        const description = _t("Changes to who can read history will only apply to future messages in this room. " +
+        "The visibility of existing history will be unchanged.");
 
         return (<SettingsFieldset legend={_t("Who can read history?")} description={description}>
             <StyledRadioGroup

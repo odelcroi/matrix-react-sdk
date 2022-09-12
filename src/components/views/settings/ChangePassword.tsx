@@ -15,24 +15,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ComponentType } from 'react';
+import React, { ComponentType } from "react";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 
 import Field from "../elements/Field";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import AccessibleButton from '../elements/AccessibleButton';
-import Spinner from '../elements/Spinner';
-import withValidation, { IFieldState, IValidationResult } from '../elements/Validation';
-import { _t, _td } from '../../../languageHandler';
+import AccessibleButton from "../elements/AccessibleButton";
+import Spinner from "../elements/Spinner";
+import withValidation, { IFieldState, IValidationResult } from "../elements/Validation";
+import { _t, _td } from "../../../languageHandler";
 import Modal from "../../../Modal";
 import PassphraseField from "../auth/PassphraseField";
-import { PASSWORD_MIN_SCORE } from '../auth/RegistrationForm';
+import { PASSWORD_MIN_SCORE } from "../auth/RegistrationForm";
 import SetEmailDialog from "../dialogs/SetEmailDialog";
 import QuestionDialog from "../dialogs/QuestionDialog";
 
-const FIELD_OLD_PASSWORD = 'field_old_password';
-const FIELD_NEW_PASSWORD = 'field_new_password';
-const FIELD_NEW_PASSWORD_CONFIRM = 'field_new_password_confirm';
+const FIELD_OLD_PASSWORD = "field_old_password";
+const FIELD_NEW_PASSWORD = "field_new_password";
+const FIELD_NEW_PASSWORD_CONFIRM = "field_new_password_confirm";
 
 enum Phase {
     Edit = "edit",
@@ -100,16 +100,16 @@ export default class ChangePassword extends React.Component<IProps, IState> {
                 description:
                     <div>
                         <p>{ _t(
-                            'Changing your password on this homeserver will cause all of your other devices to be ' +
-                            'signed out. This will delete the message encryption keys stored on them, and may make ' +
-                            'encrypted chat history unreadable.',
+                            "Changing your password on this homeserver will cause all of your other devices to be " +
+                            "signed out. This will delete the message encryption keys stored on them, and may make " +
+                            "encrypted chat history unreadable.",
                         ) }</p>
                         <p>{ _t(
-                            'If you want to retain access to your chat history in encrypted rooms you should first ' +
-                            'export your room keys and re-import them afterwards.',
+                            "If you want to retain access to your chat history in encrypted rooms you should first " +
+                            "export your room keys and re-import them afterwards.",
                         ) }</p>
                         <p>{ _t(
-                            'You can also ask your homeserver admin to upgrade the server to change this behaviour.',
+                            "You can also ask your homeserver admin to upgrade the server to change this behaviour.",
                         ) }</p>
                     </div>,
                 button: _t("Continue"),
@@ -119,7 +119,7 @@ export default class ChangePassword extends React.Component<IProps, IState> {
                         className="mx_Dialog_primary"
                         onClick={this.onExportE2eKeysClicked}
                     >
-                        { _t('Export E2E room keys') }
+                        { _t("Export E2E room keys") }
                     </button>,
                 ],
             });
@@ -139,9 +139,9 @@ export default class ChangePassword extends React.Component<IProps, IState> {
         userHasOtherDevices: boolean,
     ): void {
         const authDict = {
-            type: 'm.login.password',
+            type: "m.login.password",
             identifier: {
-                type: 'm.id.user',
+                type: "m.id.user",
                 user: cli.credentials.userId,
             },
             // TODO: Remove `user` once servers support proper UIA
@@ -197,7 +197,7 @@ export default class ChangePassword extends React.Component<IProps, IState> {
     private optionallySetEmail(): Promise<boolean> {
         // Ask for an email otherwise the user has no way to reset their password
         const modal = Modal.createDialog(SetEmailDialog, {
-            title: _t('Do you want to set an email address?'),
+            title: _t("Do you want to set an email address?"),
         });
         return modal.finished.then(([confirmed]) => confirmed);
     }
@@ -205,7 +205,7 @@ export default class ChangePassword extends React.Component<IProps, IState> {
     private onExportE2eKeysClicked = (): void => {
         Modal.createDialogAsync(
             import(
-                '../../../async-components/views/dialogs/security/ExportE2eKeysDialog'
+                "../../../async-components/views/dialogs/security/ExportE2eKeysDialog"
             ) as unknown as Promise<ComponentType<{}>>,
             {
                 matrixClient: MatrixClientPeg.get(),
@@ -383,7 +383,7 @@ export default class ChangePassword extends React.Component<IProps, IState> {
                             <Field
                                 ref={field => this[FIELD_OLD_PASSWORD] = field}
                                 type="password"
-                                label={_t('Current password')}
+                                label={_t("Current password")}
                                 value={this.state.oldPassword}
                                 onChange={this.onChangeOldPassword}
                                 onValidate={this.onOldPasswordValidate}
@@ -414,7 +414,7 @@ export default class ChangePassword extends React.Component<IProps, IState> {
                             />
                         </div>
                         <AccessibleButton className={buttonClassName} kind={this.props.buttonKind} onClick={this.onClickChange}>
-                            { this.props.buttonLabel || _t('Change Password') }
+                            { this.props.buttonLabel || _t("Change Password") }
                         </AccessibleButton>
                     </form>
                 );

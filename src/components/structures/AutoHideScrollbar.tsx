@@ -20,7 +20,7 @@ import React, { HTMLAttributes, ReactHTML, WheelEvent } from "react";
 
 type DynamicHtmlElementProps<T extends keyof JSX.IntrinsicElements> =
     JSX.IntrinsicElements[T] extends HTMLAttributes<{}> ? DynamicElementProps<T> : DynamicElementProps<"div">;
-type DynamicElementProps<T extends keyof JSX.IntrinsicElements> = Partial<Omit<JSX.IntrinsicElements[T], 'ref'>>;
+type DynamicElementProps<T extends keyof JSX.IntrinsicElements> = Partial<Omit<JSX.IntrinsicElements[T], "ref">>;
 
 export type IProps<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementProps<T> & {
     element?: T;
@@ -34,7 +34,7 @@ export type IProps<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementPr
 
 export default class AutoHideScrollbar<T extends keyof JSX.IntrinsicElements> extends React.Component<IProps<T>> {
     static defaultProps = {
-        element: 'div' as keyof ReactHTML,
+        element: "div" as keyof ReactHTML,
     };
 
     public readonly containerRef: React.RefObject<HTMLDivElement> = React.createRef();

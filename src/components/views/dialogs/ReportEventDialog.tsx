@@ -15,16 +15,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { _t } from '../../../languageHandler';
+import { _t } from "../../../languageHandler";
 import { ensureDMExists } from "../../../createRoom";
 import { IDialogProps } from "./IDialogProps";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import SdkConfig from '../../../SdkConfig';
-import Markdown from '../../../Markdown';
+import SdkConfig from "../../../SdkConfig";
+import Markdown from "../../../Markdown";
 import SettingsStore from "../../../settings/SettingsStore";
 import StyledRadioButton from "../elements/StyledRadioButton";
 import BaseDialog from "./BaseDialog";
@@ -346,7 +346,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                 <BaseDialog
                     className="mx_ReportEventDialog"
                     onFinished={this.props.onFinished}
-                    title={_t('Report Content')}
+                    title={_t("Report Content")}
                     contentId='mx_ReportEventDialog'
                 >
                     <div>
@@ -356,7 +356,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                             checked={this.state.nature == Nature.Disagreement}
                             onChange={this.onNatureChosen}
                         >
-                            { _t('Disagree') }
+                            { _t("Disagree") }
                         </StyledRadioButton>
                         <StyledRadioButton
                             name="nature"
@@ -364,7 +364,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                             checked={this.state.nature == Nature.Toxic}
                             onChange={this.onNatureChosen}
                         >
-                            { _t('Toxic Behaviour') }
+                            { _t("Toxic Behaviour") }
                         </StyledRadioButton>
                         <StyledRadioButton
                             name="nature"
@@ -372,7 +372,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                             checked={this.state.nature == Nature.Illegal}
                             onChange={this.onNatureChosen}
                         >
-                            { _t('Illegal Content') }
+                            { _t("Illegal Content") }
                         </StyledRadioButton>
                         <StyledRadioButton
                             name="nature"
@@ -380,7 +380,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                             checked={this.state.nature == Nature.Spam}
                             onChange={this.onNatureChosen}
                         >
-                            { _t('Spam or propaganda') }
+                            { _t("Spam or propaganda") }
                         </StyledRadioButton>
                         <StyledRadioButton
                             name="nature"
@@ -388,7 +388,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                             checked={this.state.nature == NonStandardValue.Admin}
                             onChange={this.onNatureChosen}
                         >
-                            { _t('Report the entire room') }
+                            { _t("Report the entire room") }
                         </StyledRadioButton>
                         <StyledRadioButton
                             name="nature"
@@ -396,7 +396,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                             checked={this.state.nature == Nature.Other}
                             onChange={this.onNatureChosen}
                         >
-                            { _t('Other') }
+                            { _t("Other") }
                         </StyledRadioButton>
                         <p>
                             { subtitle }
@@ -430,7 +430,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
             <BaseDialog
                 className="mx_ReportEventDialog"
                 onFinished={this.props.onFinished}
-                title={_t('Report Content to Your Homeserver Administrator')}
+                title={_t("Report Content to Your Homeserver Administrator")}
                 contentId='mx_ReportEventDialog'
             >
                 <div className="mx_ReportEventDialog" id="mx_ReportEventDialog">

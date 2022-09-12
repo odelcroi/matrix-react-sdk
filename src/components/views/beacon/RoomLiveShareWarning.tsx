@@ -14,35 +14,35 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { Room } from 'matrix-js-sdk/src/matrix';
+import React from "react";
+import { Room } from "matrix-js-sdk/src/matrix";
 
-import { _t } from '../../../languageHandler';
-import { useEventEmitterState } from '../../../hooks/useEventEmitter';
-import { OwnBeaconStore, OwnBeaconStoreEvent } from '../../../stores/OwnBeaconStore';
-import { useOwnLiveBeacons } from '../../../utils/beacon';
-import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
-import Spinner from '../elements/Spinner';
-import StyledLiveBeaconIcon from './StyledLiveBeaconIcon';
-import { Icon as CloseIcon } from '../../../../res/img/image-view/close.svg';
-import LiveTimeRemaining from './LiveTimeRemaining';
-import dispatcher from '../../../dispatcher/dispatcher';
-import { ViewRoomPayload } from '../../../dispatcher/payloads/ViewRoomPayload';
-import { Action } from '../../../dispatcher/actions';
+import { _t } from "../../../languageHandler";
+import { useEventEmitterState } from "../../../hooks/useEventEmitter";
+import { OwnBeaconStore, OwnBeaconStoreEvent } from "../../../stores/OwnBeaconStore";
+import { useOwnLiveBeacons } from "../../../utils/beacon";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
+import Spinner from "../elements/Spinner";
+import StyledLiveBeaconIcon from "./StyledLiveBeaconIcon";
+import { Icon as CloseIcon } from "../../../../res/img/image-view/close.svg";
+import LiveTimeRemaining from "./LiveTimeRemaining";
+import dispatcher from "../../../dispatcher/dispatcher";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import { Action } from "../../../dispatcher/actions";
 
 const getLabel = (hasLocationPublishError: boolean, hasStopSharingError: boolean): string => {
     if (hasLocationPublishError) {
-        return _t('An error occurred whilst sharing your live location, please try again');
+        return _t("An error occurred whilst sharing your live location, please try again");
     }
     if (hasStopSharingError) {
-        return _t('An error occurred while stopping your live location, please try again');
+        return _t("An error occurred while stopping your live location, please try again");
     }
-    return _t('You are sharing your live location');
+    return _t("You are sharing your live location");
 };
 
 interface RoomLiveShareWarningInnerProps {
     liveBeaconIds: string[];
-    roomId: Room['roomId'];
+    roomId: Room["roomId"];
 }
 const RoomLiveShareWarningInner: React.FC<RoomLiveShareWarningInnerProps> = ({ liveBeaconIds, roomId }) => {
     const {
@@ -109,11 +109,11 @@ const RoomLiveShareWarningInner: React.FC<RoomLiveShareWarningInnerProps> = ({ l
             element='button'
             disabled={stoppingInProgress}
         >
-            { hasError ? _t('Retry') : _t('Stop') }
+            { hasError ? _t("Retry") : _t("Stop") }
         </AccessibleButton>
         { hasLocationPublishError && <AccessibleButton
             data-test-id='room-live-share-wire-error-close-button'
-            title={_t('Stop and close')}
+            title={_t("Stop and close")}
             element='button'
             className='mx_RoomLiveShareWarning_closeButton'
             onClick={stopPropagationWrapper(onStopSharing)}
@@ -124,7 +124,7 @@ const RoomLiveShareWarningInner: React.FC<RoomLiveShareWarningInnerProps> = ({ l
 };
 
 interface Props {
-    roomId: Room['roomId'];
+    roomId: Room["roomId"];
 }
 const RoomLiveShareWarning: React.FC<Props> = ({ roomId }) => {
     // do we have an active geolocation.watchPosition

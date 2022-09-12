@@ -22,16 +22,16 @@ import {
 } from "../../../../../src/components/views/settings/devices/types";
 
 const MS_DAY = 86400000;
-describe('filterDevicesBySecurityRecommendation()', () => {
-    const unverifiedNoMetadata = { device_id: 'unverified-no-metadata', isVerified: false };
-    const verifiedNoMetadata = { device_id: 'verified-no-metadata', isVerified: true };
-    const hundredDaysOld = { device_id: '100-days-old', isVerified: true, last_seen_ts: Date.now() - (MS_DAY * 100) };
+describe("filterDevicesBySecurityRecommendation()", () => {
+    const unverifiedNoMetadata = { device_id: "unverified-no-metadata", isVerified: false };
+    const verifiedNoMetadata = { device_id: "verified-no-metadata", isVerified: true };
+    const hundredDaysOld = { device_id: "100-days-old", isVerified: true, last_seen_ts: Date.now() - (MS_DAY * 100) };
     const hundredDaysOldUnverified = {
-        device_id: 'unverified-100-days-old',
+        device_id: "unverified-100-days-old",
         isVerified: false,
         last_seen_ts: Date.now() - (MS_DAY * 100),
     };
-    const fiftyDaysOld = { device_id: '50-days-old', isVerified: true, last_seen_ts: Date.now() - (MS_DAY * 50) };
+    const fiftyDaysOld = { device_id: "50-days-old", isVerified: true, last_seen_ts: Date.now() - (MS_DAY * 50) };
 
     const devices = [
         unverifiedNoMetadata,
@@ -41,11 +41,11 @@ describe('filterDevicesBySecurityRecommendation()', () => {
         fiftyDaysOld,
     ];
 
-    it('returns all devices when no securityRecommendations are passed', () => {
+    it("returns all devices when no securityRecommendations are passed", () => {
         expect(filterDevicesBySecurityRecommendation(devices, [])).toBe(devices);
     });
 
-    it('returns devices older than 90 days as inactive', () => {
+    it("returns devices older than 90 days as inactive", () => {
         expect(filterDevicesBySecurityRecommendation(devices, [DeviceSecurityVariation.Inactive])).toEqual([
             // devices without ts metadata are not filtered as inactive
             hundredDaysOld,
@@ -53,7 +53,7 @@ describe('filterDevicesBySecurityRecommendation()', () => {
         ]);
     });
 
-    it('returns correct devices for verified filter', () => {
+    it("returns correct devices for verified filter", () => {
         expect(filterDevicesBySecurityRecommendation(devices, [DeviceSecurityVariation.Verified])).toEqual([
             verifiedNoMetadata,
             hundredDaysOld,
@@ -61,14 +61,14 @@ describe('filterDevicesBySecurityRecommendation()', () => {
         ]);
     });
 
-    it('returns correct devices for unverified filter', () => {
+    it("returns correct devices for unverified filter", () => {
         expect(filterDevicesBySecurityRecommendation(devices, [DeviceSecurityVariation.Unverified])).toEqual([
             unverifiedNoMetadata,
             hundredDaysOldUnverified,
         ]);
     });
 
-    it('returns correct devices for combined verified and inactive filters', () => {
+    it("returns correct devices for combined verified and inactive filters", () => {
         expect(filterDevicesBySecurityRecommendation(
             devices,
             [DeviceSecurityVariation.Unverified, DeviceSecurityVariation.Inactive],

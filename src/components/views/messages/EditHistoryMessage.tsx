@@ -14,18 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
-import { EventStatus, MatrixEvent, MatrixEventEvent } from 'matrix-js-sdk/src/models/event';
-import classNames from 'classnames';
+import React, { createRef } from "react";
+import { EventStatus, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
+import classNames from "classnames";
 
-import * as HtmlUtils from '../../../HtmlUtils';
-import { editBodyDiffToHtml } from '../../../utils/MessageDiffUtils';
-import { formatTime } from '../../../DateUtils';
-import { pillifyLinks, unmountPills } from '../../../utils/pillify';
-import { tooltipifyLinks, unmountTooltips } from '../../../utils/tooltipify';
-import { _t } from '../../../languageHandler';
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import Modal from '../../../Modal';
+import * as HtmlUtils from "../../../HtmlUtils";
+import { editBodyDiffToHtml } from "../../../utils/MessageDiffUtils";
+import { formatTime } from "../../../DateUtils";
+import { pillifyLinks, unmountPills } from "../../../utils/pillify";
+import { tooltipifyLinks, unmountTooltips } from "../../../utils/tooltipify";
+import { _t } from "../../../languageHandler";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import Modal from "../../../Modal";
 import RedactedBody from "./RedactedBody";
 import AccessibleButton from "../elements/AccessibleButton";
 import ConfirmAndWaitRedactDialog from "../dialogs/ConfirmAndWaitRedactDialog";
@@ -79,13 +79,13 @@ export default class EditHistoryMessage extends React.PureComponent<IProps, ISta
 
         Modal.createDialog(ConfirmAndWaitRedactDialog, {
             redact: () => cli.redactEvent(event.getRoomId(), event.getId()),
-        }, 'mx_Dialog_confirmredact');
+        }, "mx_Dialog_confirmredact");
     };
 
     private onViewSourceClick = (): void => {
         Modal.createDialog(ViewSource, {
             mxEvent: this.props.mxEvent,
-        }, 'mx_Dialog_viewsource');
+        }, "mx_Dialog_viewsource");
     };
 
     private pillifyLinks(): void {
@@ -181,7 +181,7 @@ export default class EditHistoryMessage extends React.PureComponent<IProps, ISta
         }
 
         const timestamp = formatTime(new Date(mxEvent.getTs()), this.props.isTwelveHour);
-        const isSending = (['sending', 'queued', 'encrypting'].indexOf(this.state.sendStatus) !== -1);
+        const isSending = (["sending", "queued", "encrypting"].indexOf(this.state.sendStatus) !== -1);
         const classes = classNames({
             "mx_EventTile": true,
             // Note: we keep the `sending` state class for tests, not for our styles

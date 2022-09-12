@@ -15,9 +15,9 @@ limitations under the License.
 */
 
 import EventEmitter from "events";
-import { mocked, MockedObject } from 'jest-mock';
+import { mocked, MockedObject } from "jest-mock";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { JoinRule } from 'matrix-js-sdk/src/@types/partials';
+import { JoinRule } from "matrix-js-sdk/src/@types/partials";
 import {
     Room,
     User,
@@ -30,12 +30,12 @@ import {
     EventType,
     IEventRelation,
     IUnsigned,
-} from 'matrix-js-sdk/src/matrix';
+} from "matrix-js-sdk/src/matrix";
 import { normalize } from "matrix-js-sdk/src/utils";
 import { ReEmitter } from "matrix-js-sdk/src/ReEmitter";
 
-import { MatrixClientPeg as peg } from '../../src/MatrixClientPeg';
-import dis from '../../src/dispatcher/dispatcher';
+import { MatrixClientPeg as peg } from "../../src/MatrixClientPeg";
+import dis from "../../src/dispatcher/dispatcher";
 import { makeType } from "../../src/utils/TypeUtils";
 import { ValidatedServerConfig } from "../../src/utils/ValidatedServerConfig";
 import { EnhancedMap } from "../../src/utils/maps";
@@ -57,9 +57,9 @@ export function stubClient() {
     //
     // 'sandbox.restore()' doesn't work correctly on inherited methods,
     // so we do this for each method
-    jest.spyOn(peg, 'get');
-    jest.spyOn(peg, 'unset');
-    jest.spyOn(peg, 'replaceUsingCreds');
+    jest.spyOn(peg, "get");
+    jest.spyOn(peg, "unset");
+    jest.spyOn(peg, "replaceUsingCreds");
     // MatrixClientPeg.get() is called a /lot/, so implement it with our own
     // fast stub function rather than a sinon stub
     peg.get = function() { return client; };
@@ -370,7 +370,7 @@ export function mkMessage({ msg, relatesTo, ...opts }: MakeEventPassThruProps & 
         content: {
             msgtype: "m.text",
             body: message,
-            ['m.relates_to']: relatesTo,
+            ["m.relates_to"]: relatesTo,
         },
     };
 
@@ -383,12 +383,12 @@ export function mkStubRoom(roomId: string = null, name: string, client: MatrixCl
         roomId,
         getReceiptsForEvent: jest.fn().mockReturnValue([]),
         getMember: jest.fn().mockReturnValue({
-            userId: '@member:domain.bla',
-            name: 'Member',
-            rawDisplayName: 'Member',
+            userId: "@member:domain.bla",
+            name: "Member",
+            rawDisplayName: "Member",
             roomId: roomId,
-            getAvatarUrl: () => 'mxc://avatar.url/image.png',
-            getMxcAvatarUrl: () => 'mxc://avatar.url/image.png',
+            getAvatarUrl: () => "mxc://avatar.url/image.png",
+            getMxcAvatarUrl: () => "mxc://avatar.url/image.png",
         }),
         getMembersWithMembership: jest.fn().mockReturnValue([]),
         getJoinedMembers: jest.fn().mockReturnValue([]),
@@ -402,7 +402,7 @@ export function mkStubRoom(roomId: string = null, name: string, client: MatrixCl
         findEventById: () => null,
         getAccountData: () => null,
         hasMembershipState: () => null,
-        getVersion: () => '1',
+        getVersion: () => "1",
         shouldUpgradeToVersion: () => null,
         getMyMembership: jest.fn().mockReturnValue("join"),
         maySendMessage: jest.fn().mockReturnValue(true),
@@ -426,8 +426,8 @@ export function mkStubRoom(roomId: string = null, name: string, client: MatrixCl
         getDMInviter: jest.fn(),
         name,
         normalizedName: normalize(name || ""),
-        getAvatarUrl: () => 'mxc://avatar.url/room.png',
-        getMxcAvatarUrl: () => 'mxc://avatar.url/room.png',
+        getAvatarUrl: () => "mxc://avatar.url/room.png",
+        getMxcAvatarUrl: () => "mxc://avatar.url/room.png",
         isSpaceRoom: jest.fn().mockReturnValue(false),
         isElementVideoRoom: jest.fn().mockReturnValue(false),
         getUnreadNotificationCount: jest.fn(() => 0),

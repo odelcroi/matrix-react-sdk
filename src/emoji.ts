@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import EMOJIBASE from 'emojibase-data/en/compact.json';
-import SHORTCODES from 'emojibase-data/en/shortcodes/iamcal.json';
+import EMOJIBASE from "emojibase-data/en/compact.json";
+import SHORTCODES from "emojibase-data/en/shortcodes/iamcal.json";
 
 export interface IEmoji {
     label: string;
@@ -42,7 +42,7 @@ const isRegionalIndicator = (x: string): boolean => {
         // Next verify that the character is within the code point range for
         // regional indicators.
         // http://unicode.org/charts/PDF/Unicode-6.0/U60-1F100.pdf
-        x >= '\u{1f1e6}' && x <= '\u{1f1ff}';
+        x >= "\u{1f1e6}" && x <= "\u{1f1ff}";
 };
 
 const EMOJIBASE_GROUP_ID_TO_CATEGORY = [

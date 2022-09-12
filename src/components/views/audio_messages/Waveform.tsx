@@ -18,7 +18,7 @@ import React, { CSSProperties } from "react";
 import classNames from "classnames";
 
 interface WaveformCSSProperties extends CSSProperties {
-    '--barHeight': number;
+    "--barHeight": number;
 }
 
 interface IProps {
@@ -48,8 +48,8 @@ export default class Waveform extends React.PureComponent<IProps, IState> {
                 const progress = this.props.progress;
                 const isCompleteBar = (i / this.props.relHeights.length) <= progress && progress > 0;
                 const classes = classNames({
-                    'mx_Waveform_bar': true,
-                    'mx_Waveform_bar_100pct': isCompleteBar,
+                    "mx_Waveform_bar": true,
+                    "mx_Waveform_bar_100pct": isCompleteBar,
                 });
                 return <span
                     key={i}

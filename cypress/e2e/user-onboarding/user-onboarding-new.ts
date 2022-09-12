@@ -39,10 +39,10 @@ describe("User Onboarding (new user)", () => {
             cy.getBot(synapse, { displayName: bot1Name }).then(_bot1 => {
                 bot1 = _bot1;
             });
-            cy.get('.mx_UserOnboardingPage').should('exist');
-            cy.get('.mx_UserOnboardingButton').should('exist');
-            cy.get('.mx_UserOnboardingList')
-                .should('exist')
+            cy.get(".mx_UserOnboardingPage").should("exist");
+            cy.get(".mx_UserOnboardingButton").should("exist");
+            cy.get(".mx_UserOnboardingList")
+                .should("exist")
                 .should(($list) => {
                     const list = $list.get(0);
                     expect(getComputedStyle(list).opacity).to.be.eq("1");
@@ -55,7 +55,7 @@ describe("User Onboarding (new user)", () => {
     });
 
     it("page is shown and preference exists", () => {
-        cy.get('.mx_UserOnboardingPage')
+        cy.get(".mx_UserOnboardingPage")
             .percySnapshotElement("User onboarding page");
         cy.openUserSettings("Preferences");
         cy.contains("Show shortcut to welcome checklist above the room list").should("exist");
@@ -63,10 +63,10 @@ describe("User Onboarding (new user)", () => {
 
     it("app download dialog", () => {
         cy.contains(".mx_UserOnboardingTask_action", "Download apps").click();
-        cy.get('[role=dialog]')
+        cy.get("[role=dialog]")
             .contains("#mx_BaseDialog_title", "Download Element")
             .should("exist");
-        cy.get('[role=dialog]')
+        cy.get("[role=dialog]")
             .percySnapshotElement("App download dialog", {
                 widths: [640],
             });
@@ -84,10 +84,10 @@ describe("User Onboarding (new user)", () => {
             cy.get(".mx_SendMessageComposer").type(`${message}!{enter}`);
             cy.contains(".mx_MTextBody.mx_EventTile_content", message);
             cy.visit("/#/home");
-            cy.get('.mx_UserOnboardingPage').should('exist');
-            cy.get('.mx_UserOnboardingButton').should('exist');
-            cy.get('.mx_UserOnboardingList')
-                .should('exist')
+            cy.get(".mx_UserOnboardingPage").should("exist");
+            cy.get(".mx_UserOnboardingButton").should("exist");
+            cy.get(".mx_UserOnboardingList")
+                .should("exist")
                 .should(($list) => {
                     const list = $list.get(0);
                     expect(getComputedStyle(list).opacity).to.be.eq("1");

@@ -16,49 +16,49 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, useContext } from 'react';
-import { EventStatus, MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import React, { createRef, useContext } from "react";
+import { EventStatus, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
-import { Relations } from 'matrix-js-sdk/src/models/relations';
+import { Relations } from "matrix-js-sdk/src/models/relations";
 import { RoomMemberEvent } from "matrix-js-sdk/src/models/room-member";
 import { M_POLL_START } from "matrix-events-sdk";
 import { Thread } from "matrix-js-sdk/src/models/thread";
 
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import dis from '../../../dispatcher/dispatcher';
-import { _t } from '../../../languageHandler';
-import Modal from '../../../Modal';
-import Resend from '../../../Resend';
-import SettingsStore from '../../../settings/SettingsStore';
-import { isUrlPermitted } from '../../../HtmlUtils';
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import dis from "../../../dispatcher/dispatcher";
+import { _t } from "../../../languageHandler";
+import Modal from "../../../Modal";
+import Resend from "../../../Resend";
+import SettingsStore from "../../../settings/SettingsStore";
+import { isUrlPermitted } from "../../../HtmlUtils";
 import {
     canEditContent,
     canPinEvent,
     editEvent,
     isContentActionable,
-} from '../../../utils/EventUtils';
-import IconizedContextMenu, { IconizedContextMenuOption, IconizedContextMenuOptionList } from './IconizedContextMenu';
+} from "../../../utils/EventUtils";
+import IconizedContextMenu, { IconizedContextMenuOption, IconizedContextMenuOptionList } from "./IconizedContextMenu";
 import { ReadPinsEventId } from "../right_panel/types";
 import { Action } from "../../../dispatcher/actions";
-import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
-import { ButtonEvent } from '../elements/AccessibleButton';
-import { copyPlaintext, getSelectedText } from '../../../utils/strings';
-import ContextMenu, { toRightOf, IPosition, ChevronFace } from '../../structures/ContextMenu';
-import ReactionPicker from '../emojipicker/ReactionPicker';
-import ViewSource from '../../structures/ViewSource';
-import { createRedactEventDialog } from '../dialogs/ConfirmRedactDialog';
-import ShareDialog from '../dialogs/ShareDialog';
-import RoomContext, { TimelineRenderingType } from '../../../contexts/RoomContext';
+import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
+import { ButtonEvent } from "../elements/AccessibleButton";
+import { copyPlaintext, getSelectedText } from "../../../utils/strings";
+import ContextMenu, { toRightOf, IPosition, ChevronFace } from "../../structures/ContextMenu";
+import ReactionPicker from "../emojipicker/ReactionPicker";
+import ViewSource from "../../structures/ViewSource";
+import { createRedactEventDialog } from "../dialogs/ConfirmRedactDialog";
+import ShareDialog from "../dialogs/ShareDialog";
+import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInsertPayload";
-import EndPollDialog from '../dialogs/EndPollDialog';
-import { isPollEnded } from '../messages/MPollBody';
+import EndPollDialog from "../dialogs/EndPollDialog";
+import { isPollEnded } from "../messages/MPollBody";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { GetRelationsForEvent, IEventTileOps } from "../rooms/EventTile";
 import { OpenForwardDialogPayload } from "../../../dispatcher/payloads/OpenForwardDialogPayload";
 import { OpenReportEventDialogPayload } from "../../../dispatcher/payloads/OpenReportEventDialogPayload";
-import { createMapSiteLinkFromEvent } from '../../../utils/location';
-import { getForwardableEvent } from '../../../events/forward/getForwardableEvent';
-import { getShareableLocationEvent } from '../../../events/location/getShareableLocationEvent';
+import { createMapSiteLinkFromEvent } from "../../../utils/location";
+import { getForwardableEvent } from "../../../events/forward/getForwardableEvent";
+import { getShareableLocationEvent } from "../../../events/location/getShareableLocationEvent";
 import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayload";
 import { CardContext } from "../right_panel/context";
 import { UserTab } from "../dialogs/UserTab";
@@ -193,7 +193,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
 
     private isPinned(): boolean {
         const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
-        const pinnedEvent = room.currentState.getStateEvents(EventType.RoomPinnedEvents, '');
+        const pinnedEvent = room.currentState.getStateEvents(EventType.RoomPinnedEvents, "");
         if (!pinnedEvent) return false;
         const content = pinnedEvent.getContent();
         return content.pinned && Array.isArray(content.pinned) && content.pinned.includes(this.props.mxEvent.getId());
@@ -234,7 +234,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
     private onViewSourceClick = (): void => {
         Modal.createDialog(ViewSource, {
             mxEvent: this.props.mxEvent,
-        }, 'mx_Dialog_viewsource');
+        }, "mx_Dialog_viewsource");
         this.closeMenu();
     };
 
@@ -328,7 +328,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
 
     private onReplyClick = (): void => {
         dis.dispatch({
-            action: 'reply_to_event',
+            action: "reply_to_event",
             event: this.props.mxEvent,
             context: this.context.timelineRenderingType,
         });
@@ -350,7 +350,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             matrixClient,
             event: this.props.mxEvent,
             getRelationsForEvent: this.props.getRelationsForEvent,
-        }, 'mx_Dialog_endPoll');
+        }, "mx_Dialog_endPoll");
         this.closeMenu();
     };
 
@@ -401,7 +401,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             resendReactionsButton = (
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconResend"
-                    label={_t('Resend %(unsentCount)s reaction(s)', { unsentCount: unsentReactionsCount })}
+                    label={_t("Resend %(unsentCount)s reaction(s)", { unsentCount: unsentReactionsCount })}
                     onClick={this.onResendReactionsClick}
                 />
             );
@@ -426,7 +426,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconOpenInMapSite"
                     onClick={null}
-                    label={_t('Open in OpenStreetMap')}
+                    label={_t("Open in OpenStreetMap")}
                     element="a"
                     {
                         ...{
@@ -456,7 +456,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             pinButton = (
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconPin"
-                    label={this.isPinned() ? _t('Unpin') : _t('Pin')}
+                    label={this.isPinned() ? _t("Unpin") : _t("Pin")}
                     onClick={this.onPinClick}
                 />
             );
@@ -488,7 +488,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconPermalink"
                     onClick={this.onShareClick}
-                    label={_t('Share')}
+                    label={_t("Share")}
                     element="a"
                     {
                         // XXX: Typescript signature for AccessibleButton doesn't work properly for non-inputs like `a`
@@ -534,7 +534,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconLink"
                     onClick={this.closeMenu}
-                    label={_t('Source URL')}
+                    label={_t("Source URL")}
                     element="a"
                     {
                         // XXX: Typescript signature for AccessibleButton doesn't work properly for non-inputs like `a`
@@ -588,7 +588,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconCopy"
                     onClick={this.onCopyLinkClick}
-                    label={_t('Copy link')}
+                    label={_t("Copy link")}
                     element="a"
                     {
                     // XXX: Typescript signature for AccessibleButton doesn't work properly for non-inputs like `a`

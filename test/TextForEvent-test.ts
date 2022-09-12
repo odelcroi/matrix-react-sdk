@@ -15,17 +15,17 @@ limitations under the License.
 */
 
 import { EventType, MatrixEvent } from "matrix-js-sdk/src/matrix";
-import TestRenderer from 'react-test-renderer';
+import TestRenderer from "react-test-renderer";
 import { ReactElement } from "react";
 
 import { getSenderName, textForEvent } from "../src/TextForEvent";
 import SettingsStore from "../src/settings/SettingsStore";
-import { createTestClient } from './test-utils';
-import { MatrixClientPeg } from '../src/MatrixClientPeg';
-import UserIdentifierCustomisations from '../src/customisations/UserIdentifier';
+import { createTestClient } from "./test-utils";
+import { MatrixClientPeg } from "../src/MatrixClientPeg";
+import UserIdentifierCustomisations from "../src/customisations/UserIdentifier";
 
 jest.mock("../src/settings/SettingsStore");
-jest.mock('../src/customisations/UserIdentifier', () => ({
+jest.mock("../src/customisations/UserIdentifier", () => ({
     getDisplayUserIdentifier: jest.fn().mockImplementation(userId => userId),
 }));
 
@@ -51,31 +51,31 @@ function mockPinnedEvent(
 // and should be replaced with snapshots.
 function renderComponent(component): string {
     const serializeObject = (object): string => {
-        if (typeof object === 'string') {
-            return object === ' ' ? '' : object;
+        if (typeof object === "string") {
+            return object === " " ? "" : object;
         }
 
-        if (Array.isArray(object) && object.length === 1 && typeof object[0] === 'string') {
+        if (Array.isArray(object) && object.length === 1 && typeof object[0] === "string") {
             return object[0];
         }
 
-        if (object['type'] !== undefined && typeof object['children'] !== undefined) {
+        if (object["type"] !== undefined && typeof object["children"] !== undefined) {
             return serializeObject(object.children);
         }
 
         if (!Array.isArray(object)) {
-            return '';
+            return "";
         }
 
         return object.map(child => {
             return serializeObject(child);
-        }).join('');
+        }).join("");
     };
 
     return serializeObject(component.toJSON());
 }
 
-describe('TextForEvent', () => {
+describe("TextForEvent", () => {
     describe("getSenderName()", () => {
         it("Prefers sender.name", () => {
             expect(getSenderName({ sender: { name: "Alice" } } as MatrixEvent)).toBe("Alice");
@@ -91,11 +91,11 @@ describe('TextForEvent', () => {
     describe("TextForPinnedEvent", () => {
         beforeAll(() => {
             // enable feature_pinning setting
-            (SettingsStore.getValue as jest.Mock).mockImplementation(feature => feature === 'feature_pinning');
+            (SettingsStore.getValue as jest.Mock).mockImplementation(feature => feature === "feature_pinning");
         });
 
         it("mentions message when a single message was pinned, with no previously pinned messages", () => {
-            const event = mockPinnedEvent(['message-1']);
+            const event = mockPinnedEvent(["message-1"]);
             const plainText = textForEvent(event);
             const component = TestRenderer.create(textForEvent(event, true) as ReactElement);
 
@@ -105,7 +105,7 @@ describe('TextForEvent', () => {
         });
 
         it("mentions message when a single message was pinned, with multiple previously pinned messages", () => {
-            const event = mockPinnedEvent(['message-1', 'message-2', 'message-3'], ['message-1', 'message-2']);
+            const event = mockPinnedEvent(["message-1", "message-2", "message-3"], ["message-1", "message-2"]);
             const plainText = textForEvent(event);
             const component = TestRenderer.create(textForEvent(event, true) as ReactElement);
 
@@ -115,7 +115,7 @@ describe('TextForEvent', () => {
         });
 
         it("mentions message when a single message was unpinned, with a single message previously pinned", () => {
-            const event = mockPinnedEvent([], ['message-1']);
+            const event = mockPinnedEvent([], ["message-1"]);
             const plainText = textForEvent(event);
             const component = TestRenderer.create(textForEvent(event, true) as ReactElement);
 
@@ -125,7 +125,7 @@ describe('TextForEvent', () => {
         });
 
         it("mentions message when a single message was unpinned, with multiple previously pinned messages", () => {
-            const event = mockPinnedEvent(['message-2'], ['message-1', 'message-2']);
+            const event = mockPinnedEvent(["message-2"], ["message-1", "message-2"]);
             const plainText = textForEvent(event);
             const component = TestRenderer.create(textForEvent(event, true) as ReactElement);
 
@@ -135,7 +135,7 @@ describe('TextForEvent', () => {
         });
 
         it("shows generic text when multiple messages were pinned", () => {
-            const event = mockPinnedEvent(['message-1', 'message-2', 'message-3'], ['message-1']);
+            const event = mockPinnedEvent(["message-1", "message-2", "message-3"], ["message-1"]);
             const plainText = textForEvent(event);
             const component = TestRenderer.create(textForEvent(event, true) as ReactElement);
 
@@ -145,7 +145,7 @@ describe('TextForEvent', () => {
         });
 
         it("shows generic text when multiple messages were unpinned", () => {
-            const event = mockPinnedEvent(['message-3'], ['message-1', 'message-2', 'message-3']);
+            const event = mockPinnedEvent(["message-3"], ["message-1", "message-2", "message-3"]);
             const plainText = textForEvent(event);
             const component = TestRenderer.create(textForEvent(event, true) as ReactElement);
 
@@ -155,7 +155,7 @@ describe('TextForEvent', () => {
         });
 
         it("shows generic text when one message was pinned, and another unpinned", () => {
-            const event = mockPinnedEvent(['message-2'], ['message-1']);
+            const event = mockPinnedEvent(["message-2"], ["message-1"]);
             const plainText = textForEvent(event);
             const component = TestRenderer.create(textForEvent(event, true) as ReactElement);
 
@@ -172,16 +172,16 @@ describe('TextForEvent', () => {
         };
 
         const userA = {
-            id: '@a',
-            name: 'Alice',
+            id: "@a",
+            name: "Alice",
         };
         const userB = {
-            id: '@b',
-            name: 'Bob',
+            id: "@b",
+            name: "Bob",
         };
         const userC = {
-            id: '@c',
-            name: 'Carl',
+            id: "@c",
+            name: "Carl",
         };
         interface PowerEventProps {
             usersDefault?: number;
@@ -306,7 +306,7 @@ describe('TextForEvent', () => {
 
         it("uses userIdentifier customisation", () => {
             (UserIdentifierCustomisations.getDisplayUserIdentifier as jest.Mock)
-                .mockImplementation(userId => 'customised ' + userId);
+                .mockImplementation(userId => "customised " + userId);
             const event = mockPowerEvent({
                 users: {
                     [userB.id]: 100,
@@ -325,8 +325,8 @@ describe('TextForEvent', () => {
 
     describe("textForCanonicalAliasEvent()", () => {
         const userA = {
-            id: '@a',
-            name: 'Alice',
+            id: "@a",
+            name: "Alice",
         };
 
         interface AliasEventProps {
@@ -349,48 +349,48 @@ describe('TextForEvent', () => {
         type TestCase = [string, AliasEventProps & { result: string }];
         const testCases: TestCase[] = [
             ["room alias didn't change", {
-                result: '@a changed the addresses for this room.',
+                result: "@a changed the addresses for this room.",
             }],
             ["room alias changed", {
-                alias: 'banana',
-                prevAlias: 'apple',
-                result: '@a set the main address for this room to banana.',
+                alias: "banana",
+                prevAlias: "apple",
+                result: "@a set the main address for this room to banana.",
             }],
             ["room alias was added", {
-                alias: 'banana',
-                result: '@a set the main address for this room to banana.',
+                alias: "banana",
+                result: "@a set the main address for this room to banana.",
             }],
             ["room alias was removed", {
-                prevAlias: 'apple',
-                result: '@a removed the main address for this room.',
+                prevAlias: "apple",
+                result: "@a removed the main address for this room.",
             }],
             ["added an alt alias", {
-                altAliases: ['canteloupe'],
-                result: '@a added alternative address canteloupe for this room.',
+                altAliases: ["canteloupe"],
+                result: "@a added alternative address canteloupe for this room.",
             }],
             ["added multiple alt aliases", {
-                altAliases: ['canteloupe', 'date'],
-                result: '@a added the alternative addresses canteloupe, date for this room.',
+                altAliases: ["canteloupe", "date"],
+                result: "@a added the alternative addresses canteloupe, date for this room.",
             }],
             ["removed an alt alias", {
-                altAliases: ['canteloupe'],
-                prevAltAliases: ['canteloupe', 'date'],
-                result: '@a removed alternative address date for this room.',
+                altAliases: ["canteloupe"],
+                prevAltAliases: ["canteloupe", "date"],
+                result: "@a removed alternative address date for this room.",
             }],
             ["added and removed an alt aliases", {
-                altAliases: ['canteloupe', 'elderberry'],
-                prevAltAliases: ['canteloupe', 'date'],
-                result: '@a changed the alternative addresses for this room.',
+                altAliases: ["canteloupe", "elderberry"],
+                prevAltAliases: ["canteloupe", "date"],
+                result: "@a changed the alternative addresses for this room.",
             }],
             ["changed alias and added alt alias", {
-                alias: 'banana',
-                prevAlias: 'apple',
-                altAliases: ['canteloupe'],
-                result: '@a changed the main and alternative addresses for this room.',
+                alias: "banana",
+                prevAlias: "apple",
+                altAliases: ["canteloupe"],
+                result: "@a changed the main and alternative addresses for this room.",
             }],
         ];
 
-        it.each(testCases)('returns correct message when %s', (_d, { result, ...eventProps }) => {
+        it.each(testCases)("returns correct message when %s", (_d, { result, ...eventProps }) => {
             const event = mockEvent(eventProps);
             expect(textForEvent(event)).toEqual(result);
         });
@@ -401,18 +401,18 @@ describe('TextForEvent', () => {
 
         beforeEach(() => {
             pollEvent = new MatrixEvent({
-                type: 'org.matrix.msc3381.poll.start',
-                sender: '@a',
+                type: "org.matrix.msc3381.poll.start",
+                sender: "@a",
                 content: {
-                    'org.matrix.msc3381.poll.start': {
+                    "org.matrix.msc3381.poll.start": {
                         answers: [
-                            { 'org.matrix.msc1767.text': 'option1' },
-                            { 'org.matrix.msc1767.text': 'option2' },
+                            { "org.matrix.msc1767.text": "option1" },
+                            { "org.matrix.msc1767.text": "option2" },
                         ],
                         question: {
-                            'body': 'Test poll name',
-                            'msgtype': 'm.text',
-                            'org.matrix.msc1767.text': 'Test poll name',
+                            "body": "Test poll name",
+                            "msgtype": "m.text",
+                            "org.matrix.msc1767.text": "Test poll name",
                         },
                     },
                 },
@@ -422,11 +422,11 @@ describe('TextForEvent', () => {
         it("returns correct message for redacted poll start", () => {
             pollEvent.makeRedacted(pollEvent);
 
-            expect(textForEvent(pollEvent)).toEqual('@a: Message deleted');
+            expect(textForEvent(pollEvent)).toEqual("@a: Message deleted");
         });
 
         it("returns correct message for normal poll start", () => {
-            expect(textForEvent(pollEvent)).toEqual('@a has started a poll - ');
+            expect(textForEvent(pollEvent)).toEqual("@a has started a poll - ");
         });
     });
 
@@ -435,12 +435,12 @@ describe('TextForEvent', () => {
 
         beforeEach(() => {
             messageEvent = new MatrixEvent({
-                type: 'm.room.message',
-                sender: '@a',
+                type: "m.room.message",
+                sender: "@a",
                 content: {
-                    'body': 'test message',
-                    'msgtype': 'm.text',
-                    'org.matrix.msc1767.text': 'test message',
+                    "body": "test message",
+                    "msgtype": "m.text",
+                    "org.matrix.msc1767.text": "test message",
                 },
             });
         });
@@ -448,11 +448,11 @@ describe('TextForEvent', () => {
         it("returns correct message for redacted message", () => {
             messageEvent.makeRedacted(messageEvent);
 
-            expect(textForEvent(messageEvent)).toEqual('@a: Message deleted');
+            expect(textForEvent(messageEvent)).toEqual("@a: Message deleted");
         });
 
         it("returns correct message for normal message", () => {
-            expect(textForEvent(messageEvent)).toEqual('@a: test message');
+            expect(textForEvent(messageEvent)).toEqual("@a: test message");
         });
     });
 });

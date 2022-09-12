@@ -15,9 +15,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
-import { _t } from '../../../languageHandler';
+import { _t } from "../../../languageHandler";
 import { getEmojiFromUnicode, IEmoji } from "../../../emoji";
 import Emoji from "./Emoji";
 

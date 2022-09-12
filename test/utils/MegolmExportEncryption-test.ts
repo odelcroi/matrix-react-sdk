@@ -69,7 +69,7 @@ function stringToArray(s: string): ArrayBufferLike {
     return new TextEncoder().encode(s).buffer;
 }
 
-describe('MegolmExportEncryption', function() {
+describe("MegolmExportEncryption", function() {
     let MegolmExportEncryption;
 
     beforeAll(() => {
@@ -85,44 +85,44 @@ describe('MegolmExportEncryption', function() {
         window.crypto = undefined;
     });
 
-    describe('decrypt', function() {
-        it('should handle missing header', function() {
-            const input=stringToArray(`-----`);
-            return MegolmExportEncryption.decryptMegolmKeyFile(input, '')
+    describe("decrypt", function() {
+        it("should handle missing header", function() {
+            const input=stringToArray("-----");
+            return MegolmExportEncryption.decryptMegolmKeyFile(input, "")
                 .then((res) => {
-                    throw new Error('expected to throw');
+                    throw new Error("expected to throw");
                 }, (error) => {
-                    expect(error.message).toEqual('Header line not found');
+                    expect(error.message).toEqual("Header line not found");
                 });
         });
 
-        it('should handle missing trailer', function() {
+        it("should handle missing trailer", function() {
             const input=stringToArray(`-----BEGIN MEGOLM SESSION DATA-----
 -----`);
-            return MegolmExportEncryption.decryptMegolmKeyFile(input, '')
+            return MegolmExportEncryption.decryptMegolmKeyFile(input, "")
                 .then((res) => {
-                    throw new Error('expected to throw');
+                    throw new Error("expected to throw");
                 }, (error) => {
-                    expect(error.message).toEqual('Trailer line not found');
+                    expect(error.message).toEqual("Trailer line not found");
                 });
         });
 
-        it('should handle a too-short body', function() {
+        it("should handle a too-short body", function() {
             const input=stringToArray(`-----BEGIN MEGOLM SESSION DATA-----
 AXNhbHRzYWx0c2FsdHNhbHSIiIiIiIiIiIiIiIiIiIiIAAAACmIRUW2OjZ3L2l6j9h0lHlV3M2dx
 cissyYBxjsfsAn
 -----END MEGOLM SESSION DATA-----
 `);
-            return MegolmExportEncryption.decryptMegolmKeyFile(input, '')
+            return MegolmExportEncryption.decryptMegolmKeyFile(input, "")
                 .then((res) => {
-                    throw new Error('expected to throw');
+                    throw new Error("expected to throw");
                 }, (error) => {
-                    expect(error.message).toEqual('Invalid file: too short');
+                    expect(error.message).toEqual("Invalid file: too short");
                 });
         });
 
         // TODO find a subtlecrypto shim which doesn't break this test
-        it.skip('should decrypt a range of inputs', function() {
+        it.skip("should decrypt a range of inputs", function() {
             function next(i) {
                 if (i >= TEST_VECTORS.length) {
                     return;
@@ -140,12 +140,12 @@ cissyYBxjsfsAn
         });
     });
 
-    describe('encrypt', function() {
-        it('should round-trip', function() {
+    describe("encrypt", function() {
+        it("should round-trip", function() {
             const input =
-                  'words words many words in plain text here'.repeat(100);
+                  "words words many words in plain text here".repeat(100);
 
-            const password = 'my super secret passphrase';
+            const password = "my super secret passphrase";
 
             return MegolmExportEncryption.encryptMegolmKeyFile(
                 input, password, { kdf_rounds: 1000 },

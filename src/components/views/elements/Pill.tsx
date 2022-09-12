@@ -14,26 +14,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import classNames from 'classnames';
-import { Room } from 'matrix-js-sdk/src/models/room';
-import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
+import React from "react";
+import classNames from "classnames";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixClient } from 'matrix-js-sdk/src/client';
+import { MatrixClient } from "matrix-js-sdk/src/client";
 
-import dis from '../../../dispatcher/dispatcher';
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
+import dis from "../../../dispatcher/dispatcher";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { getPrimaryPermalinkEntity, parsePermalink } from "../../../utils/permalinks/Permalinks";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { Action } from "../../../dispatcher/actions";
-import Tooltip, { Alignment } from './Tooltip';
-import RoomAvatar from '../avatars/RoomAvatar';
-import MemberAvatar from '../avatars/MemberAvatar';
+import Tooltip, { Alignment } from "./Tooltip";
+import RoomAvatar from "../avatars/RoomAvatar";
+import MemberAvatar from "../avatars/MemberAvatar";
 
 export enum PillType {
-    UserMention = 'TYPE_USER_MENTION',
-    RoomMention = 'TYPE_ROOM_MENTION',
-    AtRoomMention = 'TYPE_AT_ROOM_MENTION', // '@room' mention
+    UserMention = "TYPE_USER_MENTION",
+    RoomMention = "TYPE_ROOM_MENTION",
+    AtRoomMention = "TYPE_AT_ROOM_MENTION", // '@room' mention
 }
 
 interface IProps {
@@ -104,9 +104,9 @@ export default class Pill extends React.Component<IProps, IState> {
         }
 
         const pillType = this.props.type || {
-            '@': PillType.UserMention,
-            '#': PillType.RoomMention,
-            '!': PillType.RoomMention,
+            "@": PillType.UserMention,
+            "#": PillType.RoomMention,
+            "!": PillType.RoomMention,
         }[prefix];
 
         let member;
@@ -126,7 +126,7 @@ export default class Pill extends React.Component<IProps, IState> {
             }
                 break;
             case PillType.RoomMention: {
-                const localRoom = resourceId[0] === '#' ?
+                const localRoom = resourceId[0] === "#" ?
                     MatrixClientPeg.get().getRooms().find((r) => {
                         return r.getCanonicalAlias() === resourceId ||
                                r.getAltAliases().includes(resourceId);
@@ -184,7 +184,7 @@ export default class Pill extends React.Component<IProps, IState> {
             };
             this.setState({ member });
         }).catch((err) => {
-            logger.error('Could not retrieve profile data for ' + userId + ':', err);
+            logger.error("Could not retrieve profile data for " + userId + ":", err);
         });
     }
 
@@ -213,7 +213,7 @@ export default class Pill extends React.Component<IProps, IState> {
                     if (this.props.shouldShowPillAvatar) {
                         avatar = <RoomAvatar room={room} width={16} height={16} aria-hidden="true" />;
                     }
-                    pillClass = 'mx_AtRoomPill';
+                    pillClass = "mx_AtRoomPill";
                 }
             }
                 break;
@@ -222,12 +222,12 @@ export default class Pill extends React.Component<IProps, IState> {
                 const member = this.state.member;
                 if (member) {
                     userId = member.userId;
-                    member.rawDisplayName = member.rawDisplayName || '';
+                    member.rawDisplayName = member.rawDisplayName || "";
                     linkText = member.rawDisplayName;
                     if (this.props.shouldShowPillAvatar) {
                         avatar = <MemberAvatar member={member} width={16} height={16} aria-hidden="true" hideTitle />;
                     }
-                    pillClass = 'mx_UserPill';
+                    pillClass = "mx_UserPill";
                     href = null;
                     onClick = this.onUserPillClicked;
                 }

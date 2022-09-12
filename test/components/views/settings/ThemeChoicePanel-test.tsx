@@ -14,16 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 // eslint-disable-next-line deprecate/import
 import { mount } from "enzyme";
 
 import * as TestUtils from "../../../test-utils";
-import ThemeChoicePanel from '../../../../src/components/views/settings/ThemeChoicePanel';
+import ThemeChoicePanel from "../../../../src/components/views/settings/ThemeChoicePanel";
 
 // Fake random strings to give a predictable snapshot
 jest.mock(
-    'matrix-js-sdk/src/randomstring',
+    "matrix-js-sdk/src/randomstring",
     () => {
         return {
             randomString: () => "abdefghi",
@@ -31,8 +31,8 @@ jest.mock(
     },
 );
 
-describe('ThemeChoicePanel', () => {
-    it('renders the theme choice UI', () => {
+describe("ThemeChoicePanel", () => {
+    it("renders the theme choice UI", () => {
         TestUtils.stubClient();
         const wrapper = mount(
             <ThemeChoicePanel />,

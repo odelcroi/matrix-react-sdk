@@ -16,17 +16,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import url from 'url';
-import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
+import React from "react";
+import url from "url";
+import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 
-import { _t } from '../../../languageHandler';
-import SdkConfig from '../../../SdkConfig';
+import { _t } from "../../../languageHandler";
+import SdkConfig from "../../../SdkConfig";
 import WidgetUtils from "../../../utils/WidgetUtils";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import MemberAvatar from '../avatars/MemberAvatar';
-import BaseAvatar from '../avatars/BaseAvatar';
-import AccessibleButton from './AccessibleButton';
+import MemberAvatar from "../avatars/MemberAvatar";
+import BaseAvatar from "../avatars/BaseAvatar";
+import AccessibleButton from "./AccessibleButton";
 import TextWithTooltip from "./TextWithTooltip";
 
 interface IProps {
@@ -74,8 +74,8 @@ export default class AppPermission extends React.Component<IProps, IState> {
 
         // HACK: We're relying on the query params when we should be relying on the widget's `data`.
         // This is a workaround for Scalar.
-        if (WidgetUtils.isScalarUrl(this.props.url) && params && params.get('url')) {
-            const unwrappedUrl = url.parse(params.get('url'));
+        if (WidgetUtils.isScalarUrl(this.props.url) && params && params.get("url")) {
+            const unwrappedUrl = url.parse(params.get("url"));
             return {
                 widgetDomain: unwrappedUrl.host || unwrappedUrl.hostname,
                 isWrapped: true,

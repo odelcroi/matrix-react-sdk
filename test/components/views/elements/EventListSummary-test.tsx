@@ -14,23 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 // eslint-disable-next-line deprecate/import
-import { mount, ReactWrapper } from 'enzyme';
-import { MatrixEvent, RoomMember } from 'matrix-js-sdk/src/matrix';
+import { mount, ReactWrapper } from "enzyme";
+import { MatrixEvent, RoomMember } from "matrix-js-sdk/src/matrix";
 
 import {
     getMockClientWithEventEmitter,
     mkMembership,
     mockClientMethodsUser,
     unmockClientPeg,
-} from '../../../test-utils';
+} from "../../../test-utils";
 import EventListSummary from "../../../../src/components/views/elements/EventListSummary";
-import { Layout } from '../../../../src/settings/enums/Layout';
-import MatrixClientContext from '../../../../src/contexts/MatrixClientContext';
+import { Layout } from "../../../../src/settings/enums/Layout";
+import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 
-describe('EventListSummary', function() {
-    const roomId = '!room:server.org';
+describe("EventListSummary", function() {
+    const roomId = "!room:server.org";
     // Generate dummy event tiles for use in simulating an expanded MELS
     const generateTiles = (events: MatrixEvent[]) => {
         return events.map((e) => {
@@ -69,8 +69,8 @@ describe('EventListSummary', function() {
         const member = new RoomMember(roomId, userId);
         // Use localpart as display name;
         member.name = userId.match(/@([^:]*):/)[1];
-        jest.spyOn(member, 'getAvatarUrl').mockReturnValue('avatar.jpeg');
-        jest.spyOn(member, 'getMxcAvatarUrl').mockReturnValue('mxc://avatar.url/image.png');
+        jest.spyOn(member, "getAvatarUrl").mockReturnValue("avatar.jpeg");
+        jest.spyOn(member, "getMxcAvatarUrl").mockReturnValue("mxc://avatar.url/image.png");
         const e = mkMembership({
             event: true,
             room: roomId,
@@ -102,7 +102,7 @@ describe('EventListSummary', function() {
         let eventsForUsers = [];
         let userId = "";
         for (let i = 0; i < n; i++) {
-            userId = userIdTemplate.replace('$', i);
+            userId = userIdTemplate.replace("$", i);
             events.forEach((e) => {
                 e.userId = userId;
             });
@@ -135,7 +135,7 @@ describe('EventListSummary', function() {
         unmockClientPeg();
     });
 
-    it('renders expanded events if there are less than props.threshold', function() {
+    it("renders expanded events if there are less than props.threshold", function() {
         const events = generateEvents([
             { userId: "@user_1:some.domain", prevMembership: "leave", membership: "join" },
         ]);
@@ -149,12 +149,12 @@ describe('EventListSummary', function() {
 
         const wrapper = renderComponent(props); // matrix cli context wrapper
 
-        expect(wrapper.find('GenericEventListSummary').props().children).toEqual([
+        expect(wrapper.find("GenericEventListSummary").props().children).toEqual([
             <div className="event_tile" key="event0">Expanded membership</div>,
         ]);
     });
 
-    it('renders expanded events if there are less than props.threshold', function() {
+    it("renders expanded events if there are less than props.threshold", function() {
         const events = generateEvents([
             { userId: "@user_1:some.domain", prevMembership: "leave", membership: "join" },
             { userId: "@user_1:some.domain", prevMembership: "join", membership: "leave" },
@@ -169,13 +169,13 @@ describe('EventListSummary', function() {
 
         const wrapper = renderComponent(props); // matrix cli context wrapper
 
-        expect(wrapper.find('GenericEventListSummary').props().children).toEqual([
+        expect(wrapper.find("GenericEventListSummary").props().children).toEqual([
             <div className="event_tile" key="event0">Expanded membership</div>,
             <div className="event_tile" key="event1">Expanded membership</div>,
         ]);
     });
 
-    it('renders collapsed events if events.length = props.threshold', function() {
+    it("renders collapsed events if events.length = props.threshold", function() {
         const events = generateEvents([
             { userId: "@user_1:some.domain", prevMembership: "leave", membership: "join" },
             { userId: "@user_1:some.domain", prevMembership: "join", membership: "leave" },
@@ -196,7 +196,7 @@ describe('EventListSummary', function() {
         expect(summaryText).toBe("user_1 joined and left and joined");
     });
 
-    it('truncates long join,leave repetitions', function() {
+    it("truncates long join,leave repetitions", function() {
         const events = generateEvents([
             { userId: "@user_1:some.domain", prevMembership: "leave", membership: "join" },
             { userId: "@user_1:some.domain", prevMembership: "join", membership: "leave" },
@@ -228,7 +228,7 @@ describe('EventListSummary', function() {
         expect(summaryText).toBe("user_1 joined and left 7 times");
     });
 
-    it('truncates long join,leave repetitions between other events', function() {
+    it("truncates long join,leave repetitions between other events", function() {
         const events = generateEvents([
             {
                 userId: "@user_1:some.domain",
@@ -274,7 +274,7 @@ describe('EventListSummary', function() {
         );
     });
 
-    it('truncates multiple sequences of repetitions with other events between', function() {
+    it("truncates multiple sequences of repetitions with other events between", function() {
         const events = generateEvents([
             {
                 userId: "@user_1:some.domain",
@@ -323,7 +323,7 @@ describe('EventListSummary', function() {
         );
     });
 
-    it('handles multiple users following the same sequence of memberships', function() {
+    it("handles multiple users following the same sequence of memberships", function() {
         const events = generateEvents([
             // user_1
             {
@@ -377,7 +377,7 @@ describe('EventListSummary', function() {
         );
     });
 
-    it('handles many users following the same sequence of memberships', function() {
+    it("handles many users following the same sequence of memberships", function() {
         const events = generateEventsForUsers("@user_$:some.domain", 20, [
             {
                 prevMembership: "ban",
@@ -411,7 +411,7 @@ describe('EventListSummary', function() {
         );
     });
 
-    it('correctly orders sequences of transitions by the order of their first event', function() {
+    it("correctly orders sequences of transitions by the order of their first event", function() {
         const events = generateEvents([
             {
                 userId: "@user_2:some.domain",
@@ -458,7 +458,7 @@ describe('EventListSummary', function() {
         );
     });
 
-    it('correctly identifies transitions', function() {
+    it("correctly identifies transitions", function() {
         const events = generateEvents([
             // invited
             { userId: "@user_1:some.domain", membership: "invite" },
@@ -528,7 +528,7 @@ describe('EventListSummary', function() {
         );
     });
 
-    it('handles invitation plurals correctly when there are multiple users', function() {
+    it("handles invitation plurals correctly when there are multiple users", function() {
         const events = generateEvents([
             {
                 userId: "@user_1:some.domain",
@@ -571,7 +571,7 @@ describe('EventListSummary', function() {
         );
     });
 
-    it('handles invitation plurals correctly when there are multiple invites', function() {
+    it("handles invitation plurals correctly when there are multiple invites", function() {
         const events = generateEvents([
             {
                 userId: "@user_1:some.domain",

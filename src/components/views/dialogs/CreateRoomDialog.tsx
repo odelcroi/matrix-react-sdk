@@ -20,10 +20,10 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomType } from "matrix-js-sdk/src/@types/event";
 import { JoinRule, Preset, Visibility } from "matrix-js-sdk/src/@types/partials";
 
-import SdkConfig from '../../../SdkConfig';
-import withValidation, { IFieldState } from '../elements/Validation';
-import { _t } from '../../../languageHandler';
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
+import SdkConfig from "../../../SdkConfig";
+import withValidation, { IFieldState } from "../elements/Validation";
+import { _t } from "../../../languageHandler";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { IOpts } from "../../../createRoom";
 import Field from "../elements/Field";
 import RoomAliasField from "../elements/RoomAliasField";
@@ -112,7 +112,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
             createOpts.topic = this.state.topic;
         }
         if (this.state.noFederate) {
-            createOpts.creation_content = { 'm.federate': false };
+            createOpts.creation_content = { "m.federate": false };
         }
 
         opts.parentSpace = this.props.parentSpace;
@@ -319,7 +319,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
         } else if (this.props.parentSpace) {
             title = _t("Create a room");
         } else {
-            title = this.state.joinRule === JoinRule.Public ? _t('Create a public room') : _t('Create a private room');
+            title = this.state.joinRule === JoinRule.Public ? _t("Create a public room") : _t("Create a private room");
         }
 
         return (
@@ -333,14 +333,14 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
                     <div className="mx_Dialog_content">
                         <Field
                             ref={this.nameField}
-                            label={_t('Name')}
+                            label={_t("Name")}
                             onChange={this.onNameChange}
                             onValidate={this.onNameValidate}
                             value={this.state.name}
                             className="mx_CreateRoomDialog_name"
                         />
                         <Field
-                            label={_t('Topic (optional)')}
+                            label={_t("Topic (optional)")}
                             onChange={this.onTopicChange}
                             value={this.state.topic}
                             className="mx_CreateRoomDialog_topic"
@@ -360,7 +360,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
                         { aliasField }
                         <details onToggle={this.onDetailsToggled} className="mx_CreateRoomDialog_details">
                             <summary className="mx_CreateRoomDialog_details_summary">
-                                { this.state.detailsOpen ? _t('Hide advanced') : _t('Show advanced') }
+                                { this.state.detailsOpen ? _t("Hide advanced") : _t("Show advanced") }
                             </summary>
                             <LabelledToggleSwitch
                                 label={_t(
@@ -374,7 +374,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
                         </details>
                     </div>
                 </form>
-                <DialogButtons primaryButton={isVideoRoom ? _t('Create video room') : _t('Create room')}
+                <DialogButtons primaryButton={isVideoRoom ? _t("Create video room") : _t("Create room")}
                     onPrimaryButtonClick={this.onOk}
                     onCancel={this.onCancel} />
             </BaseDialog>

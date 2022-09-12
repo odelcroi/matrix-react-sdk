@@ -14,20 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import classNames from 'classnames';
+import classNames from "classnames";
 import { MatrixClient } from "matrix-js-sdk/src/client";
-import { AuthType, IAuthDict, IInputs, IStageStatus } from 'matrix-js-sdk/src/interactive-auth';
+import { AuthType, IAuthDict, IInputs, IStageStatus } from "matrix-js-sdk/src/interactive-auth";
 import { logger } from "matrix-js-sdk/src/logger";
-import React, { ChangeEvent, createRef, FormEvent, Fragment, MouseEvent } from 'react';
+import React, { ChangeEvent, createRef, FormEvent, Fragment, MouseEvent } from "react";
 
-import EmailPromptIcon from '../../../../res/img/element-icons/email-prompt.svg';
-import { _t } from '../../../languageHandler';
+import EmailPromptIcon from "../../../../res/img/element-icons/email-prompt.svg";
+import { _t } from "../../../languageHandler";
 import SettingsStore from "../../../settings/SettingsStore";
-import { LocalisedPolicy, Policies } from '../../../Terms';
+import { LocalisedPolicy, Policies } from "../../../Terms";
 import { AuthHeaderModifier } from "../../structures/auth/header/AuthHeaderModifier";
 import AccessibleButton from "../elements/AccessibleButton";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
-import Field from '../elements/Field';
+import Field from "../elements/Field";
 import Spinner from "../elements/Spinner";
 import { Alignment } from "../elements/Tooltip";
 import CaptchaForm from "./CaptchaForm";
@@ -171,7 +171,7 @@ export class PasswordAuthEntry extends React.Component<IAuthEntryProps, IPasswor
                         className={passwordBoxClass}
                         type="password"
                         name="passwordField"
-                        label={_t('Password')}
+                        label={_t("Password")}
                         autoFocus={true}
                         value={this.state.password}
                         onChange={this.onPasswordFieldChange}
@@ -542,9 +542,9 @@ export class MsisdnAuthEntry extends React.Component<IMsisdnAuthEntryProps, IMsi
         super(props);
 
         this.state = {
-            token: '',
+            token: "",
             requestingToken: false,
-            errorText: '',
+            errorText: "",
         };
     }
 
@@ -583,7 +583,7 @@ export class MsisdnAuthEntry extends React.Component<IMsisdnAuthEntryProps, IMsi
 
     private onFormSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        if (this.state.token == '') return;
+        if (this.state.token == "") return;
 
         this.setState({
             errorText: null,
@@ -758,21 +758,21 @@ export class SSOAuthEntry extends React.Component<ISSOAuthEntryProps, ISSOAuthEn
         const cancelButton = (
             <AccessibleButton
                 onClick={this.props.onCancel}
-                kind={this.props.continueKind ? (this.props.continueKind + '_outline') : 'primary_outline'}
+                kind={this.props.continueKind ? (this.props.continueKind + "_outline") : "primary_outline"}
             >{ _t("Cancel") }</AccessibleButton>
         );
         if (this.state.phase === SSOAuthEntry.PHASE_PREAUTH) {
             continueButton = (
                 <AccessibleButton
                     onClick={this.onStartAuthClick}
-                    kind={this.props.continueKind || 'primary'}
+                    kind={this.props.continueKind || "primary"}
                 >{ this.props.continueText || _t("Single Sign On") }</AccessibleButton>
             );
         } else {
             continueButton = (
                 <AccessibleButton
                     onClick={this.onConfirmClick}
-                    kind={this.props.continueKind || 'primary'}
+                    kind={this.props.continueKind || "primary"}
                 >{ this.props.continueText || _t("Confirm") }</AccessibleButton>
             );
         }

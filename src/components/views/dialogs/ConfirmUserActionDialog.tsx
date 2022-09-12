@@ -14,16 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ChangeEvent, FormEvent, ReactNode } from 'react';
+import React, { ChangeEvent, FormEvent, ReactNode } from "react";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import classNames from "classnames";
 
-import { _t } from '../../../languageHandler';
-import MemberAvatar from '../avatars/MemberAvatar';
+import { _t } from "../../../languageHandler";
+import MemberAvatar from "../avatars/MemberAvatar";
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
-import Field from '../elements/Field';
-import UserIdentifierCustomisations from '../../../customisations/UserIdentifier';
+import Field from "../elements/Field";
+import UserIdentifierCustomisations from "../../../customisations/UserIdentifier";
 
 interface IProps {
     // matrix-js-sdk (room) member object.
@@ -84,7 +84,7 @@ export default class ConfirmUserActionDialog extends React.Component<IProps, ISt
     };
 
     public render() {
-        const confirmButtonClass = this.props.danger ? 'danger' : '';
+        const confirmButtonClass = this.props.danger ? "danger" : "";
 
         let reasonBox;
         if (this.props.askReason) {

@@ -177,8 +177,8 @@ describe("Timeline", () => {
             //  = calc(var(--name-width) + 10px + var(--icon-width))
             //  = 80 + 10 + 14 = 104px
             cy.get(".mx_EventTile[data-layout=irc].mx_EventTile_info:first-of-type .mx_EventTile_line")
-                .should('have.css', "margin-inline-start", "104px")
-                .should('have.css', "inset-inline-start", "0px");
+                .should("have.css", "margin-inline-start", "104px")
+                .should("have.css", "inset-inline-start", "0px");
 
             cy.get(".mx_Spinner").should("not.exist");
             // Exclude timestamp from snapshot
@@ -212,14 +212,14 @@ describe("Timeline", () => {
             // should not add inline start padding to a hidden event line on IRC layout
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
             cy.get(".mx_EventTile[data-layout=irc].mx_EventTile_info .mx_EventTile_line")
-                .should('have.css', 'padding-inline-start', '0px');
+                .should("have.css", "padding-inline-start", "0px");
             cy.percySnapshot("Hidden event line with zero padding on IRC layout", { percyCSS });
 
             // should add inline start padding to a hidden event line on modern layout
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
             cy.get(".mx_EventTile[data-layout=group].mx_EventTile_info .mx_EventTile_line")
                 // calc(var(--EventTile_group_line-spacing-inline-start) + 20px) = 64 + 20 = 84px
-                .should('have.css', 'padding-inline-start', '84px');
+                .should("have.css", "padding-inline-start", "84px");
             cy.percySnapshot("Hidden event line with padding on modern layout", { percyCSS });
         });
 
@@ -239,7 +239,7 @@ describe("Timeline", () => {
 
             // Click top left of the event toggle, which should not be covered by MessageActionBar's safe area
             cy.get(".mx_EventTile .mx_ViewSourceEvent").should("exist").realHover().within(() => {
-                cy.get(".mx_ViewSourceEvent_toggle").click('topLeft', { force: false });
+                cy.get(".mx_ViewSourceEvent_toggle").click("topLeft", { force: false });
             });
 
             // Make sure the expand toggle worked
@@ -350,7 +350,7 @@ describe("Timeline", () => {
             viewRoomSendMessageAndSetupReply();
 
             cy.openMessageComposerOptions().within(() => {
-                cy.get(`[aria-label="Voice Message"]`).click();
+                cy.get("[aria-label=\"Voice Message\"]").click();
             });
             cy.wait(3000);
             cy.get(".mx_RoomView_body .mx_MessageComposer .mx_MessageComposer_sendMessage").click();

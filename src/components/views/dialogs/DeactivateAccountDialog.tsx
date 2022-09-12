@@ -15,12 +15,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { AuthType, IAuthData } from 'matrix-js-sdk/src/interactive-auth';
+import React from "react";
+import { AuthType, IAuthData } from "matrix-js-sdk/src/interactive-auth";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import { _t } from '../../../languageHandler';
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { _t } from "../../../languageHandler";
 import InteractiveAuth, { ERROR_USER_CANCELLED, InteractiveAuthCallback } from "../../structures/InteractiveAuth";
 import { DEFAULT_PHASE, PasswordAuthEntry, SSOAuthEntry } from "../auth/InteractiveAuthEntryComponents";
 import StyledCheckbox from "../elements/StyledCheckbox";

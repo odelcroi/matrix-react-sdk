@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { render } from '@testing-library/react';
-import React from 'react';
+import { render } from "@testing-library/react";
+import React from "react";
 
-import { DeviceType } from '../../../../../src/components/views/settings/devices/DeviceType';
+import { DeviceType } from "../../../../../src/components/views/settings/devices/DeviceType";
 
-describe('<DeviceType />', () => {
+describe("<DeviceType />", () => {
     const defaultProps = {
         isVerified: false,
         isSelected: false,
@@ -27,17 +27,17 @@ describe('<DeviceType />', () => {
     const getComponent = (props = {}) =>
         <DeviceType {...defaultProps} {...props} />;
 
-    it('renders an unverified device', () => {
+    it("renders an unverified device", () => {
         const { container } = render(getComponent());
         expect(container).toMatchSnapshot();
     });
 
-    it('renders a verified device', () => {
+    it("renders a verified device", () => {
         const { container } = render(getComponent({ isVerified: true }));
         expect(container).toMatchSnapshot();
     });
 
-    it('renders correctly when selected', () => {
+    it("renders correctly when selected", () => {
         const { container } = render(getComponent({ isSelected: true }));
         expect(container).toMatchSnapshot();
     });

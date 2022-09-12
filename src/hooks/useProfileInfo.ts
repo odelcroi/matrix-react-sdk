@@ -38,7 +38,7 @@ export const useProfileInfo = () => {
 
     const search = useCallback(async ({ query: term }: IProfileInfoOpts): Promise<boolean> => {
         updateQuery(term);
-        if (!term?.length || !term.startsWith('@') || !term.includes(':')) {
+        if (!term?.length || !term.startsWith("@") || !term.includes(":")) {
             setProfile(null);
             return true;
         }

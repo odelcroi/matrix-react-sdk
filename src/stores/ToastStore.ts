@@ -68,7 +68,7 @@ export default class ToastStore extends EventEmitter {
         } else {
             this.toasts[oldIndex] = newToast;
         }
-        this.emit('update');
+        this.emit("update");
     }
 
     dismissToast(key) {
@@ -83,7 +83,7 @@ export default class ToastStore extends EventEmitter {
                 this.countSeen = 0;
             }
 
-            this.emit('update');
+            this.emit("update");
         }
     }
 

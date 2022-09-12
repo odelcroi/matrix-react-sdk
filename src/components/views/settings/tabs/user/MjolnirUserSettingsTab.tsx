@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../../../languageHandler";
@@ -72,8 +72,8 @@ export default class MjolnirUserSettingsTab extends React.Component<{}, IState> 
             logger.error(e);
 
             Modal.createDialog(ErrorDialog, {
-                title: _t('Error adding ignored user/server'),
-                description: _t('Something went wrong. Please try again or view your console for hints.'),
+                title: _t("Error adding ignored user/server"),
+                description: _t("Something went wrong. Please try again or view your console for hints."),
             });
         } finally {
             this.setState({ busy: false });
@@ -93,8 +93,8 @@ export default class MjolnirUserSettingsTab extends React.Component<{}, IState> 
             logger.error(e);
 
             Modal.createDialog(ErrorDialog, {
-                title: _t('Error subscribing to list'),
-                description: _t('Please verify the room ID or address and try again.'),
+                title: _t("Error subscribing to list"),
+                description: _t("Please verify the room ID or address and try again."),
             });
         } finally {
             this.setState({ busy: false });
@@ -110,8 +110,8 @@ export default class MjolnirUserSettingsTab extends React.Component<{}, IState> 
             logger.error(e);
 
             Modal.createDialog(ErrorDialog, {
-                title: _t('Error removing ignored user/server'),
-                description: _t('Something went wrong. Please try again or view your console for hints.'),
+                title: _t("Error removing ignored user/server"),
+                description: _t("Something went wrong. Please try again or view your console for hints."),
             });
         } finally {
             this.setState({ busy: false });
@@ -127,8 +127,8 @@ export default class MjolnirUserSettingsTab extends React.Component<{}, IState> 
             logger.error(e);
 
             Modal.createDialog(ErrorDialog, {
-                title: _t('Error unsubscribing from list'),
-                description: _t('Please try again or view your console for hints.'),
+                title: _t("Error unsubscribing from list"),
+                description: _t("Please try again or view your console for hints."),
             });
         } finally {
             this.setState({ busy: false });

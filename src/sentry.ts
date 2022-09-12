@@ -90,7 +90,7 @@ async function getStorageContext(): Promise<StorageContext> {
                 Object.keys(estimate.usageDetails).forEach(k => {
                     usageDetails.push(`${k}: ${String(estimate.usageDetails[k])}`);
                 });
-                result[`storageManager_usage`] = usageDetails.join(", ");
+                result["storageManager_usage"] = usageDetails.join(", ");
             }
         } catch (e) {}
     }
@@ -128,7 +128,7 @@ async function getCryptoContext(client: MatrixClient): Promise<CryptoContext> {
     const sessionBackupKeyFromCache = await client.crypto.getSessionBackupPrivateKey();
 
     return {
-        "device_keys": keys.join(', '),
+        "device_keys": keys.join(", "),
         "cross_signing_ready": String(await client.isCrossSigningReady()),
         "cross_signing_supported_by_hs":
             String(await client.doesServerSupportUnstableFeature("org.matrix.e2e_cross_signing")),
@@ -150,7 +150,7 @@ async function getCryptoContext(client: MatrixClient): Promise<CryptoContext> {
 function getDeviceContext(client: MatrixClient): DeviceContext {
     const result = {
         "device_id": client?.deviceId,
-        "mx_local_settings": localStorage.getItem('mx_local_settings'),
+        "mx_local_settings": localStorage.getItem("mx_local_settings"),
     };
 
     if (window.Modernizr) {

@@ -14,34 +14,34 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, KeyboardEvent } from 'react';
-import classNames from 'classnames';
-import { EventStatus, IContent, MatrixEvent } from 'matrix-js-sdk/src/models/event';
-import { MsgType } from 'matrix-js-sdk/src/@types/event';
-import { Room } from 'matrix-js-sdk/src/models/room';
+import React, { createRef, KeyboardEvent } from "react";
+import classNames from "classnames";
+import { EventStatus, IContent, MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MsgType } from "matrix-js-sdk/src/@types/event";
+import { Room } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
 import { Composer as ComposerEvent } from "@matrix-org/analytics-events/types/typescript/Composer";
 
-import { _t } from '../../../languageHandler';
-import dis from '../../../dispatcher/dispatcher';
-import EditorModel from '../../../editor/model';
-import { getCaretOffsetAndText } from '../../../editor/dom';
-import { htmlSerializeIfNeeded, textSerialize, containsEmote, stripEmoteCommand } from '../../../editor/serialize';
-import { findEditableEvent } from '../../../utils/EventUtils';
-import { parseEvent } from '../../../editor/deserialize';
-import { CommandPartCreator, Part, PartCreator } from '../../../editor/parts';
-import EditorStateTransfer from '../../../utils/EditorStateTransfer';
+import { _t } from "../../../languageHandler";
+import dis from "../../../dispatcher/dispatcher";
+import EditorModel from "../../../editor/model";
+import { getCaretOffsetAndText } from "../../../editor/dom";
+import { htmlSerializeIfNeeded, textSerialize, containsEmote, stripEmoteCommand } from "../../../editor/serialize";
+import { findEditableEvent } from "../../../utils/EventUtils";
+import { parseEvent } from "../../../editor/deserialize";
+import { CommandPartCreator, Part, PartCreator } from "../../../editor/parts";
+import EditorStateTransfer from "../../../utils/EditorStateTransfer";
 import BasicMessageComposer, { REGEX_EMOTICON } from "./BasicMessageComposer";
-import { CommandCategories } from '../../../SlashCommands';
+import { CommandCategories } from "../../../SlashCommands";
 import { Action } from "../../../dispatcher/actions";
-import { getKeyBindingsManager } from '../../../KeyBindingsManager';
-import SendHistoryManager from '../../../SendHistoryManager';
+import { getKeyBindingsManager } from "../../../KeyBindingsManager";
+import SendHistoryManager from "../../../SendHistoryManager";
 import { ActionPayload } from "../../../dispatcher/payloads";
-import AccessibleButton from '../elements/AccessibleButton';
-import { createRedactEventDialog } from '../dialogs/ConfirmRedactDialog';
+import AccessibleButton from "../elements/AccessibleButton";
+import { createRedactEventDialog } from "../dialogs/ConfirmRedactDialog";
 import SettingsStore from "../../../settings/SettingsStore";
-import { withMatrixClientHOC, MatrixClientProps } from '../../../contexts/MatrixClientContext';
-import RoomContext from '../../../contexts/RoomContext';
+import { withMatrixClientHOC, MatrixClientProps } from "../../../contexts/MatrixClientContext";
+import RoomContext from "../../../contexts/RoomContext";
 import { ComposerType } from "../../../dispatcher/payloads/ComposerInsertPayload";
 import { getSlashCommand, isSlashCommand, runSlashCommand, shouldSendAnyway } from "../../../editor/commands";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
@@ -301,7 +301,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
         });
 
         // Replace emoticon at the end of the message
-        if (SettingsStore.getValue('MessageComposerInput.autoReplaceEmoji')) {
+        if (SettingsStore.getValue("MessageComposerInput.autoReplaceEmoji")) {
             const caret = this.editorRef.current?.getCaret();
             const position = this.model.positionForOffset(caret.offset, caret.atNodeEnd);
             this.editorRef.current?.replaceEmoticon(position, REGEX_EMOTICON);
@@ -311,7 +311,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
 
         let shouldSend = true;
 
-        if (newContent?.body === '') {
+        if (newContent?.body === "") {
             this.cancelPreviousPendingEdit();
             createRedactEventDialog({
                 mxEvent: editedEvent,

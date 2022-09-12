@@ -15,10 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { SyntheticEvent, FocusEvent } from 'react';
+import React, { SyntheticEvent, FocusEvent } from "react";
 
 import AccessibleButton from "./AccessibleButton";
-import Tooltip, { Alignment } from './Tooltip';
+import Tooltip, { Alignment } from "./Tooltip";
 
 interface IProps extends React.ComponentProps<typeof AccessibleButton> {
     title: string;

@@ -54,7 +54,7 @@ export const sortRooms = (rooms: Room[]): Room[] => {
 
     // TODO: Don't assume we're using the same client as the peg
     // See https://github.com/vector-im/element-web/issues/14458
-    let myUserId = '';
+    let myUserId = "";
     if (MatrixClientPeg.get()) {
         myUserId = MatrixClientPeg.get().getUserId();
     }

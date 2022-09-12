@@ -14,31 +14,31 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import classNames from 'classnames';
+import classNames from "classnames";
 import { IEventRelation } from "matrix-js-sdk/src/models/event";
 import { M_POLL_START } from "matrix-events-sdk";
-import React, { createContext, ReactElement, useContext, useRef } from 'react';
-import { Room } from 'matrix-js-sdk/src/models/room';
-import { MatrixClient } from 'matrix-js-sdk/src/client';
-import { THREAD_RELATION_TYPE } from 'matrix-js-sdk/src/models/thread';
+import React, { createContext, ReactElement, useContext, useRef } from "react";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { MatrixClient } from "matrix-js-sdk/src/client";
+import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 
-import { _t } from '../../../languageHandler';
+import { _t } from "../../../languageHandler";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
-import { CollapsibleButton } from './CollapsibleButton';
-import ContextMenu, { aboveLeftOf, AboveLeftOf, useContextMenu } from '../../structures/ContextMenu';
-import dis from '../../../dispatcher/dispatcher';
-import EmojiPicker from '../emojipicker/EmojiPicker';
+import { CollapsibleButton } from "./CollapsibleButton";
+import ContextMenu, { aboveLeftOf, AboveLeftOf, useContextMenu } from "../../structures/ContextMenu";
+import dis from "../../../dispatcher/dispatcher";
+import EmojiPicker from "../emojipicker/EmojiPicker";
 import ErrorDialog from "../dialogs/ErrorDialog";
-import LocationButton from '../location/LocationButton';
+import LocationButton from "../location/LocationButton";
 import Modal from "../../../Modal";
 import PollCreateDialog from "../elements/PollCreateDialog";
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import ContentMessages from '../../../ContentMessages';
-import MatrixClientContext from '../../../contexts/MatrixClientContext';
-import RoomContext from '../../../contexts/RoomContext';
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import ContentMessages from "../../../ContentMessages";
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import RoomContext from "../../../contexts/RoomContext";
 import { useDispatcher } from "../../../hooks/useDispatcher";
 import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
-import IconizedContextMenu, { IconizedContextMenuOptionList } from '../context_menus/IconizedContextMenu';
+import IconizedContextMenu, { IconizedContextMenuOptionList } from "../context_menus/IconizedContextMenu";
 
 interface IProps {
     addEmoji: (emoji: string) => boolean;
@@ -201,7 +201,7 @@ const UploadButtonContextProvider: React.FC<IUploadButtonProps> = ({ roomId, rel
 
     const onUploadClick = () => {
         if (cli.isGuest()) {
-            dis.dispatch({ action: 'require_registration' });
+            dis.dispatch({ action: "require_registration" });
             return;
         }
         uploadInput.current?.click();
@@ -229,10 +229,10 @@ const UploadButtonContextProvider: React.FC<IUploadButtonProps> = ({ roomId, rel
         // not keeping any state, so reset the value of the form control
         // to empty.
         // NB. we need to set 'value': the 'files' property is immutable.
-        ev.target.value = '';
+        ev.target.value = "";
     };
 
-    const uploadInputStyle = { display: 'none' };
+    const uploadInputStyle = { display: "none" };
     return <UploadButtonContext.Provider value={onUploadClick}>
         { children }
 
@@ -261,7 +261,7 @@ const UploadButton = () => {
         className="mx_MessageComposer_button"
         iconClassName="mx_MessageComposer_upload"
         onClick={onClick}
-        title={_t('Attachment')}
+        title={_t("Attachment")}
     />;
 };
 
@@ -335,7 +335,7 @@ class PollButton extends React.PureComponent<IPollButtonProps> {
                     room: this.props.room,
                     threadId,
                 },
-                'mx_CompoundDialog',
+                "mx_CompoundDialog",
                 false, // isPriorityModal
                 true,  // isStaticModal
             );

@@ -895,7 +895,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         if (filter === Filter.People) {
             hiddenResultsSection = (
                 <div className="mx_SpotlightDialog_section mx_SpotlightDialog_hiddenResults" role="group">
-                    <h4>{ _t('Some results may be hidden for privacy') }</h4>
+                    <h4>{ _t("Some results may be hidden for privacy") }</h4>
                     <div className="mx_SpotlightDialog_otherSearches_messageSearchText">
                         { _t("If you can't see who you're looking for, send them your invite link.") }
                     </div>
@@ -915,7 +915,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         } else if (trimmedQuery && filter === Filter.PublicRooms) {
             hiddenResultsSection = (
                 <div className="mx_SpotlightDialog_section mx_SpotlightDialog_hiddenResults" role="group">
-                    <h4>{ _t('Some results may be hidden') }</h4>
+                    <h4>{ _t("Some results may be hidden") }</h4>
                     <div className="mx_SpotlightDialog_otherSearches_messageSearchText">
                         { _t("If you can't find the room you're looking for, " +
                                     "ask for an invite or create a new room.") }
@@ -924,7 +924,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                         id="mx_SpotlightDialog_button_createNewRoom"
                         className="mx_SpotlightDialog_createRoom"
                         onClick={() => defaultDispatcher.dispatch({
-                            action: 'view_create_room',
+                            action: "view_create_room",
                             public: true,
                             defaultName: capitalize(trimmedQuery),
                         })}
@@ -945,7 +945,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     role="group"
                     aria-labelledby="mx_SpotlightDialog_section_groupChat">
                     <h4 id="mx_SpotlightDialog_section_groupChat">
-                        { _t('Other options') }
+                        { _t("Other options") }
                     </h4>
                     <Option
                         id="mx_SpotlightDialog_button_startGroupChat"

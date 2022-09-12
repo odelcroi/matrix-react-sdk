@@ -15,15 +15,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { RoomMember, RoomMemberEvent } from "matrix-js-sdk/src/models/room-member";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
-import * as WhoIsTyping from '../../../WhoIsTyping';
-import Timer from '../../../utils/Timer';
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import MemberAvatar from '../avatars/MemberAvatar';
+import * as WhoIsTyping from "../../../WhoIsTyping";
+import Timer from "../../../utils/Timer";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import MemberAvatar from "../avatars/MemberAvatar";
 import { compare } from "../../../utils/strings";
 
 interface IProps {

@@ -19,8 +19,8 @@ import { createPartCreator, createRenderer } from "./mock";
 
 const pillChannel = "#riot-dev:matrix.org";
 
-describe('editor/range', function() {
-    it('range on empty model', function() {
+describe("editor/range", function() {
+    it("range on empty model", function() {
         const renderer = createRenderer();
         const pc = createPartCreator();
         const model = new EditorModel([], pc, renderer);
@@ -33,7 +33,7 @@ describe('editor/range', function() {
         expect(called).toBe(false);
         expect(range.text).toBe("");
     });
-    it('range replace within a part', function() {
+    it("range replace within a part", function() {
         const renderer = createRenderer();
         const pc = createPartCreator();
         const model = new EditorModel([pc.plain("hello world!!!!")], pc, renderer);
@@ -49,7 +49,7 @@ describe('editor/range', function() {
         expect(model.parts[2].text).toBe("!!!!");
         expect(model.parts.length).toBe(3);
     });
-    it('range replace across parts', function() {
+    it("range replace across parts", function() {
         const renderer = createRenderer();
         const pc = createPartCreator();
         const model = new EditorModel([
@@ -71,7 +71,7 @@ describe('editor/range', function() {
         expect(model.parts.length).toBe(3);
     });
     // bug found while implementing tab completion
-    it('replace a part with an identical part with start position at end of previous part', function() {
+    it("replace a part with an identical part with start position at end of previous part", function() {
         const renderer = createRenderer();
         const pc = createPartCreator();
         const model = new EditorModel([
@@ -88,7 +88,7 @@ describe('editor/range', function() {
         expect(model.parts[1].text).toBe("man");
         expect(model.parts.length).toBe(2);
     });
-    it('range trim spaces off both ends', () => {
+    it("range trim spaces off both ends", () => {
         const renderer = createRenderer();
         const pc = createPartCreator();
         const model = new EditorModel([
@@ -104,7 +104,7 @@ describe('editor/range', function() {
         expect(range.parts[0].text).toBe("abc");
     });
     // test for edge case when the selection just consists of whitespace
-    it('range trim just whitespace', () => {
+    it("range trim just whitespace", () => {
         const renderer = createRenderer();
         const pc = createPartCreator();
         const whitespace = "  \n    \n\n";

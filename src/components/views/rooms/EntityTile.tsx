@@ -16,13 +16,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import classNames from "classnames";
 
-import AccessibleButton from '../elements/AccessibleButton';
-import { _t, _td } from '../../../languageHandler';
-import E2EIcon, { E2EState } from './E2EIcon';
-import BaseAvatar from '../avatars/BaseAvatar';
+import AccessibleButton from "../elements/AccessibleButton";
+import { _t, _td } from "../../../languageHandler";
+import E2EIcon, { E2EState } from "./E2EIcon";
+import BaseAvatar from "../avatars/BaseAvatar";
 import PresenceLabel from "./PresenceLabel";
 
 export enum PowerStatus {
@@ -43,21 +43,21 @@ const PRESENCE_CLASS = {
 
 function presenceClassForMember(presenceState: string, lastActiveAgo: number, showPresence: boolean): string {
     if (showPresence === false) {
-        return 'mx_EntityTile_online_beenactive';
+        return "mx_EntityTile_online_beenactive";
     }
 
     // offline is split into two categories depending on whether we have
     // a last_active_ago for them.
-    if (presenceState === 'offline') {
+    if (presenceState === "offline") {
         if (lastActiveAgo) {
-            return PRESENCE_CLASS['offline'] + '_beenactive';
+            return PRESENCE_CLASS["offline"] + "_beenactive";
         } else {
-            return PRESENCE_CLASS['offline'] + '_neveractive';
+            return PRESENCE_CLASS["offline"] + "_neveractive";
         }
     } else if (presenceState) {
         return PRESENCE_CLASS[presenceState];
     } else {
-        return PRESENCE_CLASS['offline'] + '_neveractive';
+        return PRESENCE_CLASS["offline"] + "_neveractive";
     }
 }
 

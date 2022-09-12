@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useContext } from 'react';
-import { Beacon } from 'matrix-js-sdk/src/matrix';
-import { LocationAssetType } from 'matrix-js-sdk/src/@types/location';
+import React, { useContext } from "react";
+import { Beacon } from "matrix-js-sdk/src/matrix";
+import { LocationAssetType } from "matrix-js-sdk/src/@types/location";
 
-import MatrixClientContext from '../../../contexts/MatrixClientContext';
-import BeaconStatus from './BeaconStatus';
-import { BeaconDisplayStatus } from './displayStatus';
-import ShareLatestLocation from './ShareLatestLocation';
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import BeaconStatus from "./BeaconStatus";
+import { BeaconDisplayStatus } from "./displayStatus";
+import ShareLatestLocation from "./ShareLatestLocation";
 
 interface Props {
     beacon: Beacon;

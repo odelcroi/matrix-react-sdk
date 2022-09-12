@@ -20,7 +20,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import dis from "./dispatcher/dispatcher";
-import Timer from './utils/Timer';
+import Timer from "./utils/Timer";
 import { ActionPayload } from "./dispatcher/payloads";
 
 // Time in ms after that a user is considered as unavailable/away
@@ -76,7 +76,7 @@ class Presence {
     }
 
     private onAction = (payload: ActionPayload) => {
-        if (payload.action === 'user_activity') {
+        if (payload.action === "user_activity") {
             this.setState(State.Online);
             this.unavailableTimer.restart();
         }

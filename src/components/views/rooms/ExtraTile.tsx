@@ -58,10 +58,10 @@ export default class ExtraTile extends React.Component<IProps, IState> {
     public render(): React.ReactElement {
         // XXX: We copy classes because it's easier
         const classes = classNames({
-            'mx_ExtraTile': true,
-            'mx_RoomTile': true,
-            'mx_RoomTile_selected': this.props.isSelected,
-            'mx_RoomTile_minimized': this.props.isMinimized,
+            "mx_ExtraTile": true,
+            "mx_RoomTile": true,
+            "mx_RoomTile_selected": this.props.isSelected,
+            "mx_RoomTile_minimized": this.props.isMinimized,
         });
 
         let badge;
@@ -75,7 +75,7 @@ export default class ExtraTile extends React.Component<IProps, IState> {
         }
 
         let name = this.props.displayName;
-        if (typeof name !== 'string') name = '';
+        if (typeof name !== "string") name = "";
         name = name.replace(":", ":\u200b"); // add a zero-width space to allow linewrapping after the colon
 
         const nameClasses = classNames({

@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ChangeEvent, createRef } from 'react';
+import React, { ChangeEvent, createRef } from "react";
 
 import Field from "../elements/Field";
-import { _t, _td } from '../../../languageHandler';
+import { _t, _td } from "../../../languageHandler";
 import { IFieldState, IValidationResult } from "../elements/Validation";
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";

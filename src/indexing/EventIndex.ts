@@ -15,13 +15,13 @@ limitations under the License.
 */
 
 import { EventEmitter } from "events";
-import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
-import { Direction, EventTimeline } from 'matrix-js-sdk/src/models/event-timeline';
-import { Room, RoomEvent } from 'matrix-js-sdk/src/models/room';
-import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
-import { EventTimelineSet, IRoomTimelineData } from 'matrix-js-sdk/src/models/event-timeline-set';
-import { RoomState, RoomStateEvent } from 'matrix-js-sdk/src/models/room-state';
-import { TimelineIndex, TimelineWindow } from 'matrix-js-sdk/src/timeline-window';
+import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { Direction, EventTimeline } from "matrix-js-sdk/src/models/event-timeline";
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { EventTimelineSet, IRoomTimelineData } from "matrix-js-sdk/src/models/event-timeline-set";
+import { RoomState, RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { TimelineIndex, TimelineWindow } from "matrix-js-sdk/src/timeline-window";
 import { sleep } from "matrix-js-sdk/src/utils";
 import { IResultRoomEvents } from "matrix-js-sdk/src/@types/search";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -418,7 +418,7 @@ export default class EventIndex extends EventEmitter {
         let idle = false;
 
         while (!cancelled) {
-            let sleepTime = SettingsStore.getValueAt(SettingLevel.DEVICE, 'crawlerSleepTime');
+            let sleepTime = SettingsStore.getValueAt(SettingLevel.DEVICE, "crawlerSleepTime");
 
             // Don't let the user configure a lower sleep time than 100 ms.
             sleepTime = Math.max(sleepTime, 100);

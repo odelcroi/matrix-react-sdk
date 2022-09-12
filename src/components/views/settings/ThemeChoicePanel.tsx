@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../languageHandler";
@@ -23,10 +23,10 @@ import { findHighContrastTheme, findNonHighContrastTheme, getOrderedThemes, isHi
 import ThemeWatcher from "../../../settings/watchers/ThemeWatcher";
 import AccessibleButton from "../elements/AccessibleButton";
 import dis from "../../../dispatcher/dispatcher";
-import { RecheckThemePayload } from '../../../dispatcher/payloads/RecheckThemePayload';
-import { Action } from '../../../dispatcher/actions';
-import StyledCheckbox from '../elements/StyledCheckbox';
-import Field from '../elements/Field';
+import { RecheckThemePayload } from "../../../dispatcher/payloads/RecheckThemePayload";
+import { Action } from "../../../dispatcher/actions";
+import StyledCheckbox from "../elements/StyledCheckbox";
+import Field from "../elements/Field";
 import StyledRadioGroup from "../elements/StyledRadioGroup";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import PosthogTrackers from "../../../PosthogTrackers";
@@ -102,7 +102,7 @@ export default class ThemeChoicePanel extends React.Component<IProps, IState> {
 
         // doing getValue in the .catch will still return the value we failed to set,
         // so remember what the value was before we tried to set it so we can revert
-        const oldTheme: string = SettingsStore.getValue('theme');
+        const oldTheme: string = SettingsStore.getValue("theme");
         SettingsStore.setValue("theme", null, SettingLevel.DEVICE, newTheme).catch(() => {
             dis.dispatch<RecheckThemePayload>({ action: Action.RecheckTheme });
             this.setState({ theme: oldTheme });
@@ -136,7 +136,7 @@ export default class ThemeChoicePanel extends React.Component<IProps, IState> {
             const r = await fetch(this.state.customThemeUrl);
             // XXX: need some schema for this
             const themeInfo = await r.json();
-            if (!themeInfo || typeof(themeInfo['name']) !== 'string' || typeof(themeInfo['colors']) !== 'object') {
+            if (!themeInfo || typeof(themeInfo["name"]) !== "string" || typeof(themeInfo["colors"]) !== "object") {
                 this.setState({ customThemeMessage: { text: _t("Invalid theme schema."), isError: true } });
                 return;
             }

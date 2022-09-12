@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
-import * as Roles from '../../../Roles';
-import { _t } from '../../../languageHandler';
+import * as Roles from "../../../Roles";
+import { _t } from "../../../languageHandler";
 import Field from "./Field";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";

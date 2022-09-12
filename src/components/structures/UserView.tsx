@@ -20,8 +20,8 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 
 import { MatrixClientPeg } from "../../MatrixClientPeg";
-import Modal from '../../Modal';
-import { _t } from '../../languageHandler';
+import Modal from "../../Modal";
+import { _t } from "../../languageHandler";
 import ErrorDialog from "../views/dialogs/ErrorDialog";
 import MainSplit from "./MainSplit";
 import RightPanel from "./RightPanel";
@@ -71,7 +71,7 @@ export default class UserView extends React.Component<IProps, IState> {
             profileInfo = await cli.getProfileInfo(this.props.userId);
         } catch (err) {
             Modal.createDialog(ErrorDialog, {
-                title: _t('Could not load user profile'),
+                title: _t("Could not load user profile"),
                 description: ((err && err.message) ? err.message : _t("Operation failed")),
             });
             this.setState({ loading: false });

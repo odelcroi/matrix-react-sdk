@@ -18,7 +18,7 @@ import React, { useMemo, useState } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { JoinRule } from "matrix-js-sdk/src/@types/partials";
 
-import { _t } from '../../../languageHandler';
+import { _t } from "../../../languageHandler";
 import DialogButtons from "../elements/DialogButtons";
 import BaseDialog from "../dialogs/BaseDialog";
 import SpaceStore from "../../../stores/spaces/SpaceStore";

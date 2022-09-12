@@ -44,7 +44,7 @@ import { WidgetMessagingStore } from "./WidgetMessagingStore";
 import { RoomViewStore } from "../RoomViewStore";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import { OwnProfileStore } from "../OwnProfileStore";
-import WidgetUtils from '../../utils/WidgetUtils';
+import WidgetUtils from "../../utils/WidgetUtils";
 import { IntegrationManagers } from "../../integrations/IntegrationManagers";
 import SettingsStore from "../../settings/SettingsStore";
 import { WidgetType } from "../../widgets/WidgetType";
@@ -105,13 +105,13 @@ export class ElementWidget extends Widget {
     }
 
     public get rawData(): IWidgetData {
-        let conferenceId = super.rawData['conferenceId'];
+        let conferenceId = super.rawData["conferenceId"];
         if (conferenceId === undefined) {
             // we'll need to parse the conference ID out of the URL for v1 Jitsi widgets
             const parsedUrl = new URL(super.templateUrl); // use super to get the raw widget URL
             conferenceId = parsedUrl.searchParams.get("confId");
         }
-        let domain = super.rawData['domain'];
+        let domain = super.rawData["domain"];
         if (domain === undefined) {
             // v1 widgets default to meet.element.io regardless of user settings
             domain = "meet.element.io";
@@ -221,19 +221,19 @@ export class StopGapWidget extends EventEmitter {
         // TODO: Replace these with proper widget params
         // See https://github.com/matrix-org/matrix-doc/pull/1958/files#r405714833
         if (!opts?.asPopout) {
-            parsed.searchParams.set('widgetId', this.mockWidget.id);
-            parsed.searchParams.set('parentUrl', window.location.href.split('#', 2)[0]);
+            parsed.searchParams.set("widgetId", this.mockWidget.id);
+            parsed.searchParams.set("parentUrl", window.location.href.split("#", 2)[0]);
 
             // Give the widget a scalar token if we're supposed to (more legacy)
             // TODO: Stop doing this
             if (this.scalarToken) {
-                parsed.searchParams.set('scalar_token', this.scalarToken);
+                parsed.searchParams.set("scalar_token", this.scalarToken);
             }
         }
 
         // Replace the encoded dollar signs back to dollar signs. They have no special meaning
         // in HTTP, but URL parsers encode them anyways.
-        return parsed.toString().replace(/%24/g, '$');
+        return parsed.toString().replace(/%24/g, "$");
     }
 
     public get isManagedByManager(): boolean {
@@ -343,7 +343,7 @@ export class StopGapWidget extends EventEmitter {
 
                     // Send the sticker
                     defaultDispatcher.dispatch({
-                        action: 'm.sticker',
+                        action: "m.sticker",
                         data: ev.detail.data,
                         widgetId: this.mockWidget.id,
                     });

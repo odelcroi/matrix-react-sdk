@@ -15,37 +15,37 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { Direction } from 'matrix-js-sdk/src/models/event-timeline';
+import React from "react";
+import { Direction } from "matrix-js-sdk/src/models/event-timeline";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { _t } from '../../../languageHandler';
-import { formatFullDateNoTime } from '../../../DateUtils';
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import dis from '../../../dispatcher/dispatcher';
-import { Action } from '../../../dispatcher/actions';
-import SettingsStore from '../../../settings/SettingsStore';
-import { UIFeature } from '../../../settings/UIFeature';
-import Modal from '../../../Modal';
-import ErrorDialog from '../dialogs/ErrorDialog';
-import { contextMenuBelow } from '../rooms/RoomTile';
+import { _t } from "../../../languageHandler";
+import { formatFullDateNoTime } from "../../../DateUtils";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import dis from "../../../dispatcher/dispatcher";
+import { Action } from "../../../dispatcher/actions";
+import SettingsStore from "../../../settings/SettingsStore";
+import { UIFeature } from "../../../settings/UIFeature";
+import Modal from "../../../Modal";
+import ErrorDialog from "../dialogs/ErrorDialog";
+import { contextMenuBelow } from "../rooms/RoomTile";
 import { ContextMenuTooltipButton } from "../../structures/ContextMenu";
 import IconizedContextMenu, {
     IconizedContextMenuOption,
     IconizedContextMenuOptionList,
 } from "../context_menus/IconizedContextMenu";
-import JumpToDatePicker from './JumpToDatePicker';
+import JumpToDatePicker from "./JumpToDatePicker";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 function getDaysArray(): string[] {
     return [
-        _t('Sunday'),
-        _t('Monday'),
-        _t('Tuesday'),
-        _t('Wednesday'),
-        _t('Thursday'),
-        _t('Friday'),
-        _t('Saturday'),
+        _t("Sunday"),
+        _t("Monday"),
+        _t("Tuesday"),
+        _t("Wednesday"),
+        _t("Thursday"),
+        _t("Friday"),
+        _t("Saturday"),
     ];
 }
 
@@ -114,9 +114,9 @@ export default class DateSeparator extends React.Component<IProps, IState> {
         yesterday.setDate(today.getDate() - 1);
 
         if (date.toDateString() === today.toDateString()) {
-            return _t('Today');
+            return _t("Today");
         } else if (date.toDateString() === yesterday.toDateString()) {
-            return _t('Yesterday');
+            return _t("Yesterday");
         } else if (today.getTime() - date.getTime() < 6 * 24 * 60 * 60 * 1000) {
             return days[date.getDay()];
         } else {
@@ -136,7 +136,7 @@ export default class DateSeparator extends React.Component<IProps, IState> {
                 Direction.Forward,
             );
             logger.log(
-                `/timestamp_to_event: ` +
+                "/timestamp_to_event: " +
                 `found ${eventId} (${originServerTs}) for timestamp=${unixTimestamp} (looking forward)`,
             );
 
@@ -155,8 +155,8 @@ export default class DateSeparator extends React.Component<IProps, IState> {
             if (typeof code !== "undefined") {
                 // display error message stating you couldn't delete this.
                 Modal.createDialog(ErrorDialog, {
-                    title: _t('Error'),
-                    description: _t('Unable to find event at that date. (%(code)s)', { code }),
+                    title: _t("Error"),
+                    description: _t("Unable to find event at that date. (%(code)s)", { code }),
                 });
             }
         }

@@ -32,7 +32,7 @@ export class PollStartEventPreview implements IPreview {
 
         if (event.isRelation("m.replace")) {
             // It's an edit, generate the preview on the new text
-            eventContent = event.getContent()['m.new_content'];
+            eventContent = event.getContent()["m.new_content"];
         }
 
         // Check we have the information we need, and bail out if not

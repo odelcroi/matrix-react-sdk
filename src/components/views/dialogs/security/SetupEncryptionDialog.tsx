@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
-import SetupEncryptionBody from '../../../structures/auth/SetupEncryptionBody';
-import BaseDialog from '../BaseDialog';
-import { _t } from '../../../../languageHandler';
-import { SetupEncryptionStore, Phase } from '../../../../stores/SetupEncryptionStore';
+import SetupEncryptionBody from "../../../structures/auth/SetupEncryptionBody";
+import BaseDialog from "../BaseDialog";
+import { _t } from "../../../../languageHandler";
+import { SetupEncryptionStore, Phase } from "../../../../stores/SetupEncryptionStore";
 import { IDialogProps } from "../IDialogProps";
 
 function iconFromPhase(phase: Phase) {

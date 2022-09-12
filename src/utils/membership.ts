@@ -63,9 +63,9 @@ export function splitRoomsByMembership(rooms: Room[]): MembershipSplit {
 }
 
 export function getEffectiveMembership(membership: string): EffectiveMembership {
-    if (membership === 'invite') {
+    if (membership === "invite") {
         return EffectiveMembership.Invite;
-    } else if (membership === 'join') {
+    } else if (membership === "join") {
         // TODO: Include knocks? Update docs as needed in the enum. https://github.com/vector-im/element-web/issues/14237
         return EffectiveMembership.Join;
     } else {

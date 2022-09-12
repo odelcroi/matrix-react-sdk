@@ -19,15 +19,15 @@ import { MatrixClient } from "matrix-js-sdk/src/client";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { asyncAction } from './actionCreators';
-import Modal from '../Modal';
-import * as Rooms from '../Rooms';
-import { _t } from '../languageHandler';
+import { asyncAction } from "./actionCreators";
+import Modal from "../Modal";
+import * as Rooms from "../Rooms";
+import { _t } from "../languageHandler";
 import { AsyncActionPayload } from "../dispatcher/payloads";
 import RoomListStore from "../stores/room-list/RoomListStore";
 import { SortAlgorithm } from "../stores/room-list/algorithms/models";
 import { DefaultTagID } from "../stores/room-list/models";
-import ErrorDialog from '../components/views/dialogs/ErrorDialog';
+import ErrorDialog from "../components/views/dialogs/ErrorDialog";
 
 export default class RoomListActions {
     /**
@@ -79,7 +79,7 @@ export default class RoomListActions {
             };
         }
 
-        return asyncAction('RoomListActions.tagRoom', () => {
+        return asyncAction("RoomListActions.tagRoom", () => {
             const promises = [];
             const roomId = room.roomId;
 
@@ -92,8 +92,8 @@ export default class RoomListActions {
                 ).catch((err) => {
                     logger.error("Failed to set DM tag " + err);
                     Modal.createDialog(ErrorDialog, {
-                        title: _t('Failed to set direct message tag'),
-                        description: ((err && err.message) ? err.message : _t('Operation failed')),
+                        title: _t("Failed to set direct message tag"),
+                        description: ((err && err.message) ? err.message : _t("Operation failed")),
                     });
                 });
             }
@@ -112,8 +112,8 @@ export default class RoomListActions {
                 ).catch(function(err) {
                     logger.error("Failed to remove tag " + oldTag + " from room: " + err);
                     Modal.createDialog(ErrorDialog, {
-                        title: _t('Failed to remove tag %(tagName)s from room', { tagName: oldTag }),
-                        description: ((err && err.message) ? err.message : _t('Operation failed')),
+                        title: _t("Failed to remove tag %(tagName)s from room", { tagName: oldTag }),
+                        description: ((err && err.message) ? err.message : _t("Operation failed")),
                     });
                 });
 
@@ -131,8 +131,8 @@ export default class RoomListActions {
                 const promiseToAdd = matrixClient.setRoomTag(roomId, newTag, metaData).catch(function(err) {
                     logger.error("Failed to add tag " + newTag + " to room: " + err);
                     Modal.createDialog(ErrorDialog, {
-                        title: _t('Failed to add tag %(tagName)s to room', { tagName: newTag }),
-                        description: ((err && err.message) ? err.message : _t('Operation failed')),
+                        title: _t("Failed to add tag %(tagName)s to room", { tagName: newTag }),
+                        description: ((err && err.message) ? err.message : _t("Operation failed")),
                     });
 
                     throw err;

@@ -86,9 +86,9 @@ export default class DownloadActionButton extends React.PureComponent<IProps, IS
         }
 
         const classes = classNames({
-            'mx_MessageActionBar_iconButton': true,
-            'mx_MessageActionBar_downloadButton': true,
-            'mx_MessageActionBar_downloadSpinnerButton': !!spinner,
+            "mx_MessageActionBar_iconButton": true,
+            "mx_MessageActionBar_downloadButton": true,
+            "mx_MessageActionBar_downloadSpinnerButton": !!spinner,
         });
 
         return <RovingAccessibleTooltipButton

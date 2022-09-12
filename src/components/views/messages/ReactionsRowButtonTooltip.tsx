@@ -17,9 +17,9 @@ limitations under the License.
 import React from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
-import { unicodeToShortcode } from '../../../HtmlUtils';
-import { _t } from '../../../languageHandler';
-import { formatCommaSeparatedList } from '../../../utils/FormattingUtils';
+import { unicodeToShortcode } from "../../../HtmlUtils";
+import { _t } from "../../../languageHandler";
+import { formatCommaSeparatedList } from "../../../utils/FormattingUtils";
 import Tooltip from "../elements/Tooltip";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 

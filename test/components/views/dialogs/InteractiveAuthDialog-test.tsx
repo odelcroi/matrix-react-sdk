@@ -15,17 +15,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { act } from 'react-dom/test-utils';
+import React from "react";
+import { act } from "react-dom/test-utils";
 // eslint-disable-next-line deprecate/import
-import { mount, ReactWrapper } from 'enzyme';
+import { mount, ReactWrapper } from "enzyme";
 
 import InteractiveAuthDialog from "../../../../src/components/views/dialogs/InteractiveAuthDialog";
-import { flushPromises, getMockClientWithEventEmitter, unmockClientPeg } from '../../../test-utils';
+import { flushPromises, getMockClientWithEventEmitter, unmockClientPeg } from "../../../test-utils";
 
-describe('InteractiveAuthDialog', function() {
+describe("InteractiveAuthDialog", function() {
     const mockClient = getMockClientWithEventEmitter({
-        generateClientSecret: jest.fn().mockReturnValue('t35tcl1Ent5ECr3T'),
+        generateClientSecret: jest.fn().mockReturnValue("t35tcl1Ent5ECr3T"),
     });
 
     const defaultProps = {
@@ -49,7 +49,7 @@ describe('InteractiveAuthDialog', function() {
 
     const getSubmitButton = (wrapper: ReactWrapper) => wrapper.find('[type="submit"]').at(0);
 
-    it('Should successfully complete a password flow', async () => {
+    it("Should successfully complete a password flow", async () => {
         const onFinished = jest.fn();
         const makeRequest = jest.fn().mockResolvedValue({ a: 1 });
 
@@ -66,7 +66,7 @@ describe('InteractiveAuthDialog', function() {
         const passwordNode = wrapper.find('input[type="password"]').at(0);
         const submitNode = getSubmitButton(wrapper);
 
-        const formNode = wrapper.find('form').at(0);
+        const formNode = wrapper.find("form").at(0);
         expect(passwordNode).toBeTruthy();
         expect(submitNode).toBeTruthy();
 
@@ -75,7 +75,7 @@ describe('InteractiveAuthDialog', function() {
 
         // put something in the password box
         act(() => {
-            passwordNode.simulate('change', { target: { value: "s3kr3t" } });
+            passwordNode.simulate("change", { target: { value: "s3kr3t" } });
             wrapper.setProps({});
         });
 
@@ -84,7 +84,7 @@ describe('InteractiveAuthDialog', function() {
 
         // hit enter; that should trigger a request
         act(() => {
-            formNode.simulate('submit');
+            formNode.simulate("submit");
         });
 
         // wait for auth request to resolve

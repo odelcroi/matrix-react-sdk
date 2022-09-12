@@ -14,18 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient, Room } from 'matrix-js-sdk/src/matrix';
-import { mocked } from 'jest-mock';
+import { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
+import { mocked } from "jest-mock";
 
-import { Command, Commands, getCommand } from '../src/SlashCommands';
-import { createTestClient } from './test-utils';
-import { MatrixClientPeg } from '../src/MatrixClientPeg';
-import { LocalRoom, LOCAL_ROOM_ID_PREFIX } from '../src/models/LocalRoom';
-import { RoomViewStore } from '../src/stores/RoomViewStore';
-import SettingsStore from '../src/settings/SettingsStore';
-import LegacyCallHandler from '../src/LegacyCallHandler';
+import { Command, Commands, getCommand } from "../src/SlashCommands";
+import { createTestClient } from "./test-utils";
+import { MatrixClientPeg } from "../src/MatrixClientPeg";
+import { LocalRoom, LOCAL_ROOM_ID_PREFIX } from "../src/models/LocalRoom";
+import { RoomViewStore } from "../src/stores/RoomViewStore";
+import SettingsStore from "../src/settings/SettingsStore";
+import LegacyCallHandler from "../src/LegacyCallHandler";
 
-describe('SlashCommands', () => {
+describe("SlashCommands", () => {
     let client: MatrixClient;
     const roomId = "!room:example.com";
     let room: Room;
@@ -55,7 +55,7 @@ describe('SlashCommands', () => {
         jest.clearAllMocks();
 
         client = createTestClient();
-        jest.spyOn(MatrixClientPeg, 'get').mockReturnValue(client);
+        jest.spyOn(MatrixClientPeg, "get").mockReturnValue(client);
 
         room = new Room(roomId, client, client.getUserId());
         localRoom = new LocalRoom(localRoomId, client, client.getUserId());
@@ -63,8 +63,8 @@ describe('SlashCommands', () => {
         jest.spyOn(RoomViewStore.instance, "getRoomId");
     });
 
-    describe('/topic', () => {
-        it('sets topic', async () => {
+    describe("/topic", () => {
+        it("sets topic", async () => {
             const command = getCommand("/topic pizza");
             expect(command.cmd).toBeDefined();
             expect(command.args).toBeDefined();

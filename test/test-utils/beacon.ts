@@ -84,9 +84,9 @@ type ContentProps = {
     description?: string;
 };
 const DEFAULT_CONTENT_PROPS: ContentProps = {
-    geoUri: 'geo:-36.24484561954707,175.46884959563613;u=10',
+    geoUri: "geo:-36.24484561954707,175.46884959563613;u=10",
     timestamp: 123,
-    beaconInfoId: '$123',
+    beaconInfoId: "$123",
 };
 
 /**
@@ -181,7 +181,7 @@ export const watchPositionMockImplementation = (delays: number[], errorCodes: nu
             totalDelay += delayMs;
             const timeout = setTimeout(() => {
                 if (errorCodes[index]) {
-                    error(getMockGeolocationPositionError(errorCodes[index], 'error message'));
+                    error(getMockGeolocationPositionError(errorCodes[index], "error message"));
                 } else {
                     callback({ ...position, timestamp: position.timestamp + totalDelay });
                 }

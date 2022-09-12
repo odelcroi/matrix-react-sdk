@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import { IThreepid, ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -25,7 +25,7 @@ import Field from "../../elements/Field";
 import AccessibleButton from "../../elements/AccessibleButton";
 import * as Email from "../../../../email";
 import AddThreepid from "../../../../AddThreepid";
-import Modal from '../../../../Modal';
+import Modal from "../../../../Modal";
 import ErrorDialog from "../../dialogs/ErrorDialog";
 
 /*
@@ -214,7 +214,7 @@ export default class EmailAddresses extends React.Component<IProps, IState> {
             });
         }).catch((err) => {
             this.setState({ continueDisabled: false });
-            if (err.errcode === 'M_THREEPID_AUTH_FAILED') {
+            if (err.errcode === "M_THREEPID_AUTH_FAILED") {
                 Modal.createDialog(ErrorDialog, {
                     title: _t("Your email address hasn't been verified yet"),
                     description: _t("Click the link in the email you received to verify " +

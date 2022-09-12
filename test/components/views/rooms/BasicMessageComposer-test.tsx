@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 // eslint-disable-next-line deprecate/import
-import { mount, ReactWrapper } from 'enzyme';
-import { MatrixClient, Room } from 'matrix-js-sdk/src/matrix';
+import { mount, ReactWrapper } from "enzyme";
+import { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
 
-import BasicMessageComposer from '../../../../src/components/views/rooms/BasicMessageComposer';
+import BasicMessageComposer from "../../../../src/components/views/rooms/BasicMessageComposer";
 import * as TestUtils from "../../../test-utils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import EditorModel from "../../../../src/editor/model";
@@ -56,7 +56,7 @@ describe("BasicMessageComposer", () => {
 function render(model: EditorModel): ReactWrapper {
     const client: MatrixClient = MatrixClientPeg.get();
 
-    const roomId = '!1234567890:domain';
+    const roomId = "!1234567890:domain";
     const userId = client.getUserId();
     const room = new Room(roomId, client, userId);
 

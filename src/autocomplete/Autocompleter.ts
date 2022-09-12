@@ -15,18 +15,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ReactElement } from 'react';
-import { Room } from 'matrix-js-sdk/src/models/room';
+import { ReactElement } from "react";
+import { Room } from "matrix-js-sdk/src/models/room";
 
-import CommandProvider from './CommandProvider';
-import RoomProvider from './RoomProvider';
-import UserProvider from './UserProvider';
-import EmojiProvider from './EmojiProvider';
-import NotifProvider from './NotifProvider';
+import CommandProvider from "./CommandProvider";
+import RoomProvider from "./RoomProvider";
+import UserProvider from "./UserProvider";
+import EmojiProvider from "./EmojiProvider";
+import NotifProvider from "./NotifProvider";
 import { timeout } from "../utils/promise";
 import AutocompleteProvider, { ICommand } from "./AutocompleteProvider";
 import SpaceProvider from "./SpaceProvider";
-import { TimelineRenderingType } from '../contexts/RoomContext';
+import { TimelineRenderingType } from "../contexts/RoomContext";
 
 export interface ISelectionRange {
     beginning?: boolean; // whether the selection is in the first block of the editor or not

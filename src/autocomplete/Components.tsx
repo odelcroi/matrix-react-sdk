@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { forwardRef } from 'react';
-import classNames from 'classnames';
+import React, { forwardRef } from "react";
+import classNames from "classnames";
 
 /* These were earlier stateless functional components but had to be converted
 since we need to use refs/findDOMNode to access the underlying DOM node to focus the correct completion,
@@ -36,12 +36,12 @@ export const TextualCompletion = forwardRef<ITextualCompletionProps, any>((props
         subtitle,
         description,
         className,
-        'aria-selected': ariaSelectedAttribute,
+        "aria-selected": ariaSelectedAttribute,
         ...restProps
     } = props;
     return (
         <div {...restProps}
-            className={classNames('mx_Autocomplete_Completion_block', className)}
+            className={classNames("mx_Autocomplete_Completion_block", className)}
             role="option"
             aria-selected={ariaSelectedAttribute}
             ref={ref}
@@ -64,12 +64,12 @@ export const PillCompletion = forwardRef<IPillCompletionProps, any>((props, ref)
         description,
         className,
         children,
-        'aria-selected': ariaSelectedAttribute,
+        "aria-selected": ariaSelectedAttribute,
         ...restProps
     } = props;
     return (
         <div {...restProps}
-            className={classNames('mx_Autocomplete_Completion_pill', className)}
+            className={classNames("mx_Autocomplete_Completion_pill", className)}
             role="option"
             aria-selected={ariaSelectedAttribute}
             ref={ref}

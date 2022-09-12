@@ -14,22 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, KeyboardEvent, ReactNode, TransitionEvent } from 'react';
-import ReactDOM from 'react-dom';
-import classNames from 'classnames';
-import { Room } from 'matrix-js-sdk/src/models/room';
-import { EventType } from 'matrix-js-sdk/src/@types/event';
-import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import React, { createRef, KeyboardEvent, ReactNode, TransitionEvent } from "react";
+import ReactDOM from "react-dom";
+import classNames from "classnames";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { EventType } from "matrix-js-sdk/src/@types/event";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Relations } from "matrix-js-sdk/src/models/relations";
-import { logger } from 'matrix-js-sdk/src/logger';
+import { logger } from "matrix-js-sdk/src/logger";
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
-import { M_BEACON_INFO } from 'matrix-js-sdk/src/@types/beacon';
+import { M_BEACON_INFO } from "matrix-js-sdk/src/@types/beacon";
 import { isSupportedReceiptType } from "matrix-js-sdk/src/utils";
 
-import shouldHideEvent from '../../shouldHideEvent';
-import { wantsDateSeparator } from '../../DateUtils';
-import { MatrixClientPeg } from '../../MatrixClientPeg';
-import SettingsStore from '../../settings/SettingsStore';
+import shouldHideEvent from "../../shouldHideEvent";
+import { wantsDateSeparator } from "../../DateUtils";
+import { MatrixClientPeg } from "../../MatrixClientPeg";
+import SettingsStore from "../../settings/SettingsStore";
 import RoomContext, { TimelineRenderingType } from "../../contexts/RoomContext";
 import { Layout } from "../../settings/enums/Layout";
 import { _t } from "../../languageHandler";
@@ -39,19 +39,19 @@ import IRCTimelineProfileResizer from "../views/elements/IRCTimelineProfileResiz
 import DMRoomMap from "../../utils/DMRoomMap";
 import NewRoomIntro from "../views/rooms/NewRoomIntro";
 import HistoryTile from "../views/rooms/HistoryTile";
-import defaultDispatcher from '../../dispatcher/dispatcher';
+import defaultDispatcher from "../../dispatcher/dispatcher";
 import LegacyCallEventGrouper from "./LegacyCallEventGrouper";
-import WhoIsTypingTile from '../views/rooms/WhoIsTypingTile';
+import WhoIsTypingTile from "../views/rooms/WhoIsTypingTile";
 import ScrollPanel, { IScrollState } from "./ScrollPanel";
-import GenericEventListSummary from '../views/elements/GenericEventListSummary';
-import EventListSummary from '../views/elements/EventListSummary';
-import DateSeparator from '../views/messages/DateSeparator';
-import ErrorBoundary from '../views/elements/ErrorBoundary';
+import GenericEventListSummary from "../views/elements/GenericEventListSummary";
+import EventListSummary from "../views/elements/EventListSummary";
+import DateSeparator from "../views/messages/DateSeparator";
+import ErrorBoundary from "../views/elements/ErrorBoundary";
 import ResizeNotifier from "../../utils/ResizeNotifier";
 import Spinner from "../views/elements/Spinner";
 import { RoomPermalinkCreator } from "../../utils/permalinks/Permalinks";
 import EditorStateTransfer from "../../utils/EditorStateTransfer";
-import { Action } from '../../dispatcher/actions';
+import { Action } from "../../dispatcher/actions";
 import { getEventDisplayInfo } from "../../utils/EventRenderingUtils";
 import { IReadReceiptInfo } from "../views/rooms/ReadReceiptMarker";
 import { haveRendererForEvent } from "../../events/EventTileFactory";
@@ -507,7 +507,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             // confused.
             if (visible) {
                 hr = <hr className="mx_RoomView_myReadMarker"
-                    style={{ opacity: 1, width: '99%' }}
+                    style={{ opacity: 1, width: "99%" }}
                 />;
             }
 
@@ -557,8 +557,8 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         if (node) {
             // now the element has appeared, change the style which will trigger the CSS transition
             requestAnimationFrame(() => {
-                node.style.width = '10%';
-                node.style.opacity = '0';
+                node.style.width = "10%";
+                node.style.opacity = "0";
             });
         }
     };
@@ -744,7 +744,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         const readReceipts = this.readReceiptsByEvent[eventId];
 
         let isLastSuccessful = false;
-        const isSentState = s => !s || s === 'sent';
+        const isSentState = s => !s || s === "sent";
         const isSent = isSentState(mxEv.getAssociatedStatus());
         const hasNextEvent = nextEvent && this.shouldShowEvent(nextEvent);
         if (!hasNextEvent && isSent) {
@@ -975,7 +975,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             bottomSpinner = <li key="_bottomSpinner"><Spinner /></li>;
         }
 
-        const style = this.props.hidden ? { display: 'none' } : {};
+        const style = this.props.hidden ? { display: "none" } : {};
 
         let whoIsTyping;
         if (this.props.room &&
@@ -1127,7 +1127,7 @@ class CreationGrouper extends BaseGrouper {
         if (panel.wantsDateSeparator(this.prevEvent, createEvent.getDate())) {
             const ts = createEvent.getTs();
             ret.push(
-                <li key={ts+'~'}><DateSeparator roomId={createEvent.getRoomId()} ts={ts} /></li>,
+                <li key={ts+"~"}><DateSeparator roomId={createEvent.getRoomId()} ts={ts} /></li>,
             );
         }
 
@@ -1272,7 +1272,7 @@ class MainGrouper extends BaseGrouper {
         if (panel.wantsDateSeparator(this.prevEvent, this.events[0].getDate())) {
             const ts = this.events[0].getTs();
             ret.push(
-                <li key={ts+'~'}><DateSeparator roomId={this.events[0].getRoomId()} ts={ts} /></li>,
+                <li key={ts+"~"}><DateSeparator roomId={this.events[0].getRoomId()} ts={ts} /></li>,
             );
         }
 

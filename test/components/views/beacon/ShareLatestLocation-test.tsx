@@ -14,23 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 // eslint-disable-next-line deprecate/import
-import { mount } from 'enzyme';
-import { act } from 'react-dom/test-utils';
+import { mount } from "enzyme";
+import { act } from "react-dom/test-utils";
 
-import ShareLatestLocation from '../../../../src/components/views/beacon/ShareLatestLocation';
-import { copyPlaintext } from '../../../../src/utils/strings';
-import { flushPromises } from '../../../test-utils';
+import ShareLatestLocation from "../../../../src/components/views/beacon/ShareLatestLocation";
+import { copyPlaintext } from "../../../../src/utils/strings";
+import { flushPromises } from "../../../test-utils";
 
-jest.mock('../../../../src/utils/strings', () => ({
+jest.mock("../../../../src/utils/strings", () => ({
     copyPlaintext: jest.fn().mockResolvedValue(undefined),
 }));
 
-describe('<ShareLatestLocation />', () => {
+describe("<ShareLatestLocation />", () => {
     const defaultProps = {
         latestLocationState: {
-            uri: 'geo:51,42;u=35',
+            uri: "geo:51,42;u=35",
             timestamp: 123,
         },
     };
@@ -41,20 +41,20 @@ describe('<ShareLatestLocation />', () => {
         jest.clearAllMocks();
     });
 
-    it('renders null when no location', () => {
+    it("renders null when no location", () => {
         const component = getComponent({ latestLocationState: undefined });
         expect(component.html()).toBeNull();
     });
 
-    it('renders share buttons when there is a location', async () => {
+    it("renders share buttons when there is a location", async () => {
         const component = getComponent();
         expect(component).toMatchSnapshot();
 
         await act(async () => {
-            component.find('.mx_CopyableText_copyButton').at(0).simulate('click');
+            component.find(".mx_CopyableText_copyButton").at(0).simulate("click");
             await flushPromises();
         });
 
-        expect(copyPlaintext).toHaveBeenCalledWith('51,42');
+        expect(copyPlaintext).toHaveBeenCalledWith("51,42");
     });
 });

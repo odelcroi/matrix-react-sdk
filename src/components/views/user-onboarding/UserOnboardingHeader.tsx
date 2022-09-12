@@ -26,7 +26,7 @@ import Heading from "../../views/typography/Heading";
 
 const onClickSendDm = (ev: ButtonEvent) => {
     PosthogTrackers.trackInteraction("WebUserOnboardingHeaderSendDm", ev);
-    defaultDispatcher.dispatch({ action: 'view_create_chat' });
+    defaultDispatcher.dispatch({ action: "view_create_chat" });
 };
 
 interface Props {

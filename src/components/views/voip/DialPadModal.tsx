@@ -19,7 +19,7 @@ import { createRef } from "react";
 
 import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import Field from "../elements/Field";
-import DialPad from './DialPad';
+import DialPad from "./DialPad";
 import DialPadBackspaceButton from "../elements/DialPadBackspaceButton";
 import LegacyCallHandler from "../../../LegacyCallHandler";
 
@@ -37,7 +37,7 @@ export default class DialpadModal extends React.PureComponent<IProps, IState> {
     constructor(props) {
         super(props);
         this.state = {
-            value: '',
+            value: "",
         };
     }
 

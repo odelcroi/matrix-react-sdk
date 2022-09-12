@@ -14,18 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
-import { _t } from '../../../languageHandler';
+import { _t } from "../../../languageHandler";
 import SdkConfig from "../../../SdkConfig";
-import Modal from '../../../Modal';
+import Modal from "../../../Modal";
 import SettingsStore from "../../../settings/SettingsStore";
 import AccessibleButton from "../elements/AccessibleButton";
 import { formatBytes, formatCountLong } from "../../../utils/FormattingUtils";
 import EventIndexPeg from "../../../indexing/EventIndexPeg";
 import { SettingLevel } from "../../../settings/SettingLevel";
-import SeshatResetDialog from '../dialogs/SeshatResetDialog';
-import InlineSpinner from '../elements/InlineSpinner';
+import SeshatResetDialog from "../dialogs/SeshatResetDialog";
+import InlineSpinner from "../elements/InlineSpinner";
 
 interface IState {
     enabling: boolean;
@@ -43,7 +43,7 @@ export default class EventIndexPanel extends React.Component<{}, IState> {
             eventIndexSize: 0,
             roomCount: 0,
             eventIndexingEnabled:
-                SettingsStore.getValueAt(SettingLevel.DEVICE, 'enableEventIndexing'),
+                SettingsStore.getValueAt(SettingLevel.DEVICE, "enableEventIndexing"),
         };
     }
 
@@ -79,7 +79,7 @@ export default class EventIndexPanel extends React.Component<{}, IState> {
 
     async updateState() {
         const eventIndex = EventIndexPeg.get();
-        const eventIndexingEnabled = SettingsStore.getValueAt(SettingLevel.DEVICE, 'enableEventIndexing');
+        const eventIndexingEnabled = SettingsStore.getValueAt(SettingLevel.DEVICE, "enableEventIndexing");
         const enabling = false;
 
         let eventIndexSize = 0;
@@ -111,7 +111,7 @@ export default class EventIndexPanel extends React.Component<{}, IState> {
         Modal.createDialogAsync(
             // @ts-ignore: TS doesn't seem to like the type of this now that it
             // has also been converted to TS as well, but I can't figure out why...
-            import('../../../async-components/views/dialogs/eventindex/ManageEventIndexDialog'),
+            import("../../../async-components/views/dialogs/eventindex/ManageEventIndexDialog"),
             {
                 onFinished: () => {},
             }, null, /* priority = */ false, /* static = */ true,
@@ -126,7 +126,7 @@ export default class EventIndexPanel extends React.Component<{}, IState> {
         await EventIndexPeg.initEventIndex();
         await EventIndexPeg.get().addInitialCheckpoints();
         EventIndexPeg.get().startCrawler();
-        await SettingsStore.setValue('enableEventIndexing', null, SettingLevel.DEVICE, true);
+        await SettingsStore.setValue("enableEventIndexing", null, SettingLevel.DEVICE, true);
         await this.updateState();
     };
 
@@ -134,7 +134,7 @@ export default class EventIndexPanel extends React.Component<{}, IState> {
         const { close } = Modal.createDialog(SeshatResetDialog, {
             onFinished: async (success) => {
                 if (success) {
-                    await SettingsStore.setValue('enableEventIndexing', null, SettingLevel.DEVICE, false);
+                    await SettingsStore.setValue("enableEventIndexing", null, SettingLevel.DEVICE, false);
                     await EventIndexPeg.deleteEventIndex();
                     await this.onEnable();
                     close();

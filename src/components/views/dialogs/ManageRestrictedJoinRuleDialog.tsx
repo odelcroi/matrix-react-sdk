@@ -17,7 +17,7 @@ limitations under the License.
 import React, { useMemo, useState } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 
-import { _t } from '../../../languageHandler';
+import { _t } from "../../../languageHandler";
 import { IDialogProps } from "./IDialogProps";
 import BaseDialog from "./BaseDialog";
 import SearchBox from "../../structures/SearchBox";

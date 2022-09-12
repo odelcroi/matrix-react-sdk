@@ -133,12 +133,12 @@ export default class NotificationBadge extends React.PureComponent<XOR<IProps, I
         if (isEmptyBadge) symbol = "";
 
         const classes = classNames({
-            'mx_NotificationBadge': true,
-            'mx_NotificationBadge_visible': isEmptyBadge ? true : notification.hasUnreadCount,
-            'mx_NotificationBadge_highlighted': notification.hasMentions,
-            'mx_NotificationBadge_dot': isEmptyBadge,
-            'mx_NotificationBadge_2char': symbol.length > 0 && symbol.length < 3,
-            'mx_NotificationBadge_3char': symbol.length > 2,
+            "mx_NotificationBadge": true,
+            "mx_NotificationBadge_visible": isEmptyBadge ? true : notification.hasUnreadCount,
+            "mx_NotificationBadge_highlighted": notification.hasMentions,
+            "mx_NotificationBadge_dot": isEmptyBadge,
+            "mx_NotificationBadge_2char": symbol.length > 0 && symbol.length < 3,
+            "mx_NotificationBadge_3char": symbol.length > 2,
         });
 
         if (onClick) {

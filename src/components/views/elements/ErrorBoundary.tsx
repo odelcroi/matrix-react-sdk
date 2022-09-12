@@ -14,16 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ErrorInfo } from 'react';
+import React, { ErrorInfo } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { _t } from '../../../languageHandler';
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import PlatformPeg from '../../../PlatformPeg';
-import Modal from '../../../Modal';
+import { _t } from "../../../languageHandler";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import PlatformPeg from "../../../PlatformPeg";
+import Modal from "../../../Modal";
 import SdkConfig from "../../../SdkConfig";
-import BugReportDialog from '../dialogs/BugReportDialog';
-import AccessibleButton from './AccessibleButton';
+import BugReportDialog from "../dialogs/BugReportDialog";
+import AccessibleButton from "./AccessibleButton";
 
 interface IState {
     error: Error;
@@ -69,7 +69,7 @@ export default class ErrorBoundary extends React.PureComponent<{}, IState> {
 
     private onBugReport = (): void => {
         Modal.createDialog(BugReportDialog, {
-            label: 'react-soft-crash',
+            label: "react-soft-crash",
             error: this.state.error,
         });
     };

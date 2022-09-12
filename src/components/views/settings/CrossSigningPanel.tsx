@@ -14,19 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { ClientEvent, MatrixEvent } from 'matrix-js-sdk/src/matrix';
+import React from "react";
+import { ClientEvent, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import { _t } from '../../../languageHandler';
-import Modal from '../../../Modal';
-import Spinner from '../elements/Spinner';
-import InteractiveAuthDialog from '../dialogs/InteractiveAuthDialog';
-import ConfirmDestroyCrossSigningDialog from '../dialogs/security/ConfirmDestroyCrossSigningDialog';
-import SetupEncryptionDialog from '../dialogs/security/SetupEncryptionDialog';
-import { accessSecretStorage } from '../../../SecurityManager';
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { _t } from "../../../languageHandler";
+import Modal from "../../../Modal";
+import Spinner from "../elements/Spinner";
+import InteractiveAuthDialog from "../dialogs/InteractiveAuthDialog";
+import ConfirmDestroyCrossSigningDialog from "../dialogs/security/ConfirmDestroyCrossSigningDialog";
+import SetupEncryptionDialog from "../dialogs/security/SetupEncryptionDialog";
+import { accessSecretStorage } from "../../../SecurityManager";
 import AccessibleButton from "../elements/AccessibleButton";
 
 interface IState {

@@ -14,18 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from "react";
 
 import { _t } from "../../../../../languageHandler";
-import { useOwnDevices } from '../../devices/useOwnDevices';
-import SettingsSubsection from '../../shared/SettingsSubsection';
-import { FilteredDeviceList } from '../../devices/FilteredDeviceList';
-import CurrentDeviceSection from '../../devices/CurrentDeviceSection';
-import SecurityRecommendations from '../../devices/SecurityRecommendations';
-import { DeviceSecurityVariation, DeviceWithVerification } from '../../devices/types';
-import SettingsTab from '../SettingsTab';
-import Modal from '../../../../../Modal';
-import SetupEncryptionDialog from '../../../dialogs/security/SetupEncryptionDialog';
+import { useOwnDevices } from "../../devices/useOwnDevices";
+import SettingsSubsection from "../../shared/SettingsSubsection";
+import { FilteredDeviceList } from "../../devices/FilteredDeviceList";
+import CurrentDeviceSection from "../../devices/CurrentDeviceSection";
+import SecurityRecommendations from "../../devices/SecurityRecommendations";
+import { DeviceSecurityVariation, DeviceWithVerification } from "../../devices/types";
+import SettingsTab from "../SettingsTab";
+import Modal from "../../../../../Modal";
+import SetupEncryptionDialog from "../../../dialogs/security/SetupEncryptionDialog";
 
 const SessionManagerTab: React.FC = () => {
     const {
@@ -35,11 +35,11 @@ const SessionManagerTab: React.FC = () => {
         refreshDevices,
     } = useOwnDevices();
     const [filter, setFilter] = useState<DeviceSecurityVariation>();
-    const [expandedDeviceIds, setExpandedDeviceIds] = useState<DeviceWithVerification['device_id'][]>([]);
+    const [expandedDeviceIds, setExpandedDeviceIds] = useState<DeviceWithVerification["device_id"][]>([]);
     const filteredDeviceListRef = useRef<HTMLDivElement>(null);
     const scrollIntoViewTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
-    const onDeviceExpandToggle = (deviceId: DeviceWithVerification['device_id']): void => {
+    const onDeviceExpandToggle = (deviceId: DeviceWithVerification["device_id"]): void => {
         if (expandedDeviceIds.includes(deviceId)) {
             setExpandedDeviceIds(expandedDeviceIds.filter(id => id !== deviceId));
         } else {
@@ -55,9 +55,9 @@ const SessionManagerTab: React.FC = () => {
         scrollIntoViewTimeoutRef.current =
             window.setTimeout(() => filteredDeviceListRef.current?.scrollIntoView({
                 // align element to top of scrollbox
-                block: 'start',
-                inline: 'nearest',
-                behavior: 'smooth',
+                block: "start",
+                inline: "nearest",
+                behavior: "smooth",
             }));
     };
 
@@ -78,7 +78,7 @@ const SessionManagerTab: React.FC = () => {
         clearTimeout(scrollIntoViewTimeoutRef.current);
     }, [scrollIntoViewTimeoutRef]);
 
-    return <SettingsTab heading={_t('Sessions')}>
+    return <SettingsTab heading={_t("Sessions")}>
         <SecurityRecommendations
             devices={devices}
             goToFilteredList={onGoToFilteredList}
@@ -92,10 +92,10 @@ const SessionManagerTab: React.FC = () => {
         {
             shouldShowOtherSessions &&
             <SettingsSubsection
-                heading={_t('Other sessions')}
+                heading={_t("Other sessions")}
                 description={_t(
-                    `For best security, verify your sessions and sign out ` +
-                    `from any session that you don't recognize or use anymore.`,
+                    "For best security, verify your sessions and sign out " +
+                    "from any session that you don't recognize or use anymore.",
                 )}
                 data-testid='other-sessions-section'
             >

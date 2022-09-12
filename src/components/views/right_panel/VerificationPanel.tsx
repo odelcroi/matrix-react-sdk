@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { verificationMethods } from 'matrix-js-sdk/src/crypto';
+import { verificationMethods } from "matrix-js-sdk/src/crypto";
 import { QrCodeEvent, ReciprocateQRCode, SCAN_QR_CODE_METHOD } from "matrix-js-sdk/src/crypto/verification/QRCode";
 import {
     Phase,
@@ -77,7 +77,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
             ) }</p> :
             null;
 
-        if (this.props.layout === 'dialog') {
+        if (this.props.layout === "dialog") {
             // HACK: This is a terrible idea.
             let qrBlockDialog: JSX.Element;
             let sasBlockDialog: JSX.Element;
@@ -243,7 +243,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
                 description = _t("You've successfully verified your device!");
             } else {
                 description = _t("You've successfully verified %(deviceName)s (%(deviceId)s)!", {
-                    deviceName: device ? device.getDisplayName() : '',
+                    deviceName: device ? device.getDisplayName() : "",
                     deviceId: this.props.request.channel.deviceId,
                 });
             }

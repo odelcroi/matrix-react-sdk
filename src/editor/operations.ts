@@ -17,7 +17,7 @@ limitations under the License.
 import Range from "./range";
 import { Part, Type } from "./parts";
 import { Formatting } from "../components/views/rooms/MessageComposerFormatBar";
-import { longestBacktickSequence } from './deserialize';
+import { longestBacktickSequence } from "./deserialize";
 
 /**
  * Some common queries and transformations on the editor model
@@ -183,7 +183,7 @@ export function formatRangeAsCode(range: Range): void {
     const hasBlockFormatting = (range.length > 0)
         && range.text.startsWith("```")
         && range.text.endsWith("```")
-        && range.text.includes('\n');
+        && range.text.includes("\n");
 
     const needsBlockFormatting = parts.some(p => p.type === Type.Newline);
 

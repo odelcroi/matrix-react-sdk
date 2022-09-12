@@ -15,10 +15,10 @@ limitations under the License.
 */
 
 import React from "react";
-import classNames from 'classnames';
+import classNames from "classnames";
 
-import { _t } from '../../../languageHandler';
-import AccessibleButton from '../elements/AccessibleButton';
+import { _t } from "../../../languageHandler";
+import AccessibleButton from "../elements/AccessibleButton";
 
 interface IProps {
     numUnreadMessages?: number;
@@ -28,8 +28,8 @@ interface IProps {
 
 const JumpToBottomButton: React.FC<IProps> = (props) => {
     const className = classNames({
-        'mx_JumpToBottomButton': true,
-        'mx_JumpToBottomButton_highlight': props.highlight,
+        "mx_JumpToBottomButton": true,
+        "mx_JumpToBottomButton_highlight": props.highlight,
     });
     let badge;
     if (props.numUnreadMessages) {

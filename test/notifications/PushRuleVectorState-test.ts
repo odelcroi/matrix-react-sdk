@@ -33,7 +33,7 @@ describe("PushRuleVectorState", function() {
                 ],
                 default: false,
                 enabled: false,
-                rule_id: '1',
+                rule_id: "1",
             };
 
             expect(PushRuleVectorState.contentRuleVectorStateKind(rule)).
@@ -49,7 +49,7 @@ describe("PushRuleVectorState", function() {
                 ],
                 default: false,
                 enabled: false,
-                rule_id: '1',
+                rule_id: "1",
             };
 
             expect(PushRuleVectorState.contentRuleVectorStateKind(rule)).
@@ -65,7 +65,7 @@ describe("PushRuleVectorState", function() {
                 ],
                 default: false,
                 enabled: false,
-                rule_id: '1',
+                rule_id: "1",
             };
 
             expect(PushRuleVectorState.contentRuleVectorStateKind(rule)).

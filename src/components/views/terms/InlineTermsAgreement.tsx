@@ -54,7 +54,7 @@ export default class InlineTermsAgreement extends React.Component<IProps, IState
         for (const servicePolicies of this.props.policiesAndServicePairs) {
             const availablePolicies = Object.values(servicePolicies.policies);
             for (const policy of availablePolicies) {
-                const language = pickBestLanguage(Object.keys(policy).filter(p => p !== 'version'));
+                const language = pickBestLanguage(Object.keys(policy).filter(p => p !== "version"));
                 const renderablePolicy: Policy = {
                     checked: false,
                     url: policy[language].url,

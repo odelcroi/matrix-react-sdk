@@ -14,18 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import classNames from 'classnames';
+import React from "react";
+import classNames from "classnames";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
-import { _t } from '../../../languageHandler';
-import Modal from '../../../Modal';
+import { _t } from "../../../languageHandler";
+import Modal from "../../../Modal";
 import SdkConfig from "../../../SdkConfig";
-import BugReportDialog from '../dialogs/BugReportDialog';
-import AccessibleButton from '../elements/AccessibleButton';
+import BugReportDialog from "../dialogs/BugReportDialog";
+import AccessibleButton from "../elements/AccessibleButton";
 import SettingsStore from "../../../settings/SettingsStore";
 import ViewSource from "../../structures/ViewSource";
-import { Layout } from '../../../settings/enums/Layout';
+import { Layout } from "../../../settings/enums/Layout";
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -53,7 +53,7 @@ export default class TileErrorBoundary extends React.Component<IProps, IState> {
 
     private onBugReport = (): void => {
         Modal.createDialog(BugReportDialog, {
-            label: 'react-soft-crash-tile',
+            label: "react-soft-crash-tile",
             error: this.state.error,
         });
     };
@@ -61,7 +61,7 @@ export default class TileErrorBoundary extends React.Component<IProps, IState> {
     private onViewSource = (): void => {
         Modal.createDialog(ViewSource, {
             mxEvent: this.props.mxEvent,
-        }, 'mx_Dialog_viewsource');
+        }, "mx_Dialog_viewsource");
     };
 
     render() {

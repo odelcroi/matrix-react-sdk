@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 import HostSignupDialog from "../dialogs/HostSignupDialog";
 import { HostSignupStore } from "../../../stores/HostSignupStore";

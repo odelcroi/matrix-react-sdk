@@ -15,21 +15,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ComponentType } from 'react';
+import React, { ComponentType } from "react";
 import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
 import { TrustInfo } from "matrix-js-sdk/src/crypto/backup";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import { _t } from '../../../languageHandler';
-import Modal from '../../../Modal';
-import { isSecureBackupRequired } from '../../../utils/WellKnownUtils';
-import Spinner from '../elements/Spinner';
-import AccessibleButton from '../elements/AccessibleButton';
-import QuestionDialog from '../dialogs/QuestionDialog';
-import RestoreKeyBackupDialog from '../dialogs/security/RestoreKeyBackupDialog';
-import { accessSecretStorage } from '../../../SecurityManager';
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { _t } from "../../../languageHandler";
+import Modal from "../../../Modal";
+import { isSecureBackupRequired } from "../../../utils/WellKnownUtils";
+import Spinner from "../elements/Spinner";
+import AccessibleButton from "../elements/AccessibleButton";
+import QuestionDialog from "../dialogs/QuestionDialog";
+import RestoreKeyBackupDialog from "../dialogs/security/RestoreKeyBackupDialog";
+import { accessSecretStorage } from "../../../SecurityManager";
 
 interface IState {
     loading: boolean;
@@ -169,7 +169,7 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
     private startNewBackup = (): void => {
         Modal.createDialogAsync(
             import(
-                '../../../async-components/views/dialogs/security/CreateKeyBackupDialog'
+                "../../../async-components/views/dialogs/security/CreateKeyBackupDialog"
             ) as unknown as Promise<ComponentType<{}>>,
             {
                 onFinished: () => {
@@ -181,12 +181,12 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
 
     private deleteBackup = (): void => {
         Modal.createDialog(QuestionDialog, {
-            title: _t('Delete Backup'),
+            title: _t("Delete Backup"),
             description: _t(
                 "Are you sure? You will lose your encrypted messages if your " +
                 "keys are not backed up properly.",
             ),
-            button: _t('Delete Backup'),
+            button: _t("Delete Backup"),
             danger: true,
             onFinished: (proceed) => {
                 if (!proceed) return;
@@ -279,11 +279,11 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
             let backupSigStatuses: React.ReactNode = backupSigStatus.sigs.map((sig, i) => {
                 const deviceName = sig.device ? (sig.device.getDisplayName() || sig.device.deviceId) : null;
                 const validity = sub =>
-                    <span className={sig.valid ? 'mx_SecureBackupPanel_sigValid' : 'mx_SecureBackupPanel_sigInvalid'}>
+                    <span className={sig.valid ? "mx_SecureBackupPanel_sigValid" : "mx_SecureBackupPanel_sigInvalid"}>
                         { sub }
                     </span>;
                 const verify = sub =>
-                    <span className={sig.device && sig.deviceTrust.isVerified() ? 'mx_SecureBackupPanel_deviceVerified' : 'mx_SecureBackupPanel_deviceNotVerified'}>
+                    <span className={sig.device && sig.deviceTrust.isVerified() ? "mx_SecureBackupPanel_deviceVerified" : "mx_SecureBackupPanel_deviceNotVerified"}>
                         { sub }
                     </span>;
                 const device = sub => <span className="mx_SecureBackupPanel_deviceName">{ deviceName }</span>;

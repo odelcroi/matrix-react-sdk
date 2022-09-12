@@ -14,18 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactNode } from 'react';
+import React, { ReactNode } from "react";
 import { MatrixError } from "matrix-js-sdk/src/http-api";
 import classNames from "classnames";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { _t, _td } from '../../../languageHandler';
-import Login, { ISSOFlow, LoginFlow } from '../../../Login';
-import SdkConfig from '../../../SdkConfig';
-import { messageForResourceLimitError } from '../../../utils/ErrorUtils';
+import { _t, _td } from "../../../languageHandler";
+import Login, { ISSOFlow, LoginFlow } from "../../../Login";
+import SdkConfig from "../../../SdkConfig";
+import { messageForResourceLimitError } from "../../../utils/ErrorUtils";
 import AutoDiscoveryUtils from "../../../utils/AutoDiscoveryUtils";
 import AuthPage from "../../views/auth/AuthPage";
-import PlatformPeg from '../../../PlatformPeg';
+import PlatformPeg from "../../../PlatformPeg";
 import SettingsStore from "../../../settings/SettingsStore";
 import { UIFeature } from "../../../settings/UIFeature";
 import { IMatrixClientCreds } from "../../../MatrixClientPeg";
@@ -36,8 +36,8 @@ import SSOButtons from "../../views/elements/SSOButtons";
 import ServerPicker from "../../views/elements/ServerPicker";
 import AuthBody from "../../views/auth/AuthBody";
 import AuthHeader from "../../views/auth/AuthHeader";
-import AccessibleButton from '../../views/elements/AccessibleButton';
-import { ValidatedServerConfig } from '../../../utils/ValidatedServerConfig';
+import AccessibleButton from "../../views/elements/AccessibleButton";
+import { ValidatedServerConfig } from "../../../utils/ValidatedServerConfig";
 
 // These are used in several places, and come from the js-sdk's autodiscovery
 // stuff. We define them here so that they'll be picked up by i18n.
@@ -121,7 +121,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
 
             flows: null,
 
-            username: props.defaultUsername? props.defaultUsername: '',
+            username: props.defaultUsername? props.defaultUsername: "",
             phoneCountry: null,
             phoneNumber: "",
 
@@ -133,13 +133,13 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
         // map from login step type to a function which will render a control
         // letting you do that login type
         this.stepRendererMap = {
-            'm.login.password': this.renderPasswordStep,
+            "m.login.password": this.renderPasswordStep,
 
             // CAS and SSO are the same thing, modulo the url we link to
             // eslint-disable-next-line @typescript-eslint/naming-convention
-            'm.login.cas': () => this.renderSsoStep("cas"),
+            "m.login.cas": () => this.renderSsoStep("cas"),
             // eslint-disable-next-line @typescript-eslint/naming-convention
-            'm.login.sso': () => this.renderSsoStep("sso"),
+            "m.login.sso": () => this.renderSsoStep("sso"),
         };
     }
 
@@ -213,19 +213,19 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             // Some error strings only apply for logging in
             const usingEmail = username.indexOf("@") > 0;
             if (error.httpStatus === 400 && usingEmail) {
-                errorText = _t('This homeserver does not support login using email address.');
-            } else if (error.errcode === 'M_RESOURCE_LIMIT_EXCEEDED') {
+                errorText = _t("This homeserver does not support login using email address.");
+            } else if (error.errcode === "M_RESOURCE_LIMIT_EXCEEDED") {
                 const errorTop = messageForResourceLimitError(
                     error.data.limit_type,
                     error.data.admin_contact,
                     {
-                        'monthly_active_user': _td(
+                        "monthly_active_user": _td(
                             "This homeserver has hit its Monthly Active User limit.",
                         ),
-                        'hs_blocked': _td(
+                        "hs_blocked": _td(
                             "This homeserver has been blocked by its administrator.",
                         ),
-                        '': _td(
+                        "": _td(
                             "This homeserver has exceeded one of its resource limits.",
                         ),
                     },
@@ -234,7 +234,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                     error.data.limit_type,
                     error.data.admin_contact,
                     {
-                        '': _td("Please <a>contact your service administrator</a> to continue using this service."),
+                        "": _td("Please <a>contact your service administrator</a> to continue using this service."),
                     },
                 );
                 errorText = (
@@ -244,22 +244,22 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                     </div>
                 );
             } else if (error.httpStatus === 401 || error.httpStatus === 403) {
-                if (error.errcode === 'M_USER_DEACTIVATED') {
-                    errorText = _t('This account has been deactivated.');
+                if (error.errcode === "M_USER_DEACTIVATED") {
+                    errorText = _t("This account has been deactivated.");
                 } else if (SdkConfig.get("disable_custom_urls")) {
                     errorText = (
                         <div>
-                            <div>{ _t('Incorrect username and/or password.') }</div>
+                            <div>{ _t("Incorrect username and/or password.") }</div>
                             <div className="mx_Login_smallError">
                                 { _t(
-                                    'Please note you are logging into the %(hs)s server, not matrix.org.',
+                                    "Please note you are logging into the %(hs)s server, not matrix.org.",
                                     { hs: this.props.serverConfig.hsName },
                                 ) }
                             </div>
                         </div>
                     );
                 } else {
-                    errorText = _t('Incorrect username and/or password.');
+                    errorText = _t("Incorrect username and/or password.");
                 }
             } else {
                 // other errors, not specific to doing a password login
@@ -292,7 +292,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             canTryLogin: true,
         });
         if (doWellknownLookup) {
-            const serverName = username.split(':').slice(1).join(':');
+            const serverName = username.split(":").slice(1).join(":");
             try {
                 const result = await AutoDiscoveryUtils.validateServerName(serverName);
                 this.props.onServerConfigChange(result);
@@ -355,7 +355,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
         if (ssoFlow && !hasPasswordFlow) {
             ev.preventDefault();
             ev.stopPropagation();
-            const ssoKind = ssoFlow.type === 'm.login.sso' ? 'sso' : 'cas';
+            const ssoKind = ssoFlow.type === "m.login.sso" ? "sso" : "cas";
             PlatformPeg.get().startSingleSignOn(this.loginLogic.createTemporaryClient(), ssoKind,
                 this.props.fragmentAfterLogin);
         } else {
@@ -453,8 +453,8 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
         let errorText: ReactNode = _t("There was a problem communicating with the homeserver, " +
             "please try again later.") + (errCode ? " (" + errCode + ")" : "");
 
-        if (err["cors"] === 'rejected') { // browser-request specific error field
-            if (window.location.protocol === 'https:' &&
+        if (err["cors"] === "rejected") { // browser-request specific error field
+            if (window.location.protocol === "https:" &&
                 (this.props.serverConfig.hsUrl.startsWith("http:") ||
                  !this.props.serverConfig.hsUrl.startsWith("http"))
             ) {
@@ -462,7 +462,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                     { _t("Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. " +
                         "Either use HTTPS or <a>enable unsafe scripts</a>.", {},
                     {
-                        'a': (sub) => {
+                        "a": (sub) => {
                             return <a
                                 target="_blank"
                                 rel="noreferrer noopener"
@@ -479,7 +479,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                         "<a>homeserver's SSL certificate</a> is trusted, and that a browser extension " +
                         "is not blocking requests.", {},
                     {
-                        'a': (sub) =>
+                        "a": (sub) =>
                             <a target="_blank" rel="noreferrer noopener" href={this.props.serverConfig.hsUrl}>
                                 { sub }
                             </a>,
@@ -601,7 +601,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                 <AuthHeader disableLanguageSelector={this.props.isSyncing || this.state.busyLoggingIn} />
                 <AuthBody>
                     <h1>
-                        { _t('Sign in') }
+                        { _t("Sign in") }
                         { loader }
                     </h1>
                     { errorTextSection }

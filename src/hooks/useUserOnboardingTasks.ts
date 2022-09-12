@@ -49,7 +49,7 @@ interface InternalUserOnboardingTask extends UserOnboardingTask {
 
 const onClickStartDm = (ev: ButtonEvent) => {
     PosthogTrackers.trackInteraction("WebUserOnboardingTaskSendDm", ev);
-    defaultDispatcher.dispatch({ action: 'view_create_chat' });
+    defaultDispatcher.dispatch({ action: "view_create_chat" });
 };
 
 const tasks: InternalUserOnboardingTask[] = [

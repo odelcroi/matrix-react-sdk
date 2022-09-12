@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { mocked } from 'jest-mock';
+import { mocked } from "jest-mock";
 import { ConditionKind, PushRuleActionName, TweakName } from "matrix-js-sdk/src/@types/PushRules";
 
 import { stubClient } from "./test-utils";

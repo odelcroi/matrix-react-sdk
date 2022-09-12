@@ -241,7 +241,7 @@ export default class HTMLExporter extends Exporter {
                 this.avatars.set(member.userId, true);
                 const image = await fetch(avatarUrl);
                 const blob = await image.blob();
-                this.addFile(`users/${member.userId.replace(/:/g, '-')}.png`, blob);
+                this.addFile(`users/${member.userId.replace(/:/g, "-")}.png`, blob);
             } catch (err) {
                 logger.log("Failed to fetch user's avatar" + err);
             }
@@ -305,7 +305,7 @@ export default class HTMLExporter extends Exporter {
         ) {
             // to linkify textual events, we'll need lifecycle methods which won't be invoked in renderToString
             // So, we'll have to render the component into a temporary root element
-            const tempRoot = document.createElement('div');
+            const tempRoot = document.createElement("div");
             ReactDOM.render(
                 EventTile,
                 tempRoot,
@@ -319,10 +319,10 @@ export default class HTMLExporter extends Exporter {
             const mxc = mxEv.getContent().url ?? mxEv.getContent().file?.url;
             eventTileMarkup = eventTileMarkup.split(mxc).join(filePath);
         }
-        eventTileMarkup = eventTileMarkup.replace(/<span class="mx_MFileBody_info_icon".*?>.*?<\/span>/, '');
+        eventTileMarkup = eventTileMarkup.replace(/<span class="mx_MFileBody_info_icon".*?>.*?<\/span>/, "");
         if (hasAvatar) {
             eventTileMarkup = eventTileMarkup.replace(
-                encodeURI(this.getAvatarURL(mxEv)).replace(/&/g, '&amp;'),
+                encodeURI(this.getAvatarURL(mxEv)).replace(/&/g, "&amp;"),
                 `users/${mxEv.sender.userId.replace(/:/g, "-")}.png`,
             );
         }
@@ -337,8 +337,8 @@ export default class HTMLExporter extends Exporter {
             formatted_body: `${text}`,
         };
         if (italic) {
-            modifiedContent.formatted_body = '<em>' + modifiedContent.formatted_body + '</em>';
-            modifiedContent.body = '*' + modifiedContent.body + '*';
+            modifiedContent.formatted_body = "<em>" + modifiedContent.formatted_body + "</em>";
+            modifiedContent.body = "*" + modifiedContent.body + "*";
         }
         const modifiedEvent = new MatrixEvent();
         modifiedEvent.event = mxEv.event;

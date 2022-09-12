@@ -41,7 +41,7 @@ const isDeviceVerified = (
     }
 };
 
-const fetchDevicesWithVerification = async (matrixClient: MatrixClient): Promise<DevicesState['devices']> => {
+const fetchDevicesWithVerification = async (matrixClient: MatrixClient): Promise<DevicesState["devices"]> => {
     const { devices } = await matrixClient.getDevices();
     const crossSigningInfo = matrixClient.getStoredCrossSigningForUser(matrixClient.getUserId());
 
@@ -57,8 +57,8 @@ const fetchDevicesWithVerification = async (matrixClient: MatrixClient): Promise
 };
 
 export enum OwnDevicesError {
-    Unsupported = 'Unsupported',
-    Default = 'Default',
+    Unsupported = "Unsupported",
+    Default = "Default",
 }
 type DevicesState = {
     devices: DevicesDictionary;
@@ -72,7 +72,7 @@ export const useOwnDevices = (): DevicesState => {
 
     const currentDeviceId = matrixClient.getDeviceId();
 
-    const [devices, setDevices] = useState<DevicesState['devices']>({});
+    const [devices, setDevices] = useState<DevicesState["devices"]>({});
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<OwnDevicesError>();
 

@@ -14,18 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { IProtocol } from 'matrix-js-sdk/src/matrix';
-import { CallEvent, CallState, CallType } from 'matrix-js-sdk/src/webrtc/call';
-import EventEmitter from 'events';
-import { mocked } from 'jest-mock';
+import { IProtocol } from "matrix-js-sdk/src/matrix";
+import { CallEvent, CallState, CallType } from "matrix-js-sdk/src/webrtc/call";
+import EventEmitter from "events";
+import { mocked } from "jest-mock";
 
 import LegacyCallHandler, {
     LegacyCallHandlerEvent, PROTOCOL_PSTN, PROTOCOL_PSTN_PREFIXED, PROTOCOL_SIP_NATIVE, PROTOCOL_SIP_VIRTUAL,
-} from '../src/LegacyCallHandler';
-import { stubClient, mkStubRoom, untilDispatch } from './test-utils';
-import { MatrixClientPeg } from '../src/MatrixClientPeg';
-import DMRoomMap from '../src/utils/DMRoomMap';
-import SdkConfig from '../src/SdkConfig';
+} from "../src/LegacyCallHandler";
+import { stubClient, mkStubRoom, untilDispatch } from "./test-utils";
+import { MatrixClientPeg } from "../src/MatrixClientPeg";
+import DMRoomMap from "../src/utils/DMRoomMap";
+import SdkConfig from "../src/SdkConfig";
 import { Action } from "../src/dispatcher/actions";
 import { getFunctionalMembers } from "../src/utils/room/getFunctionalMembers";
 
@@ -57,34 +57,34 @@ const VIRTUAL_ROOM_BOB = "$virtual_bob_room:example.org";
 const BOB_PHONE_NUMBER = "01818118181";
 
 function mkStubDM(roomId, userId) {
-    const room = mkStubRoom(roomId, 'room', MatrixClientPeg.get());
+    const room = mkStubRoom(roomId, "room", MatrixClientPeg.get());
     room.getJoinedMembers = jest.fn().mockReturnValue([
         {
-            userId: '@me:example.org',
-            name: 'Member',
-            rawDisplayName: 'Member',
+            userId: "@me:example.org",
+            name: "Member",
+            rawDisplayName: "Member",
             roomId: roomId,
-            membership: 'join',
-            getAvatarUrl: () => 'mxc://avatar.url/image.png',
-            getMxcAvatarUrl: () => 'mxc://avatar.url/image.png',
+            membership: "join",
+            getAvatarUrl: () => "mxc://avatar.url/image.png",
+            getMxcAvatarUrl: () => "mxc://avatar.url/image.png",
         },
         {
             userId: userId,
-            name: 'Member',
-            rawDisplayName: 'Member',
+            name: "Member",
+            rawDisplayName: "Member",
             roomId: roomId,
-            membership: 'join',
-            getAvatarUrl: () => 'mxc://avatar.url/image.png',
-            getMxcAvatarUrl: () => 'mxc://avatar.url/image.png',
+            membership: "join",
+            getAvatarUrl: () => "mxc://avatar.url/image.png",
+            getMxcAvatarUrl: () => "mxc://avatar.url/image.png",
         },
         {
             userId: FUNCTIONAL_USER,
-            name: 'Bot user',
-            rawDisplayName: 'Bot user',
+            name: "Bot user",
+            rawDisplayName: "Bot user",
             roomId: roomId,
-            membership: 'join',
-            getAvatarUrl: () => 'mxc://avatar.url/image.png',
-            getMxcAvatarUrl: () => 'mxc://avatar.url/image.png',
+            membership: "join",
+            getAvatarUrl: () => "mxc://avatar.url/image.png",
+            getMxcAvatarUrl: () => "mxc://avatar.url/image.png",
         },
     ]);
     room.currentState.getMembers = room.getJoinedMembers;
@@ -117,7 +117,7 @@ function untilCallHandlerEvent(callHandler: LegacyCallHandler, event: LegacyCall
     });
 }
 
-describe('LegacyCallHandler', () => {
+describe("LegacyCallHandler", () => {
     let dmRoomMap;
     let callHandler;
     let audioElement: HTMLAudioElement;
@@ -205,7 +205,7 @@ describe('LegacyCallHandler', () => {
 
         MatrixClientPeg.get().getThirdpartyUser = (proto, params) => {
             if ([PROTOCOL_PSTN, PROTOCOL_PSTN_PREFIXED].includes(proto)) {
-                pstnLookup = params['m.id.phone'];
+                pstnLookup = params["m.id.phone"];
                 return Promise.resolve([{
                     userid: VIRTUAL_BOB,
                     protocol: "m.id.phone",
@@ -215,8 +215,8 @@ describe('LegacyCallHandler', () => {
                     },
                 }]);
             } else if (proto === PROTOCOL_SIP_NATIVE) {
-                nativeLookup = params['virtual_mxid'];
-                if (params['virtual_mxid'] === VIRTUAL_BOB) {
+                nativeLookup = params["virtual_mxid"];
+                if (params["virtual_mxid"] === VIRTUAL_BOB) {
                     return Promise.resolve([{
                         userid: NATIVE_BOB,
                         protocol: "im.vector.protocol.sip_native",
@@ -228,7 +228,7 @@ describe('LegacyCallHandler', () => {
                 }
                 return Promise.resolve([]);
             } else if (proto === PROTOCOL_SIP_VIRTUAL) {
-                if (params['native_mxid'] === NATIVE_BOB) {
+                if (params["native_mxid"] === NATIVE_BOB) {
                     return Promise.resolve([{
                         userid: VIRTUAL_BOB,
                         protocol: "im.vector.protocol.sip_virtual",
@@ -242,7 +242,7 @@ describe('LegacyCallHandler', () => {
             }
         };
 
-        audioElement = document.createElement('audio');
+        audioElement = document.createElement("audio");
         audioElement.id = "remoteAudio";
         document.body.appendChild(audioElement);
     });
@@ -259,7 +259,7 @@ describe('LegacyCallHandler', () => {
         SdkConfig.unset();
     });
 
-    it('should look up the correct user and start a call in the room when a phone number is dialled', async () => {
+    it("should look up the correct user and start a call in the room when a phone number is dialled", async () => {
         await callHandler.dialNumber(BOB_PHONE_NUMBER);
 
         expect(pstnLookup).toEqual(BOB_PHONE_NUMBER);
@@ -277,7 +277,7 @@ describe('LegacyCallHandler', () => {
         expect(callHandler.roomIdForCall(fakeCall)).toEqual(NATIVE_ROOM_BOB);
     });
 
-    it('should look up the correct user and start a call in the room when a call is transferred', async () => {
+    it("should look up the correct user and start a call in the room when a call is transferred", async () => {
         // we can pass a very minimal object as as the call since we pass consultFirst=true:
         // we don't need to actually do any transferring
         const mockTransferreeCall = { type: CallType.Voice };
@@ -292,7 +292,7 @@ describe('LegacyCallHandler', () => {
         expect(callHandler.roomIdForCall(fakeCall)).toEqual(NATIVE_ROOM_BOB);
     });
 
-    it('should move calls between rooms when remote asserted identity changes', async () => {
+    it("should move calls between rooms when remote asserted identity changes", async () => {
         callHandler.placeCall(NATIVE_ROOM_ALICE, CallType.Voice);
 
         await untilCallHandlerEvent(callHandler, LegacyCallHandlerEvent.CallState);
@@ -343,7 +343,7 @@ describe('LegacyCallHandler', () => {
     });
 });
 
-describe('LegacyCallHandler without third party protocols', () => {
+describe("LegacyCallHandler without third party protocols", () => {
     let dmRoomMap;
     let callHandler: LegacyCallHandler;
     let audioElement: HTMLAudioElement;
@@ -397,7 +397,7 @@ describe('LegacyCallHandler without third party protocols', () => {
             throw new Error("Endpoint unsupported.");
         };
 
-        audioElement = document.createElement('audio');
+        audioElement = document.createElement("audio");
         audioElement.id = "remoteAudio";
         document.body.appendChild(audioElement);
     });
@@ -414,7 +414,7 @@ describe('LegacyCallHandler without third party protocols', () => {
         SdkConfig.unset();
     });
 
-    it('should still start a native call', async () => {
+    it("should still start a native call", async () => {
         callHandler.placeCall(NATIVE_ROOM_ALICE, CallType.Voice);
 
         await untilCallHandlerEvent(callHandler, LegacyCallHandlerEvent.CallState);

@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
-import { User } from 'matrix-js-sdk/src/models/user';
+import { User } from "matrix-js-sdk/src/models/user";
 
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import { _t } from '../../../languageHandler';
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { _t } from "../../../languageHandler";
 import BaseDialog from "./BaseDialog";
 import EncryptionPanel from "../right_panel/EncryptionPanel";
 

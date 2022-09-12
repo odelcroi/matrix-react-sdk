@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
-import { MatrixClient } from 'matrix-js-sdk/src/client';
+import React, { createRef } from "react";
+import { MatrixClient } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import * as MegolmExportEncryption from '../../../../utils/MegolmExportEncryption';
-import { _t } from '../../../../languageHandler';
+import * as MegolmExportEncryption from "../../../../utils/MegolmExportEncryption";
+import { _t } from "../../../../languageHandler";
 import { IDialogProps } from "../../../../components/views/dialogs/IDialogProps";
 import BaseDialog from "../../../../components/views/dialogs/BaseDialog";
 
@@ -102,7 +102,7 @@ export default class ImportE2eKeysDialog extends React.Component<IProps, IState>
             if (this.unmounted) {
                 return;
             }
-            const msg = e.friendlyText || _t('Unknown error');
+            const msg = e.friendlyText || _t("Unknown error");
             this.setState({
                 errStr: msg,
                 phase: Phase.Edit,
@@ -128,16 +128,16 @@ export default class ImportE2eKeysDialog extends React.Component<IProps, IState>
                     <div className="mx_Dialog_content">
                         <p>
                             { _t(
-                                'This process allows you to import encryption keys ' +
-                                'that you had previously exported from another Matrix ' +
-                                'client. You will then be able to decrypt any ' +
-                                'messages that the other client could decrypt.',
+                                "This process allows you to import encryption keys " +
+                                "that you had previously exported from another Matrix " +
+                                "client. You will then be able to decrypt any " +
+                                "messages that the other client could decrypt.",
                             ) }
                         </p>
                         <p>
                             { _t(
-                                'The export file will be protected with a passphrase. ' +
-                                'You should enter the passphrase here, to decrypt the file.',
+                                "The export file will be protected with a passphrase. " +
+                                "You should enter the passphrase here, to decrypt the file.",
                             ) }
                         </p>
                         <div className='error'>
@@ -182,7 +182,7 @@ export default class ImportE2eKeysDialog extends React.Component<IProps, IState>
                         <input
                             className='mx_Dialog_primary'
                             type='submit'
-                            value={_t('Import')}
+                            value={_t("Import")}
                             disabled={!this.state.enableSubmit || disableForm}
                         />
                         <button onClick={this.onCancelClick} disabled={disableForm}>

@@ -22,7 +22,7 @@ import { EventType } from "matrix-js-sdk/src/@types/event";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Optional } from "matrix-events-sdk";
 
-import { MatrixClientPeg } from '../MatrixClientPeg';
+import { MatrixClientPeg } from "../MatrixClientPeg";
 
 /**
  * Class that takes a Matrix Client and flips the m.direct map
@@ -155,7 +155,7 @@ export default class DMRoomMap {
         }
 
         const joinedRooms = commonRooms.map(r => MatrixClientPeg.get().getRoom(r))
-            .filter(r => r && r.getMyMembership() === 'join');
+            .filter(r => r && r.getMyMembership() === "join");
 
         return joinedRooms[0];
     }
@@ -200,8 +200,8 @@ export default class DMRoomMap {
                 // to avoid multiple devices fighting to correct
                 // the account data, only try to send the corrected
                 // version once.
-                logger.warn(`Invalid m.direct account data detected ` +
-                    `(self-chats that shouldn't be), patching it up.`);
+                logger.warn("Invalid m.direct account data detected " +
+                    "(self-chats that shouldn't be), patching it up.");
                 if (neededPatching && !this.hasSentOutPatchDirectAccountDataPatch) {
                     this.hasSentOutPatchDirectAccountDataPatch = true;
                     this.matrixClient.setAccountData(EventType.Direct, userToRooms);

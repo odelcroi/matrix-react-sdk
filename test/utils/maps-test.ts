@@ -16,9 +16,9 @@ limitations under the License.
 
 import { EnhancedMap, mapDiff } from "../../src/utils/maps";
 
-describe('maps', () => {
-    describe('mapDiff', () => {
-        it('should indicate no differences when the pointers are the same', () => {
+describe("maps", () => {
+    describe("mapDiff", () => {
+        it("should indicate no differences when the pointers are the same", () => {
             const a = new Map([[1, 1], [2, 2], [3, 3]]);
             const result = mapDiff(a, a);
             expect(result).toBeDefined();
@@ -30,7 +30,7 @@ describe('maps', () => {
             expect(result.changed).toHaveLength(0);
         });
 
-        it('should indicate no differences when there are none', () => {
+        it("should indicate no differences when there are none", () => {
             const a = new Map([[1, 1], [2, 2], [3, 3]]);
             const b = new Map([[1, 1], [2, 2], [3, 3]]);
             const result = mapDiff(a, b);
@@ -43,7 +43,7 @@ describe('maps', () => {
             expect(result.changed).toHaveLength(0);
         });
 
-        it('should indicate added properties', () => {
+        it("should indicate added properties", () => {
             const a = new Map([[1, 1], [2, 2], [3, 3]]);
             const b = new Map([[1, 1], [2, 2], [3, 3], [4, 4]]);
             const result = mapDiff(a, b);
@@ -57,7 +57,7 @@ describe('maps', () => {
             expect(result.added).toEqual([4]);
         });
 
-        it('should indicate removed properties', () => {
+        it("should indicate removed properties", () => {
             const a = new Map([[1, 1], [2, 2], [3, 3]]);
             const b = new Map([[1, 1], [2, 2]]);
             const result = mapDiff(a, b);
@@ -71,7 +71,7 @@ describe('maps', () => {
             expect(result.removed).toEqual([3]);
         });
 
-        it('should indicate changed properties', () => {
+        it("should indicate changed properties", () => {
             const a = new Map([[1, 1], [2, 2], [3, 3]]);
             const b = new Map([[1, 1], [2, 2], [3, 4]]); // note change
             const result = mapDiff(a, b);
@@ -85,7 +85,7 @@ describe('maps', () => {
             expect(result.changed).toEqual([3]);
         });
 
-        it('should indicate changed, added, and removed properties', () => {
+        it("should indicate changed, added, and removed properties", () => {
             const a = new Map([[1, 1], [2, 2], [3, 3]]);
             const b = new Map([[1, 1], [2, 8], [4, 4]]); // note change
             const result = mapDiff(a, b);
@@ -101,7 +101,7 @@ describe('maps', () => {
             expect(result.changed).toEqual([2]);
         });
 
-        it('should indicate changes for difference in pointers', () => {
+        it("should indicate changes for difference in pointers", () => {
             const a = new Map([[1, {}]]); // {} always creates a new object
             const b = new Map([[1, {}]]);
             const result = mapDiff(a, b);
@@ -116,24 +116,24 @@ describe('maps', () => {
         });
     });
 
-    describe('EnhancedMap', () => {
+    describe("EnhancedMap", () => {
         // Most of these tests will make sure it implements the Map<K, V> class
 
-        it('should be empty by default', () => {
+        it("should be empty by default", () => {
             const result = new EnhancedMap();
             expect(result.size).toBe(0);
         });
 
-        it('should use the provided entries', () => {
+        it("should use the provided entries", () => {
             const obj = { a: 1, b: 2 };
             const result = new EnhancedMap(Object.entries(obj));
             expect(result.size).toBe(2);
-            expect(result.get('a')).toBe(1);
-            expect(result.get('b')).toBe(2);
+            expect(result.get("a")).toBe(1);
+            expect(result.get("b")).toBe(2);
         });
 
-        it('should create keys if they do not exist', () => {
-            const key = 'a';
+        it("should create keys if they do not exist", () => {
+            const key = "a";
             const val = {}; // we'll check pointers
 
             const result = new EnhancedMap<string, any>();
@@ -155,27 +155,27 @@ describe('maps', () => {
             expect(result.size).toBe(1);
         });
 
-        it('should proxy remove to delete and return it', () => {
+        it("should proxy remove to delete and return it", () => {
             const val = {};
             const result = new EnhancedMap<string, any>();
-            result.set('a', val);
+            result.set("a", val);
 
             expect(result.size).toBe(1);
 
-            const removed = result.remove('a');
+            const removed = result.remove("a");
             expect(result.size).toBe(0);
             expect(removed).toBeDefined();
             expect(removed).toBe(val);
         });
 
-        it('should support removing unknown keys', () => {
+        it("should support removing unknown keys", () => {
             const val = {};
             const result = new EnhancedMap<string, any>();
-            result.set('a', val);
+            result.set("a", val);
 
             expect(result.size).toBe(1);
 
-            const removed = result.remove('not-a');
+            const removed = result.remove("not-a");
             expect(result.size).toBe(1);
             expect(removed).not.toBeDefined();
         });

@@ -15,16 +15,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { AllHtmlEntities } from 'html-entities';
-import cheerio from 'cheerio';
+import { AllHtmlEntities } from "html-entities";
+import cheerio from "cheerio";
 import escapeHtml from "escape-html";
 
-import Markdown from '../Markdown';
+import Markdown from "../Markdown";
 import { makeGenericPermalink } from "../utils/permalinks/Permalinks";
 import EditorModel from "./model";
-import SettingsStore from '../settings/SettingsStore';
-import SdkConfig from '../SdkConfig';
-import { Type } from './parts';
+import SettingsStore from "../settings/SettingsStore";
+import SdkConfig from "../SdkConfig";
+import { Type } from "./parts";
 
 export function mdSerialize(model: EditorModel): string {
     return model.parts.reduce((html, part) => {
@@ -59,7 +59,7 @@ export function htmlSerializeIfNeeded(
     { forceHTML = false, useMarkdown = true }: ISerializeOpts = {},
 ): string {
     if (!useMarkdown) {
-        return escapeHtml(textSerialize(model)).replace(/\n/g, '<br/>');
+        return escapeHtml(textSerialize(model)).replace(/\n/g, "<br/>");
     }
 
     const md = mdSerialize(model);
@@ -71,8 +71,8 @@ export function htmlSerializeFromMdIfNeeded(md: string, { forceHTML = false } = 
     const orig = md;
 
     if (SettingsStore.getValue("feature_latex_maths")) {
-        const patternNames = ['tex', 'latex'];
-        const patternTypes = ['display', 'inline'];
+        const patternNames = ["tex", "latex"];
+        const patternTypes = ["display", "inline"];
         const patternDefaults = {
             "tex": {
                 // detect math with tex delimiters, inline: $...$, display $$...$$
@@ -156,13 +156,13 @@ export function htmlSerializeFromMdIfNeeded(md: string, { forceHTML = false } = 
             // since maths delimiters are handled before Markdown,
             // code blocks could contain mangled content.
             // replace code blocks with original content
-            phtmlOrig('code').each(function(i) {
-                phtml('code').eq(i).text(phtmlOrig('code').eq(i).text());
+            phtmlOrig("code").each(function(i) {
+                phtml("code").eq(i).text(phtmlOrig("code").eq(i).text());
             });
 
             // add fallback output for latex math, which should not be interpreted as markdown
-            phtml('div, span').each(function(i, e) {
-                const tex = phtml(e).attr('data-mx-maths');
+            phtml("div, span").each(function(i, e) {
+                const tex = phtml(e).attr("data-mx-maths");
                 if (tex) {
                     phtml(e).html(`<code>${tex}</code>`);
                 }
@@ -207,7 +207,7 @@ export function startsWith(model: EditorModel, prefix: string, caseSensitive = t
     const firstPart = model.parts[0];
     // part type will be "plain" while editing,
     // and "command" while composing a message.
-    let text = firstPart?.text || '';
+    let text = firstPart?.text || "";
     if (!caseSensitive) {
         prefix = prefix.toLowerCase();
         text = text.toLowerCase();

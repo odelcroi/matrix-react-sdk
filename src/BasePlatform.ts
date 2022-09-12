@@ -23,8 +23,8 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
 
-import dis from './dispatcher/dispatcher';
-import BaseEventIndexManager from './indexing/BaseEventIndexManager';
+import dis from "./dispatcher/dispatcher";
+import BaseEventIndexManager from "./indexing/BaseEventIndexManager";
 import { ActionPayload } from "./dispatcher/payloads";
 import { CheckUpdatesPayload } from "./dispatcher/payloads/CheckUpdatesPayload";
 import { Action } from "./dispatcher/actions";
@@ -80,7 +80,7 @@ export default abstract class BasePlatform {
 
     protected onAction = (payload: ActionPayload): void => {
         switch (payload.action) {
-            case 'on_client_not_viable':
+            case "on_client_not_viable":
             case Action.OnLoggedOut:
                 this.setNotificationCount(0);
                 break;
@@ -200,7 +200,7 @@ export default abstract class BasePlatform {
             body: msg,
             silent: true, // we play our own sounds
         };
-        if (avatarUrl) notifBody['icon'] = avatarUrl;
+        if (avatarUrl) notifBody["icon"] = avatarUrl;
         const notification = new window.Notification(title, notifBody);
 
         notification.onclick = () => {

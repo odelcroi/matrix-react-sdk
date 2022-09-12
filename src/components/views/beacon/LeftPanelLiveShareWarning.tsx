@@ -14,18 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import classNames from 'classnames';
-import React, { useEffect } from 'react';
-import { Beacon, BeaconIdentifier } from 'matrix-js-sdk/src/matrix';
+import classNames from "classnames";
+import React, { useEffect } from "react";
+import { Beacon, BeaconIdentifier } from "matrix-js-sdk/src/matrix";
 
-import { useEventEmitterState } from '../../../hooks/useEventEmitter';
-import { _t } from '../../../languageHandler';
-import { OwnBeaconStore, OwnBeaconStoreEvent } from '../../../stores/OwnBeaconStore';
-import { Icon as LiveLocationIcon } from '../../../../res/img/location/live-location.svg';
-import { ViewRoomPayload } from '../../../dispatcher/payloads/ViewRoomPayload';
-import { Action } from '../../../dispatcher/actions';
-import dispatcher from '../../../dispatcher/dispatcher';
-import AccessibleButton from '../elements/AccessibleButton';
+import { useEventEmitterState } from "../../../hooks/useEventEmitter";
+import { _t } from "../../../languageHandler";
+import { OwnBeaconStore, OwnBeaconStoreEvent } from "../../../stores/OwnBeaconStore";
+import { Icon as LiveLocationIcon } from "../../../../res/img/location/live-location.svg";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import { Action } from "../../../dispatcher/actions";
+import dispatcher from "../../../dispatcher/dispatcher";
+import AccessibleButton from "../elements/AccessibleButton";
 
 interface Props {
     isMinimized?: boolean;
@@ -52,12 +52,12 @@ const chooseBestBeacon = (
 
 const getLabel = (hasStoppingErrors: boolean, hasLocationErrors: boolean): string => {
     if (hasStoppingErrors) {
-        return _t('An error occurred while stopping your live location');
+        return _t("An error occurred while stopping your live location");
     }
     if (hasLocationErrors) {
-        return _t('An error occurred whilst sharing your live location');
+        return _t("An error occurred whilst sharing your live location");
     }
-    return _t('You are sharing your live location');
+    return _t("You are sharing your live location");
 };
 
 const useLivenessMonitor = (liveBeaconIds: BeaconIdentifier[], beacons: Map<BeaconIdentifier, Beacon>): void => {
@@ -66,7 +66,7 @@ const useLivenessMonitor = (liveBeaconIds: BeaconIdentifier[], beacons: Map<Beac
         // for inactive tabs
         // refresh beacon monitors when the tab becomes active again
         const onPageVisibilityChanged = () => {
-            if (document.visibilityState === 'visible') {
+            if (document.visibilityState === "visible") {
                 liveBeaconIds.forEach(identifier => beacons.get(identifier)?.monitorLiveness());
             }
         };
@@ -133,9 +133,9 @@ const LeftPanelLiveShareWarning: React.FC<Props> = ({ isMinimized }) => {
     const label = getLabel(hasStoppingErrors, hasLocationPublishErrors);
 
     return <AccessibleButton
-        className={classNames('mx_LeftPanelLiveShareWarning', {
-            'mx_LeftPanelLiveShareWarning__minimized': isMinimized,
-            'mx_LeftPanelLiveShareWarning__error': hasLocationPublishErrors || hasStoppingErrors,
+        className={classNames("mx_LeftPanelLiveShareWarning", {
+            "mx_LeftPanelLiveShareWarning__minimized": isMinimized,
+            "mx_LeftPanelLiveShareWarning__error": hasLocationPublishErrors || hasStoppingErrors,
         })}
         title={isMinimized ? label : undefined}
         onClick={onWarningClick}

@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState, FormEvent } from 'react';
+import React, { useState, FormEvent } from "react";
 
-import { _t } from '../../../languageHandler';
+import { _t } from "../../../languageHandler";
 import Field from "../elements/Field";
 import { RovingAccessibleButton, useRovingTabIndex } from "../../../accessibility/RovingTabIndex";
 

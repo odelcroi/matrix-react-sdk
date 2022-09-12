@@ -117,7 +117,7 @@ export class MediaEventHelper implements IDestroyable {
             MsgType.File,
         ];
         if (mediaMsgTypes.includes(content.msgtype)) return true;
-        if (typeof(content.url) === 'string') return true;
+        if (typeof(content.url) === "string") return true;
 
         // Finally, it's probably not media
         return false;

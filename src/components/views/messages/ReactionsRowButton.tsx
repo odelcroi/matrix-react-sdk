@@ -18,8 +18,8 @@ import React from "react";
 import classNames from "classnames";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
-import { _t } from '../../../languageHandler';
-import { formatCommaSeparatedList } from '../../../utils/FormattingUtils';
+import { _t } from "../../../languageHandler";
+import { formatCommaSeparatedList } from "../../../utils/FormattingUtils";
 import dis from "../../../dispatcher/dispatcher";
 import ReactionsRowButtonTooltip from "./ReactionsRowButtonTooltip";
 import AccessibleButton from "../elements/AccessibleButton";

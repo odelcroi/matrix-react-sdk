@@ -14,23 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import TestRenderer from 'react-test-renderer';
-import { EventEmitter } from 'events';
-import { MatrixEvent, EventType } from 'matrix-js-sdk/src/matrix';
-import { CryptoEvent } from 'matrix-js-sdk/src/crypto';
-import { UserTrustLevel } from 'matrix-js-sdk/src/crypto/CrossSigning';
-import { VerificationRequest } from 'matrix-js-sdk/src/crypto/verification/request/VerificationRequest';
+import React from "react";
+import TestRenderer from "react-test-renderer";
+import { EventEmitter } from "events";
+import { MatrixEvent, EventType } from "matrix-js-sdk/src/matrix";
+import { CryptoEvent } from "matrix-js-sdk/src/crypto";
+import { UserTrustLevel } from "matrix-js-sdk/src/crypto/CrossSigning";
+import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 
-import { MatrixClientPeg } from '../../../../src/MatrixClientPeg';
-import MKeyVerificationConclusion from '../../../../src/components/views/messages/MKeyVerificationConclusion';
-import { getMockClientWithEventEmitter } from '../../../test-utils';
+import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
+import MKeyVerificationConclusion from "../../../../src/components/views/messages/MKeyVerificationConclusion";
+import { getMockClientWithEventEmitter } from "../../../test-utils";
 
 const trustworthy = ({ isCrossSigningVerified: () => true }) as unknown as UserTrustLevel;
 const untrustworthy = ({ isCrossSigningVerified: () => false }) as unknown as UserTrustLevel;
 
 describe("MKeyVerificationConclusion", () => {
-    const userId = '@user:server';
+    const userId = "@user:server";
     const mockClient = getMockClientWithEventEmitter({
         getRoom: jest.fn(),
         getUserId: jest.fn().mockReturnValue(userId),
@@ -60,7 +60,7 @@ describe("MKeyVerificationConclusion", () => {
     });
 
     afterAll(() => {
-        jest.spyOn(MatrixClientPeg, 'get').mockRestore();
+        jest.spyOn(MatrixClientPeg, "get").mockRestore();
     });
 
     it("shouldn't render if there's no verificationRequest", () => {

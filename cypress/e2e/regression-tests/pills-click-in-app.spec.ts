@@ -33,7 +33,7 @@ describe("Pills", () => {
         cy.stopSynapse(synapse);
     });
 
-    it('should navigate clicks internally to the app', () => {
+    it("should navigate clicks internally to the app", () => {
         const messageRoom = "Send Messages Here";
         const targetLocalpart = "aliasssssssssssss";
         cy.createRoom({

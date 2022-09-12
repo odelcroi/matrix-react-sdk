@@ -14,20 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
+import React, { createRef } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import Notifier from "../../../../../Notifier";
-import SettingsStore from '../../../../../settings/SettingsStore';
+import SettingsStore from "../../../../../settings/SettingsStore";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
 import { RoomEchoChamber } from "../../../../../stores/local-echo/RoomEchoChamber";
-import { EchoChamber } from '../../../../../stores/local-echo/EchoChamber';
+import { EchoChamber } from "../../../../../stores/local-echo/EchoChamber";
 import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
 import StyledRadioGroup from "../../../elements/StyledRadioGroup";
-import { RoomNotifState } from '../../../../../RoomNotifs';
+import { RoomNotifState } from "../../../../../RoomNotifs";
 import defaultDispatcher from "../../../../../dispatcher/dispatcher";
 import { Action } from "../../../../../dispatcher/actions";
 import { UserTab } from "../../../dialogs/UserTab";

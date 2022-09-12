@@ -17,7 +17,7 @@ limitations under the License.
 import React, { RefCallback, ComponentType } from "react";
 import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
-import { MatrixClientPeg as peg } from '../../src/MatrixClientPeg';
+import { MatrixClientPeg as peg } from "../../src/MatrixClientPeg";
 import MatrixClientContext from "../../src/contexts/MatrixClientContext";
 
 type WrapperProps<T> = { wrappedRef?: RefCallback<ComponentType<T>> } & T;

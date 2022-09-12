@@ -15,12 +15,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import filesize from "filesize";
 
-import { Icon as FileIcon } from '../../../../res/img/feather-customised/files.svg';
-import { _t } from '../../../languageHandler';
-import { getBlobSafeMimeType } from '../../../utils/blobs';
+import { Icon as FileIcon } from "../../../../res/img/feather-customised/files.svg";
+import { _t } from "../../../languageHandler";
+import { getBlobSafeMimeType } from "../../../utils/blobs";
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
 
@@ -78,7 +78,7 @@ export default class UploadConfirmDialog extends React.Component<IProps> {
                 },
             );
         } else {
-            title = _t('Upload files');
+            title = _t("Upload files");
         }
 
         const fileId = `mx-uploadconfirmdialog-${this.props.file.name}`;
@@ -133,7 +133,7 @@ export default class UploadConfirmDialog extends React.Component<IProps> {
                     </div>
                 </div>
 
-                <DialogButtons primaryButton={_t('Upload')}
+                <DialogButtons primaryButton={_t("Upload")}
                     hasCancel={false}
                     onPrimaryButtonClick={this.onUploadClick}
                     focus={true}

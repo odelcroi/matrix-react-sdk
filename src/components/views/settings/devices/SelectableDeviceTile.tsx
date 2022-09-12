@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
-import StyledCheckbox, { CheckboxStyle } from '../../elements/StyledCheckbox';
-import DeviceTile, { DeviceTileProps } from './DeviceTile';
+import StyledCheckbox, { CheckboxStyle } from "../../elements/StyledCheckbox";
+import DeviceTile, { DeviceTileProps } from "./DeviceTile";
 
 interface Props extends DeviceTileProps {
     isSelected: boolean;

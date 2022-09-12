@@ -14,15 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { HTMLAttributes } from 'react';
-import classNames from 'classnames';
+import React, { HTMLAttributes } from "react";
+import classNames from "classnames";
 
-type Size = 'h1' | 'h2' | 'h3' | 'h4';
+type Size = "h1" | "h2" | "h3" | "h4";
 interface HeadingProps extends HTMLAttributes<HTMLHeadingElement> {
     size: Size;
 }
 
-const Heading: React.FC<HeadingProps> = ({ size, className, children, ...rest }) => React.createElement(size || 'h1', {
+const Heading: React.FC<HeadingProps> = ({ size, className, children, ...rest }) => React.createElement(size || "h1", {
     ...rest,
     className: classNames(`mx_Heading_${size}`, className),
     children,

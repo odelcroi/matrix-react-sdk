@@ -127,8 +127,8 @@ describe("MessageComposerButtons", () => {
         ]);
     });
 
-    describe('polls button', () => {
-        it('should render when asked to', () => {
+    describe("polls button", () => {
+        it("should render when asked to", () => {
             const buttons = wrapAndRender(
                 <MessageComposerButtons
                     isMenuOpen={true}
@@ -152,7 +152,7 @@ describe("MessageComposerButtons", () => {
             ]);
         });
 
-        it('should not render when asked not to', () => {
+        it("should not render when asked not to", () => {
             const buttons = wrapAndRender(
                 <MessageComposerButtons
                     isMenuOpen={true}
@@ -180,7 +180,7 @@ describe("MessageComposerButtons", () => {
 
 function wrapAndRender(component: React.ReactElement, narrow: boolean): ReactWrapper {
     const mockClient = createTestClient();
-    jest.spyOn(MatrixClientPeg, 'get').mockReturnValue(mockClient);
+    jest.spyOn(MatrixClientPeg, "get").mockReturnValue(mockClient);
     const roomId = "myroomid";
     const mockRoom: any = {
         currentState: undefined,
@@ -246,7 +246,7 @@ function buttonLabels(buttons: ReactWrapper): any[] {
     // and the labels under More options use textContent
     const mainButtons = (
         buttons
-            .find('div.mx_MessageComposer_button[aria-label]')
+            .find("div.mx_MessageComposer_button[aria-label]")
             .map((button: ReactWrapper) => button.prop("aria-label") as string)
             .filter(x => x)
     );

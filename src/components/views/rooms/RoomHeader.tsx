@@ -15,35 +15,35 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import classNames from 'classnames';
-import { throttle } from 'lodash';
-import { MatrixEvent, Room, RoomStateEvent } from 'matrix-js-sdk/src/matrix';
+import React from "react";
+import classNames from "classnames";
+import { throttle } from "lodash";
+import { MatrixEvent, Room, RoomStateEvent } from "matrix-js-sdk/src/matrix";
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
 
-import { _t } from '../../../languageHandler';
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
+import { _t } from "../../../languageHandler";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
 import { UserTab } from "../dialogs/UserTab";
 import SettingsStore from "../../../settings/SettingsStore";
-import RoomHeaderButtons from '../right_panel/RoomHeaderButtons';
-import E2EIcon from './E2EIcon';
+import RoomHeaderButtons from "../right_panel/RoomHeaderButtons";
+import E2EIcon from "./E2EIcon";
 import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import RoomTopic from "../elements/RoomTopic";
 import RoomName from "../elements/RoomName";
-import { E2EStatus } from '../../../utils/ShieldUtils';
-import { IOOBData } from '../../../stores/ThreepidInviteStore';
-import { SearchScope } from './SearchBar';
-import { ContextMenuTooltipButton } from '../../structures/ContextMenu';
+import { E2EStatus } from "../../../utils/ShieldUtils";
+import { IOOBData } from "../../../stores/ThreepidInviteStore";
+import { SearchScope } from "./SearchBar";
+import { ContextMenuTooltipButton } from "../../structures/ContextMenu";
 import RoomContextMenu from "../context_menus/RoomContextMenu";
-import { contextMenuBelow } from './RoomTile';
-import { RoomNotificationStateStore } from '../../../stores/notifications/RoomNotificationStateStore';
-import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
-import { NotificationStateEvents } from '../../../stores/notifications/NotificationState';
+import { contextMenuBelow } from "./RoomTile";
+import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
+import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePhases";
+import { NotificationStateEvents } from "../../../stores/notifications/NotificationState";
 import RoomContext from "../../../contexts/RoomContext";
-import RoomLiveShareWarning from '../beacon/RoomLiveShareWarning';
+import RoomLiveShareWarning from "../beacon/RoomLiveShareWarning";
 import { BetaPill } from "../beta/BetaCard";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
@@ -228,14 +228,14 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         const members = this.props.room ? this.props.room.getJoinedMembers() : undefined;
         if (members) {
             if (members.length === 1 && members[0].userId === MatrixClientPeg.get().credentials.userId) {
-                const nameEvent = this.props.room.currentState.getStateEvents('m.room.name', '');
+                const nameEvent = this.props.room.currentState.getStateEvents("m.room.name", "");
                 if (!nameEvent || !nameEvent.getContent().name) {
                     settingsHint = true;
                 }
             }
         }
 
-        const textClasses = classNames('mx_RoomHeader_nametext', { mx_RoomHeader_settingsHint: settingsHint });
+        const textClasses = classNames("mx_RoomHeader_nametext", { mx_RoomHeader_settingsHint: settingsHint });
         const roomName = <RoomName room={this.props.room}>
             { (name) => {
                 const roomName = name || oobName;

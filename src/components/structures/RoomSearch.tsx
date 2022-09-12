@@ -48,16 +48,16 @@ export default class RoomSearch extends React.PureComponent<IProps> {
     }
 
     private onAction = (payload: ActionPayload) => {
-        if (payload.action === 'focus_room_filter') {
+        if (payload.action === "focus_room_filter") {
             this.openSpotlight();
         }
     };
 
     public render(): React.ReactNode {
         const classes = classNames({
-            'mx_RoomSearch': true,
-            'mx_RoomSearch_minimized': this.props.isMinimized,
-        }, 'mx_RoomSearch_spotlightTrigger');
+            "mx_RoomSearch": true,
+            "mx_RoomSearch_minimized": this.props.isMinimized,
+        }, "mx_RoomSearch_spotlightTrigger");
 
         const icon = (
             <div className="mx_RoomSearch_icon" />

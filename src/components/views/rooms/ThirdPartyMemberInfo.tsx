@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -28,8 +28,8 @@ import Modal from "../../../Modal";
 import { isValid3pidInvite } from "../../../RoomInvite";
 import RoomAvatar from "../avatars/RoomAvatar";
 import RoomName from "../elements/RoomName";
-import ErrorDialog from '../dialogs/ErrorDialog';
-import AccessibleButton from '../elements/AccessibleButton';
+import ErrorDialog from "../dialogs/ErrorDialog";
+import AccessibleButton from "../elements/AccessibleButton";
 
 interface IProps {
     event: MatrixEvent;
@@ -55,7 +55,7 @@ export default class ThirdPartyMemberInfo extends React.Component<IProps, IState
         const powerLevels = this.room.currentState.getStateEvents("m.room.power_levels", "");
 
         let kickLevel = powerLevels ? powerLevels.getContent().kick : 50;
-        if (typeof(kickLevel) !== 'number') kickLevel = 50;
+        if (typeof(kickLevel) !== "number") kickLevel = 50;
 
         const sender = this.room.getMember(this.props.event.getSender());
 
@@ -86,7 +86,7 @@ export default class ThirdPartyMemberInfo extends React.Component<IProps, IState
             const isInvited = isValid3pidInvite(ev);
 
             const newState = { invited: isInvited };
-            if (newDisplayName) newState['displayName'] = newDisplayName;
+            if (newDisplayName) newState["displayName"] = newDisplayName;
             this.setState(newState);
         }
     };
@@ -149,7 +149,7 @@ export default class ThirdPartyMemberInfo extends React.Component<IProps, IState
                 <div className="mx_MemberInfo_name">
                     <AccessibleButton className="mx_MemberInfo_cancel"
                         onClick={this.onCancel}
-                        title={_t('Close')}
+                        title={_t("Close")}
                     />
                     <h2>{ this.state.displayName }</h2>
                 </div>

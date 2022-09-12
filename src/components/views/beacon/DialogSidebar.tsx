@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { Beacon } from 'matrix-js-sdk/src/matrix';
+import React from "react";
+import { Beacon } from "matrix-js-sdk/src/matrix";
 
-import { Icon as CloseIcon } from '../../../../res/img/image-view/close.svg';
-import { _t } from '../../../languageHandler';
-import AccessibleButton from '../elements/AccessibleButton';
-import Heading from '../typography/Heading';
-import BeaconListItem from './BeaconListItem';
+import { Icon as CloseIcon } from "../../../../res/img/image-view/close.svg";
+import { _t } from "../../../languageHandler";
+import AccessibleButton from "../elements/AccessibleButton";
+import Heading from "../typography/Heading";
+import BeaconListItem from "./BeaconListItem";
 
 interface Props {
     beacons: Beacon[];
@@ -36,11 +36,11 @@ const DialogSidebar: React.FC<Props> = ({
 }) => {
     return <div className='mx_DialogSidebar'>
         <div className='mx_DialogSidebar_header'>
-            <Heading size='h4'>{ _t('View List') }</Heading>
+            <Heading size='h4'>{ _t("View List") }</Heading>
             <AccessibleButton
                 className='mx_DialogSidebar_closeButton'
                 onClick={requestClose}
-                title={_t('Close sidebar')}
+                title={_t("Close sidebar")}
                 data-testid='dialog-sidebar-close'
             >
                 <CloseIcon className='mx_DialogSidebar_closeButtonIcon' />
@@ -55,7 +55,7 @@ const DialogSidebar: React.FC<Props> = ({
                 />) }
             </ol>
             : <div className='mx_DialogSidebar_noResults'>
-                { _t('No live locations') }
+                { _t("No live locations") }
             </div>
         }
     </div>;

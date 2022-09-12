@@ -17,9 +17,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import request from 'browser-request';
-import counterpart from 'counterpart';
-import React from 'react';
+import request from "browser-request";
+import counterpart from "counterpart";
+import React from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 import { Optional } from "matrix-events-sdk";
 
@@ -33,17 +33,17 @@ import { ModuleRunner } from "./modules/ModuleRunner";
 // @ts-ignore - $webapp is a webpack resolve alias pointing to the output directory, see webpack config
 import webpackLangJsonUrl from "$webapp/i18n/languages.json";
 
-const i18nFolder = 'i18n/';
+const i18nFolder = "i18n/";
 
 // Control whether to also return original, untranslated strings
 // Useful for debugging and testing
 const ANNOTATE_STRINGS = false;
 
 // We use english strings as keys, some of which contain full stops
-counterpart.setSeparator('|');
+counterpart.setSeparator("|");
 
 // see `translateWithFallback` for an explanation of fallback handling
-const FALLBACK_LOCALE = 'en';
+const FALLBACK_LOCALE = "en";
 counterpart.setFallbackLocale(FALLBACK_LOCALE);
 
 export interface ITranslatableError extends Error {
@@ -128,15 +128,15 @@ function safeCounterpartTranslate(text: string, variables?: object) {
     // valid ES6 template strings to i18n strings it's extremely easy to pass undefined/null
     // if there are no existing null guards. To avoid this making the app completely inoperable,
     // we'll check all the values for undefined/null and stringify them here.
-    if (options && typeof options === 'object') {
+    if (options && typeof options === "object") {
         Object.keys(options).forEach((k) => {
             if (options[k] === undefined) {
                 logger.warn("safeCounterpartTranslate called with undefined interpolation name: " + k);
-                options[k] = 'undefined';
+                options[k] = "undefined";
             }
             if (options[k] === null) {
                 logger.warn("safeCounterpartTranslate called with null interpolation name: " + k);
-                options[k] = 'null';
+                options[k] = "null";
             }
         });
     }
@@ -161,7 +161,7 @@ const annotateStrings = (result: TranslatedString, translationKey: string): Tran
         return result;
     }
 
-    if (typeof result === 'string') {
+    if (typeof result === "string") {
         return `@@${translationKey}##${result}@@`;
     } else {
         return <span className='translated-string' data-orig-string={translationKey}>{ result }</span>;
@@ -227,7 +227,7 @@ export function _tDom(text: string, variables?: IVariables, tags?: Tags): Transl
  */
 export function sanitizeForTranslation(text: string): string {
     // Add a non-breaking space so the regex doesn't trigger when translating.
-    return text.replace(/%\(([^)]*)\)/g, '%\xa0($1)');
+    return text.replace(/%\(([^)]*)\)/g, "%\xa0($1)");
 }
 
 /*
@@ -296,7 +296,7 @@ export function replaceByRegexes(text: string, mapping: IVariables | Tags): stri
         let matchFoundSomewhere = false; // If we don't find a match anywhere we want to log it
         for (let outputIndex = 0; outputIndex < output.length; outputIndex++) {
             const inputText = output[outputIndex];
-            if (typeof inputText !== 'string') { // We might have inserted objects earlier, don't try to replace them
+            if (typeof inputText !== "string") { // We might have inserted objects earlier, don't try to replace them
                 continue;
             }
 
@@ -326,13 +326,13 @@ export function replaceByRegexes(text: string, mapping: IVariables | Tags): stri
                     replaced = mapping[regexpString];
                 }
 
-                if (typeof replaced === 'object') {
+                if (typeof replaced === "object") {
                     shouldWrapInSpan = true;
                 }
 
                 // Here we also need to check that it actually is a string before comparing against one
                 // The head and tail are always strings
-                if (typeof replaced !== 'string' || replaced !== '') {
+                if (typeof replaced !== "string" || replaced !== "") {
                     parts.push(replaced);
                 }
 
@@ -357,7 +357,7 @@ export function replaceByRegexes(text: string, mapping: IVariables | Tags): stri
             // remove the old element at the same time
             output.splice(outputIndex, 1, ...parts);
 
-            if (head !== '') { // Don't push empty nodes, they are of no use
+            if (head !== "") { // Don't push empty nodes, they are of no use
                 output.splice(outputIndex, 0, head);
             }
         }
@@ -366,16 +366,16 @@ export function replaceByRegexes(text: string, mapping: IVariables | Tags): stri
             // of e.g. plurals. It's still a bit suspicious, and could be due to an error, so log it.
             // However, not showing count is so common that it's not worth logging. And other commonly unused variables
             // here, if there are any.
-            if (regexpString !== '%\\(count\\)s') {
+            if (regexpString !== "%\\(count\\)s") {
                 logger.log(`Could not find ${regexp} in ${text}`);
             }
         }
     }
 
     if (shouldWrapInSpan) {
-        return React.createElement('span', null, ...output);
+        return React.createElement("span", null, ...output);
     } else {
-        return output.join('');
+        return output.join("");
     }
 }
 
@@ -409,7 +409,7 @@ export function setLanguage(preferredLangs: string | string[]) {
         }
         if (!langToUse) {
             // Fallback to en_EN if none is found
-            langToUse = 'en';
+            langToUse = "en";
             logger.error("Unable to find an appropriate language");
         }
 
@@ -426,10 +426,10 @@ export function setLanguage(preferredLangs: string | string[]) {
 
         // Set 'en' as fallback language:
         if (langToUse !== "en") {
-            return getLanguageRetry(i18nFolder + availLangs['en'].fileName);
+            return getLanguageRetry(i18nFolder + availLangs["en"].fileName);
         }
     }).then(async (langData) => {
-        if (langData) counterpart.registerTranslations('en', langData);
+        if (langData) counterpart.registerTranslations("en", langData);
         await registerCustomTranslations();
     });
 }
@@ -440,8 +440,8 @@ export function getAllLanguagesFromJson() {
         for (const langKey in langsObject) {
             if (langsObject.hasOwnProperty(langKey)) {
                 langs.push({
-                    'value': langKey,
-                    'label': langsObject[langKey].label,
+                    "value": langKey,
+                    "label": langsObject[langKey].label,
                 });
             }
         }
@@ -471,7 +471,7 @@ export function getLanguageFromBrowser() {
 export function getNormalizedLanguageKeys(language: string) {
     const languageKeys: string[] = [];
     const normalizedLanguage = normalizeLanguageKey(language);
-    const languageParts = normalizedLanguage.split('-');
+    const languageParts = normalizedLanguage.split("-");
     if (languageParts.length === 2 && languageParts[0] === languageParts[1]) {
         languageKeys.push(languageParts[0]);
     } else {
@@ -524,7 +524,7 @@ export function pickBestLanguage(langs: string[]): string {
 
     {
         // Neither of those? Try an english variant.
-        const enIndex = normalisedLangs.findIndex((l) => l.startsWith('en'));
+        const enIndex = normalisedLangs.findIndex((l) => l.startsWith("en"));
         if (enIndex > -1) return langs[enIndex];
     }
 
@@ -535,10 +535,10 @@ export function pickBestLanguage(langs: string[]): string {
 function getLangsJson(): Promise<object> {
     return new Promise((resolve, reject) => {
         let url;
-        if (typeof(webpackLangJsonUrl) === 'string') { // in Jest this 'url' isn't a URL, so just fall through
+        if (typeof(webpackLangJsonUrl) === "string") { // in Jest this 'url' isn't a URL, so just fall through
             url = webpackLangJsonUrl;
         } else {
-            url = i18nFolder + 'languages.json';
+            url = i18nFolder + "languages.json";
         }
         request(
             { method: "GET", url },

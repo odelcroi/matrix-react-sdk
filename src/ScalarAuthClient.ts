@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import url from 'url';
+import url from "url";
 import request from "browser-request";
 import { SERVICE_TYPES } from "matrix-js-sdk/src/service-types";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import SettingsStore from "./settings/SettingsStore";
-import { Service, startTermsFlow, TermsInteractionCallback, TermsNotSignedError } from './Terms';
+import { Service, startTermsFlow, TermsInteractionCallback, TermsNotSignedError } from "./Terms";
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import SdkConfig from "./SdkConfig";
 import { WidgetType } from "./widgets/WidgetType";
@@ -115,7 +115,7 @@ export default class ScalarAuthClient {
             }, (err, response, body) => {
                 if (err) {
                     reject(err);
-                } else if (body && body.errcode === 'M_TERMS_NOT_SIGNED') {
+                } else if (body && body.errcode === "M_TERMS_NOT_SIGNED") {
                     reject(new TermsNotSignedError());
                 } else if (response.statusCode / 100 !== 2) {
                     reject(body);
@@ -153,8 +153,8 @@ export default class ScalarAuthClient {
                 // a grace period to update their configs, then use the rest url as
                 // a regular base url.
                 const parsedImRestUrl = url.parse(this.apiUrl);
-                parsedImRestUrl.path = '';
-                parsedImRestUrl.pathname = '';
+                parsedImRestUrl.path = "";
+                parsedImRestUrl.pathname = "";
                 return startTermsFlow([new Service(
                     SERVICE_TYPES.IM,
                     url.format(parsedImRestUrl),
@@ -188,8 +188,8 @@ export default class ScalarAuthClient {
 
         return new Promise(function(resolve, reject) {
             request({
-                method: 'POST',
-                uri: scalarRestUrl + '/register',
+                method: "POST",
+                uri: scalarRestUrl + "/register",
                 qs: { v: imApiVersion },
                 body: openidTokenObject,
                 json: true,
@@ -208,13 +208,13 @@ export default class ScalarAuthClient {
     }
 
     getScalarPageTitle(url: string): Promise<string> {
-        let scalarPageLookupUrl = this.apiUrl + '/widgets/title_lookup';
+        let scalarPageLookupUrl = this.apiUrl + "/widgets/title_lookup";
         scalarPageLookupUrl = this.getStarterLink(scalarPageLookupUrl);
-        scalarPageLookupUrl += '&curl=' + encodeURIComponent(url);
+        scalarPageLookupUrl += "&curl=" + encodeURIComponent(url);
 
         return new Promise(function(resolve, reject) {
             request({
-                method: 'GET',
+                method: "GET",
                 uri: scalarPageLookupUrl,
                 json: true,
             }, (err, response, body) => {
@@ -244,17 +244,17 @@ export default class ScalarAuthClient {
      * @return {Promise}           Resolves on completion
      */
     disableWidgetAssets(widgetType: WidgetType, widgetId: string): Promise<void> {
-        let url = this.apiUrl + '/widgets/set_assets_state';
+        let url = this.apiUrl + "/widgets/set_assets_state";
         url = this.getStarterLink(url);
         return new Promise<void>((resolve, reject) => {
             request({
-                method: 'GET', // XXX: Actions shouldn't be GET requests
+                method: "GET", // XXX: Actions shouldn't be GET requests
                 uri: url,
                 json: true,
                 qs: {
-                    'widget_type': widgetType.preferred,
-                    'widget_id': widgetId,
-                    'state': 'disable',
+                    "widget_type": widgetType.preferred,
+                    "widget_id": widgetId,
+                    "state": "disable",
                 },
             }, (err, response, body) => {
                 if (err) {
@@ -279,10 +279,10 @@ export default class ScalarAuthClient {
         url += "&room_name=" + encodeURIComponent(roomName);
         url += "&theme=" + encodeURIComponent(SettingsStore.getValue("theme"));
         if (id) {
-            url += '&integ_id=' + encodeURIComponent(id);
+            url += "&integ_id=" + encodeURIComponent(id);
         }
         if (screen) {
-            url += '&screen=' + encodeURIComponent(screen);
+            url += "&screen=" + encodeURIComponent(screen);
         }
         return url;
     }

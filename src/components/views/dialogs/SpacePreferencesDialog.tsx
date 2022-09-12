@@ -17,7 +17,7 @@ limitations under the License.
 import React, { ChangeEvent } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 
-import { _t, _td } from '../../../languageHandler';
+import { _t, _td } from "../../../languageHandler";
 import BaseDialog from "../dialogs/BaseDialog";
 import { IDialogProps } from "./IDialogProps";
 import TabbedView, { Tab } from "../../structures/TabbedView";

@@ -17,16 +17,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { CallType, MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
-import classNames from 'classnames';
+import React from "react";
+import { CallType, MatrixCall } from "matrix-js-sdk/src/webrtc/call";
+import classNames from "classnames";
 
-import LegacyCallHandler, { LegacyCallHandlerEvent } from '../LegacyCallHandler';
-import { MatrixClientPeg } from '../MatrixClientPeg';
-import { _t } from '../languageHandler';
-import RoomAvatar from '../components/views/avatars/RoomAvatar';
-import AccessibleTooltipButton from '../components/views/elements/AccessibleTooltipButton';
-import AccessibleButton from '../components/views/elements/AccessibleButton';
+import LegacyCallHandler, { LegacyCallHandlerEvent } from "../LegacyCallHandler";
+import { MatrixClientPeg } from "../MatrixClientPeg";
+import { _t } from "../languageHandler";
+import RoomAvatar from "../components/views/avatars/RoomAvatar";
+import AccessibleTooltipButton from "../components/views/elements/AccessibleTooltipButton";
+import AccessibleButton from "../components/views/elements/AccessibleButton";
 
 export const getIncomingLegacyCallToastKey = (callId: string) => `call_${callId}`;
 

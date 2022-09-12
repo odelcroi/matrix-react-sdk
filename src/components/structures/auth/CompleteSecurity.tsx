@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
-import { _t } from '../../../languageHandler';
-import { SetupEncryptionStore, Phase } from '../../../stores/SetupEncryptionStore';
+import { _t } from "../../../languageHandler";
+import { SetupEncryptionStore, Phase } from "../../../stores/SetupEncryptionStore";
 import SetupEncryptionBody from "./SetupEncryptionBody";
-import AccessibleButton from '../../views/elements/AccessibleButton';
+import AccessibleButton from "../../views/elements/AccessibleButton";
 import CompleteSecurityBody from "../../views/auth/CompleteSecurityBody";
 import AuthPage from "../../views/auth/AuthPage";
 

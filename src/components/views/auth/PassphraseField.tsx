@@ -55,7 +55,7 @@ class PassphraseField extends PureComponent<IProps> {
         },
         deriveData: async ({ value }) => {
             if (!value) return null;
-            const { scorePassword } = await import('../../../utils/PasswordScorer');
+            const { scorePassword } = await import("../../../utils/PasswordScorer");
             return scorePassword(value);
         },
         rules: [

@@ -15,17 +15,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { ResizeMethod } from 'matrix-js-sdk/src/@types/partials';
+import { ResizeMethod } from "matrix-js-sdk/src/@types/partials";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import dis from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
 import BaseAvatar from "./BaseAvatar";
 import { mediaFromMxc } from "../../../customisations/Media";
-import { CardContext } from '../right_panel/context';
-import UserIdentifierCustomisations from '../../../customisations/UserIdentifier';
+import { CardContext } from "../right_panel/context";
+import UserIdentifierCustomisations from "../../../customisations/UserIdentifier";
 import SettingsStore from "../../../settings/SettingsStore";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
@@ -56,7 +56,7 @@ export default class MemberAvatar extends React.PureComponent<IProps, IState> {
     public static defaultProps = {
         width: 40,
         height: 40,
-        resizeMethod: 'crop',
+        resizeMethod: "crop",
         viewUserOnClick: false,
     };
 

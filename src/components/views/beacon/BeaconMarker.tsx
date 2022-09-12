@@ -14,17 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactNode, useContext } from 'react';
-import maplibregl from 'maplibre-gl';
+import React, { ReactNode, useContext } from "react";
+import maplibregl from "maplibre-gl";
 import {
     Beacon,
     BeaconEvent,
-} from 'matrix-js-sdk/src/matrix';
-import { LocationAssetType } from 'matrix-js-sdk/src/@types/location';
+} from "matrix-js-sdk/src/matrix";
+import { LocationAssetType } from "matrix-js-sdk/src/@types/location";
 
-import MatrixClientContext from '../../../contexts/MatrixClientContext';
-import { useEventEmitterState } from '../../../hooks/useEventEmitter';
-import SmartMarker from '../location/SmartMarker';
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import { useEventEmitterState } from "../../../hooks/useEventEmitter";
+import SmartMarker from "../location/SmartMarker";
 
 interface Props {
     map: maplibregl.Map;

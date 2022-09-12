@@ -14,16 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import { _t } from '../../../../languageHandler';
-import Spinner from '../../elements/Spinner';
-import SettingsSubsection from '../shared/SettingsSubsection';
-import DeviceDetails from './DeviceDetails';
-import DeviceExpandDetailsButton from './DeviceExpandDetailsButton';
-import DeviceTile from './DeviceTile';
-import { DeviceVerificationStatusCard } from './DeviceVerificationStatusCard';
-import { DeviceWithVerification } from './types';
+import { _t } from "../../../../languageHandler";
+import Spinner from "../../elements/Spinner";
+import SettingsSubsection from "../shared/SettingsSubsection";
+import DeviceDetails from "./DeviceDetails";
+import DeviceExpandDetailsButton from "./DeviceExpandDetailsButton";
+import DeviceTile from "./DeviceTile";
+import { DeviceVerificationStatusCard } from "./DeviceVerificationStatusCard";
+import { DeviceWithVerification } from "./types";
 
 interface Props {
     device?: DeviceWithVerification;
@@ -37,7 +37,7 @@ const CurrentDeviceSection: React.FC<Props> = ({
     const [isExpanded, setIsExpanded] = useState(false);
 
     return <SettingsSubsection
-        heading={_t('Current session')}
+        heading={_t("Current session")}
         data-testid='current-session-section'
     >
         { isLoading && <Spinner /> }

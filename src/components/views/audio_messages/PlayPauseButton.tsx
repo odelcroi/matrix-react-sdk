@@ -52,10 +52,10 @@ export default class PlayPauseButton extends React.PureComponent<IProps> {
         const { playback, playbackPhase, ...restProps } = this.props;
         const isPlaying = playback.isPlaying;
         const isDisabled = playbackPhase === PlaybackState.Decoding;
-        const classes = classNames('mx_PlayPauseButton', {
-            'mx_PlayPauseButton_play': !isPlaying,
-            'mx_PlayPauseButton_pause': isPlaying,
-            'mx_PlayPauseButton_disabled': isDisabled,
+        const classes = classNames("mx_PlayPauseButton", {
+            "mx_PlayPauseButton_play": !isPlaying,
+            "mx_PlayPauseButton_pause": isPlaying,
+            "mx_PlayPauseButton_disabled": isDisabled,
         });
 
         return <AccessibleTooltipButton

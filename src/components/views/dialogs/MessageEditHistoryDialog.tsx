@@ -14,17 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { defer } from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixClient } from 'matrix-js-sdk/src/client';
+import { MatrixClient } from "matrix-js-sdk/src/client";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import { _t } from '../../../languageHandler';
-import { wantsDateSeparator } from '../../../DateUtils';
-import SettingsStore from '../../../settings/SettingsStore';
+import { _t } from "../../../languageHandler";
+import { wantsDateSeparator } from "../../../DateUtils";
+import SettingsStore from "../../../settings/SettingsStore";
 import BaseDialog from "./BaseDialog";
 import ScrollPanel from "../../structures/ScrollPanel";
 import Spinner from "../elements/Spinner";

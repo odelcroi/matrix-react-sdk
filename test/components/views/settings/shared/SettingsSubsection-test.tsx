@@ -14,30 +14,30 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { render } from '@testing-library/react';
+import React from "react";
+import { render } from "@testing-library/react";
 
-import SettingsSubsection from '../../../../../src/components/views/settings/shared/SettingsSubsection';
+import SettingsSubsection from "../../../../../src/components/views/settings/shared/SettingsSubsection";
 
-describe('<SettingsSubsection />', () => {
+describe("<SettingsSubsection />", () => {
     const defaultProps = {
-        heading: 'Test',
+        heading: "Test",
         children: <div>test settings content</div>,
     };
     const getComponent = (props = {}): React.ReactElement =>
         (<SettingsSubsection {...defaultProps} {...props} />);
 
-    it('renders without description', () => {
+    it("renders without description", () => {
         const { container } = render(getComponent());
         expect(container).toMatchSnapshot();
     });
 
-    it('renders with plain text description', () => {
-        const { container } = render(getComponent({ description: 'This describes the subsection' }));
+    it("renders with plain text description", () => {
+        const { container } = render(getComponent({ description: "This describes the subsection" }));
         expect(container).toMatchSnapshot();
     });
 
-    it('renders with react element description', () => {
+    it("renders with react element description", () => {
         const description = <p>This describes the section <a href='/#'>link</a></p>;
         const { container } = render(getComponent({ description }));
         expect(container).toMatchSnapshot();

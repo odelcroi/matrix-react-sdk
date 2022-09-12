@@ -58,7 +58,7 @@ export default class PlainTextExporter extends Exporter {
 
         rplSource = match[2].substring(1);
         // Get the first non-blank line from the source.
-        const lines = rplSource.split('\n').filter((line) => !/^\s*$/.test(line));
+        const lines = rplSource.split("\n").filter((line) => !/^\s*$/.test(line));
         if (lines.length > 0) {
             // Cut to a maximum length.
             rplSource = lines[0].substring(0, REPLY_SOURCE_MAX_LENGTH);

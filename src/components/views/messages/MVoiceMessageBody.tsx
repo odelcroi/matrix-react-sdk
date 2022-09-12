@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from "react";
 
-import InlineSpinner from '../elements/InlineSpinner';
+import InlineSpinner from "../elements/InlineSpinner";
 import { _t } from "../../../languageHandler";
 import RecordingPlayback from "../audio_messages/RecordingPlayback";
 import MAudioBody from "./MAudioBody";

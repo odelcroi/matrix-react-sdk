@@ -15,12 +15,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ContextType, MutableRefObject } from 'react';
+import React, { ContextType, MutableRefObject } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 
-import WidgetUtils from '../../../utils/WidgetUtils';
+import WidgetUtils from "../../../utils/WidgetUtils";
 import AppTile from "./AppTile";
-import { IApp } from '../../../stores/WidgetStore';
+import { IApp } from "../../../stores/WidgetStore";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 
 interface IProps {

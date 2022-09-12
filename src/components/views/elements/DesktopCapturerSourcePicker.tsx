@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import classNames from 'classnames';
+import React from "react";
+import classNames from "classnames";
 
-import { _t } from '../../../languageHandler';
+import { _t } from "../../../languageHandler";
 import BaseDialog from "..//dialogs/BaseDialog";
 import DialogButtons from "./DialogButtons";
-import AccessibleButton from './AccessibleButton';
-import TabbedView, { Tab, TabLocation } from '../../structures/TabbedView';
+import AccessibleButton from "./AccessibleButton";
+import TabbedView, { Tab, TabLocation } from "../../structures/TabbedView";
 import PlatformPeg from "../../../PlatformPeg";
 
 export function getDesktopCapturerSources(): Promise<Array<DesktopCapturerSource>> {

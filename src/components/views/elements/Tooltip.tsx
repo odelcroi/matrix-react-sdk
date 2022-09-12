@@ -17,9 +17,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { CSSProperties } from 'react';
-import ReactDOM from 'react-dom';
-import classNames from 'classnames';
+import React, { CSSProperties } from "react";
+import ReactDOM from "react-dom";
+import classNames from "classnames";
 
 import UIStore from "../../../stores/UIStore";
 import { objectHasDiff } from "../../../utils/objects";
@@ -82,7 +82,7 @@ export default class Tooltip extends React.PureComponent<ITooltipProps, State> {
     }
 
     public componentDidMount() {
-        window.addEventListener('scroll', this.updatePosition, {
+        window.addEventListener("scroll", this.updatePosition, {
             passive: true,
             capture: true,
         });
@@ -100,7 +100,7 @@ export default class Tooltip extends React.PureComponent<ITooltipProps, State> {
 
     // Remove the wrapper element, as the tooltip has finished using it
     public componentWillUnmount() {
-        window.removeEventListener('scroll', this.updatePosition, {
+        window.removeEventListener("scroll", this.updatePosition, {
             capture: true,
         });
     }

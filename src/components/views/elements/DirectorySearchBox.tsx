@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ChangeEvent, createRef } from 'react';
+import React, { ChangeEvent, createRef } from "react";
 
-import { _t } from '../../../languageHandler';
+import { _t } from "../../../languageHandler";
 import AccessibleButton from "./AccessibleButton";
 
 interface IProps {
@@ -40,12 +40,12 @@ export default class DirectorySearchBox extends React.Component<IProps, IState> 
         super(props);
 
         this.state = {
-            value: this.props.initialText || '',
+            value: this.props.initialText || "",
         };
     }
 
     private onClearClick = (): void => {
-        this.setState({ value: '' });
+        this.setState({ value: "" });
 
         if (this.input.current) {
             this.input.current.focus();
@@ -66,7 +66,7 @@ export default class DirectorySearchBox extends React.Component<IProps, IState> 
     };
 
     private onKeyUp = (ev: React.KeyboardEvent): void => {
-        if (ev.key == 'Enter' && this.props.showJoinButton) {
+        if (ev.key == "Enter" && this.props.showJoinButton) {
             if (this.props.onJoinClick) {
                 this.props.onJoinClick(this.state.value);
             }

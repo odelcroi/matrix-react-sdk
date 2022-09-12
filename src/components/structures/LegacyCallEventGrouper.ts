@@ -17,9 +17,9 @@ limitations under the License.
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { CallEvent, CallState, CallType, MatrixCall } from "matrix-js-sdk/src/webrtc/call";
-import { EventEmitter } from 'events';
+import { EventEmitter } from "events";
 
-import LegacyCallHandler, { LegacyCallHandlerEvent } from '../../LegacyCallHandler';
+import LegacyCallHandler, { LegacyCallHandlerEvent } from "../../LegacyCallHandler";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 
 export enum LegacyCallEventGrouperEvent {
@@ -103,7 +103,7 @@ export default class LegacyCallEventGrouper extends EventEmitter {
         if (!invite) return;
 
         // FIXME: Find a better way to determine this from the event?
-        if (invite.getContent()?.offer?.sdp?.indexOf('m=video') !== -1) return false;
+        if (invite.getContent()?.offer?.sdp?.indexOf("m=video") !== -1) return false;
         return true;
     }
 

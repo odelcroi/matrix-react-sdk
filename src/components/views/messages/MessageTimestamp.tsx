@@ -15,9 +15,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
-import { formatFullDate, formatTime, formatFullTime, formatRelativeTime } from '../../../DateUtils';
+import { formatFullDate, formatTime, formatFullTime, formatRelativeTime } from "../../../DateUtils";
 
 interface IProps {
     ts: number;

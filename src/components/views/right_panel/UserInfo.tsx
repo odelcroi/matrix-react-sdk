@@ -17,36 +17,36 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import classNames from 'classnames';
-import { ClientEvent, MatrixClient } from 'matrix-js-sdk/src/client';
-import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
-import { User } from 'matrix-js-sdk/src/models/user';
-import { Room } from 'matrix-js-sdk/src/models/room';
-import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
+import classNames from "classnames";
+import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
+import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { User } from "matrix-js-sdk/src/models/user";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 
-import dis from '../../../dispatcher/dispatcher';
-import Modal from '../../../Modal';
-import { _t } from '../../../languageHandler';
-import DMRoomMap from '../../../utils/DMRoomMap';
-import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
-import SdkConfig from '../../../SdkConfig';
+import dis from "../../../dispatcher/dispatcher";
+import Modal from "../../../Modal";
+import { _t } from "../../../languageHandler";
+import DMRoomMap from "../../../utils/DMRoomMap";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
+import SdkConfig from "../../../SdkConfig";
 import { RoomViewStore } from "../../../stores/RoomViewStore";
 import MultiInviter from "../../../utils/MultiInviter";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import E2EIcon from "../rooms/E2EIcon";
 import { useTypedEventEmitter } from "../../../hooks/useEventEmitter";
-import { textualPowerLevel } from '../../../Roles';
+import { textualPowerLevel } from "../../../Roles";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
-import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
+import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePhases";
 import EncryptionPanel from "./EncryptionPanel";
-import { useAsyncMemo } from '../../../hooks/useAsyncMemo';
-import { legacyVerifyUser, verifyDevice, verifyUser } from '../../../verification';
+import { useAsyncMemo } from "../../../hooks/useAsyncMemo";
+import { legacyVerifyUser, verifyDevice, verifyUser } from "../../../verification";
 import { Action } from "../../../dispatcher/actions";
 import { UserTab } from "../dialogs/UserTab";
 import { useIsEncrypted } from "../../../hooks/useIsEncrypted";
@@ -72,12 +72,12 @@ import { bulkSpaceBehaviour } from "../../../utils/space";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
 import { TimelineRenderingType } from "../../../contexts/RoomContext";
-import RightPanelStore from '../../../stores/right-panel/RightPanelStore';
-import { IRightPanelCardState } from '../../../stores/right-panel/RightPanelStoreIPanelState';
-import UserIdentifierCustomisations from '../../../customisations/UserIdentifier';
+import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
+import { IRightPanelCardState } from "../../../stores/right-panel/RightPanelStoreIPanelState";
+import UserIdentifierCustomisations from "../../../customisations/UserIdentifier";
 import PosthogTrackers from "../../../PosthogTrackers";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
-import { DirectoryMember, startDmOnFirstMessage } from '../../../utils/direct-messages';
+import { DirectoryMember, startDmOnFirstMessage } from "../../../utils/direct-messages";
 
 export interface IDevice {
     deviceId: string;
@@ -396,7 +396,7 @@ const UserOptionsSection: React.FC<{
                         onClick={onReadReceiptButton}
                         className="mx_UserInfo_field"
                     >
-                        { _t('Jump to read receipt') }
+                        { _t("Jump to read receipt") }
                     </AccessibleButton>
                 );
             }
@@ -407,12 +407,12 @@ const UserOptionsSection: React.FC<{
                     onClick={onInsertPillButton}
                     className="mx_UserInfo_field"
                 >
-                    { _t('Mention') }
+                    { _t("Mention") }
                 </AccessibleButton>
             );
         }
 
-        if (canInvite && (member?.membership ?? 'leave') === 'leave' && shouldShowComponent(UIComponent.InviteUsers)) {
+        if (canInvite && (member?.membership ?? "leave") === "leave" && shouldShowComponent(UIComponent.InviteUsers)) {
             const roomId = member && member.roomId ? member.roomId : RoomViewStore.instance.getRoomId();
             const onInviteUserButton = async (ev: ButtonEvent) => {
                 try {
@@ -425,7 +425,7 @@ const UserOptionsSection: React.FC<{
                     });
                 } catch (err) {
                     Modal.createDialog(ErrorDialog, {
-                        title: _t('Failed to invite'),
+                        title: _t("Failed to invite"),
                         description: ((err && err.message) ? err.message : _t("Operation failed")),
                     });
                 }
@@ -439,7 +439,7 @@ const UserOptionsSection: React.FC<{
                     onClick={onInviteUserButton}
                     className="mx_UserInfo_field"
                 >
-                    { _t('Invite') }
+                    { _t("Invite") }
                 </AccessibleButton>
             );
         }
@@ -451,7 +451,7 @@ const UserOptionsSection: React.FC<{
             onClick={onShareUserClick}
             className="mx_UserInfo_field"
         >
-            { _t('Share Link to User') }
+            { _t("Share Link to User") }
         </AccessibleButton>
     );
 
@@ -1204,7 +1204,7 @@ const BasicUserInfo: React.FC<{
             logger.error(err);
 
             Modal.createDialog(ErrorDialog, {
-                title: _t('Failed to deactivate user'),
+                title: _t("Failed to deactivate user"),
                 description: ((err && err.message) ? err.message : _t("Operation failed")),
             });
         }

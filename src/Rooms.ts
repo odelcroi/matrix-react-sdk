@@ -17,8 +17,8 @@ limitations under the License.
 import { Room } from "matrix-js-sdk/src/models/room";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 
-import { MatrixClientPeg } from './MatrixClientPeg';
-import AliasCustomisations from './customisations/Alias';
+import { MatrixClientPeg } from "./MatrixClientPeg";
+import AliasCustomisations from "./customisations/Alias";
 
 /**
  * Given a room object, return the alias we should use for it,

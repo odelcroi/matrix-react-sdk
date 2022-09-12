@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import * as React from 'react';
+import * as React from "react";
 import {
     ClientWidgetApi,
     IModalWidgetCloseRequest,
@@ -31,8 +31,8 @@ import {
     WidgetKind,
 } from "matrix-widget-api";
 
-import BaseDialog from './BaseDialog';
-import { _t, getUserLanguage } from '../../../languageHandler';
+import BaseDialog from "./BaseDialog";
+import { _t, getUserLanguage } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
 import { StopGapWidgetDriver } from "../../../stores/widgets/StopGapWidgetDriver";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -141,12 +141,12 @@ export default class ModalWidgetDialog extends React.PureComponent<IProps, IStat
         // Add in some legacy support sprinkles (for non-popout widgets)
         // TODO: Replace these with proper widget params
         // See https://github.com/matrix-org/matrix-doc/pull/1958/files#r405714833
-        parsed.searchParams.set('widgetId', this.widget.id);
-        parsed.searchParams.set('parentUrl', window.location.href.split('#', 2)[0]);
+        parsed.searchParams.set("widgetId", this.widget.id);
+        parsed.searchParams.set("parentUrl", window.location.href.split("#", 2)[0]);
 
         // Replace the encoded dollar signs back to dollar signs. They have no special meaning
         // in HTTP, but URL parsers encode them anyways.
-        const widgetUrl = parsed.toString().replace(/%24/g, '$');
+        const widgetUrl = parsed.toString().replace(/%24/g, "$");
 
         let buttons;
         if (this.props.widgetDefinition.buttons) {

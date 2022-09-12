@@ -185,7 +185,7 @@ describe("AppTile", () => {
     it("distinguishes widgets with the same ID in different rooms", async () => {
         // Set up right panel state
         const realGetValue = SettingsStore.getValue;
-        jest.spyOn(SettingsStore, 'getValue').mockImplementation((name, roomId) => {
+        jest.spyOn(SettingsStore, "getValue").mockImplementation((name, roomId) => {
             if (name === "RightPanel.phases") {
                 if (roomId === "r1") {
                     return {
@@ -329,28 +329,28 @@ describe("AppTile", () => {
                 </MatrixClientContext.Provider>
             ));
 
-            moveToContainerSpy = jest.spyOn(WidgetLayoutStore.instance, 'moveToContainer');
+            moveToContainerSpy = jest.spyOn(WidgetLayoutStore.instance, "moveToContainer");
         });
 
         it("requiresClient should be true", () => {
-            expect(wrapper.state('requiresClient')).toBe(true);
+            expect(wrapper.state("requiresClient")).toBe(true);
         });
 
         it("clicking 'minimise' should send the widget to the right", () => {
-            const minimiseButton = wrapper.find('.mx_AppTileMenuBar_iconButton_minimise');
-            minimiseButton.first().simulate('click');
+            const minimiseButton = wrapper.find(".mx_AppTileMenuBar_iconButton_minimise");
+            minimiseButton.first().simulate("click");
             expect(moveToContainerSpy).toHaveBeenCalledWith(r1, app1, Container.Right);
         });
 
         it("clicking 'maximise' should send the widget to the center", () => {
-            const minimiseButton = wrapper.find('.mx_AppTileMenuBar_iconButton_maximise');
-            minimiseButton.first().simulate('click');
+            const minimiseButton = wrapper.find(".mx_AppTileMenuBar_iconButton_maximise");
+            minimiseButton.first().simulate("click");
             expect(moveToContainerSpy).toHaveBeenCalledWith(r1, app1, Container.Center);
         });
 
         describe("for a maximised (centered) widget", () => {
             beforeEach(() => {
-                jest.spyOn(WidgetLayoutStore.instance, 'isInContainer').mockImplementation(
+                jest.spyOn(WidgetLayoutStore.instance, "isInContainer").mockImplementation(
                     (room: Optional<Room>, widget: IApp, container: Container) => {
                         return room === r1 && widget === app1 && container === Container.Center;
                     },
@@ -358,8 +358,8 @@ describe("AppTile", () => {
             });
 
             it("clicking 'un-maximise' should send the widget to the top", () => {
-                const unMaximiseButton = wrapper.find('.mx_AppTileMenuBar_iconButton_collapse');
-                unMaximiseButton.first().simulate('click');
+                const unMaximiseButton = wrapper.find(".mx_AppTileMenuBar_iconButton_collapse");
+                unMaximiseButton.first().simulate("click");
                 expect(moveToContainerSpy).toHaveBeenCalledWith(r1, app1, Container.Top);
             });
         });
@@ -390,7 +390,7 @@ describe("AppTile", () => {
             });
 
             it("requiresClient should be false", () => {
-                expect(wrapper.state('requiresClient')).toBe(false);
+                expect(wrapper.state("requiresClient")).toBe(false);
             });
         });
     });

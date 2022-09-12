@@ -17,7 +17,7 @@ limitations under the License.
 */
 
 import { Room } from "matrix-js-sdk/src/models/room";
-import classNames from 'classnames';
+import classNames from "classnames";
 import { Dispatcher } from "flux";
 import { Enable, Resizable } from "re-resizable";
 import { Direction } from "re-resizable/lib/resizer";
@@ -198,8 +198,8 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         }
 
         // Do the same check used on props for state, without the rooms we're going to no-op
-        const prevStateNoRooms = objectExcluding(this.state, ['rooms']);
-        const nextStateNoRooms = objectExcluding(nextState, ['rooms']);
+        const prevStateNoRooms = objectExcluding(this.state, ["rooms"]);
+        const nextStateNoRooms = objectExcluding(nextState, ["rooms"]);
         if (objectHasDiff(prevStateNoRooms, nextStateNoRooms)) {
             return true;
         }
@@ -448,12 +448,12 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         const listScrollTop = Math.round(list.scrollTop);
         const isAtTop = listScrollTop <= Math.round(HEADER_HEIGHT);
         const isAtBottom = listScrollTop >= Math.round(list.scrollHeight - list.offsetHeight);
-        const isStickyTop = possibleSticky.classList.contains('mx_RoomSublist_headerContainer_stickyTop');
-        const isStickyBottom = possibleSticky.classList.contains('mx_RoomSublist_headerContainer_stickyBottom');
+        const isStickyTop = possibleSticky.classList.contains("mx_RoomSublist_headerContainer_stickyTop");
+        const isStickyBottom = possibleSticky.classList.contains("mx_RoomSublist_headerContainer_stickyBottom");
 
         if ((isStickyBottom && !isAtBottom) || (isStickyTop && !isAtTop)) {
             // is sticky - jump to list
-            sublist.scrollIntoView({ behavior: 'smooth' });
+            sublist.scrollIntoView({ behavior: "smooth" });
         } else {
             // on screen - toggle collapse
             const isExpanded = this.state.isExpanded;
@@ -461,7 +461,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
             // if the bottom list is collapsed then scroll it in so it doesn't expand off screen
             if (!isExpanded && isStickyBottom) {
                 setImmediate(() => {
-                    sublist.scrollIntoView({ behavior: 'smooth' });
+                    sublist.scrollIntoView({ behavior: "smooth" });
                 });
             }
         }
@@ -677,13 +677,13 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                     }
 
                     const collapseClasses = classNames({
-                        'mx_RoomSublist_collapseBtn': true,
-                        'mx_RoomSublist_collapseBtn_collapsed': !this.state.isExpanded && !this.props.forceExpanded,
+                        "mx_RoomSublist_collapseBtn": true,
+                        "mx_RoomSublist_collapseBtn_collapsed": !this.state.isExpanded && !this.props.forceExpanded,
                     });
 
                     const classes = classNames({
-                        'mx_RoomSublist_headerContainer': true,
-                        'mx_RoomSublist_headerContainer_withAux': !!addRoomButton,
+                        "mx_RoomSublist_headerContainer": true,
+                        "mx_RoomSublist_headerContainer_withAux": !!addRoomButton,
                     });
 
                     const badgeContainer = (
@@ -749,10 +749,10 @@ export default class RoomSublist extends React.Component<IProps, IState> {
     public render(): React.ReactElement {
         const visibleTiles = this.renderVisibleTiles();
         const classes = classNames({
-            'mx_RoomSublist': true,
-            'mx_RoomSublist_hasMenuOpen': !!this.state.contextMenuPosition,
-            'mx_RoomSublist_minimized': this.props.isMinimized,
-            'mx_RoomSublist_hidden': (
+            "mx_RoomSublist": true,
+            "mx_RoomSublist_hasMenuOpen": !!this.state.contextMenuPosition,
+            "mx_RoomSublist_minimized": this.props.isMinimized,
+            "mx_RoomSublist_hidden": (
                 !this.state.rooms.length && !this.props.extraTiles?.length && this.props.alwaysVisible !== true
             ),
         });
@@ -775,7 +775,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
             const minTilesPx = layout.tilesToPixelsWithPadding(minTiles, minHeightPadding);
             const maxTilesPx = layout.tilesToPixelsWithPadding(this.numTiles, this.padding);
             const showMoreBtnClasses = classNames({
-                'mx_RoomSublist_showNButton': true,
+                "mx_RoomSublist_showNButton": true,
             });
 
             // If we're hiding rooms, show a 'show more' button to the user. This button
@@ -865,8 +865,8 @@ export default class RoomSublist extends React.Component<IProps, IState> {
             // only mathematically 7 possible).
 
             const handleWrapperClasses = classNames({
-                'mx_RoomSublist_resizerHandles': true,
-                'mx_RoomSublist_resizerHandles_showNButton': !!showNButton,
+                "mx_RoomSublist_resizerHandles": true,
+                "mx_RoomSublist_resizerHandles_showNButton": !!showNButton,
             });
 
             content = (

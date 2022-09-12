@@ -14,46 +14,46 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, KeyboardEvent } from 'react';
-import { Thread, THREAD_RELATION_TYPE, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
-import { Room } from 'matrix-js-sdk/src/models/room';
-import { IEventRelation, MatrixEvent } from 'matrix-js-sdk/src/models/event';
-import { TimelineWindow } from 'matrix-js-sdk/src/timeline-window';
-import { Direction } from 'matrix-js-sdk/src/models/event-timeline';
-import { IRelationsRequestOpts } from 'matrix-js-sdk/src/@types/requests';
-import { logger } from 'matrix-js-sdk/src/logger';
+import React, { createRef, KeyboardEvent } from "react";
+import { Thread, THREAD_RELATION_TYPE, ThreadEvent } from "matrix-js-sdk/src/models/thread";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { IEventRelation, MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { TimelineWindow } from "matrix-js-sdk/src/timeline-window";
+import { Direction } from "matrix-js-sdk/src/models/event-timeline";
+import { IRelationsRequestOpts } from "matrix-js-sdk/src/@types/requests";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import BaseCard from "../views/right_panel/BaseCard";
 import { RightPanelPhases } from "../../stores/right-panel/RightPanelStorePhases";
-import ResizeNotifier from '../../utils/ResizeNotifier';
-import MessageComposer from '../views/rooms/MessageComposer';
-import { RoomPermalinkCreator } from '../../utils/permalinks/Permalinks';
-import { Layout } from '../../settings/enums/Layout';
-import TimelinePanel from './TimelinePanel';
+import ResizeNotifier from "../../utils/ResizeNotifier";
+import MessageComposer from "../views/rooms/MessageComposer";
+import { RoomPermalinkCreator } from "../../utils/permalinks/Permalinks";
+import { Layout } from "../../settings/enums/Layout";
+import TimelinePanel from "./TimelinePanel";
 import dis from "../../dispatcher/dispatcher";
-import { ActionPayload } from '../../dispatcher/payloads';
-import { Action } from '../../dispatcher/actions';
-import { MatrixClientPeg } from '../../MatrixClientPeg';
-import { E2EStatus } from '../../utils/ShieldUtils';
-import EditorStateTransfer from '../../utils/EditorStateTransfer';
-import RoomContext, { TimelineRenderingType } from '../../contexts/RoomContext';
-import ContentMessages from '../../ContentMessages';
-import UploadBar from './UploadBar';
-import { _t } from '../../languageHandler';
-import ThreadListContextMenu from '../views/context_menus/ThreadListContextMenu';
-import RightPanelStore from '../../stores/right-panel/RightPanelStore';
+import { ActionPayload } from "../../dispatcher/payloads";
+import { Action } from "../../dispatcher/actions";
+import { MatrixClientPeg } from "../../MatrixClientPeg";
+import { E2EStatus } from "../../utils/ShieldUtils";
+import EditorStateTransfer from "../../utils/EditorStateTransfer";
+import RoomContext, { TimelineRenderingType } from "../../contexts/RoomContext";
+import ContentMessages from "../../ContentMessages";
+import UploadBar from "./UploadBar";
+import { _t } from "../../languageHandler";
+import ThreadListContextMenu from "../views/context_menus/ThreadListContextMenu";
+import RightPanelStore from "../../stores/right-panel/RightPanelStore";
 import SettingsStore from "../../settings/SettingsStore";
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import FileDropTarget from "./FileDropTarget";
 import { getKeyBindingsManager } from "../../KeyBindingsManager";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
-import Measured from '../views/elements/Measured';
+import Measured from "../views/elements/Measured";
 import PosthogTrackers from "../../PosthogTrackers";
 import { ButtonEvent } from "../views/elements/AccessibleButton";
-import { RoomViewStore } from '../../stores/RoomViewStore';
+import { RoomViewStore } from "../../stores/RoomViewStore";
 import Spinner from "../views/elements/Spinner";
 import { ComposerInsertPayload, ComposerType } from "../../dispatcher/payloads/ComposerInsertPayload";
-import Heading from '../views/typography/Heading';
+import Heading from "../views/typography/Heading";
 
 interface IProps {
     room: Room;
@@ -162,7 +162,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
                     }
                 });
                 break;
-            case 'reply_to_event':
+            case "reply_to_event":
                 if (payload.context === TimelineRenderingType.Thread) {
                     this.setState({
                         replyToEvent: payload.event,

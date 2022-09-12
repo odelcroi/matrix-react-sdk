@@ -40,10 +40,10 @@ function memberEventDiff(ev: MatrixEvent): IDiff {
     const prevContent = ev.getPrevContent();
 
     const isMembershipChanged = content.membership !== prevContent.membership;
-    diff.isJoin = isMembershipChanged && content.membership === 'join';
-    diff.isPart = isMembershipChanged && content.membership === 'leave' && ev.getStateKey() === ev.getSender();
+    diff.isJoin = isMembershipChanged && content.membership === "join";
+    diff.isPart = isMembershipChanged && content.membership === "leave" && ev.getStateKey() === ev.getSender();
 
-    const isJoinToJoin = !isMembershipChanged && content.membership === 'join';
+    const isJoinToJoin = !isMembershipChanged && content.membership === "join";
     diff.isDisplaynameChange = isJoinToJoin && content.displayname !== prevContent.displayname;
     diff.isAvatarChange = isJoinToJoin && content.avatar_url !== prevContent.avatar_url;
     return diff;
@@ -65,7 +65,7 @@ export default function shouldHideEvent(ev: MatrixEvent, ctx?: IRoomState): bool
     // Hide redacted events
     // Deleted events with a thread are always shown regardless of user preference
     // to make sure that a thread can be accessible even if the root message is deleted
-    if (ev.isRedacted() && !isEnabled('showRedactions') && !ev.getThread()) return true;
+    if (ev.isRedacted() && !isEnabled("showRedactions") && !ev.getThread()) return true;
 
     // Hide replacement events since they update the original tile (if enabled)
     if (ev.isRelation(RelationType.Replace)) return true;
@@ -73,9 +73,9 @@ export default function shouldHideEvent(ev: MatrixEvent, ctx?: IRoomState): bool
     const eventDiff = memberEventDiff(ev);
 
     if (eventDiff.isMemberEvent) {
-        if ((eventDiff.isJoin || eventDiff.isPart) && !isEnabled('showJoinLeaves')) return true;
-        if (eventDiff.isAvatarChange && !isEnabled('showAvatarChanges')) return true;
-        if (eventDiff.isDisplaynameChange && !isEnabled('showDisplaynameChanges')) return true;
+        if ((eventDiff.isJoin || eventDiff.isPart) && !isEnabled("showJoinLeaves")) return true;
+        if (eventDiff.isAvatarChange && !isEnabled("showAvatarChanges")) return true;
+        if (eventDiff.isDisplaynameChange && !isEnabled("showDisplaynameChanges")) return true;
     }
 
     return false;

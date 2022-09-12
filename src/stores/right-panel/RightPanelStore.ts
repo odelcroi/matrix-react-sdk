@@ -18,19 +18,19 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { Optional } from "matrix-events-sdk";
 
-import defaultDispatcher from '../../dispatcher/dispatcher';
-import { pendingVerificationRequestForUser } from '../../verification';
+import defaultDispatcher from "../../dispatcher/dispatcher";
+import { pendingVerificationRequestForUser } from "../../verification";
 import SettingsStore from "../../settings/SettingsStore";
 import { RightPanelPhases } from "./RightPanelStorePhases";
 import { SettingLevel } from "../../settings/SettingLevel";
-import { UPDATE_EVENT } from '../AsyncStore';
-import { ReadyWatchingStore } from '../ReadyWatchingStore';
+import { UPDATE_EVENT } from "../AsyncStore";
+import { ReadyWatchingStore } from "../ReadyWatchingStore";
 import {
     convertToStatePanel,
     convertToStorePanel,
     IRightPanelCard,
     IRightPanelForRoom,
-} from './RightPanelStoreIPanelState';
+} from "./RightPanelStoreIPanelState";
 import { ActionPayload } from "../../dispatcher/payloads";
 import { Action } from "../../dispatcher/actions";
 import { ActiveRoomChangedPayload } from "../../dispatcher/payloads/ActiveRoomChangedPayload";
@@ -337,7 +337,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
         if (!isViewingRoom) {
             logger.warn(
                 `Tried to switch right panel to a room phase: ${targetPhase}, ` +
-                `but we are currently not viewing a room`,
+                "but we are currently not viewing a room",
             );
             return false;
         }

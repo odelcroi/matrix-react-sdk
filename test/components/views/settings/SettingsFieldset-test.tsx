@@ -12,16 +12,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { renderIntoDocument } from 'react-dom/test-utils';
+import React from "react";
+import { renderIntoDocument } from "react-dom/test-utils";
 
-import SettingsFieldset from '../../../../src/components/views/settings/SettingsFieldset';
+import SettingsFieldset from "../../../../src/components/views/settings/SettingsFieldset";
 
-describe('<SettingsFieldset />', () => {
+describe("<SettingsFieldset />", () => {
     const defaultProps = {
-        "legend": 'Who can read history?',
+        "legend": "Who can read history?",
         "children": <div>test</div>,
-        'data-test-id': 'test',
+        "data-test-id": "test",
     };
     const getComponent = (props = {}) => {
         const wrapper = renderIntoDocument<HTMLDivElement>(
@@ -30,16 +30,16 @@ describe('<SettingsFieldset />', () => {
         return wrapper.children[0];
     };
 
-    it('renders fieldset without description', () => {
+    it("renders fieldset without description", () => {
         expect(getComponent()).toMatchSnapshot();
     });
 
-    it('renders fieldset with plain text description', () => {
-        const description = 'Changes to who can read history.';
+    it("renders fieldset with plain text description", () => {
+        const description = "Changes to who can read history.";
         expect(getComponent({ description })).toMatchSnapshot();
     });
 
-    it('renders fieldset with react description', () => {
+    it("renders fieldset with react description", () => {
         const description = <><p>Test</p><a href='#test'>a link</a></>;
         expect(getComponent({ description })).toMatchSnapshot();
     });

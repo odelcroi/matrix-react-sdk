@@ -15,34 +15,34 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient } from 'matrix-js-sdk/src/client';
+import { MatrixClient } from "matrix-js-sdk/src/client";
 import React, { ReactNode } from "react";
 
-import { _t, _td } from '../languageHandler';
+import { _t, _td } from "../languageHandler";
 import {
     NotificationBodyEnabledController,
     NotificationsEnabledController,
 } from "./controllers/NotificationControllers";
-import ThemeController from './controllers/ThemeController';
-import PushToMatrixClientController from './controllers/PushToMatrixClientController';
+import ThemeController from "./controllers/ThemeController";
+import PushToMatrixClientController from "./controllers/PushToMatrixClientController";
 import ReloadOnChangeController from "./controllers/ReloadOnChangeController";
-import FontSizeController from './controllers/FontSizeController';
-import SystemFontController from './controllers/SystemFontController';
-import UseSystemFontController from './controllers/UseSystemFontController';
+import FontSizeController from "./controllers/FontSizeController";
+import SystemFontController from "./controllers/SystemFontController";
+import UseSystemFontController from "./controllers/UseSystemFontController";
 import { SettingLevel } from "./SettingLevel";
 import SettingController from "./controllers/SettingController";
-import { IS_MAC } from '../Keyboard';
+import { IS_MAC } from "../Keyboard";
 import UIFeatureController from "./controllers/UIFeatureController";
 import { UIFeature } from "./UIFeature";
 import { OrderedMultiController } from "./controllers/OrderedMultiController";
 import { Layout } from "./enums/Layout";
-import ReducedMotionController from './controllers/ReducedMotionController';
+import ReducedMotionController from "./controllers/ReducedMotionController";
 import IncompatibleController from "./controllers/IncompatibleController";
 import { ImageSize } from "./enums/ImageSize";
 import { MetaSpace } from "../stores/spaces";
 import SdkConfig from "../SdkConfig";
-import SlidingSyncController from './controllers/SlidingSyncController';
-import ThreadBetaController from './controllers/ThreadBetaController';
+import SlidingSyncController from "./controllers/SlidingSyncController";
+import ThreadBetaController from "./controllers/ThreadBetaController";
 import { FontWatcher } from "./watchers/FontWatcher";
 
 // These are just a bunch of helper arrays to avoid copy/pasting a bunch of times
@@ -411,7 +411,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         isFeature: true,
         labsGroup: LabGroup.Developer,
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
-        displayName: _td('Sliding Sync mode (under active development, cannot be disabled)'),
+        displayName: _td("Sliding Sync mode (under active development, cannot be disabled)"),
         default: false,
         controller: new SlidingSyncController(),
     },
@@ -455,24 +455,24 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "MessageComposerInput.suggestEmoji": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Enable Emoji suggestions while typing'),
+        displayName: _td("Enable Emoji suggestions while typing"),
         default: true,
-        invertedSettingName: 'MessageComposerInput.dontSuggestEmoji',
+        invertedSettingName: "MessageComposerInput.dontSuggestEmoji",
     },
     "MessageComposerInput.showStickersButton": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Show stickers button'),
+        displayName: _td("Show stickers button"),
         default: true,
         controller: new UIFeatureController(UIFeature.Widgets, false),
     },
     "MessageComposerInput.showPollsButton": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Show polls button'),
+        displayName: _td("Show polls button"),
         default: true,
     },
     "MessageComposerInput.insertTrailingColon": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Insert a trailing colon after user mentions at the start of a message'),
+        displayName: _td("Insert a trailing colon after user mentions at the start of a message"),
         default: true,
     },
     // TODO: Wire up appropriately to UI (FTUE notifications)
@@ -488,85 +488,85 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "showRedactions": {
         supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,
-        displayName: _td('Show a placeholder for removed messages'),
+        displayName: _td("Show a placeholder for removed messages"),
         default: true,
-        invertedSettingName: 'hideRedactions',
+        invertedSettingName: "hideRedactions",
     },
     "showJoinLeaves": {
         supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,
-        displayName: _td('Show join/leave messages (invites/removes/bans unaffected)'),
+        displayName: _td("Show join/leave messages (invites/removes/bans unaffected)"),
         default: true,
-        invertedSettingName: 'hideJoinLeaves',
+        invertedSettingName: "hideJoinLeaves",
     },
     "showAvatarChanges": {
         supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,
-        displayName: _td('Show avatar changes'),
+        displayName: _td("Show avatar changes"),
         default: true,
-        invertedSettingName: 'hideAvatarChanges',
+        invertedSettingName: "hideAvatarChanges",
     },
     "showDisplaynameChanges": {
         supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,
-        displayName: _td('Show display name changes'),
+        displayName: _td("Show display name changes"),
         default: true,
-        invertedSettingName: 'hideDisplaynameChanges',
+        invertedSettingName: "hideDisplaynameChanges",
     },
     "showReadReceipts": {
         supportedLevels: LEVELS_ROOM_SETTINGS,
-        displayName: _td('Show read receipts sent by other users'),
+        displayName: _td("Show read receipts sent by other users"),
         default: true,
-        invertedSettingName: 'hideReadReceipts',
+        invertedSettingName: "hideReadReceipts",
     },
     "showTwelveHourTimestamps": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Show timestamps in 12 hour format (e.g. 2:30pm)'),
+        displayName: _td("Show timestamps in 12 hour format (e.g. 2:30pm)"),
         default: false,
     },
     "alwaysShowTimestamps": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Always show message timestamps'),
+        displayName: _td("Always show message timestamps"),
         default: false,
     },
     "autoplayGifs": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Autoplay GIFs'),
+        displayName: _td("Autoplay GIFs"),
         default: false,
     },
     "autoplayVideo": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Autoplay videos'),
+        displayName: _td("Autoplay videos"),
         default: false,
     },
     "enableSyntaxHighlightLanguageDetection": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Enable automatic language detection for syntax highlighting'),
+        displayName: _td("Enable automatic language detection for syntax highlighting"),
         default: false,
     },
     "expandCodeByDefault": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Expand code blocks by default'),
+        displayName: _td("Expand code blocks by default"),
         default: false,
     },
     "showCodeLineNumbers": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Show line numbers in code blocks'),
+        displayName: _td("Show line numbers in code blocks"),
         default: true,
     },
     "scrollToBottomOnMessageSent": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Jump to the bottom of the timeline when you send a message'),
+        displayName: _td("Jump to the bottom of the timeline when you send a message"),
         default: true,
     },
     "Pill.shouldShowPillAvatar": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Show avatars in user and room mentions'),
+        displayName: _td("Show avatars in user and room mentions"),
         default: true,
-        invertedSettingName: 'Pill.shouldHidePillAvatar',
+        invertedSettingName: "Pill.shouldHidePillAvatar",
     },
     "TextualBody.enableBigEmoji": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Enable big emoji in chat'),
+        displayName: _td("Enable big emoji in chat"),
         default: true,
-        invertedSettingName: 'TextualBody.disableBigEmoji',
+        invertedSettingName: "TextualBody.disableBigEmoji",
     },
     "MessageComposerInput.isRichTextEnabled": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
@@ -580,7 +580,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td("Send typing notifications"),
         default: true,
-        invertedSettingName: 'dontSendTypingNotifications',
+        invertedSettingName: "dontSendTypingNotifications",
     },
     "showTypingNotifications": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
@@ -604,12 +604,12 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "MessageComposerInput.autoReplaceEmoji": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Automatically replace plain text Emoji'),
+        displayName: _td("Automatically replace plain text Emoji"),
         default: false,
     },
     "MessageComposerInput.useMarkdown": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Enable Markdown'),
+        displayName: _td("Enable Markdown"),
         description: () => _t(
             "Start messages with <code>/plain</code> to send without markdown and <code>/md</code> to send with.",
             {},
@@ -619,7 +619,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "VideoView.flipVideoHorizontally": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Mirror local video feed'),
+        displayName: _td("Mirror local video feed"),
         default: false,
     },
     "theme": {
@@ -655,7 +655,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
             "(if you enable this, the other party might be able to see your IP address)",
         ),
         default: true,
-        invertedSettingName: 'webRtcForceTURN',
+        invertedSettingName: "webRtcForceTURN",
     },
     "webrtc_audiooutput": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
@@ -708,7 +708,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "pseudonymousAnalyticsOptIn": {
         supportedLevels: [SettingLevel.ACCOUNT],
-        displayName: _td('Send analytics data'),
+        displayName: _td("Send analytics data"),
         default: null,
     },
     "FTUE.useCaseSelection": {
@@ -733,8 +733,8 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: [SettingLevel.ROOM_DEVICE, SettingLevel.DEVICE],
         supportedLevelsAreOrdered: true,
         displayName: {
-            "default": _td('Never send encrypted messages to unverified sessions from this session'),
-            "room-device": _td('Never send encrypted messages to unverified sessions in this room from this session'),
+            "default": _td("Never send encrypted messages to unverified sessions from this session"),
+            "room-device": _td("Never send encrypted messages to unverified sessions in this room from this session"),
         },
         default: false,
         controller: new UIFeatureController(UIFeature.AdvancedEncryption),
@@ -742,7 +742,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     "urlPreviewsEnabled": {
         supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,
         displayName: {
-            "default": _td('Enable inline URL previews by default'),
+            "default": _td("Enable inline URL previews by default"),
             "room-account": _td("Enable URL previews for this room (only affects you)"),
             "room": _td("Enable URL previews by default for participants in this room"),
         },
@@ -777,12 +777,12 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "enableWidgetScreenshots": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Enable widget screenshots on supported widgets'),
+        displayName: _td("Enable widget screenshots on supported widgets"),
         default: false,
     },
     "promptBeforeInviteUnknownUsers": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Prompt before sending invites to potentially invalid matrix IDs'),
+        displayName: _td("Prompt before sending invites to potentially invalid matrix IDs"),
         default: true,
     },
     "widgetOpenIDPermissions": {
@@ -822,7 +822,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "lowBandwidth": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
-        displayName: _td('Low bandwidth mode (requires compatible homeserver)'),
+        displayName: _td("Low bandwidth mode (requires compatible homeserver)"),
         default: false,
         controller: new ReloadOnChangeController(),
     },

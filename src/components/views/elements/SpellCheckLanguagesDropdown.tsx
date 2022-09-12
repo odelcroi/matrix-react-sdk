@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
 import Dropdown from "../../views/elements/Dropdown";
 import PlatformPeg from "../../../PlatformPeg";
@@ -46,7 +46,7 @@ export default class SpellCheckLanguagesDropdown extends React.Component<SpellCh
         this.onSearchChange = this.onSearchChange.bind(this);
 
         this.state = {
-            searchQuery: '',
+            searchQuery: "",
             languages: null,
         };
     }
@@ -69,7 +69,7 @@ export default class SpellCheckLanguagesDropdown extends React.Component<SpellCh
                 });
                 this.setState({ languages: langs });
             }).catch((e) => {
-                this.setState({ languages: ['en'] });
+                this.setState({ languages: ["en"] });
             });
         }
     }

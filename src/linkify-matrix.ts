@@ -15,20 +15,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import * as linkifyjs from 'linkifyjs';
-import { registerCustomProtocol, registerPlugin } from 'linkifyjs';
-import linkifyElement from 'linkify-element';
-import linkifyString from 'linkify-string';
-import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
+import * as linkifyjs from "linkifyjs";
+import { registerCustomProtocol, registerPlugin } from "linkifyjs";
+import linkifyElement from "linkify-element";
+import linkifyString from "linkify-string";
+import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 
 import {
     parsePermalink,
     tryTransformEntityToPermalink,
     tryTransformPermalinkToLocalHref,
 } from "./utils/permalinks/Permalinks";
-import dis from './dispatcher/dispatcher';
-import { Action } from './dispatcher/actions';
-import { ViewUserPayload } from './dispatcher/payloads/ViewUserPayload';
+import dis from "./dispatcher/dispatcher";
+import { Action } from "./dispatcher/actions";
+import { ViewUserPayload } from "./dispatcher/payloads/ViewUserPayload";
 import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
 import { showGroupReplacedWithSpacesDialog } from "./group_helpers";
 
@@ -50,7 +50,7 @@ function matrixOpaqueIdLinkifyParser({
     scanner: any;
     parser: any;
     utils: any;
-    token: '#' | '+' | '@';
+    token: "#" | "+" | "@";
     name: Type;
 }) {
     const {
@@ -216,12 +216,12 @@ export const options = {
     },
 
     attributes: {
-        rel: 'noreferrer noopener',
+        rel: "noreferrer noopener",
     },
 
-    ignoreTags: ['pre', 'code'],
+    ignoreTags: ["pre", "code"],
 
-    className: 'linkified',
+    className: "linkified",
 
     target: function(href: string, type: Type | string): string {
         if (type === Type.URL) {
@@ -233,7 +233,7 @@ export const options = {
                 ) {
                     return null;
                 } else {
-                    return '_blank';
+                    return "_blank";
                 }
             } catch (e) {
                 // malformed URI
@@ -245,7 +245,7 @@ export const options = {
 
 // Run the plugins
 registerPlugin(Type.RoomAlias, ({ scanner, parser, utils }) => {
-    const token = scanner.tokens.POUND as '#';
+    const token = scanner.tokens.POUND as "#";
     matrixOpaqueIdLinkifyParser({
         scanner,
         parser,
@@ -256,7 +256,7 @@ registerPlugin(Type.RoomAlias, ({ scanner, parser, utils }) => {
 });
 
 registerPlugin(Type.GroupId, ({ scanner, parser, utils }) => {
-    const token = scanner.tokens.PLUS as '+';
+    const token = scanner.tokens.PLUS as "+";
     matrixOpaqueIdLinkifyParser({
         scanner,
         parser,
@@ -267,7 +267,7 @@ registerPlugin(Type.GroupId, ({ scanner, parser, utils }) => {
 });
 
 registerPlugin(Type.UserId, ({ scanner, parser, utils }) => {
-    const token = scanner.tokens.AT as '@';
+    const token = scanner.tokens.AT as "@";
     matrixOpaqueIdLinkifyParser({
         scanner,
         parser,

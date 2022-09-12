@@ -18,11 +18,11 @@ import { ClientEvent, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/ma
 import { sleep } from "matrix-js-sdk/src/utils";
 import { ISyncStateData, SyncState } from "matrix-js-sdk/src/sync";
 
-import SdkConfig from '../SdkConfig';
-import sendBugReport from '../rageshake/submit-rageshake';
-import defaultDispatcher from '../dispatcher/dispatcher';
-import { AsyncStoreWithClient } from './AsyncStoreWithClient';
-import { ActionPayload } from '../dispatcher/payloads';
+import SdkConfig from "../SdkConfig";
+import sendBugReport from "../rageshake/submit-rageshake";
+import defaultDispatcher from "../dispatcher/dispatcher";
+import { AsyncStoreWithClient } from "./AsyncStoreWithClient";
+import { ActionPayload } from "../dispatcher/payloads";
 import SettingsStore from "../settings/SettingsStore";
 import { Action } from "../dispatcher/actions";
 
@@ -166,7 +166,7 @@ export default class AutoRageshakeStore extends AsyncStoreWithClient<IState> {
         if (!SettingsStore.getValue("automaticKeyBackNotEnabledReporting")) return;
 
         await sendBugReport(SdkConfig.get().bug_report_endpoint_url, {
-            userText: `Auto-reporting key backup not enabled`,
+            userText: "Auto-reporting key backup not enabled",
             sendLogs: true,
             labels: ["web", Action.ReportKeyBackupNotEnabled],
         });

@@ -465,11 +465,11 @@ export default class InteractiveTooltip extends React.Component<IProps, IState> 
         const chevron = <div className={"mx_InteractiveTooltip_chevron_" + chevronFace} />;
 
         const menuClasses = classNames({
-            'mx_InteractiveTooltip': true,
-            'mx_InteractiveTooltip_withChevron_top': chevronFace === ChevronFace.Top,
-            'mx_InteractiveTooltip_withChevron_left': chevronFace === ChevronFace.Left,
-            'mx_InteractiveTooltip_withChevron_right': chevronFace === ChevronFace.Right,
-            'mx_InteractiveTooltip_withChevron_bottom': chevronFace === ChevronFace.Bottom,
+            "mx_InteractiveTooltip": true,
+            "mx_InteractiveTooltip_withChevron_top": chevronFace === ChevronFace.Top,
+            "mx_InteractiveTooltip_withChevron_left": chevronFace === ChevronFace.Left,
+            "mx_InteractiveTooltip_withChevron_right": chevronFace === ChevronFace.Right,
+            "mx_InteractiveTooltip_withChevron_bottom": chevronFace === ChevronFace.Bottom,
         });
 
         const menuStyle: CSSProperties = {};

@@ -15,8 +15,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { _t } from '../languageHandler';
-import { jsxJoin } from './ReactUtils';
+import { _t } from "../languageHandler";
+import { jsxJoin } from "./ReactUtils";
 
 /**
  * formats numbers to fit into ~3 characters, suitable for badge counts
@@ -45,15 +45,15 @@ export function formatCountLong(count: number): string {
  * e.g: 1024 -> 1.00 KB
  */
 export function formatBytes(bytes: number, decimals = 2): string {
-    if (bytes === 0) return '0 Bytes';
+    if (bytes === 0) return "0 Bytes";
 
     const k = 1024;
     const dm = decimals < 0 ? 0 : decimals;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+    const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
 
     const i = Math.floor(Math.log(bytes) / Math.log(k));
 
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
 }
 
 /**

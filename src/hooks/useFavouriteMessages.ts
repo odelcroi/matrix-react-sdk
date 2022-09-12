@@ -31,7 +31,7 @@ export default function useFavouriteMessages() {
             : favouriteMessageIds.push(eventId);
 
         //update the local storage
-        localStorage.setItem('io_element_favouriteMessages', JSON.stringify(favouriteMessageIds));
+        localStorage.setItem("io_element_favouriteMessages", JSON.stringify(favouriteMessageIds));
 
         // This forces a re-render to account for changes in appearance in real-time when the favourite button is toggled
         setX([]);

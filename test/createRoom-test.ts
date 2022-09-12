@@ -24,7 +24,7 @@ import { MatrixClientPeg } from "../src/MatrixClientPeg";
 import WidgetStore from "../src/stores/WidgetStore";
 import WidgetUtils from "../src/utils/WidgetUtils";
 import { JitsiCall } from "../src/models/Call";
-import createRoom, { canEncryptToAllUsers } from '../src/createRoom';
+import createRoom, { canEncryptToAllUsers } from "../src/createRoom";
 
 describe("createRoom", () => {
     mockPlatformPeg();

@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
-import React from 'react';
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import React from "react";
 
-import { _t } from '../../../languageHandler';
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import Modal from '../../../Modal';
-import ErrorDialog from './ErrorDialog';
+import { _t } from "../../../languageHandler";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import Modal from "../../../Modal";
+import ErrorDialog from "./ErrorDialog";
 import TextInputDialog from "./TextInputDialog";
 
 interface IProps {
@@ -74,11 +74,11 @@ export function createRedactEventDialog({
                 if (typeof code !== "undefined") {
                     // display error message stating you couldn't delete this.
                     Modal.createDialog(ErrorDialog, {
-                        title: _t('Error'),
-                        description: _t('You cannot delete this message. (%(code)s)', { code }),
+                        title: _t("Error"),
+                        description: _t("You cannot delete this message. (%(code)s)", { code }),
                     });
                 }
             }
         },
-    }, 'mx_Dialog_confirmredact');
+    }, "mx_Dialog_confirmredact");
 }

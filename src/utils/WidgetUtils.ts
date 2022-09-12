@@ -25,11 +25,11 @@ import { ClientEvent, RoomStateEvent } from "matrix-js-sdk/src/matrix";
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
 import { randomString, randomLowercaseString, randomUppercaseString } from "matrix-js-sdk/src/randomstring";
 
-import { MatrixClientPeg } from '../MatrixClientPeg';
-import PlatformPeg from '../PlatformPeg';
+import { MatrixClientPeg } from "../MatrixClientPeg";
+import PlatformPeg from "../PlatformPeg";
 import SdkConfig from "../SdkConfig";
-import dis from '../dispatcher/dispatcher';
-import WidgetEchoStore from '../stores/WidgetEchoStore';
+import dis from "../dispatcher/dispatcher";
+import WidgetEchoStore from "../stores/WidgetEchoStore";
 import { IntegrationManagers } from "../integrations/IntegrationManagers";
 import { WidgetType } from "../widgets/WidgetType";
 import { Jitsi } from "../widgets/Jitsi";
@@ -59,13 +59,13 @@ export default class WidgetUtils {
      */
     static canUserModifyWidgets(roomId: string): boolean {
         if (!roomId) {
-            logger.warn('No room ID specified');
+            logger.warn("No room ID specified");
             return false;
         }
 
         const client = MatrixClientPeg.get();
         if (!client) {
-            logger.warn('User must be be logged in');
+            logger.warn("User must be be logged in");
             return false;
         }
 
@@ -77,7 +77,7 @@ export default class WidgetUtils {
 
         const me = client.credentials.userId;
         if (!me) {
-            logger.warn('Failed to get user ID');
+            logger.warn("Failed to get user ID");
             return false;
         }
 
@@ -87,7 +87,7 @@ export default class WidgetUtils {
         }
 
         // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
-        return room.currentState.maySendStateEvent('im.vector.modular.widgets', me);
+        return room.currentState.maySendStateEvent("im.vector.modular.widgets", me);
     }
 
     // TODO: Generify the name of this function. It's not just scalar.
@@ -98,7 +98,7 @@ export default class WidgetUtils {
      */
     static isScalarUrl(testUrlString: string): boolean {
         if (!testUrlString) {
-            logger.error('Scalar URL check failed. No URL specified');
+            logger.error("Scalar URL check failed. No URL specified");
             return false;
         }
 
@@ -152,14 +152,14 @@ export default class WidgetUtils {
                 }
             }
 
-            const startingAccountDataEvent = MatrixClientPeg.get().getAccountData('m.widgets');
+            const startingAccountDataEvent = MatrixClientPeg.get().getAccountData("m.widgets");
             if (eventInIntendedState(startingAccountDataEvent)) {
                 resolve();
                 return;
             }
 
             function onAccountData(ev) {
-                const currentAccountDataEvent = MatrixClientPeg.get().getAccountData('m.widgets');
+                const currentAccountDataEvent = MatrixClientPeg.get().getAccountData("m.widgets");
                 if (eventInIntendedState(currentAccountDataEvent)) {
                     MatrixClientPeg.get().removeListener(ClientEvent.AccountData, onAccountData);
                     clearTimeout(timerId);
@@ -192,7 +192,7 @@ export default class WidgetUtils {
             // we're waiting for it to be in
             function eventsInIntendedState(evList) {
                 const widgetPresent = evList.some((ev) => {
-                    return ev.getContent() && ev.getContent()['id'] === widgetId;
+                    return ev.getContent() && ev.getContent()["id"] === widgetId;
                 });
                 if (add) {
                     return widgetPresent;
@@ -203,7 +203,7 @@ export default class WidgetUtils {
 
             const room = MatrixClientPeg.get().getRoom(roomId);
             // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
-            const startingWidgetEvents = room.currentState.getStateEvents('im.vector.modular.widgets');
+            const startingWidgetEvents = room.currentState.getStateEvents("im.vector.modular.widgets");
             if (eventsInIntendedState(startingWidgetEvents)) {
                 resolve();
                 return;
@@ -213,7 +213,7 @@ export default class WidgetUtils {
                 if (ev.getRoomId() !== roomId || ev.getType() !== "im.vector.modular.widgets") return;
 
                 // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
-                const currentWidgetEvents = room.currentState.getStateEvents('im.vector.modular.widgets');
+                const currentWidgetEvents = room.currentState.getStateEvents("im.vector.modular.widgets");
 
                 if (eventsInIntendedState(currentWidgetEvents)) {
                     MatrixClientPeg.get().removeListener(RoomStateEvent.Events, onRoomStateEvents);
@@ -252,7 +252,7 @@ export default class WidgetUtils {
         try {
             delete userWidgets[widgetId];
         } catch (e) {
-            logger.error(`$widgetId is non-configurable`);
+            logger.error("$widgetId is non-configurable");
         }
 
         const addingWidget = Boolean(widgetUrl);
@@ -263,7 +263,7 @@ export default class WidgetUtils {
                 content: content,
                 sender: client.getUserId(),
                 state_key: widgetId,
-                type: 'm.widget',
+                type: "m.widget",
                 id: widgetId,
             };
         }
@@ -272,7 +272,7 @@ export default class WidgetUtils {
         // since the widget won't appear added until this happens. If we don't
         // wait for this, the action will complete but if the user is fast enough,
         // the widget still won't actually be there.
-        return client.setAccountData('m.widgets', userWidgets).then(() => {
+        return client.setAccountData("m.widgets", userWidgets).then(() => {
             return WidgetUtils.waitForUserWidget(widgetId, addingWidget);
         }).then(() => {
             dis.dispatch({ action: "user_widget_updated" });
@@ -334,7 +334,7 @@ export default class WidgetUtils {
      */
     static getRoomWidgets(room: Room) {
         // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
-        const appsStateEvents = room.currentState.getStateEvents('im.vector.modular.widgets');
+        const appsStateEvents = room.currentState.getStateEvents("im.vector.modular.widgets");
         if (!appsStateEvents) {
             return [];
         }
@@ -351,9 +351,9 @@ export default class WidgetUtils {
     static getUserWidgets(): Record<string, IWidgetEvent> {
         const client = MatrixClientPeg.get();
         if (!client) {
-            throw new Error('User not logged in');
+            throw new Error("User not logged in");
         }
-        const userWidgets = client.getAccountData('m.widgets');
+        const userWidgets = client.getAccountData("m.widgets");
         if (userWidgets && userWidgets.getContent()) {
             return userWidgets.getContent();
         }
@@ -397,9 +397,9 @@ export default class WidgetUtils {
     static async removeIntegrationManagerWidgets(): Promise<void> {
         const client = MatrixClientPeg.get();
         if (!client) {
-            throw new Error('User not logged in');
+            throw new Error("User not logged in");
         }
-        const widgets = client.getAccountData('m.widgets');
+        const widgets = client.getAccountData("m.widgets");
         if (!widgets) return;
         const userWidgets: Record<string, IWidgetEvent> = widgets.getContent() || {};
         Object.entries(userWidgets).forEach(([key, widget]) => {
@@ -407,7 +407,7 @@ export default class WidgetUtils {
                 delete userWidgets[key];
             }
         });
-        await client.setAccountData('m.widgets', userWidgets);
+        await client.setAccountData("m.widgets", userWidgets);
     }
 
     static addIntegrationManagerWidget(name: string, uiUrl: string, apiUrl: string): Promise<void> {
@@ -427,17 +427,17 @@ export default class WidgetUtils {
     static async removeStickerpickerWidgets(): Promise<void> {
         const client = MatrixClientPeg.get();
         if (!client) {
-            throw new Error('User not logged in');
+            throw new Error("User not logged in");
         }
-        const widgets = client.getAccountData('m.widgets');
+        const widgets = client.getAccountData("m.widgets");
         if (!widgets) return;
         const userWidgets: Record<string, IWidgetEvent> = widgets.getContent() || {};
         Object.entries(userWidgets).forEach(([key, widget]) => {
-            if (widget.content && widget.content.type === 'm.stickerpicker') {
+            if (widget.content && widget.content.type === "m.stickerpicker") {
                 delete userWidgets[key];
             }
         });
-        await client.setAccountData('m.widgets', userWidgets);
+        await client.setAccountData("m.widgets", userWidgets);
     }
 
     static async addJitsiWidget(
@@ -452,7 +452,7 @@ export default class WidgetUtils {
         const widgetId = randomString(24); // Must be globally unique
 
         let confId;
-        if (auth === 'openidtoken-jwt') {
+        if (auth === "openidtoken-jwt") {
             // Create conference ID from room ID
             // For compatibility with Jitsi, use base32 without padding.
             // More details here:
@@ -465,8 +465,8 @@ export default class WidgetUtils {
 
         // TODO: Remove URL hacks when the mobile clients eventually support v2 widgets
         const widgetUrl = new URL(WidgetUtils.getLocalJitsiWrapperUrl({ auth }));
-        widgetUrl.search = ''; // Causes the URL class use searchParams instead
-        widgetUrl.searchParams.set('confId', confId);
+        widgetUrl.search = ""; // Causes the URL class use searchParams instead
+        widgetUrl.searchParams.set("confId", confId);
 
         await WidgetUtils.setRoomWidget(roomId, widgetId, WidgetType.JITSI, widgetUrl.toString(), name, {
             conferenceId: confId,
@@ -501,22 +501,22 @@ export default class WidgetUtils {
     static getLocalJitsiWrapperUrl(opts: {forLocalRender?: boolean, auth?: string} = {}) {
         // NB. we can't just encodeURIComponent all of these because the $ signs need to be there
         const queryStringParts = [
-            'conferenceDomain=$domain',
-            'conferenceId=$conferenceId',
-            'isAudioOnly=$isAudioOnly',
-            'isVideoChannel=$isVideoChannel',
-            'displayName=$matrix_display_name',
-            'avatarUrl=$matrix_avatar_url',
-            'userId=$matrix_user_id',
-            'roomId=$matrix_room_id',
-            'theme=$theme',
-            'roomName=$roomName',
+            "conferenceDomain=$domain",
+            "conferenceId=$conferenceId",
+            "isAudioOnly=$isAudioOnly",
+            "isVideoChannel=$isVideoChannel",
+            "displayName=$matrix_display_name",
+            "avatarUrl=$matrix_avatar_url",
+            "userId=$matrix_user_id",
+            "roomId=$matrix_room_id",
+            "theme=$theme",
+            "roomName=$roomName",
             `supportsScreensharing=${PlatformPeg.get().supportsJitsiScreensharing()}`,
         ];
         if (opts.auth) {
             queryStringParts.push(`auth=${opts.auth}`);
         }
-        const queryString = queryStringParts.join('&');
+        const queryString = queryStringParts.join("&");
 
         let baseUrl = window.location.href;
         if (window.location.protocol !== "https:" && !opts.forLocalRender) {
@@ -549,7 +549,7 @@ export default class WidgetUtils {
 
     static editWidget(room: Room, app: IApp): void {
         // noinspection JSIgnoredPromiseFromCall
-        IntegrationManagers.sharedInstance().getPrimaryManager().open(room, 'type_' + app.type, app.id);
+        IntegrationManagers.sharedInstance().getPrimaryManager().open(room, "type_" + app.type, app.id);
     }
 
     static isManagedByManager(app) {

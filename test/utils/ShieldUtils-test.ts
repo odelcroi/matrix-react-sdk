@@ -17,10 +17,10 @@ limitations under the License.
 import {
     MatrixClient,
     Room,
-} from 'matrix-js-sdk/src/matrix';
+} from "matrix-js-sdk/src/matrix";
 
-import { shieldStatusForRoom } from '../../src/utils/ShieldUtils';
-import DMRoomMap from '../../src/utils/DMRoomMap';
+import { shieldStatusForRoom } from "../../src/utils/ShieldUtils";
+import DMRoomMap from "../../src/utils/DMRoomMap";
 
 function mkClient(selfTrust = false) {
     return {
@@ -66,11 +66,11 @@ describe("shieldStatusForMembership self-trust behaviour", function() {
         const mockInstance = {
             getUserIdForRoomId: (roomId) => roomId === "DM" ? "@any:h" : null,
         } as unknown as DMRoomMap;
-        jest.spyOn(DMRoomMap, 'shared').mockReturnValue(mockInstance);
+        jest.spyOn(DMRoomMap, "shared").mockReturnValue(mockInstance);
     });
 
     afterAll(() => {
-        jest.spyOn(DMRoomMap, 'shared').mockRestore();
+        jest.spyOn(DMRoomMap, "shared").mockRestore();
     });
 
     it.each(
@@ -157,7 +157,7 @@ describe("shieldStatusForMembership other-trust behaviour", function() {
         const mockInstance = {
             getUserIdForRoomId: (roomId) => roomId === "DM" ? "@any:h" : null,
         } as unknown as DMRoomMap;
-        jest.spyOn(DMRoomMap, 'shared').mockReturnValue(mockInstance);
+        jest.spyOn(DMRoomMap, "shared").mockReturnValue(mockInstance);
     });
 
     it.each(

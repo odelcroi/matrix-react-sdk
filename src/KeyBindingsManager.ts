@@ -16,8 +16,8 @@ limitations under the License.
 */
 
 import { KeyBindingAction } from "./accessibility/KeyboardShortcuts";
-import { defaultBindingsProvider } from './KeyBindingsDefaults';
-import { IS_MAC } from './Keyboard';
+import { defaultBindingsProvider } from "./KeyBindingsDefaults";
+import { IS_MAC } from "./Keyboard";
 
 /**
  * Represent a key combination.

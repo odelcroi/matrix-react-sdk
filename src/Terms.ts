@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import classNames from 'classnames';
-import { SERVICE_TYPES } from 'matrix-js-sdk/src/service-types';
+import classNames from "classnames";
+import { SERVICE_TYPES } from "matrix-js-sdk/src/service-types";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { MatrixClientPeg } from './MatrixClientPeg';
-import Modal from './Modal';
+import { MatrixClientPeg } from "./MatrixClientPeg";
+import Modal from "./Modal";
 import TermsDialog from "./components/views/dialogs/TermsDialog";
 
 export class TermsNotSignedError extends Error {}
@@ -101,10 +101,10 @@ export async function startTermsFlow(
      */
 
     const terms: { policies: Policies }[] = await Promise.all(termsPromises);
-    const policiesAndServicePairs = terms.map((t, i) => { return { 'service': services[i], 'policies': t.policies }; });
+    const policiesAndServicePairs = terms.map((t, i) => { return { "service": services[i], "policies": t.policies }; });
 
     // fetch the set of agreed policy URLs from account data
-    const currentAcceptedTerms = await MatrixClientPeg.get().getAccountData('m.accepted_terms');
+    const currentAcceptedTerms = await MatrixClientPeg.get().getAccountData("m.accepted_terms");
     let agreedUrlSet: Set<string>;
     if (!currentAcceptedTerms || !currentAcceptedTerms.getContent() || !currentAcceptedTerms.getContent().accepted) {
         agreedUrlSet = new Set();
@@ -124,7 +124,7 @@ export async function startTermsFlow(
         for (const [policyName, policy] of Object.entries(policies)) {
             let policyAgreed = false;
             for (const lang of Object.keys(policy)) {
-                if (lang === 'version') continue;
+                if (lang === "version") continue;
                 if (agreedUrlSet.has(policy[lang].url)) {
                     policyAgreed = true;
                     break;
@@ -151,7 +151,7 @@ export async function startTermsFlow(
     // We only ever add to the set of URLs, so if anything has changed then we'd see a different length
     if (agreedUrlSet.size !== numAcceptedBeforeAgreement) {
         const newAcceptedTerms = { accepted: Array.from(agreedUrlSet) };
-        await MatrixClientPeg.get().setAccountData('m.accepted_terms', newAcceptedTerms);
+        await MatrixClientPeg.get().setAccountData("m.accepted_terms", newAcceptedTerms);
     }
 
     const agreePromises = policiesAndServicePairs.map((policiesAndService) => {
@@ -161,7 +161,7 @@ export async function startTermsFlow(
         const urlsForService = Array.from(agreedUrlSet).filter((url) => {
             for (const policy of Object.values(policiesAndService.policies)) {
                 for (const lang of Object.keys(policy)) {
-                    if (lang === 'version') continue;
+                    if (lang === "version") continue;
                     if (policy[lang].url === url) return true;
                 }
             }

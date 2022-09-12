@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import posthog, { PostHog } from 'posthog-js';
+import posthog, { PostHog } from "posthog-js";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
 import { UserProperties } from "@matrix-org/analytics-events/types/typescript/UserProperties";
-import { Signup } from '@matrix-org/analytics-events/types/typescript/Signup';
+import { Signup } from "@matrix-org/analytics-events/types/typescript/Signup";
 
-import PlatformPeg from './PlatformPeg';
-import SdkConfig from './SdkConfig';
+import PlatformPeg from "./PlatformPeg";
+import SdkConfig from "./SdkConfig";
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import SettingsStore from "./settings/SettingsStore";
 import { ScreenName } from "./PosthogTrackers";
@@ -73,7 +73,7 @@ export function getRedactedCurrentLocation(
 ): string {
     // Redact PII from the current location.
     // For known screens, assumes a URL structure of /<screen name>/might/be/pii
-    if (origin.startsWith('file://')) {
+    if (origin.startsWith("file://")) {
         pathname = "/<redacted_file_scheme_url>/";
     }
 
@@ -172,13 +172,13 @@ export class PosthogAnalytics {
 
         if (this.anonymity == Anonymity.Anonymous) {
             // drop referrer information for anonymous users
-            properties['$referrer'] = null;
-            properties['$referring_domain'] = null;
-            properties['$initial_referrer'] = null;
-            properties['$initial_referring_domain'] = null;
+            properties["$referrer"] = null;
+            properties["$referring_domain"] = null;
+            properties["$initial_referrer"] = null;
+            properties["$initial_referring_domain"] = null;
 
             // drop device ID, which is a UUID persisted in local storage
-            properties['$device_id'] = null;
+            properties["$device_id"] = null;
         }
 
         return properties;
@@ -242,7 +242,7 @@ export class PosthogAnalytics {
     }
 
     private static getRandomAnalyticsId(): string {
-        return [...crypto.getRandomValues(new Uint8Array(16))].map((c) => c.toString(16)).join('');
+        return [...crypto.getRandomValues(new Uint8Array(16))].map((c) => c.toString(16)).join("");
     }
 
     public async identifyUser(client: MatrixClient, analyticsIdGenerator: () => string): Promise<void> {

@@ -17,7 +17,7 @@ limitations under the License.
 import React, { ComponentType } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { _t } from './languageHandler';
+import { _t } from "./languageHandler";
 import { IDialogProps } from "./components/views/dialogs/IDialogProps";
 import BaseDialog from "./components/views/dialogs/BaseDialog";
 import DialogButtons from "./components/views/elements/DialogButtons";
@@ -50,7 +50,7 @@ export default class AsyncWrapper extends React.Component<IProps, IState> {
     componentDidMount() {
         // XXX: temporary logging to try to diagnose
         // https://github.com/vector-im/element-web/issues/3148
-        logger.log('Starting load of AsyncWrapper for modal');
+        logger.log("Starting load of AsyncWrapper for modal");
         this.props.prom.then((result) => {
             if (this.unmounted) return;
 
@@ -62,7 +62,7 @@ export default class AsyncWrapper extends React.Component<IProps, IState> {
                 : result as ComponentType;
             this.setState({ component });
         }).catch((e) => {
-            logger.warn('AsyncWrapper promise failed', e);
+            logger.warn("AsyncWrapper promise failed", e);
             this.setState({ error: e });
         });
     }

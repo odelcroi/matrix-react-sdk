@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
+import React from "react";
+import PropTypes from "prop-types";
+import { MatrixCall } from "matrix-js-sdk/src/webrtc/call";
 
-import { _t } from '../../../languageHandler';
-import ContextMenu, { IProps as IContextMenuProps, MenuItem } from '../../structures/ContextMenu';
-import LegacyCallHandler from '../../../LegacyCallHandler';
+import { _t } from "../../../languageHandler";
+import ContextMenu, { IProps as IContextMenuProps, MenuItem } from "../../structures/ContextMenu";
+import LegacyCallHandler from "../../../LegacyCallHandler";
 
 interface IProps extends IContextMenuProps {
     call: MatrixCall;

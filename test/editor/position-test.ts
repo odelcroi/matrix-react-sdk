@@ -27,20 +27,20 @@ function createRenderer() {
     return render;
 }
 
-describe('editor/position', function() {
-    it('move first position backward in empty model', function() {
+describe("editor/position", function() {
+    it("move first position backward in empty model", function() {
         const model = new EditorModel([], createPartCreator(), createRenderer());
         const pos = model.positionForOffset(0, true);
         const pos2 = pos.backwardsWhile(model, () => true);
         expect(pos).toBe(pos2);
     });
-    it('move first position forwards in empty model', function() {
+    it("move first position forwards in empty model", function() {
         const model = new EditorModel([], createPartCreator(), createRenderer());
         const pos = model.positionForOffset(0, true);
         const pos2 = pos.forwardsWhile(model, () => true);
         expect(pos).toBe(pos2);
     });
-    it('move forwards within one part', function() {
+    it("move forwards within one part", function() {
         const pc = createPartCreator();
         const model = new EditorModel([pc.plain("hello")], pc, createRenderer());
         const pos = model.positionForOffset(1);
@@ -49,7 +49,7 @@ describe('editor/position', function() {
         expect(pos2.index).toBe(0);
         expect(pos2.offset).toBe(4);
     });
-    it('move forwards crossing to other part', function() {
+    it("move forwards crossing to other part", function() {
         const pc = createPartCreator();
         const model = new EditorModel([pc.plain("hello"), pc.plain(" world")], pc, createRenderer());
         const pos = model.positionForOffset(4);
@@ -58,7 +58,7 @@ describe('editor/position', function() {
         expect(pos2.index).toBe(1);
         expect(pos2.offset).toBe(2);
     });
-    it('move backwards within one part', function() {
+    it("move backwards within one part", function() {
         const pc = createPartCreator();
         const model = new EditorModel([pc.plain("hello")], pc, createRenderer());
         const pos = model.positionForOffset(4);
@@ -67,7 +67,7 @@ describe('editor/position', function() {
         expect(pos2.index).toBe(0);
         expect(pos2.offset).toBe(1);
     });
-    it('move backwards crossing to other part', function() {
+    it("move backwards crossing to other part", function() {
         const pc = createPartCreator();
         const model = new EditorModel([pc.plain("hello"), pc.plain(" world")], pc, createRenderer());
         const pos = model.positionForOffset(7);

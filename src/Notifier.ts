@@ -27,15 +27,15 @@ import {
     PermissionChanged as PermissionChangedEvent,
 } from "@matrix-org/analytics-events/types/typescript/PermissionChanged";
 
-import { MatrixClientPeg } from './MatrixClientPeg';
+import { MatrixClientPeg } from "./MatrixClientPeg";
 import { PosthogAnalytics } from "./PosthogAnalytics";
-import SdkConfig from './SdkConfig';
-import PlatformPeg from './PlatformPeg';
-import * as TextForEvent from './TextForEvent';
-import * as Avatar from './Avatar';
-import dis from './dispatcher/dispatcher';
-import { _t } from './languageHandler';
-import Modal from './Modal';
+import SdkConfig from "./SdkConfig";
+import PlatformPeg from "./PlatformPeg";
+import * as TextForEvent from "./TextForEvent";
+import * as Avatar from "./Avatar";
+import dis from "./dispatcher/dispatcher";
+import { _t } from "./languageHandler";
+import Modal from "./Modal";
 import SettingsStore from "./settings/SettingsStore";
 import { hideToast as hideNotificationsToast } from "./toasts/DesktopNotificationsToast";
 import { SettingLevel } from "./settings/SettingLevel";
@@ -110,7 +110,7 @@ export const Notifier = {
             if (ev.getContent().body && !msgTypeHandlers.hasOwnProperty(ev.getContent().msgtype)) {
                 msg = ev.getContent().body;
             }
-        } else if (ev.getType() === 'm.room.member') {
+        } else if (ev.getType() === "m.room.member") {
             // context is all in the message here, we don't need
             // to display sender info
             title = room.name;
@@ -124,12 +124,12 @@ export const Notifier = {
         }
 
         if (!this.isBodyEnabled()) {
-            msg = '';
+            msg = "";
         }
 
         let avatarUrl = null;
         if (ev.sender && !SettingsStore.getValue("lowBandwidth")) {
-            avatarUrl = Avatar.avatarUrlForMember(ev.sender, 40, 40, 'crop');
+            avatarUrl = Avatar.avatarUrlForMember(ev.sender, 40, 40, "crop");
         }
 
         const notif = plaf.displayNotification(title, msg, avatarUrl, room, ev);
@@ -242,16 +242,16 @@ export const Notifier = {
         if (enable) {
             // Attempt to get permission from user
             plaf.requestNotificationPermission().then((result) => {
-                if (result !== 'granted') {
+                if (result !== "granted") {
                     // The permission request was dismissed or denied
                     // TODO: Support alternative branding in messaging
                     const brand = SdkConfig.get().brand;
-                    const description = result === 'denied'
-                        ? _t('%(brand)s does not have permission to send you notifications - ' +
-                            'please check your browser settings', { brand })
-                        : _t('%(brand)s was not given permission to send notifications - please try again', { brand });
+                    const description = result === "denied"
+                        ? _t("%(brand)s does not have permission to send you notifications - " +
+                            "please check your browser settings", { brand })
+                        : _t("%(brand)s was not given permission to send notifications - please try again", { brand });
                     Modal.createDialog(ErrorDialog, {
-                        title: _t('Unable to enable Notifications'),
+                        title: _t("Unable to enable Notifications"),
                         description,
                     });
                     return;

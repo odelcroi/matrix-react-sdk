@@ -17,7 +17,7 @@ limitations under the License.
 import * as React from "react";
 import { useContext, useState } from "react";
 
-import AutoHideScrollbar from './AutoHideScrollbar';
+import AutoHideScrollbar from "./AutoHideScrollbar";
 import { getHomePageUrl } from "../../utils/pages";
 import { _tDom } from "../../languageHandler";
 import SdkConfig from "../../SdkConfig";
@@ -35,7 +35,7 @@ import EmbeddedPage from "./EmbeddedPage";
 
 const onClickSendDm = (ev: ButtonEvent) => {
     PosthogTrackers.trackInteraction("WebHomeCreateChatButton", ev);
-    dis.dispatch({ action: 'view_create_chat' });
+    dis.dispatch({ action: "view_create_chat" });
 };
 
 const onClickExplore = (ev: ButtonEvent) => {
@@ -45,7 +45,7 @@ const onClickExplore = (ev: ButtonEvent) => {
 
 const onClickNewRoom = (ev: ButtonEvent) => {
     PosthogTrackers.trackInteraction("WebHomeCreateRoomButton", ev);
-    dis.dispatch({ action: 'view_create_room' });
+    dis.dispatch({ action: "view_create_room" });
 };
 
 interface IProps {

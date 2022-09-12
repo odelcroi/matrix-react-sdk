@@ -16,30 +16,30 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import classNames from 'classnames';
+import React from "react";
+import classNames from "classnames";
 import { logger } from "matrix-js-sdk/src/logger";
 import { createClient } from "matrix-js-sdk/src/matrix";
 
-import { _t, _td } from '../../../languageHandler';
+import { _t, _td } from "../../../languageHandler";
 import Modal from "../../../Modal";
 import PasswordReset from "../../../PasswordReset";
 import AutoDiscoveryUtils from "../../../utils/AutoDiscoveryUtils";
 import AuthPage from "../../views/auth/AuthPage";
 import ServerPicker from "../../views/elements/ServerPicker";
 import EmailField from "../../views/auth/EmailField";
-import PassphraseField from '../../views/auth/PassphraseField';
-import { PASSWORD_MIN_SCORE } from '../../views/auth/RegistrationForm';
-import InlineSpinner from '../../views/elements/InlineSpinner';
+import PassphraseField from "../../views/auth/PassphraseField";
+import { PASSWORD_MIN_SCORE } from "../../views/auth/RegistrationForm";
+import InlineSpinner from "../../views/elements/InlineSpinner";
 import Spinner from "../../views/elements/Spinner";
 import QuestionDialog from "../../views/dialogs/QuestionDialog";
 import ErrorDialog from "../../views/dialogs/ErrorDialog";
 import AuthHeader from "../../views/auth/AuthHeader";
 import AuthBody from "../../views/auth/AuthBody";
 import PassphraseConfirmField from "../../views/auth/PassphraseConfirmField";
-import AccessibleButton from '../../views/elements/AccessibleButton';
-import StyledCheckbox from '../../views/elements/StyledCheckbox';
-import { ValidatedServerConfig } from '../../../utils/ValidatedServerConfig';
+import AccessibleButton from "../../views/elements/AccessibleButton";
+import StyledCheckbox from "../../views/elements/StyledCheckbox";
+import { ValidatedServerConfig } from "../../../utils/ValidatedServerConfig";
 
 enum Phase {
     // Show the forgot password inputs
@@ -81,9 +81,9 @@ interface IState {
 }
 
 enum ForgotPasswordField {
-    Email = 'field_email',
-    Password = 'field_password',
-    PasswordConfirm = 'field_password_confirm',
+    Email = "field_email",
+    Password = "field_password",
+    PasswordConfirm = "field_password_confirm",
 }
 
 export default class ForgotPassword extends React.Component<IProps, IState> {
@@ -164,7 +164,7 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                 phase: Phase.EmailSent,
             });
         }, (err) => {
-            this.showErrorDialog(_t('Failed to send email') + ": " + err.message);
+            this.showErrorDialog(_t("Failed to send email") + ": " + err.message);
             this.setState({
                 phase: Phase.Forgot,
             });
@@ -201,7 +201,7 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
 
         if (this.state.logoutDevices) {
             const { finished } = Modal.createDialog<[boolean]>(QuestionDialog, {
-                title: _t('Warning!'),
+                title: _t("Warning!"),
                 description:
                     <div>
                         <p>{ !this.state.serverSupportsControlOfDevicesLogout ?
@@ -220,7 +220,7 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                             "or export your message keys from one of your other devices before proceeding.",
                         ) }</p>
                     </div>,
-                button: _t('Continue'),
+                button: _t("Continue"),
             });
             const [confirmed] = await finished;
 
@@ -321,7 +321,7 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                 <div className="mx_AuthBody_fieldRow">
                     <EmailField
                         name="reset_email" // define a name so browser's password autofill gets less confused
-                        labelRequired={_td('The email address linked to your account must be entered.')}
+                        labelRequired={_td("The email address linked to your account must be entered.")}
                         labelInvalid={_td("The email address doesn't appear to be valid.")}
                         value={this.state.email}
                         fieldRef={field => this[ForgotPasswordField.Email] = field}
@@ -333,7 +333,7 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                     <PassphraseField
                         name="reset_password"
                         type="password"
-                        label={_td('New Password')}
+                        label={_td("New Password")}
                         value={this.state.password}
                         minScore={PASSWORD_MIN_SCORE}
                         fieldRef={field => this[ForgotPasswordField.Password] = field}
@@ -342,7 +342,7 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                     />
                     <PassphraseConfirmField
                         name="reset_password_confirm"
-                        label={_td('Confirm')}
+                        label={_td("Confirm")}
                         labelRequired={_td("A new password must be entered.")}
                         labelInvalid={_td("New passwords must match each other.")}
                         value={this.state.password2}
@@ -360,17 +360,17 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                     </div> : null
                 }
                 <span>{ _t(
-                    'A verification email will be sent to your inbox to confirm ' +
-                    'setting your new password.',
+                    "A verification email will be sent to your inbox to confirm " +
+                    "setting your new password.",
                 ) }</span>
                 <input
                     className="mx_Login_submit"
                     type="submit"
-                    value={_t('Send Reset Email')}
+                    value={_t("Send Reset Email")}
                 />
             </form>
             <AccessibleButton kind='link' className="mx_AuthBody_changeFlow" onClick={this.onLoginClick}>
-                { _t('Sign in instead') }
+                { _t("Sign in instead") }
             </AccessibleButton>
         </div>;
     }
@@ -388,7 +388,7 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                 className="mx_Login_submit"
                 type="button"
                 onClick={this.onVerify}
-                value={_t('I have verified my email address')} />
+                value={_t("I have verified my email address")} />
             { this.state.currentHttpRequest && (
                 <div className="mx_Login_spinner"><InlineSpinner w={64} h={64} /></div>)
             }
@@ -410,7 +410,7 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                 className="mx_Login_submit"
                 type="button"
                 onClick={this.props.onComplete}
-                value={_t('Return to login screen')} />
+                value={_t("Return to login screen")} />
         </div>;
     }
 
@@ -437,7 +437,7 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
             <AuthPage>
                 <AuthHeader />
                 <AuthBody>
-                    <h1> { _t('Set a new password') } </h1>
+                    <h1> { _t("Set a new password") } </h1>
                     { resetPasswordJsx }
                 </AuthBody>
             </AuthPage>

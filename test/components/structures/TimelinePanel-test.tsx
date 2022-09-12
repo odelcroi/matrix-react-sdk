@@ -14,24 +14,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 // eslint-disable-next-line deprecate/import
 import { mount, ReactWrapper } from "enzyme";
 import { EventTimeline } from "matrix-js-sdk/src/models/event-timeline";
-import { MessageEvent } from 'matrix-events-sdk';
+import { MessageEvent } from "matrix-events-sdk";
 import {
     EventTimelineSet,
     EventType,
     MatrixEvent,
     PendingEventOrdering,
     Room,
-} from 'matrix-js-sdk/src/matrix';
+} from "matrix-js-sdk/src/matrix";
 import { ReceiptType } from "matrix-js-sdk/src/@types/read_receipts";
 import { render, RenderResult } from "@testing-library/react";
 
 import { mkRoom, stubClient } from "../../test-utils";
-import TimelinePanel from '../../../src/components/structures/TimelinePanel';
-import { MatrixClientPeg } from '../../../src/MatrixClientPeg';
+import TimelinePanel from "../../../src/components/structures/TimelinePanel";
+import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
 import SettingsStore from "../../../src/settings/SettingsStore";
 
 const newReceipt = (eventId: string, userId: string, readTs: number, fullyReadTs: number): MatrixEvent => {
@@ -78,13 +78,13 @@ const mockEvents = (room: Room, count = 2): MatrixEvent[] => {
     return events;
 };
 
-describe('TimelinePanel', () => {
+describe("TimelinePanel", () => {
     beforeEach(() => {
         stubClient();
     });
 
-    describe('read receipts and markers', () => {
-        it('should forget the read marker when asked to', () => {
+    describe("read receipts and markers", () => {
+        it("should forget the read marker when asked to", () => {
             const cli = MatrixClientPeg.get();
             const readMarkersSent = [];
 

@@ -17,7 +17,7 @@ limitations under the License.
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { Room } from "matrix-js-sdk/src/models/room";
 
-import DMRoomMap from './DMRoomMap';
+import DMRoomMap from "./DMRoomMap";
 
 export enum E2EStatus {
     Warning = "warning",

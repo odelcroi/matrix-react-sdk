@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import { mocked } from 'jest-mock';
+import { mocked } from "jest-mock";
 
 import { SpaceWatcher } from "../../../src/stores/room-list/SpaceWatcher";
 import type { RoomListStoreClass } from "../../../src/stores/room-list/RoomListStore";

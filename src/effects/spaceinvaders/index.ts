@@ -13,7 +13,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-import ICanvasEffect from '../ICanvasEffect';
+import ICanvasEffect from "../ICanvasEffect";
 import { arrayFastClone } from "../../utils/arrays";
 
 export type SpaceInvadersOptions = {
@@ -59,7 +59,7 @@ export default class SpaceInvaders implements ICanvasEffect {
         if (!canvas) {
             return;
         }
-        this.context = canvas.getContext('2d');
+        this.context = canvas.getContext("2d");
         this.particles = [];
         const count = this.options.maxCount;
         while (this.particles.length < count) {

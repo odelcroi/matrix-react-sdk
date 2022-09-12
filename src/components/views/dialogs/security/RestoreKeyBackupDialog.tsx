@@ -15,17 +15,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { MatrixClient } from 'matrix-js-sdk/src/client';
+import React from "react";
+import { MatrixClient } from "matrix-js-sdk/src/client";
 import { IKeyBackupInfo, IKeyBackupRestoreResult } from "matrix-js-sdk/src/crypto/keybackup";
 import { ISecretStorageKeyInfo } from "matrix-js-sdk/src/crypto/api";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { MatrixClientPeg } from '../../../../MatrixClientPeg';
-import { _t } from '../../../../languageHandler';
-import { accessSecretStorage } from '../../../../SecurityManager';
+import { MatrixClientPeg } from "../../../../MatrixClientPeg";
+import { _t } from "../../../../languageHandler";
+import { accessSecretStorage } from "../../../../SecurityManager";
 import { IDialogProps } from "../IDialogProps";
-import Spinner from '../../elements/Spinner';
+import Spinner from "../../elements/Spinner";
 import DialogButtons from "../../elements/DialogButtons";
 import AccessibleButton from "../../elements/AccessibleButton";
 import BaseDialog from "../BaseDialog";
@@ -94,7 +94,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
             recoverInfo: null,
             recoveryKeyValid: false,
             forceRecoveryKey: false,
-            passPhrase: '',
+            passPhrase: "",
             restoreType: null,
             progress: { stage: ProgressState.PreFetch },
         };
@@ -366,7 +366,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
             content = <div>
                 <p>{ _t("Successfully restored %(sessionCount)s keys", { sessionCount: this.state.recoverInfo.imported }) }</p>
                 { failedToDecrypt }
-                <DialogButtons primaryButton={_t('OK')}
+                <DialogButtons primaryButton={_t("OK")}
                     onPrimaryButtonClick={this.onDone}
                     hasCancel={false}
                     focus={true}
@@ -393,7 +393,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
                         autoFocus={true}
                     />
                     <DialogButtons
-                        primaryButton={_t('Next')}
+                        primaryButton={_t("Next")}
                         onPrimaryButtonClick={this.onPassPhraseNext}
                         primaryIsSubmit={true}
                         hasCancel={true}
@@ -455,7 +455,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
                         autoFocus={true}
                     />
                     { keyStatus }
-                    <DialogButtons primaryButton={_t('Next')}
+                    <DialogButtons primaryButton={_t("Next")}
                         onPrimaryButtonClick={this.onRecoveryKeyNext}
                         hasCancel={true}
                         onCancel={this.onCancel}

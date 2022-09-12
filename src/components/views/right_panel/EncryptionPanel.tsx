@@ -31,7 +31,7 @@ import { ensureDMExists } from "../../../createRoom";
 import { useTypedEventEmitter } from "../../../hooks/useEventEmitter";
 import Modal from "../../../Modal";
 import { _t } from "../../../languageHandler";
-import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
+import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePhases";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import ErrorDialog from "../dialogs/ErrorDialog";
 

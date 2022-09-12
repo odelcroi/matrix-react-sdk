@@ -14,16 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
-import { MatrixClient } from 'matrix-js-sdk/src/client';
+import React from "react";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixClient } from "matrix-js-sdk/src/client";
 
 import BaseDialog from "../dialogs/BaseDialog";
 import { IDialogProps } from "../dialogs/IDialogProps";
-import { locationEventGeoUri, isSelfLocation } from '../../../utils/location';
-import Map from './Map';
-import SmartMarker from './SmartMarker';
-import ZoomButtons from './ZoomButtons';
+import { locationEventGeoUri, isSelfLocation } from "../../../utils/location";
+import Map from "./Map";
+import SmartMarker from "./SmartMarker";
+import ZoomButtons from "./ZoomButtons";
 
 interface IProps extends IDialogProps {
     matrixClient: MatrixClient;

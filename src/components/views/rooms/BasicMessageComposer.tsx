@@ -14,23 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import classNames from 'classnames';
-import React, { createRef, ClipboardEvent } from 'react';
-import { Room } from 'matrix-js-sdk/src/models/room';
-import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
-import EMOTICON_REGEX from 'emojibase-regex/emoticon';
+import classNames from "classnames";
+import React, { createRef, ClipboardEvent } from "react";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import EMOTICON_REGEX from "emojibase-regex/emoticon";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import EditorModel from '../../../editor/model';
-import HistoryManager from '../../../editor/history';
-import { Caret, setSelection } from '../../../editor/caret';
+import EditorModel from "../../../editor/model";
+import HistoryManager from "../../../editor/history";
+import { Caret, setSelection } from "../../../editor/caret";
 import { formatRange, formatRangeAsLink, replaceRangeAndMoveCaret, toggleInlineFormat }
-    from '../../../editor/operations';
-import { getCaretOffsetAndText, getRangeForSelection } from '../../../editor/dom';
-import Autocomplete, { generateCompletionDomId } from '../rooms/Autocomplete';
-import { getAutoCompleteCreator, Part, Type } from '../../../editor/parts';
-import { parseEvent, parsePlainTextMessage } from '../../../editor/deserialize';
-import { renderModel } from '../../../editor/render';
+    from "../../../editor/operations";
+import { getCaretOffsetAndText, getRangeForSelection } from "../../../editor/dom";
+import Autocomplete, { generateCompletionDomId } from "../rooms/Autocomplete";
+import { getAutoCompleteCreator, Part, Type } from "../../../editor/parts";
+import { parseEvent, parsePlainTextMessage } from "../../../editor/deserialize";
+import { renderModel } from "../../../editor/render";
 import TypingStore from "../../../stores/TypingStore";
 import SettingsStore from "../../../settings/SettingsStore";
 import { IS_MAC, Key } from "../../../Keyboard";
@@ -41,16 +41,16 @@ import MessageComposerFormatBar, { Formatting } from "./MessageComposerFormatBar
 import DocumentOffset from "../../../editor/offset";
 import { IDiff } from "../../../editor/diff";
 import AutocompleteWrapperModel from "../../../editor/autocomplete";
-import DocumentPosition from '../../../editor/position';
+import DocumentPosition from "../../../editor/position";
 import { ICompletion } from "../../../autocomplete/Autocompleter";
-import { getKeyBindingsManager } from '../../../KeyBindingsManager';
-import { ALTERNATE_KEY_NAME, KeyBindingAction } from '../../../accessibility/KeyboardShortcuts';
+import { getKeyBindingsManager } from "../../../KeyBindingsManager";
+import { ALTERNATE_KEY_NAME, KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { _t } from "../../../languageHandler";
-import { linkify } from '../../../linkify-matrix';
+import { linkify } from "../../../linkify-matrix";
 
 // matches emoticons which follow the start of a line or whitespace
-const REGEX_EMOTICON_WHITESPACE = new RegExp('(?:^|\\s)(' + EMOTICON_REGEX.source + ')\\s|:^$');
-export const REGEX_EMOTICON = new RegExp('(?:^|\\s)(' + EMOTICON_REGEX.source + ')$');
+const REGEX_EMOTICON_WHITESPACE = new RegExp("(?:^|\\s)(" + EMOTICON_REGEX.source + ")\\s|:^$");
+export const REGEX_EMOTICON = new RegExp("(?:^|\\s)(" + EMOTICON_REGEX.source + ")$");
 
 const SURROUND_WITH_CHARACTERS = ["\"", "_", "`", "'", "*", "~", "$"];
 const SURROUND_WITH_DOUBLE_CHARACTERS = new Map([
@@ -140,9 +140,9 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             showVisualBell: false,
         };
 
-        this.useMarkdownHandle = SettingsStore.watchSetting('MessageComposerInput.useMarkdown', null,
+        this.useMarkdownHandle = SettingsStore.watchSetting("MessageComposerInput.useMarkdown", null,
             this.configureUseMarkdown);
-        this.emoticonSettingHandle = SettingsStore.watchSetting('MessageComposerInput.autoReplaceEmoji', null,
+        this.emoticonSettingHandle = SettingsStore.watchSetting("MessageComposerInput.autoReplaceEmoji", null,
             this.configureEmoticonAutoReplace);
         this.configureEmoticonAutoReplace();
         this.shouldShowPillAvatarSettingHandle = SettingsStore.watchSetting("Pill.shouldShowPillAvatar", null,
@@ -259,7 +259,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
 
     private showPlaceholder(): void {
         // escape single quotes
-        const placeholder = this.props.placeholder.replace(/'/g, '\\\'');
+        const placeholder = this.props.placeholder.replace(/'/g, "\\'");
         this.editorRef.current.style.setProperty("--placeholder", `'${placeholder}'`);
         this.editorRef.current.classList.add("mx_BasicMessageComposer_inputEmpty");
     }
@@ -287,7 +287,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         // however, doing this async seems to break things in Safari for some reason, so browser sniff.
 
         const ua = navigator.userAgent.toLowerCase();
-        const isSafari = ua.includes('safari/') && !ua.includes('chrome/');
+        const isSafari = ua.includes("safari/") && !ua.includes("chrome/");
 
         if (isSafari) {
             this.onInput({ inputType: "insertCompositionText" });
@@ -664,7 +664,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
     };
 
     private transform = (documentPosition: DocumentPosition): void => {
-        const shouldReplace = SettingsStore.getValue('MessageComposerInput.autoReplaceEmoji');
+        const shouldReplace = SettingsStore.getValue("MessageComposerInput.autoReplaceEmoji");
         if (shouldReplace) this.replaceEmoticon(documentPosition, REGEX_EMOTICON_WHITESPACE);
     };
 

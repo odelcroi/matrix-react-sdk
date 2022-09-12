@@ -14,15 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import classnames from 'classnames';
-import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
-import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
+import React from "react";
+import classnames from "classnames";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 
-import * as Avatar from '../../../Avatar';
-import EventTile from '../rooms/EventTile';
+import * as Avatar from "../../../Avatar";
+import EventTile from "../rooms/EventTile";
 import { Layout } from "../../../settings/enums/Layout";
-import Spinner from './Spinner';
+import Spinner from "./Spinner";
 
 interface IProps {
     /**

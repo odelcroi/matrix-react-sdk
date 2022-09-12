@@ -15,12 +15,12 @@ limitations under the License.
 */
 
 import { EventEmitter } from "events";
-import { mocked } from 'jest-mock';
+import { mocked } from "jest-mock";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { defer } from "matrix-js-sdk/src/utils";
-import { ClientEvent, RoomEvent, MatrixEvent } from 'matrix-js-sdk/src/matrix';
+import { ClientEvent, RoomEvent, MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import SpaceStore from "../../src/stores/spaces/SpaceStore";
 import {
@@ -399,7 +399,7 @@ describe("SpaceStore", () => {
                 await run();
             });
 
-            describe('isRoomInSpace()', () => {
+            describe("isRoomInSpace()", () => {
                 it("home space contains orphaned rooms", () => {
                     expect(store.isRoomInSpace(MetaSpace.Home, orphan1)).toBeTruthy();
                     expect(store.isRoomInSpace(MetaSpace.Home, orphan2)).toBeTruthy();
@@ -528,7 +528,7 @@ describe("SpaceStore", () => {
                     expect(store.isRoomInSpace(space3, dm3)).toBeFalsy();
                 });
 
-                it('uses cached aggregated rooms', () => {
+                it("uses cached aggregated rooms", () => {
                     const rooms = store.getSpaceFilteredRoomIds(space4, true);
                     expect(store.isRoomInSpace(space4, fav1)).toBeTruthy();
                     expect(store.isRoomInSpace(space4, fav3)).toBeTruthy();
@@ -690,7 +690,7 @@ describe("SpaceStore", () => {
             expect(store.isRoomInSpace(MetaSpace.Home, invite1)).toBeTruthy();
         });
 
-        describe('onRoomsUpdate()', () => {
+        describe("onRoomsUpdate()", () => {
             beforeEach(() => {
                 [fav1, fav2, fav3, dm1, dm2, dm3, orphan1, orphan2, invite1, invite2, room1, room2, room3, room4]
                     .forEach(mkRoom);
@@ -725,7 +725,7 @@ describe("SpaceStore", () => {
                     room: spaceId,
                     user: client.getUserId(),
                     skey: user.userId,
-                    content: { membership: 'join' },
+                    content: { membership: "join" },
                     ts: Date.now(),
                 });
                 const spaceRoom = client.getRoom(spaceId);
@@ -737,11 +737,11 @@ describe("SpaceStore", () => {
                 client.emit(RoomStateEvent.Members, memberEvent, spaceRoom.currentState, user);
             };
 
-            it('emits events for parent spaces when child room is added', async () => {
+            it("emits events for parent spaces when child room is added", async () => {
                 await run();
 
-                const room5 = mkRoom('!room5:server');
-                const emitSpy = jest.spyOn(store, 'emit').mockClear();
+                const room5 = mkRoom("!room5:server");
+                const emitSpy = jest.spyOn(store, "emit").mockClear();
                 // add room5 into space2
                 addChildRoom(space2, room5.roomId);
 
@@ -753,9 +753,9 @@ describe("SpaceStore", () => {
                 expect(emitSpy).not.toHaveBeenCalledWith(space3);
             });
 
-            it('updates rooms state when a child room is added', async () => {
+            it("updates rooms state when a child room is added", async () => {
                 await run();
-                const room5 = mkRoom('!room5:server');
+                const room5 = mkRoom("!room5:server");
 
                 expect(store.isRoomInSpace(space2, room5.roomId)).toBeFalsy();
                 expect(store.isRoomInSpace(space4, room5.roomId)).toBeFalsy();
@@ -770,10 +770,10 @@ describe("SpaceStore", () => {
                 expect(store.isRoomInSpace(space1, room5.roomId)).toBeTruthy();
             });
 
-            it('emits events for parent spaces when a member is added', async () => {
+            it("emits events for parent spaces when a member is added", async () => {
                 await run();
 
-                const emitSpy = jest.spyOn(store, 'emit').mockClear();
+                const emitSpy = jest.spyOn(store, "emit").mockClear();
                 // add into space2
                 addMember(space2, dm1Partner);
 
@@ -785,7 +785,7 @@ describe("SpaceStore", () => {
                 expect(emitSpy).not.toHaveBeenCalledWith(space3);
             });
 
-            it('updates users state when a member is added', async () => {
+            it("updates users state when a member is added", async () => {
                 await run();
 
                 expect(store.getSpaceFilteredUserIds(space2)).toEqual(new Set([]));

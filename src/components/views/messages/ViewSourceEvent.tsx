@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { MatrixEvent, MatrixEventEvent } from 'matrix-js-sdk/src/matrix';
-import classNames from 'classnames';
+import React from "react";
+import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/matrix";
+import classNames from "classnames";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import { _t } from '../../../languageHandler';
-import AccessibleButton from '../elements/AccessibleButton';
+import { _t } from "../../../languageHandler";
+import AccessibleButton from "../elements/AccessibleButton";
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -77,7 +77,7 @@ export default class ViewSourceEvent extends React.PureComponent<IProps, IState>
             { content }
             <AccessibleButton
                 kind='link'
-                title={_t('toggle event')}
+                title={_t("toggle event")}
                 className="mx_ViewSourceEvent_toggle"
                 onClick={this.onToggle}
             />

@@ -41,27 +41,27 @@ const PREVIEWS: Record<string, {
     isState: boolean;
     previewer: IPreview;
 }> = {
-    'm.room.message': {
+    "m.room.message": {
         isState: false,
         previewer: new MessageEventPreview(),
     },
-    'm.call.invite': {
+    "m.call.invite": {
         isState: false,
         previewer: new LegacyCallInviteEventPreview(),
     },
-    'm.call.answer': {
+    "m.call.answer": {
         isState: false,
         previewer: new LegacyCallAnswerEventPreview(),
     },
-    'm.call.hangup': {
+    "m.call.hangup": {
         isState: false,
         previewer: new LegacyCallHangupEvent(),
     },
-    'm.sticker': {
+    "m.sticker": {
         isState: false,
         previewer: new StickerEventPreview(),
     },
-    'm.reaction': {
+    "m.reaction": {
         isState: false,
         previewer: new ReactionEventPreview(),
     },
@@ -199,7 +199,7 @@ export class MessagePreviewStore extends AsyncStoreWithClient<IState> {
     protected async onAction(payload: ActionPayload) {
         if (!this.matrixClient) return;
 
-        if (payload.action === 'MatrixActions.Room.timeline' || payload.action === 'MatrixActions.Event.decrypted') {
+        if (payload.action === "MatrixActions.Room.timeline" || payload.action === "MatrixActions.Event.decrypted") {
             const event = payload.event; // TODO: Type out the dispatcher
             const isHistoricalEvent = payload.hasOwnProperty("isLiveEvent") && !payload.isLiveEvent;
             if (!this.previews.has(event.getRoomId()) || isHistoricalEvent) return; // not important

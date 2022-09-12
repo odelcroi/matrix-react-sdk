@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import classNames from "classnames";
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
 import { _t } from "../../../languageHandler";
 import { UseCase } from "../../../settings/enums/UseCase";

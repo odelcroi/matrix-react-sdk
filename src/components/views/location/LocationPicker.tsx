@@ -14,25 +14,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { SyntheticEvent } from 'react';
-import maplibregl, { MapMouseEvent } from 'maplibre-gl';
+import React, { SyntheticEvent } from "react";
+import maplibregl, { MapMouseEvent } from "maplibre-gl";
 import { logger } from "matrix-js-sdk/src/logger";
-import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
-import { ClientEvent, IClientWellKnown } from 'matrix-js-sdk/src/client';
+import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { ClientEvent, IClientWellKnown } from "matrix-js-sdk/src/client";
 
-import { _t } from '../../../languageHandler';
-import MatrixClientContext from '../../../contexts/MatrixClientContext';
-import Modal from '../../../Modal';
-import SdkConfig from '../../../SdkConfig';
-import { tileServerFromWellKnown } from '../../../utils/WellKnownUtils';
-import { GenericPosition, genericPositionFromGeolocation, getGeoUri } from '../../../utils/beacon';
-import { LocationShareError, findMapStyleUrl } from '../../../utils/location';
-import ErrorDialog from '../dialogs/ErrorDialog';
-import AccessibleButton from '../elements/AccessibleButton';
-import { MapError } from './MapError';
-import LiveDurationDropdown, { DEFAULT_DURATION_MS } from './LiveDurationDropdown';
-import { LocationShareType, ShareLocationFn } from './shareLocation';
-import Marker from './Marker';
+import { _t } from "../../../languageHandler";
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import Modal from "../../../Modal";
+import SdkConfig from "../../../SdkConfig";
+import { tileServerFromWellKnown } from "../../../utils/WellKnownUtils";
+import { GenericPosition, genericPositionFromGeolocation, getGeoUri } from "../../../utils/beacon";
+import { LocationShareError, findMapStyleUrl } from "../../../utils/location";
+import ErrorDialog from "../dialogs/ErrorDialog";
+import AccessibleButton from "../elements/AccessibleButton";
+import { MapError } from "./MapError";
+import LiveDurationDropdown, { DEFAULT_DURATION_MS } from "./LiveDurationDropdown";
+import { LocationShareType, ShareLocationFn } from "./shareLocation";
+import Marker from "./Marker";
 
 export interface ILocationPickerProps {
     sender: RoomMember;
@@ -76,7 +76,7 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
 
         try {
             this.map = new maplibregl.Map({
-                container: 'mx_LocationPicker_map',
+                container: "mx_LocationPicker_map",
                 style: findMapStyleUrl(),
                 center: [0, 0],
                 zoom: 1,
@@ -92,7 +92,7 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
 
             this.map.addControl(this.geolocate);
 
-            this.map.on('error', (e) => {
+            this.map.on("error", (e) => {
                 logger.error(
                     "Failed to load map: check map_style_url in config.json "
                     + "has a valid URL and API key",
@@ -101,22 +101,22 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
                 this.setState({ error: LocationShareError.MapStyleUrlNotReachable });
             });
 
-            this.map.on('load', () => {
+            this.map.on("load", () => {
                 this.geolocate.trigger();
             });
 
-            this.geolocate.on('error', this.onGeolocateError);
+            this.geolocate.on("error", this.onGeolocateError);
 
             if (isSharingOwnLocation(this.props.shareType)) {
-                this.geolocate.on('geolocate', this.onGeolocate);
+                this.geolocate.on("geolocate", this.onGeolocate);
             }
 
             if (this.props.shareType === LocationShareType.Pin) {
                 const navigationControl = new maplibregl.NavigationControl({
                     showCompass: false, showZoom: true,
                 });
-                this.map.addControl(navigationControl, 'bottom-right');
-                this.map.on('click', this.onClick);
+                this.map.addControl(navigationControl, "bottom-right");
+                this.map.on("click", this.onClick);
             }
         } catch (e) {
             logger.error("Failed to render map", e);
@@ -128,16 +128,16 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
     }
 
     componentWillUnmount() {
-        this.geolocate?.off('error', this.onGeolocateError);
-        this.geolocate?.off('geolocate', this.onGeolocate);
-        this.map?.off('click', this.onClick);
+        this.geolocate?.off("error", this.onGeolocateError);
+        this.geolocate?.off("geolocate", this.onGeolocate);
+        this.map?.off("click", this.onClick);
         this.context.off(ClientEvent.ClientWellKnown, this.updateStyleUrl);
     }
 
     private addMarkerToMap = () => {
         this.marker = new maplibregl.Marker({
             element: document.getElementById(this.getMarkerId()),
-            anchor: 'bottom',
+            anchor: "bottom",
             offset: [0, -1],
         }).setLngLat(new maplibregl.LngLat(0, 0))
             .addTo(this.map);
@@ -243,7 +243,7 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
                             className='mx_LocationPicker_submitButton'
                             disabled={!this.state.position}
                             onClick={this.onOk}>
-                            { _t('Share location') }
+                            { _t("Share location") }
                         </AccessibleButton>
                     </form>
                 </div>

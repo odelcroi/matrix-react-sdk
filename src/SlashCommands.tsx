@@ -17,29 +17,29 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import * as React from 'react';
+import * as React from "react";
 import { User } from "matrix-js-sdk/src/models/user";
-import { Direction } from 'matrix-js-sdk/src/models/event-timeline';
+import { Direction } from "matrix-js-sdk/src/models/event-timeline";
 import { EventType } from "matrix-js-sdk/src/@types/event";
-import * as ContentHelpers from 'matrix-js-sdk/src/content-helpers';
+import * as ContentHelpers from "matrix-js-sdk/src/content-helpers";
 import { Element as ChildElement, parseFragment as parseHtml } from "parse5";
 import { logger } from "matrix-js-sdk/src/logger";
-import { IContent } from 'matrix-js-sdk/src/models/event';
-import { MRoomTopicEventContent } from 'matrix-js-sdk/src/@types/topic';
+import { IContent } from "matrix-js-sdk/src/models/event";
+import { MRoomTopicEventContent } from "matrix-js-sdk/src/@types/topic";
 import { SlashCommand as SlashCommandEvent } from "@matrix-org/analytics-events/types/typescript/SlashCommand";
 
-import { MatrixClientPeg } from './MatrixClientPeg';
-import dis from './dispatcher/dispatcher';
-import { _t, _td, ITranslatableError, newTranslatableError } from './languageHandler';
-import Modal from './Modal';
-import MultiInviter from './utils/MultiInviter';
-import { linkifyElement, topicToHtml } from './HtmlUtils';
+import { MatrixClientPeg } from "./MatrixClientPeg";
+import dis from "./dispatcher/dispatcher";
+import { _t, _td, ITranslatableError, newTranslatableError } from "./languageHandler";
+import Modal from "./Modal";
+import MultiInviter from "./utils/MultiInviter";
+import { linkifyElement, topicToHtml } from "./HtmlUtils";
 import QuestionDialog from "./components/views/dialogs/QuestionDialog";
 import WidgetUtils from "./utils/WidgetUtils";
 import { textToHtmlRainbow } from "./utils/colour";
-import { AddressType, getAddressType } from './UserAddress';
-import { abbreviateUrl } from './utils/UrlUtils';
-import { getDefaultIdentityServerUrl, setToDefaultIdentityServer } from './utils/IdentityServerUtils';
+import { AddressType, getAddressType } from "./UserAddress";
+import { abbreviateUrl } from "./utils/UrlUtils";
+import { getDefaultIdentityServerUrl, setToDefaultIdentityServer } from "./utils/IdentityServerUtils";
 import { isPermalinkHost, parsePermalink } from "./utils/permalinks/Permalinks";
 import { WidgetType } from "./widgets/WidgetType";
 import { Jitsi } from "./widgets/Jitsi";
@@ -54,22 +54,22 @@ import { UIComponent, UIFeature } from "./settings/UIFeature";
 import { CHAT_EFFECTS } from "./effects";
 import LegacyCallHandler from "./LegacyCallHandler";
 import { guessAndSetDMRoom } from "./Rooms";
-import { upgradeRoom } from './utils/RoomUpgrade';
-import UploadConfirmDialog from './components/views/dialogs/UploadConfirmDialog';
-import DevtoolsDialog from './components/views/dialogs/DevtoolsDialog';
+import { upgradeRoom } from "./utils/RoomUpgrade";
+import UploadConfirmDialog from "./components/views/dialogs/UploadConfirmDialog";
+import DevtoolsDialog from "./components/views/dialogs/DevtoolsDialog";
 import RoomUpgradeWarningDialog from "./components/views/dialogs/RoomUpgradeWarningDialog";
 import InfoDialog from "./components/views/dialogs/InfoDialog";
 import SlashCommandHelpDialog from "./components/views/dialogs/SlashCommandHelpDialog";
 import { shouldShowComponent } from "./customisations/helpers/UIComponents";
-import { TimelineRenderingType } from './contexts/RoomContext';
+import { TimelineRenderingType } from "./contexts/RoomContext";
 import { RoomViewStore } from "./stores/RoomViewStore";
 import { XOR } from "./@types/common";
 import { PosthogAnalytics } from "./PosthogAnalytics";
 import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
-import VoipUserMapper from './VoipUserMapper';
-import { htmlSerializeFromMdIfNeeded } from './editor/serialize';
+import VoipUserMapper from "./VoipUserMapper";
+import { htmlSerializeFromMdIfNeeded } from "./editor/serialize";
 import { leaveRoomBehaviour } from "./utils/leave-behaviour";
-import { isLocalRoom } from './utils/localRoom/isLocalRoom';
+import { isLocalRoom } from "./utils/localRoom/isLocalRoom";
 
 // XXX: workaround for https://github.com/microsoft/TypeScript/issues/31816
 interface HTMLInputEvent extends Event {
@@ -78,8 +78,8 @@ interface HTMLInputEvent extends Event {
 
 const singleMxcUpload = async (): Promise<any> => {
     return new Promise((resolve) => {
-        const fileSelector = document.createElement('input');
-        fileSelector.setAttribute('type', 'file');
+        const fileSelector = document.createElement("input");
+        fileSelector.setAttribute("type", "file");
         fileSelector.onchange = (ev: HTMLInputEvent) => {
             const file = ev.target.files[0];
 
@@ -187,7 +187,7 @@ export class Command {
     }
 
     public getUsage() {
-        return _t('Usage') + ': ' + this.getCommandWithArgs();
+        return _t("Usage") + ": " + this.getCommandWithArgs();
     }
 
     public isEnabled(): boolean {
@@ -219,9 +219,9 @@ const isCurrentLocalRoom = (): boolean => {
 
 export const Commands = [
     new Command({
-        command: 'spoiler',
-        args: '<message>',
-        description: _td('Sends the given message as a spoiler'),
+        command: "spoiler",
+        args: "<message>",
+        description: _td("Sends the given message as a spoiler"),
         runFn: function(roomId, message) {
             return successSync(ContentHelpers.makeHtmlMessage(
                 message,
@@ -231,79 +231,79 @@ export const Commands = [
         category: CommandCategories.messages,
     }),
     new Command({
-        command: 'shrug',
-        args: '<message>',
-        description: _td('Prepends ¯\\_(ツ)_/¯ to a plain-text message'),
+        command: "shrug",
+        args: "<message>",
+        description: _td("Prepends ¯\\_(ツ)_/¯ to a plain-text message"),
         runFn: function(roomId, args) {
-            let message = '¯\\_(ツ)_/¯';
+            let message = "¯\\_(ツ)_/¯";
             if (args) {
-                message = message + ' ' + args;
+                message = message + " " + args;
             }
             return successSync(ContentHelpers.makeTextMessage(message));
         },
         category: CommandCategories.messages,
     }),
     new Command({
-        command: 'tableflip',
-        args: '<message>',
-        description: _td('Prepends (╯°□°）╯︵ ┻━┻ to a plain-text message'),
+        command: "tableflip",
+        args: "<message>",
+        description: _td("Prepends (╯°□°）╯︵ ┻━┻ to a plain-text message"),
         runFn: function(roomId, args) {
-            let message = '(╯°□°）╯︵ ┻━┻';
+            let message = "(╯°□°）╯︵ ┻━┻";
             if (args) {
-                message = message + ' ' + args;
+                message = message + " " + args;
             }
             return successSync(ContentHelpers.makeTextMessage(message));
         },
         category: CommandCategories.messages,
     }),
     new Command({
-        command: 'unflip',
-        args: '<message>',
-        description: _td('Prepends ┬──┬ ノ( ゜-゜ノ) to a plain-text message'),
+        command: "unflip",
+        args: "<message>",
+        description: _td("Prepends ┬──┬ ノ( ゜-゜ノ) to a plain-text message"),
         runFn: function(roomId, args) {
-            let message = '┬──┬ ノ( ゜-゜ノ)';
+            let message = "┬──┬ ノ( ゜-゜ノ)";
             if (args) {
-                message = message + ' ' + args;
+                message = message + " " + args;
             }
             return successSync(ContentHelpers.makeTextMessage(message));
         },
         category: CommandCategories.messages,
     }),
     new Command({
-        command: 'lenny',
-        args: '<message>',
-        description: _td('Prepends ( ͡° ͜ʖ ͡°) to a plain-text message'),
+        command: "lenny",
+        args: "<message>",
+        description: _td("Prepends ( ͡° ͜ʖ ͡°) to a plain-text message"),
         runFn: function(roomId, args) {
-            let message = '( ͡° ͜ʖ ͡°)';
+            let message = "( ͡° ͜ʖ ͡°)";
             if (args) {
-                message = message + ' ' + args;
+                message = message + " " + args;
             }
             return successSync(ContentHelpers.makeTextMessage(message));
         },
         category: CommandCategories.messages,
     }),
     new Command({
-        command: 'plain',
-        args: '<message>',
-        description: _td('Sends a message as plain text, without interpreting it as markdown'),
+        command: "plain",
+        args: "<message>",
+        description: _td("Sends a message as plain text, without interpreting it as markdown"),
         runFn: function(roomId, messages) {
             return successSync(ContentHelpers.makeTextMessage(messages));
         },
         category: CommandCategories.messages,
     }),
     new Command({
-        command: 'html',
-        args: '<message>',
-        description: _td('Sends a message as html, without interpreting it as markdown'),
+        command: "html",
+        args: "<message>",
+        description: _td("Sends a message as html, without interpreting it as markdown"),
         runFn: function(roomId, messages) {
             return successSync(ContentHelpers.makeHtmlMessage(messages, messages));
         },
         category: CommandCategories.messages,
     }),
     new Command({
-        command: 'upgraderoom',
-        args: '<new_version>',
-        description: _td('Upgrades a room to a new version'),
+        command: "upgraderoom",
+        args: "<new_version>",
+        description: _td("Upgrades a room to a new version"),
         isEnabled: () => !isCurrentLocalRoom(),
         runFn: function(roomId, args) {
             if (args) {
@@ -330,9 +330,9 @@ export const Commands = [
         renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
-        command: 'jumptodate',
-        args: '<YYYY-MM-DD>',
-        description: _td('Jump to the given date in the timeline'),
+        command: "jumptodate",
+        args: "<YYYY-MM-DD>",
+        description: _td("Jump to the given date in the timeline"),
         isEnabled: () => SettingsStore.getValue("feature_jump_to_date"),
         runFn: function(roomId, args) {
             if (args) {
@@ -340,8 +340,8 @@ export const Commands = [
                     const unixTimestamp = Date.parse(args);
                     if (!unixTimestamp) {
                         throw newTranslatableError(
-                            'We were unable to understand the given date (%(inputDate)s). ' +
-                                'Try using the format YYYY-MM-DD.',
+                            "We were unable to understand the given date (%(inputDate)s). " +
+                                "Try using the format YYYY-MM-DD.",
                             { inputDate: args },
                         );
                     }
@@ -371,9 +371,9 @@ export const Commands = [
         category: CommandCategories.actions,
     }),
     new Command({
-        command: 'nick',
-        args: '<display_name>',
-        description: _td('Changes your display nickname'),
+        command: "nick",
+        args: "<display_name>",
+        description: _td("Changes your display nickname"),
         runFn: function(roomId, args) {
             if (args) {
                 return success(MatrixClientPeg.get().setDisplayName(args));
@@ -384,20 +384,20 @@ export const Commands = [
         renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
-        command: 'myroomnick',
-        aliases: ['roomnick'],
-        args: '<display_name>',
-        description: _td('Changes your display nickname in the current room only'),
+        command: "myroomnick",
+        aliases: ["roomnick"],
+        args: "<display_name>",
+        description: _td("Changes your display nickname in the current room only"),
         isEnabled: () => !isCurrentLocalRoom(),
         runFn: function(roomId, args) {
             if (args) {
                 const cli = MatrixClientPeg.get();
-                const ev = cli.getRoom(roomId).currentState.getStateEvents('m.room.member', cli.getUserId());
+                const ev = cli.getRoom(roomId).currentState.getStateEvents("m.room.member", cli.getUserId());
                 const content = {
-                    ...(ev ? ev.getContent() : { membership: 'join' }),
+                    ...(ev ? ev.getContent() : { membership: "join" }),
                     displayname: args,
                 };
-                return success(cli.sendStateEvent(roomId, 'm.room.member', content, cli.getUserId()));
+                return success(cli.sendStateEvent(roomId, "m.room.member", content, cli.getUserId()));
             }
             return reject(this.getUsage());
         },
@@ -405,9 +405,9 @@ export const Commands = [
         renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
-        command: 'roomavatar',
-        args: '[<mxc_url>]',
-        description: _td('Changes the avatar of the current room'),
+        command: "roomavatar",
+        args: "[<mxc_url>]",
+        description: _td("Changes the avatar of the current room"),
         isEnabled: () => !isCurrentLocalRoom(),
         runFn: function(roomId, args) {
             let promise = Promise.resolve(args);
@@ -417,16 +417,16 @@ export const Commands = [
 
             return success(promise.then((url) => {
                 if (!url) return;
-                return MatrixClientPeg.get().sendStateEvent(roomId, 'm.room.avatar', { url }, '');
+                return MatrixClientPeg.get().sendStateEvent(roomId, "m.room.avatar", { url }, "");
             }));
         },
         category: CommandCategories.actions,
         renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
-        command: 'myroomavatar',
-        args: '[<mxc_url>]',
-        description: _td('Changes your avatar in this current room only'),
+        command: "myroomavatar",
+        args: "[<mxc_url>]",
+        description: _td("Changes your avatar in this current room only"),
         isEnabled: () => !isCurrentLocalRoom(),
         runFn: function(roomId, args) {
             const cli = MatrixClientPeg.get();
@@ -440,21 +440,21 @@ export const Commands = [
 
             return success(promise.then((url) => {
                 if (!url) return;
-                const ev = room.currentState.getStateEvents('m.room.member', userId);
+                const ev = room.currentState.getStateEvents("m.room.member", userId);
                 const content = {
-                    ...(ev ? ev.getContent() : { membership: 'join' }),
+                    ...(ev ? ev.getContent() : { membership: "join" }),
                     avatar_url: url,
                 };
-                return cli.sendStateEvent(roomId, 'm.room.member', content, userId);
+                return cli.sendStateEvent(roomId, "m.room.member", content, userId);
             }));
         },
         category: CommandCategories.actions,
         renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
-        command: 'myavatar',
-        args: '[<mxc_url>]',
-        description: _td('Changes your avatar in all rooms'),
+        command: "myavatar",
+        args: "[<mxc_url>]",
+        description: _td("Changes your avatar in all rooms"),
         runFn: function(roomId, args) {
             let promise = Promise.resolve(args);
             if (!args) {
@@ -470,9 +470,9 @@ export const Commands = [
         renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
-        command: 'topic',
-        args: '[<topic>]',
-        description: _td('Gets or sets the room topic'),
+        command: "topic",
+        args: "[<topic>]",
+        description: _td("Gets or sets the room topic"),
         isEnabled: () => !isCurrentLocalRoom(),
         runFn: function(roomId, args) {
             const cli = MatrixClientPeg.get();
@@ -487,10 +487,10 @@ export const Commands = [
                 );
             }
 
-            const content: MRoomTopicEventContent = room.currentState.getStateEvents('m.room.topic', '')?.getContent();
+            const content: MRoomTopicEventContent = room.currentState.getStateEvents("m.room.topic", "")?.getContent();
             const topic = !!content
                 ? ContentHelpers.parseTopicContent(content)
-                : { text: _t('This room has no topic.') };
+                : { text: _t("This room has no topic.") };
 
             const ref = e => e && linkifyElement(e);
             const body = topicToHtml(topic.text, topic.html, ref, true);
@@ -507,9 +507,9 @@ export const Commands = [
         renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
-        command: 'roomname',
-        args: '<name>',
-        description: _td('Sets the room name'),
+        command: "roomname",
+        args: "<name>",
+        description: _td("Sets the room name"),
         isEnabled: () => !isCurrentLocalRoom(),
         runFn: function(roomId, args) {
             if (args) {
@@ -521,9 +521,9 @@ export const Commands = [
         renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
-        command: 'invite',
-        args: '<user-id> [<reason>]',
-        description: _td('Invites user with given id to current room'),
+        command: "invite",
+        args: "<user-id> [<reason>]",
+        description: _td("Invites user with given id to current room"),
         analyticsName: "Invite",
         isEnabled: () => !isCurrentLocalRoom() && shouldShowComponent(UIComponent.InviteUsers),
         runFn: function(roomId, args) {
@@ -588,10 +588,10 @@ export const Commands = [
         renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
-        command: 'join',
-        aliases: ['j', 'goto'],
-        args: '<room-address>',
-        description: _td('Joins room with given address'),
+        command: "join",
+        aliases: ["j", "goto"],
+        args: "<room-address>",
+        description: _td("Joins room with given address"),
         runFn: function(roomId, args) {
             if (args) {
                 // Note: we support 2 versions of this command. The first is
@@ -606,7 +606,7 @@ export const Commands = [
                 // The command also supports event permalinks transparently:
                 //   /join https://matrix.to/#/!example:example.org/$something:example.org
                 //   /join https://matrix.to/#/!example:example.org/$something:example.org?via=altserver.com
-                const params = args.split(' ');
+                const params = args.split(" ");
                 if (params.length < 1) return reject(this.getUsage());
 
                 let isPermalink = false;
@@ -622,10 +622,10 @@ export const Commands = [
                         isPermalink = true;
                     }
                 }
-                if (params[0][0] === '#') {
+                if (params[0][0] === "#") {
                     let roomAlias = params[0];
-                    if (!roomAlias.includes(':')) {
-                        roomAlias += ':' + MatrixClientPeg.get().getDomain();
+                    if (!roomAlias.includes(":")) {
+                        roomAlias += ":" + MatrixClientPeg.get().getDomain();
                     }
 
                     dis.dispatch<ViewRoomPayload>({
@@ -636,7 +636,7 @@ export const Commands = [
                         metricsViaKeyboard: true,
                     });
                     return success();
-                } else if (params[0][0] === '!') {
+                } else if (params[0][0] === "!") {
                     const [roomId, ...viaServers] = params;
 
                     dis.dispatch<ViewRoomPayload>({
@@ -674,7 +674,7 @@ export const Commands = [
                         metricsViaKeyboard: true,
                     };
 
-                    if (entity[0] === '!') dispatch["room_id"] = entity;
+                    if (entity[0] === "!") dispatch["room_id"] = entity;
                     else dispatch["room_alias"] = entity;
 
                     if (eventId) {
@@ -690,7 +690,7 @@ export const Commands = [
                         };
 
                         // For if the join fails (rejoin button)
-                        dispatch['via_servers'] = viaServers;
+                        dispatch["via_servers"] = viaServers;
                     }
 
                     dis.dispatch(dispatch);
@@ -703,9 +703,9 @@ export const Commands = [
         renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
-        command: 'part',
-        args: '[<room-address>]',
-        description: _td('Leave room'),
+        command: "part",
+        args: "[<room-address>]",
+        description: _td("Leave room"),
         analyticsName: "Part",
         isEnabled: () => !isCurrentLocalRoom(),
         runFn: function(roomId, args) {
@@ -716,16 +716,16 @@ export const Commands = [
                 const matches = args.match(/^(\S+)$/);
                 if (matches) {
                     let roomAlias = matches[1];
-                    if (roomAlias[0] !== '#') return reject(this.getUsage());
+                    if (roomAlias[0] !== "#") return reject(this.getUsage());
 
-                    if (!roomAlias.includes(':')) {
-                        roomAlias += ':' + cli.getDomain();
+                    if (!roomAlias.includes(":")) {
+                        roomAlias += ":" + cli.getDomain();
                     }
 
                     // Try to find a room with this alias
                     const rooms = cli.getRooms();
                     for (let i = 0; i < rooms.length; i++) {
-                        const aliasEvents = rooms[i].currentState.getStateEvents('m.room.aliases');
+                        const aliasEvents = rooms[i].currentState.getStateEvents("m.room.aliases");
                         for (let j = 0; j < aliasEvents.length; j++) {
                             const aliases = aliasEvents[j].getContent().aliases || [];
                             for (let k = 0; k < aliases.length; k++) {
@@ -741,7 +741,7 @@ export const Commands = [
                     if (!targetRoomId) {
                         return reject(
                             newTranslatableError(
-                                'Unrecognised room address: %(roomAlias)s',
+                                "Unrecognised room address: %(roomAlias)s",
                                 { roomAlias },
                             ),
                         );
@@ -756,10 +756,10 @@ export const Commands = [
         renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
-        command: 'remove',
+        command: "remove",
         aliases: ["kick"],
-        args: '<user-id> [reason]',
-        description: _td('Removes user with given id from this room'),
+        args: "<user-id> [reason]",
+        description: _td("Removes user with given id from this room"),
         isEnabled: () => !isCurrentLocalRoom(),
         runFn: function(roomId, args) {
             if (args) {
@@ -774,9 +774,9 @@ export const Commands = [
         renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
-        command: 'ban',
-        args: '<user-id> [reason]',
-        description: _td('Bans user with given id'),
+        command: "ban",
+        args: "<user-id> [reason]",
+        description: _td("Bans user with given id"),
         isEnabled: () => !isCurrentLocalRoom(),
         runFn: function(roomId, args) {
             if (args) {
@@ -791,9 +791,9 @@ export const Commands = [
         renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
-        command: 'unban',
-        args: '<user-id>',
-        description: _td('Unbans user with given ID'),
+        command: "unban",
+        args: "<user-id>",
+        description: _td("Unbans user with given ID"),
         isEnabled: () => !isCurrentLocalRoom(),
         runFn: function(roomId, args) {
             if (args) {
@@ -809,9 +809,9 @@ export const Commands = [
         renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
-        command: 'ignore',
-        args: '<user-id>',
-        description: _td('Ignores a user, hiding their messages from you'),
+        command: "ignore",
+        args: "<user-id>",
+        description: _td("Ignores a user, hiding their messages from you"),
         runFn: function(roomId, args) {
             if (args) {
                 const cli = MatrixClientPeg.get();
@@ -824,9 +824,9 @@ export const Commands = [
                     return success(
                         cli.setIgnoredUsers(ignoredUsers).then(() => {
                             Modal.createDialog(InfoDialog, {
-                                title: _t('Ignored user'),
+                                title: _t("Ignored user"),
                                 description: <div>
-                                    <p>{ _t('You are now ignoring %(userId)s', { userId }) }</p>
+                                    <p>{ _t("You are now ignoring %(userId)s", { userId }) }</p>
                                 </div>,
                             });
                         }),
@@ -838,9 +838,9 @@ export const Commands = [
         category: CommandCategories.actions,
     }),
     new Command({
-        command: 'unignore',
-        args: '<user-id>',
-        description: _td('Stops ignoring a user, showing their messages going forward'),
+        command: "unignore",
+        args: "<user-id>",
+        description: _td("Stops ignoring a user, showing their messages going forward"),
         runFn: function(roomId, args) {
             if (args) {
                 const cli = MatrixClientPeg.get();
@@ -854,9 +854,9 @@ export const Commands = [
                     return success(
                         cli.setIgnoredUsers(ignoredUsers).then(() => {
                             Modal.createDialog(InfoDialog, {
-                                title: _t('Unignored user'),
+                                title: _t("Unignored user"),
                                 description: <div>
-                                    <p>{ _t('You are no longer ignoring %(userId)s', { userId }) }</p>
+                                    <p>{ _t("You are no longer ignoring %(userId)s", { userId }) }</p>
                                 </div>,
                             });
                         }),
@@ -868,9 +868,9 @@ export const Commands = [
         category: CommandCategories.actions,
     }),
     new Command({
-        command: 'op',
-        args: '<user-id> [<power-level>]',
-        description: _td('Define the power level of a user'),
+        command: "op",
+        args: "<user-id> [<power-level>]",
+        description: _td("Define the power level of a user"),
         isEnabled(): boolean {
             const cli = MatrixClientPeg.get();
             const room = cli.getRoom(RoomViewStore.instance.getRoomId());
@@ -898,7 +898,7 @@ export const Commands = [
                         if (!member || getEffectiveMembership(member.membership) === EffectiveMembership.Leave) {
                             return reject(newTranslatableError("Could not find user in room"));
                         }
-                        const powerLevelEvent = room.currentState.getStateEvents('m.room.power_levels', '');
+                        const powerLevelEvent = room.currentState.getStateEvents("m.room.power_levels", "");
                         return success(cli.setPowerLevel(roomId, userId, powerLevel, powerLevelEvent));
                     }
                 }
@@ -909,9 +909,9 @@ export const Commands = [
         renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
-        command: 'deop',
-        args: '<user-id>',
-        description: _td('Deops user with given id'),
+        command: "deop",
+        args: "<user-id>",
+        description: _td("Deops user with given id"),
         isEnabled(): boolean {
             const cli = MatrixClientPeg.get();
             const room = cli.getRoom(RoomViewStore.instance.getRoomId());
@@ -930,7 +930,7 @@ export const Commands = [
                         );
                     }
 
-                    const powerLevelEvent = room.currentState.getStateEvents('m.room.power_levels', '');
+                    const powerLevelEvent = room.currentState.getStateEvents("m.room.power_levels", "");
                     if (!powerLevelEvent.getContent().users[args]) {
                         return reject(newTranslatableError("Could not find user in room"));
                     }
@@ -943,8 +943,8 @@ export const Commands = [
         renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
-        command: 'devtools',
-        description: _td('Opens the Developer Tools dialog'),
+        command: "devtools",
+        description: _td("Opens the Developer Tools dialog"),
         runFn: function(roomId) {
             Modal.createDialog(DevtoolsDialog, { roomId }, "mx_DevtoolsDialog_wrapper");
             return success();
@@ -952,9 +952,9 @@ export const Commands = [
         category: CommandCategories.advanced,
     }),
     new Command({
-        command: 'addwidget',
-        args: '<url | embed code | Jitsi url>',
-        description: _td('Adds a custom widget by URL to the room'),
+        command: "addwidget",
+        args: "<url | embed code | Jitsi url>",
+        description: _td("Adds a custom widget by URL to the room"),
         isEnabled: () => SettingsStore.getValue(UIFeature.Widgets)
             && shouldShowComponent(UIComponent.AddIntegrations)
             && !isCurrentLocalRoom(),
@@ -970,8 +970,8 @@ export const Commands = [
                 const embed = parseHtml(widgetUrl);
                 if (embed && embed.childNodes && embed.childNodes.length === 1) {
                     const iframe = embed.childNodes[0] as ChildElement;
-                    if (iframe.tagName.toLowerCase() === 'iframe' && iframe.attrs) {
-                        const srcAttr = iframe.attrs.find(a => a.name === 'src');
+                    if (iframe.tagName.toLowerCase() === "iframe" && iframe.attrs) {
+                        const srcAttr = iframe.attrs.find(a => a.name === "src");
                         logger.log("Pulling URL out of iframe (embed code)");
                         widgetUrl = srcAttr.value;
                     }
@@ -1008,9 +1008,9 @@ export const Commands = [
         renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
-        command: 'verify',
-        args: '<user-id> <device-id> <device-signing-key>',
-        description: _td('Verifies a user, session, and pubkey tuple'),
+        command: "verify",
+        args: "<user-id> <device-id> <device-signing-key>",
+        description: _td("Verifies a user, session, and pubkey tuple"),
         runFn: function(roomId, args) {
             if (args) {
                 const matches = args.match(/^(\S+) +(\S+) +(\S+)$/);
@@ -1025,7 +1025,7 @@ export const Commands = [
                         const device = cli.getStoredDevice(userId, deviceId);
                         if (!device) {
                             throw newTranslatableError(
-                                'Unknown (user, session) pair: (%(userId)s, %(deviceId)s)',
+                                "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)",
                                 { userId, deviceId },
                             );
                         }
@@ -1033,16 +1033,16 @@ export const Commands = [
 
                         if (deviceTrust.isVerified()) {
                             if (device.getFingerprint() === fingerprint) {
-                                throw newTranslatableError('Session already verified!');
+                                throw newTranslatableError("Session already verified!");
                             } else {
-                                throw newTranslatableError('WARNING: Session already verified, but keys do NOT MATCH!');
+                                throw newTranslatableError("WARNING: Session already verified, but keys do NOT MATCH!");
                             }
                         }
 
                         if (device.getFingerprint() !== fingerprint) {
                             const fprint = device.getFingerprint();
                             throw newTranslatableError(
-                                'WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session' +
+                                "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session" +
                                     ' %(deviceId)s is "%(fprint)s" which does not match the provided key ' +
                                     '"%(fingerprint)s". This could mean your communications are being intercepted!',
                                 {
@@ -1058,12 +1058,12 @@ export const Commands = [
 
                         // Tell the user we verified everything
                         Modal.createDialog(InfoDialog, {
-                            title: _t('Verified key'),
+                            title: _t("Verified key"),
                             description: <div>
                                 <p>
                                     {
-                                        _t('The signing key you provided matches the signing key you received ' +
-                                            'from %(userId)s\'s session %(deviceId)s. Session marked as verified.',
+                                        _t("The signing key you provided matches the signing key you received " +
+                                            "from %(userId)s's session %(deviceId)s. Session marked as verified.",
                                         { userId, deviceId })
                                     }
                                 </p>
@@ -1078,8 +1078,8 @@ export const Commands = [
         renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
-        command: 'discardsession',
-        description: _td('Forces the current outbound group session in an encrypted room to be discarded'),
+        command: "discardsession",
+        description: _td("Forces the current outbound group session in an encrypted room to be discarded"),
         isEnabled: () => !isCurrentLocalRoom(),
         runFn: function(roomId) {
             try {
@@ -1093,8 +1093,8 @@ export const Commands = [
         renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
-        command: 'remakeolm',
-        description: _td('Developer command: Discards the current outbound group session and sets up new Olm sessions'),
+        command: "remakeolm",
+        description: _td("Developer command: Discards the current outbound group session and sets up new Olm sessions"),
         isEnabled: () => {
             return SettingsStore.getValue("developerMode") && !isCurrentLocalRoom();
         },
@@ -1117,7 +1117,7 @@ export const Commands = [
     new Command({
         command: "rainbow",
         description: _td("Sends the given message coloured as a rainbow"),
-        args: '<message>',
+        args: "<message>",
         runFn: function(roomId, args) {
             if (!args) return reject(this.getUserId());
             return successSync(ContentHelpers.makeHtmlMessage(args, textToHtmlRainbow(args)));
@@ -1127,7 +1127,7 @@ export const Commands = [
     new Command({
         command: "rainbowme",
         description: _td("Sends the given emote coloured as a rainbow"),
-        args: '<message>',
+        args: "<message>",
         runFn: function(roomId, args) {
             if (!args) return reject(this.getUserId());
             return successSync(ContentHelpers.makeHtmlEmote(args, textToHtmlRainbow(args)));
@@ -1320,8 +1320,8 @@ export const Commands = [
     // /me is special because its not handled by SlashCommands.js and is instead done inside the Composer classes
     new Command({
         command: "me",
-        args: '<message>',
-        description: _td('Displays action'),
+        args: "<message>",
+        description: _td("Displays action"),
         category: CommandCategories.messages,
         hideCompletionAfterSpace: true,
     }),
@@ -1330,7 +1330,7 @@ export const Commands = [
         return new Command({
             command: effect.command,
             description: effect.description(),
-            args: '<message>',
+            args: "<message>",
             runFn: function(roomId, args) {
                 let content: IContent;
                 if (!args) {
@@ -1362,8 +1362,8 @@ Commands.forEach(cmd => {
 export function parseCommandString(input: string): { cmd?: string, args?: string } {
     // trim any trailing whitespace, as it can confuse the parser for
     // IRC-style commands
-    input = input.replace(/\s+$/, '');
-    if (input[0] !== '/') return {}; // not a command
+    input = input.replace(/\s+$/, "");
+    if (input[0] !== "/") return {}; // not a command
 
     const bits = input.match(/^(\S+?)(?:[ \n]+((.|\n)*))?$/);
     let cmd: string;

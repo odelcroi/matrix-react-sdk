@@ -66,7 +66,7 @@ export const showRoom = (
         // to the directory.
         if (client.isGuest()) {
             if (!room.world_readable && !room.guest_can_join) {
-                dis.dispatch({ action: 'require_registration' });
+                dis.dispatch({ action: "require_registration" });
                 return;
             }
         }
@@ -79,7 +79,7 @@ export const showRoom = (
             avatarUrl: room.avatar_url,
             // XXX: This logic is duplicated from the JS SDK which
             // would normally decide what the name is.
-            name: room.name || roomAlias || _t('Unnamed room'),
+            name: room.name || roomAlias || _t("Unnamed room"),
         };
 
         if (roomServer) {
@@ -115,8 +115,8 @@ export function joinRoomByAlias(cli: MatrixClient, alias: string, {
     if (!instanceId || instanceId === ALL_ROOMS) {
         // If the user specified an alias without a domain, add on whichever server is selected
         // in the dropdown
-        if (!alias.includes(':')) {
-            alias = alias + ':' + roomServer;
+        if (!alias.includes(":")) {
+            alias = alias + ":" + roomServer;
         }
         showRoom(cli, null, {
             roomAlias: alias,
@@ -133,8 +133,8 @@ export function joinRoomByAlias(cli: MatrixClient, alias: string, {
         if (!fields) {
             const brand = SdkConfig.get().brand;
             throw new GenericError(
-                _t('Unable to join network'),
-                _t('%(brand)s does not know how to join a room on this network', { brand }),
+                _t("Unable to join network"),
+                _t("%(brand)s does not know how to join a room on this network", { brand }),
             );
         }
         cli.getThirdpartyLocation(protocolName, fields).then((resp) => {
@@ -146,14 +146,14 @@ export function joinRoomByAlias(cli: MatrixClient, alias: string, {
                 });
             } else {
                 throw new GenericError(
-                    _t('Room not found'),
-                    _t('Couldn\'t find a matching Matrix room'),
+                    _t("Room not found"),
+                    _t("Couldn't find a matching Matrix room"),
                 );
             }
         }, (e) => {
             throw new GenericError(
-                _t('Fetching third party location failed'),
-                _t('Unable to look up room ID from server'),
+                _t("Fetching third party location failed"),
+                _t("Unable to look up room ID from server"),
             );
         });
     }

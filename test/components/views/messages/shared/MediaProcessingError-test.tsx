@@ -14,20 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { render } from '@testing-library/react';
+import React from "react";
+import { render } from "@testing-library/react";
 
-import MediaProcessingError from '../../../../../src/components/views/messages/shared/MediaProcessingError';
+import MediaProcessingError from "../../../../../src/components/views/messages/shared/MediaProcessingError";
 
-describe('<MediaProcessingError />', () => {
+describe("<MediaProcessingError />", () => {
     const defaultProps = {
-        className: 'test-classname',
-        children: 'Something went wrong',
+        className: "test-classname",
+        children: "Something went wrong",
     };
     const getComponent = (props = {}) =>
         render(<MediaProcessingError {...defaultProps} {...props} />);
 
-    it('renders', () => {
+    it("renders", () => {
         const { container } = getComponent();
         expect(container).toMatchSnapshot();
     });

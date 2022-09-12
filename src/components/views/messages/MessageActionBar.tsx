@@ -16,28 +16,28 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactElement, useCallback, useContext, useEffect } from 'react';
-import { EventStatus, MatrixEvent, MatrixEventEvent } from 'matrix-js-sdk/src/models/event';
-import classNames from 'classnames';
-import { MsgType, RelationType } from 'matrix-js-sdk/src/@types/event';
-import { Thread } from 'matrix-js-sdk/src/models/thread';
-import { M_BEACON_INFO } from 'matrix-js-sdk/src/@types/beacon';
+import React, { ReactElement, useCallback, useContext, useEffect } from "react";
+import { EventStatus, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
+import classNames from "classnames";
+import { MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
+import { Thread } from "matrix-js-sdk/src/models/thread";
+import { M_BEACON_INFO } from "matrix-js-sdk/src/@types/beacon";
 
-import { Icon as ContextMenuIcon } from '../../../../res/img/element-icons/context-menu.svg';
-import { Icon as EditIcon } from '../../../../res/img/element-icons/room/message-bar/edit.svg';
-import { Icon as EmojiIcon } from '../../../../res/img/element-icons/room/message-bar/emoji.svg';
-import { Icon as ResendIcon } from '../../../../res/img/element-icons/retry.svg';
-import { Icon as ThreadIcon } from '../../../../res/img/element-icons/message/thread.svg';
-import { Icon as TrashcanIcon } from '../../../../res/img/element-icons/trashcan.svg';
-import { Icon as StarIcon } from '../../../../res/img/element-icons/room/message-bar/star.svg';
-import { Icon as ReplyIcon } from '../../../../res/img/element-icons/room/message-bar/reply.svg';
-import { Icon as ExpandMessageIcon } from '../../../../res/img/element-icons/expand-message.svg';
-import { Icon as CollapseMessageIcon } from '../../../../res/img/element-icons/collapse-message.svg';
-import type { Relations } from 'matrix-js-sdk/src/models/relations';
-import { _t } from '../../../languageHandler';
-import dis, { defaultDispatcher } from '../../../dispatcher/dispatcher';
-import ContextMenu, { aboveLeftOf, ContextMenuTooltipButton, useContextMenu } from '../../structures/ContextMenu';
-import { isContentActionable, canEditContent, editEvent, canCancel } from '../../../utils/EventUtils';
+import { Icon as ContextMenuIcon } from "../../../../res/img/element-icons/context-menu.svg";
+import { Icon as EditIcon } from "../../../../res/img/element-icons/room/message-bar/edit.svg";
+import { Icon as EmojiIcon } from "../../../../res/img/element-icons/room/message-bar/emoji.svg";
+import { Icon as ResendIcon } from "../../../../res/img/element-icons/retry.svg";
+import { Icon as ThreadIcon } from "../../../../res/img/element-icons/message/thread.svg";
+import { Icon as TrashcanIcon } from "../../../../res/img/element-icons/trashcan.svg";
+import { Icon as StarIcon } from "../../../../res/img/element-icons/room/message-bar/star.svg";
+import { Icon as ReplyIcon } from "../../../../res/img/element-icons/room/message-bar/reply.svg";
+import { Icon as ExpandMessageIcon } from "../../../../res/img/element-icons/expand-message.svg";
+import { Icon as CollapseMessageIcon } from "../../../../res/img/element-icons/collapse-message.svg";
+import type { Relations } from "matrix-js-sdk/src/models/relations";
+import { _t } from "../../../languageHandler";
+import dis, { defaultDispatcher } from "../../../dispatcher/dispatcher";
+import ContextMenu, { aboveLeftOf, ContextMenuTooltipButton, useContextMenu } from "../../structures/ContextMenu";
+import { isContentActionable, canEditContent, editEvent, canCancel } from "../../../utils/EventUtils";
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import Toolbar from "../../../accessibility/Toolbar";
 import { RovingAccessibleTooltipButton, useRovingTabIndex } from "../../../accessibility/RovingTabIndex";
@@ -46,19 +46,19 @@ import Resend from "../../../Resend";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { MediaEventHelper } from "../../../utils/MediaEventHelper";
 import DownloadActionButton from "./DownloadActionButton";
-import SettingsStore from '../../../settings/SettingsStore';
-import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
-import ReplyChain from '../elements/ReplyChain';
+import SettingsStore from "../../../settings/SettingsStore";
+import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
+import ReplyChain from "../elements/ReplyChain";
 import ReactionPicker from "../emojipicker/ReactionPicker";
-import { CardContext } from '../right_panel/context';
-import { shouldDisplayReply } from '../../../utils/Reply';
+import { CardContext } from "../right_panel/context";
+import { shouldDisplayReply } from "../../../utils/Reply";
 import { Key } from "../../../Keyboard";
 import { ALTERNATE_KEY_NAME } from "../../../accessibility/KeyboardShortcuts";
-import { UserTab } from '../dialogs/UserTab';
-import { Action } from '../../../dispatcher/actions';
+import { UserTab } from "../dialogs/UserTab";
+import { Action } from "../../../dispatcher/actions";
 import SdkConfig from "../../../SdkConfig";
 import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayload";
-import useFavouriteMessages from '../../../hooks/useFavouriteMessages';
+import useFavouriteMessages from "../../../hooks/useFavouriteMessages";
 
 interface IOptionsButtonProps {
     mxEvent: MatrixEvent;
@@ -275,7 +275,7 @@ const FavouriteButton = ({ mxEvent }: IFavouriteButtonProp) => {
 
     const eventId = mxEvent.getId();
     const classes = classNames("mx_MessageActionBar_iconButton mx_MessageActionBar_favouriteButton", {
-        'mx_MessageActionBar_favouriteButton_fillstar': isFavourite(eventId),
+        "mx_MessageActionBar_favouriteButton_fillstar": isFavourite(eventId),
     });
 
     const onClick = useCallback((e: React.MouseEvent) => {
@@ -363,7 +363,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
         e.stopPropagation();
 
         dis.dispatch({
-            action: 'reply_to_event',
+            action: "reply_to_event",
             event: this.props.mxEvent,
             context: this.context.timelineRenderingType,
         });
@@ -555,8 +555,8 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
 
             if (this.props.isQuoteExpanded !== undefined && shouldDisplayReply(this.props.mxEvent)) {
                 const expandClassName = classNames({
-                    'mx_MessageActionBar_iconButton': true,
-                    'mx_MessageActionBar_expandCollapseMessageButton': true,
+                    "mx_MessageActionBar_iconButton": true,
+                    "mx_MessageActionBar_expandCollapseMessageButton": true,
                 });
                 const tooltip = <>
                     <div className="mx_Tooltip_title">

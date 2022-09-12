@@ -69,14 +69,14 @@ export async function startDm(client: MatrixClient, targets: Member[], showSpinn
         createRoomOptions.createOpts = targetIds.reduce(
             (roomOptions, address) => {
                 const type = getAddressType(address);
-                if (type === 'email') {
+                if (type === "email") {
                     const invite: IInvite3PID = {
                         id_server: client.getIdentityServerUrl(true),
-                        medium: 'email',
+                        medium: "email",
                         address,
                     };
                     roomOptions.invite_3pid.push(invite);
-                } else if (type === 'mx-user-id') {
+                } else if (type === "mx-user-id") {
                     roomOptions.invite.push(address);
                 }
                 return roomOptions;

@@ -14,17 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { forwardRef, useContext } from 'react';
+import React, { forwardRef, useContext } from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { IRoomEncryption } from "matrix-js-sdk/src/crypto/RoomList";
 
-import { _t } from '../../../languageHandler';
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
+import { _t } from "../../../languageHandler";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import EventTileBubble from "./EventTileBubble";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import DMRoomMap from "../../../utils/DMRoomMap";
 import { objectHasDiff } from "../../../utils/objects";
-import { isLocalRoom } from '../../../utils/localRoom/isLocalRoom';
+import { isLocalRoom } from "../../../utils/localRoom/isLocalRoom";
 
 interface IProps {
     mxEvent: MatrixEvent;

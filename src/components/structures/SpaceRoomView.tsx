@@ -74,7 +74,7 @@ import RoomPreviewCard from "../views/rooms/RoomPreviewCard";
 import { SpaceFeedbackPrompt } from "../views/spaces/SpaceCreateMenu";
 import SpacePublicShare from "../views/spaces/SpacePublicShare";
 import { ChevronFace, ContextMenuButton, useContextMenu } from "./ContextMenu";
-import MainSplit from './MainSplit';
+import MainSplit from "./MainSplit";
 import RightPanel from "./RightPanel";
 import SpaceHierarchy, { showRoom } from "./SpaceHierarchy";
 

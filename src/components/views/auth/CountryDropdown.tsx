@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
-import { COUNTRIES, getEmojiFlag, PhoneNumberCountryDefinition } from '../../../phonenumber';
+import { COUNTRIES, getEmojiFlag, PhoneNumberCountryDefinition } from "../../../phonenumber";
 import SdkConfig from "../../../SdkConfig";
 import { _t } from "../../../languageHandler";
 import Dropdown from "../elements/Dropdown";
@@ -28,7 +28,7 @@ for (const c of COUNTRIES) {
 
 function countryMatchesSearchQuery(query: string, country: PhoneNumberCountryDefinition): boolean {
     // Remove '+' if present (when searching for a prefix)
-    if (query[0] === '+') {
+    if (query[0] === "+") {
         query = query.slice(1);
     }
 
@@ -64,7 +64,7 @@ export default class CountryDropdown extends React.Component<IProps, IState> {
         }
 
         this.state = {
-            searchQuery: '',
+            searchQuery: "",
             defaultCountry,
         };
     }
@@ -98,7 +98,7 @@ export default class CountryDropdown extends React.Component<IProps, IState> {
         }
         let countryPrefix;
         if (this.props.showPrefix) {
-            countryPrefix = '+' + COUNTRIES_BY_ISO2[iso2].prefix;
+            countryPrefix = "+" + COUNTRIES_BY_ISO2[iso2].prefix;
         }
         return <span className="mx_CountryDropdown_shortOption">
             { this.flagImgForIso2(iso2) }

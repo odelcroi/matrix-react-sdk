@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import { sortBy } from "lodash";
 
 import { _t } from "../../../../../languageHandler";
@@ -23,8 +23,8 @@ import LabelledToggleSwitch from "../../../elements/LabelledToggleSwitch";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
 import SdkConfig from "../../../../../SdkConfig";
 import BetaCard from "../../../beta/BetaCard";
-import SettingsFlag from '../../../elements/SettingsFlag';
-import { MatrixClientPeg } from '../../../../../MatrixClientPeg';
+import SettingsFlag from "../../../elements/SettingsFlag";
+import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
 import { LabGroup, labGroupNames } from "../../../../../settings/Settings";
 import { EnhancedMap } from "../../../../../utils/maps";
 
@@ -150,10 +150,10 @@ export default class LabsUserSettingsTab extends React.Component<{}, IState> {
                 <div className="mx_SettingsTab_heading">{ _t("Labs") }</div>
                 <div className='mx_SettingsTab_subsectionText'>
                     {
-                        _t('Feeling experimental? Labs are the best way to get things early, ' +
-                            'test out new features and help shape them before they actually launch. ' +
-                            '<a>Learn more</a>.', {}, {
-                            'a': (sub) => {
+                        _t("Feeling experimental? Labs are the best way to get things early, " +
+                            "test out new features and help shape them before they actually launch. " +
+                            "<a>Learn more</a>.", {}, {
+                            "a": (sub) => {
                                 return <a
                                     href="https://github.com/vector-im/element-web/blob/develop/docs/labs.md"
                                     rel='noreferrer noopener'

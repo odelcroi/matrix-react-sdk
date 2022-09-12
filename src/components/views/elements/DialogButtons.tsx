@@ -18,7 +18,7 @@ limitations under the License.
 
 import React from "react";
 
-import { _t } from '../../../languageHandler';
+import { _t } from "../../../languageHandler";
 
 interface IProps {
     // The primary button which is styled differently and has default focus.
@@ -103,7 +103,7 @@ export default class DialogButtons extends React.Component<IProps> {
                 <span className="mx_Dialog_buttons_row">
                     { cancelButton }
                     { this.props.children }
-                    <button type={this.props.primaryIsSubmit ? 'submit' : 'button'}
+                    <button type={this.props.primaryIsSubmit ? "submit" : "button"}
                         data-test-id="dialog-primary-button"
                         className={primaryButtonClassName}
                         onClick={this.props.onPrimaryButtonClick}

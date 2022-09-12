@@ -14,18 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import classNames from 'classnames';
+import React from "react";
+import classNames from "classnames";
 
-import { Icon as CheckmarkIcon } from '../../../../res/img/element-icons/roomlist/checkmark.svg';
-import Dropdown, { DropdownProps } from './Dropdown';
+import { Icon as CheckmarkIcon } from "../../../../res/img/element-icons/roomlist/checkmark.svg";
+import Dropdown, { DropdownProps } from "./Dropdown";
 
 export type FilterDropdownOption<FilterKeysType extends string> = {
     id: FilterKeysType;
     label: string;
     description?: string;
 };
-type FilterDropdownProps<FilterKeysType extends string> = Omit<DropdownProps, 'children'> & {
+type FilterDropdownProps<FilterKeysType extends string> = Omit<DropdownProps, "children"> & {
     value: FilterKeysType;
     options: FilterDropdownOption<FilterKeysType>[];
     // A label displayed before the selected value
@@ -61,7 +61,7 @@ export const FilterDropdown = <FilterKeysType extends string = string>(
     return <Dropdown
         {...restProps}
         value={value}
-        className={classNames('mx_FilterDropdown', className)}
+        className={classNames("mx_FilterDropdown", className)}
         getShortOption={getSelectedFilterOptionComponent<FilterKeysType>(options, selectedLabel)}
     >
         { options.map(({ id, label, description }) =>

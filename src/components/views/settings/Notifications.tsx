@@ -212,7 +212,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 const rule: IAnnotatedPushRule = Object.assign(r, { kind });
                 const category = categories[rule.rule_id] ?? RuleClass.Other;
 
-                if (rule.rule_id[0] === '.') {
+                if (rule.rule_id[0] === ".") {
                     defaultRules[category].push(rule);
                 }
             }
@@ -278,8 +278,8 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
 
     private showSaveError() {
         Modal.createDialog(ErrorDialog, {
-            title: _t('Error saving notification preferences'),
-            description: _t('An error occurred whilst saving your notification preferences.'),
+            title: _t("Error saving notification preferences"),
+            description: _t("An error occurred whilst saving your notification preferences."),
         });
     }
 
@@ -288,7 +288,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
 
         try {
             const masterRule = this.state.masterPushRule;
-            await MatrixClientPeg.get().setPushRuleEnabled('global', masterRule.kind, masterRule.rule_id, !checked);
+            await MatrixClientPeg.get().setPushRuleEnabled("global", masterRule.kind, masterRule.rule_id, !checked);
             await this.refreshFromServer();
         } catch (e) {
             this.setState({ phase: Phase.Error });
@@ -372,20 +372,20 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                     }
 
                     if (actions) {
-                        await cli.setPushRuleActions('global', rule.kind, rule.rule_id, actions);
+                        await cli.setPushRuleActions("global", rule.kind, rule.rule_id, actions);
                     }
                     if (enabled !== undefined) {
-                        await cli.setPushRuleEnabled('global', rule.kind, rule.rule_id, enabled);
+                        await cli.setPushRuleEnabled("global", rule.kind, rule.rule_id, enabled);
                     }
                 }
             } else {
                 const definition: VectorPushRuleDefinition = VectorPushRulesDefinitions[rule.ruleId];
                 const actions = definition.vectorStateToActions[checkedState];
                 if (!actions) {
-                    await cli.setPushRuleEnabled('global', rule.rule.kind, rule.rule.rule_id, false);
+                    await cli.setPushRuleEnabled("global", rule.rule.kind, rule.rule.rule_id, false);
                 } else {
-                    await cli.setPushRuleActions('global', rule.rule.kind, rule.rule.rule_id, actions);
-                    await cli.setPushRuleEnabled('global', rule.rule.kind, rule.rule.rule_id, true);
+                    await cli.setPushRuleActions("global", rule.rule.kind, rule.rule.rule_id, actions);
+                    await cli.setPushRuleEnabled("global", rule.rule.kind, rule.rule.rule_id, true);
                 }
             }
 
@@ -423,7 +423,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
 
             for (const word of diff.removed) {
                 for (const rule of originalRules.filter(r => r.pattern === word)) {
-                    await MatrixClientPeg.get().deletePushRule('global', rule.kind, rule.rule_id);
+                    await MatrixClientPeg.get().deletePushRule("global", rule.kind, rule.rule_id);
                 }
             }
 
@@ -440,12 +440,12 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             }
             const kind = PushRuleKind.ContentSpecific;
             for (const word of diff.added) {
-                await MatrixClientPeg.get().addPushRule('global', kind, word, {
+                await MatrixClientPeg.get().addPushRule("global", kind, word, {
                     actions: PushRuleVectorState.actionsFor(ruleVectorState),
                     pattern: word,
                 });
                 if (ruleVectorState === VectorState.Off) {
-                    await MatrixClientPeg.get().setPushRuleEnabled('global', kind, word, false);
+                    await MatrixClientPeg.get().setPushRuleEnabled("global", kind, word, false);
                 }
             }
 
@@ -523,7 +523,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 data-test-id='notif-setting-notificationsEnabled'
                 value={this.state.desktopNotifications}
                 onChange={this.onDesktopNotificationsChanged}
-                label={_t('Enable desktop notifications for this session')}
+                label={_t("Enable desktop notifications for this session")}
                 disabled={this.state.phase === Phase.Persisting}
             />
 
@@ -531,7 +531,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 data-test-id='notif-setting-notificationBodyEnabled'
                 value={this.state.desktopShowBody}
                 onChange={this.onDesktopShowBodyChanged}
-                label={_t('Show message in desktop notification')}
+                label={_t("Show message in desktop notification")}
                 disabled={this.state.phase === Phase.Persisting}
             />
 
@@ -539,7 +539,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 data-test-id='notif-setting-audioNotificationsEnabled'
                 value={this.state.audioNotifications}
                 onChange={this.onAudioNotificationsChanged}
-                label={_t('Enable audible notifications for this session')}
+                label={_t("Enable audible notifications for this session")}
                 disabled={this.state.phase === Phase.Persisting}
             />
 
@@ -588,9 +588,9 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         }
 
         const VectorStateToLabel = {
-            [VectorState.On]: _t('On'),
-            [VectorState.Off]: _t('Off'),
-            [VectorState.Loud]: _t('Noisy'),
+            [VectorState.On]: _t("On"),
+            [VectorState.Off]: _t("Off"),
+            [VectorState.Loud]: _t("Noisy"),
         };
 
         const makeRadio = (r: IVectorPushRule, s: VectorState) => (

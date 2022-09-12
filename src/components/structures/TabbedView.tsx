@@ -20,8 +20,8 @@ import * as React from "react";
 import classNames from "classnames";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { _t } from '../../languageHandler';
-import AutoHideScrollbar from './AutoHideScrollbar';
+import { _t } from "../../languageHandler";
+import AutoHideScrollbar from "./AutoHideScrollbar";
 import AccessibleButton from "../views/elements/AccessibleButton";
 import { PosthogScreenTracker, ScreenName } from "../../PosthogTrackers";
 
@@ -47,8 +47,8 @@ export class Tab {
 }
 
 export enum TabLocation {
-    LEFT = 'left',
-    TOP = 'top',
+    LEFT = "left",
+    TOP = "top",
 }
 
 interface IProps {
@@ -140,9 +140,9 @@ export default class TabbedView extends React.Component<IProps, IState> {
         const panel = tab ? this.renderTabPanel(tab) : null;
 
         const tabbedViewClasses = classNames({
-            'mx_TabbedView': true,
-            'mx_TabbedView_tabsOnLeft': this.props.tabLocation == TabLocation.LEFT,
-            'mx_TabbedView_tabsOnTop': this.props.tabLocation == TabLocation.TOP,
+            "mx_TabbedView": true,
+            "mx_TabbedView_tabsOnLeft": this.props.tabLocation == TabLocation.LEFT,
+            "mx_TabbedView_tabsOnTop": this.props.tabLocation == TabLocation.TOP,
         });
 
         return (

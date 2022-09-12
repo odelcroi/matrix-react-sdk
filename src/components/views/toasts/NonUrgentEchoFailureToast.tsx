@@ -31,7 +31,7 @@ export default class NonUrgentEchoFailureToast extends React.PureComponent {
             <div className="mx_NonUrgentEchoFailureToast">
                 <span className="mx_NonUrgentEchoFailureToast_icon" />
                 { _t("Your server isn't responding to some <a>requests</a>.", {}, {
-                    'a': (sub) => (
+                    "a": (sub) => (
                         <AccessibleButton kind="link_inline" onClick={this.openDialog}>{ sub }</AccessibleButton>
                     ),
                 }) }

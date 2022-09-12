@@ -14,15 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
-import { _t } from '../../../languageHandler';
-import dis from '../../../dispatcher/dispatcher';
-import { ActionPayload } from '../../../dispatcher/payloads';
+import { _t } from "../../../languageHandler";
+import dis from "../../../dispatcher/dispatcher";
+import { ActionPayload } from "../../../dispatcher/payloads";
 import Spinner from "../elements/Spinner";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
-import Heading from '../typography/Heading';
+import Heading from "../typography/Heading";
 
 interface IProps {
     // false to display an error saying that we couldn't connect to the integration manager
@@ -76,7 +76,7 @@ export default class IntegrationManager extends React.Component<IProps, IState> 
     };
 
     private onAction = (payload: ActionPayload): void => {
-        if (payload.action === 'close_scalar') {
+        if (payload.action === "close_scalar") {
             this.props.onFinished();
         }
     };

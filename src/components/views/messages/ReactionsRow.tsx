@@ -19,8 +19,8 @@ import classNames from "classnames";
 import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
 import { Relations, RelationsEvent } from "matrix-js-sdk/src/models/relations";
 
-import { _t } from '../../../languageHandler';
-import { isContentActionable } from '../../../utils/EventUtils';
+import { _t } from "../../../languageHandler";
+import { isContentActionable } from "../../../utils/EventUtils";
 import { ContextMenuTooltipButton } from "../../../accessibility/context_menu/ContextMenuTooltipButton";
 import ContextMenu, { aboveLeftOf, useContextMenu } from "../../structures/ContextMenu";
 import ReactionPicker from "../emojipicker/ReactionPicker";

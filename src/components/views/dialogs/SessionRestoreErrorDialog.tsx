@@ -16,11 +16,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
-import SdkConfig from '../../../SdkConfig';
-import Modal from '../../../Modal';
-import { _t } from '../../../languageHandler';
+import SdkConfig from "../../../SdkConfig";
+import Modal from "../../../Modal";
+import { _t } from "../../../languageHandler";
 import QuestionDialog from "./QuestionDialog";
 import BugReportDialog from "./BugReportDialog";
 import BaseDialog from "./BaseDialog";
@@ -87,7 +87,7 @@ export default class SessionRestoreErrorDialog extends React.Component<IProps> {
             <BaseDialog
                 className="mx_ErrorDialog"
                 onFinished={this.props.onFinished}
-                title={_t('Unable to restore session')}
+                title={_t("Unable to restore session")}
                 contentId='mx_Dialog_content'
                 hasCancel={false}
             >

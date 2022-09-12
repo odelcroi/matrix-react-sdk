@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import { sleep } from "matrix-js-sdk/src/utils";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -55,7 +55,7 @@ export class IgnoredUser extends React.Component<IIgnoredUserProps> {
         return (
             <div className='mx_SecurityUserSettingsTab_ignoredUser'>
                 <AccessibleButton onClick={this.onUnignoreClicked} kind='primary_sm' aria-describedby={id} disabled={this.props.inProgress}>
-                    { _t('Unignore') }
+                    { _t("Unignore") }
                 </AccessibleButton>
                 <span id={id}>{ this.props.userId }</span>
             </div>
@@ -208,7 +208,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         const { waitingUnignored, ignoredUserIds } = this.state;
 
         const userIds = !ignoredUserIds?.length
-            ? _t('You have no ignored users.')
+            ? _t("You have no ignored users.")
             : ignoredUserIds.map((u) => {
                 return (
                     <IgnoredUser
@@ -222,7 +222,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
 
         return (
             <div className='mx_SettingsTab_section'>
-                <span className='mx_SettingsTab_subheading'>{ _t('Ignored users') }</span>
+                <span className='mx_SettingsTab_subheading'>{ _t("Ignored users") }</span>
                 <div className='mx_SettingsTab_subsectionText'>
                     { userIds }
                 </div>
@@ -239,7 +239,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
 
         return (
             <div className='mx_SettingsTab_section mx_SecurityUserSettingsTab_bulkOptions'>
-                <span className='mx_SettingsTab_subheading'>{ _t('Bulk options') }</span>
+                <span className='mx_SettingsTab_subheading'>{ _t("Bulk options") }</span>
                 <AccessibleButton onClick={this.onAcceptAllInvitesClicked} kind='primary' disabled={this.state.managingInvites}>
                     { _t("Accept all %(invitedRooms)s invites", { invitedRooms: invitedRoomIds.size }) }
                 </AccessibleButton>

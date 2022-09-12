@@ -16,20 +16,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ComponentProps } from 'react';
+import React, { ComponentProps } from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { EventType } from 'matrix-js-sdk/src/@types/event';
+import { EventType } from "matrix-js-sdk/src/@types/event";
 
-import { _t } from '../../../languageHandler';
-import { formatCommaSeparatedList } from '../../../utils/FormattingUtils';
+import { _t } from "../../../languageHandler";
+import { formatCommaSeparatedList } from "../../../utils/FormattingUtils";
 import { isValid3pidInvite } from "../../../RoomInvite";
 import GenericEventListSummary from "./GenericEventListSummary";
-import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
-import { jsxJoin } from '../../../utils/ReactUtils';
-import { Layout } from '../../../settings/enums/Layout';
-import RightPanelStore from '../../../stores/right-panel/RightPanelStore';
-import AccessibleButton from './AccessibleButton';
+import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePhases";
+import { jsxJoin } from "../../../utils/ReactUtils";
+import { Layout } from "../../../settings/enums/Layout";
+import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
+import AccessibleButton from "./AccessibleButton";
 import RoomContext from "../../../contexts/RoomContext";
 
 const onPinnedMessagesClick = (): void => {
@@ -135,7 +135,7 @@ export default class EventListSummary extends React.Component<IProps> {
 
             const desc = formatCommaSeparatedList(descs);
 
-            return _t('%(nameList)s %(transitionList)s', { nameList, transitionList: desc });
+            return _t("%(nameList)s %(transitionList)s", { nameList, transitionList: desc });
         });
 
         if (!summaries) {
@@ -390,10 +390,10 @@ export default class EventListSummary extends React.Component<IProps> {
 
             case EventType.RoomMember:
                 switch (e.mxEvent.getContent().membership) {
-                    case 'invite': return TransitionType.Invited;
-                    case 'ban': return TransitionType.Banned;
-                    case 'join':
-                        if (e.mxEvent.getPrevContent().membership === 'join') {
+                    case "invite": return TransitionType.Invited;
+                    case "ban": return TransitionType.Banned;
+                    case "join":
+                        if (e.mxEvent.getPrevContent().membership === "join") {
                             if (e.mxEvent.getContent().displayname !== e.mxEvent.getPrevContent().displayname) {
                                 return TransitionType.ChangedName;
                             } else if (e.mxEvent.getContent().avatar_url !== e.mxEvent.getPrevContent().avatar_url) {
@@ -404,7 +404,7 @@ export default class EventListSummary extends React.Component<IProps> {
                         } else {
                             return TransitionType.Joined;
                         }
-                    case 'leave':
+                    case "leave":
                         if (e.mxEvent.getSender() === e.mxEvent.getStateKey()) {
                             if (e.mxEvent.getPrevContent().membership === "invite") {
                                 return TransitionType.InviteReject;
@@ -412,8 +412,8 @@ export default class EventListSummary extends React.Component<IProps> {
                             return TransitionType.Left;
                         }
                         switch (e.mxEvent.getPrevContent().membership) {
-                            case 'invite': return TransitionType.InviteWithdrawal;
-                            case 'ban': return TransitionType.Unbanned;
+                            case "invite": return TransitionType.InviteWithdrawal;
+                            case "ban": return TransitionType.Unbanned;
                             // sender is not target and made the target leave, if not from invite/ban then this is a kick
                             default: return TransitionType.Kicked;
                         }
@@ -527,7 +527,7 @@ export default class EventListSummary extends React.Component<IProps> {
         );
 
         return <GenericEventListSummary
-            data-testid={this.props['data-testid']}
+            data-testid={this.props["data-testid"]}
             events={this.props.events}
             threshold={this.props.threshold}
             onToggle={this.props.onToggle}

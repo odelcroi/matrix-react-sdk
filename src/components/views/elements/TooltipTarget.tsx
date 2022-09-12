@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { HTMLAttributes } from 'react';
+import React, { HTMLAttributes } from "react";
 
 import useFocus from "../../../hooks/useFocus";
 import useHover from "../../../hooks/useHover";
-import Tooltip, { ITooltipProps } from './Tooltip';
+import Tooltip, { ITooltipProps } from "./Tooltip";
 
-interface IProps extends HTMLAttributes<HTMLSpanElement>, Omit<ITooltipProps, 'visible'> {
+interface IProps extends HTMLAttributes<HTMLSpanElement>, Omit<ITooltipProps, "visible"> {
     tooltipTargetClassName?: string;
     ignoreHover?: (ev: React.MouseEvent) => boolean;
 }

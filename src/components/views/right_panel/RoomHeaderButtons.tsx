@@ -22,15 +22,15 @@ import React from "react";
 import classNames from "classnames";
 import { Room } from "matrix-js-sdk/src/models/room";
 
-import { _t } from '../../../languageHandler';
-import HeaderButton from './HeaderButton';
-import HeaderButtons, { HeaderKind } from './HeaderButtons';
-import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
+import { _t } from "../../../languageHandler";
+import HeaderButton from "./HeaderButton";
+import HeaderButtons, { HeaderKind } from "./HeaderButtons";
+import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePhases";
 import { Action } from "../../../dispatcher/actions";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import { useSettingValue } from "../../../hooks/useSettings";
-import { useReadPinnedEvents, usePinnedEvents } from './PinnedMessagesCard';
+import { useReadPinnedEvents, usePinnedEvents } from "./PinnedMessagesCard";
 import { showThreadPanel } from "../../../dispatcher/dispatch-actions/threads";
 import SettingsStore from "../../../settings/SettingsStore";
 import {
@@ -268,7 +268,7 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
             <HeaderButton
                 key="notifsButton"
                 name="notifsButton"
-                title={_t('Notifications')}
+                title={_t("Notifications")}
                 isHighlighted={this.isPhase(RightPanelPhases.NotificationPanel)}
                 onClick={this.onNotificationsClicked}
                 isUnread={this.globalNotificationState.color === NotificationColor.Red}
@@ -282,7 +282,7 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
             <HeaderButton
                 key="roomSummaryButton"
                 name="roomSummaryButton"
-                title={_t('Room Info')}
+                title={_t("Room Info")}
                 isHighlighted={this.isPhase(ROOM_INFO_PHASES)}
                 onClick={this.onRoomSummaryClicked}
             />,

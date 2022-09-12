@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactNode, useState } from 'react';
-import classNames from 'classnames';
-import { RoomMember } from 'matrix-js-sdk/src/matrix';
+import React, { ReactNode, useState } from "react";
+import classNames from "classnames";
+import { RoomMember } from "matrix-js-sdk/src/matrix";
 
-import { Icon as LocationIcon } from '../../../../res/img/element-icons/location.svg';
-import { getUserNameColorClass } from '../../../utils/FormattingUtils';
-import MemberAvatar from '../avatars/MemberAvatar';
+import { Icon as LocationIcon } from "../../../../res/img/element-icons/location.svg";
+import { getUserNameColorClass } from "../../../utils/FormattingUtils";
+import MemberAvatar from "../avatars/MemberAvatar";
 
 interface Props {
     id?: string;
@@ -61,7 +61,7 @@ const OptionalTooltip: React.FC<{
  * Generic location marker
  */
 const Marker = React.forwardRef<HTMLDivElement, Props>(({ id, roomMember, useMemberColor, tooltip }, ref) => {
-    const memberColorClass = useMemberColor && roomMember ? getUserNameColorClass(roomMember.userId) : '';
+    const memberColorClass = useMemberColor && roomMember ? getUserNameColorClass(roomMember.userId) : "";
     return <div
         ref={ref}
         id={id}

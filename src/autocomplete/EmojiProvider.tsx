@@ -18,26 +18,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { uniq, sortBy } from 'lodash';
-import EMOTICON_REGEX from 'emojibase-regex/emoticon';
-import { Room } from 'matrix-js-sdk/src/models/room';
+import React from "react";
+import { uniq, sortBy } from "lodash";
+import EMOTICON_REGEX from "emojibase-regex/emoticon";
+import { Room } from "matrix-js-sdk/src/models/room";
 
-import { _t } from '../languageHandler';
-import AutocompleteProvider from './AutocompleteProvider';
-import QueryMatcher from './QueryMatcher';
-import { PillCompletion } from './Components';
-import { ICompletion, ISelectionRange } from './Autocompleter';
+import { _t } from "../languageHandler";
+import AutocompleteProvider from "./AutocompleteProvider";
+import QueryMatcher from "./QueryMatcher";
+import { PillCompletion } from "./Components";
+import { ICompletion, ISelectionRange } from "./Autocompleter";
 import SettingsStore from "../settings/SettingsStore";
-import { EMOJI, IEmoji, getEmojiFromUnicode } from '../emoji';
-import { TimelineRenderingType } from '../contexts/RoomContext';
-import * as recent from '../emojipicker/recent';
+import { EMOJI, IEmoji, getEmojiFromUnicode } from "../emoji";
+import { TimelineRenderingType } from "../contexts/RoomContext";
+import * as recent from "../emojipicker/recent";
 
 const LIMIT = 20;
 
 // Match for ascii-style ";-)" emoticons or ":wink:" shortcodes provided by emojibase
 // anchored to only match from the start of parts otherwise it'll show emoji suggestions whilst typing matrix IDs
-const EMOJI_REGEX = new RegExp('(' + EMOTICON_REGEX.source + '|(?:^|\\s):[+-\\w]*:?)$', 'g');
+const EMOJI_REGEX = new RegExp("(" + EMOTICON_REGEX.source + "|(?:^|\\s):[+-\\w]*:?)$", "g");
 
 interface ISortedEmoji {
     emoji: IEmoji;
@@ -85,7 +85,7 @@ export default class EmojiProvider extends AutocompleteProvider {
             shouldMatchWordsOnly: false,
         });
         this.nameMatcher = new QueryMatcher(SORTED_EMOJI, {
-            keys: ['emoji.label'],
+            keys: ["emoji.label"],
             // For removing punctuation
             shouldMatchWordsOnly: true,
         });
@@ -157,7 +157,7 @@ export default class EmojiProvider extends AutocompleteProvider {
     }
 
     getName() {
-        return '😃 ' + _t('Emoji');
+        return "😃 " + _t("Emoji");
     }
 
     renderCompletions(completions: React.ReactNode[]): React.ReactNode {

@@ -14,32 +14,32 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { AuthType, createClient } from 'matrix-js-sdk/src/matrix';
-import React, { Fragment, ReactNode } from 'react';
+import { AuthType, createClient } from "matrix-js-sdk/src/matrix";
+import React, { Fragment, ReactNode } from "react";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import classNames from "classnames";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { _t, _td } from '../../../languageHandler';
-import { messageForResourceLimitError } from '../../../utils/ErrorUtils';
+import { _t, _td } from "../../../languageHandler";
+import { messageForResourceLimitError } from "../../../utils/ErrorUtils";
 import AutoDiscoveryUtils from "../../../utils/AutoDiscoveryUtils";
-import * as Lifecycle from '../../../Lifecycle';
+import * as Lifecycle from "../../../Lifecycle";
 import { IMatrixClientCreds, MatrixClientPeg } from "../../../MatrixClientPeg";
 import AuthPage from "../../views/auth/AuthPage";
 import Login, { ISSOFlow } from "../../../Login";
 import dis from "../../../dispatcher/dispatcher";
 import SSOButtons from "../../views/elements/SSOButtons";
-import ServerPicker from '../../views/elements/ServerPicker';
-import RegistrationForm from '../../views/auth/RegistrationForm';
-import AccessibleButton from '../../views/elements/AccessibleButton';
+import ServerPicker from "../../views/elements/ServerPicker";
+import RegistrationForm from "../../views/auth/RegistrationForm";
+import AccessibleButton from "../../views/elements/AccessibleButton";
 import AuthBody from "../../views/auth/AuthBody";
 import AuthHeader from "../../views/auth/AuthHeader";
 import InteractiveAuth, { InteractiveAuthCallback } from "../InteractiveAuth";
 import Spinner from "../../views/elements/Spinner";
-import { AuthHeaderDisplay } from './header/AuthHeaderDisplay';
-import { AuthHeaderProvider } from './header/AuthHeaderProvider';
-import SettingsStore from '../../../settings/SettingsStore';
-import { ValidatedServerConfig } from '../../../utils/ValidatedServerConfig';
+import { AuthHeaderDisplay } from "./header/AuthHeaderDisplay";
+import { AuthHeaderProvider } from "./header/AuthHeaderProvider";
+import SettingsStore from "../../../settings/SettingsStore";
+import { ValidatedServerConfig } from "../../../utils/ValidatedServerConfig";
 
 const debuglog = (...args: any[]) => {
     if (SettingsStore.getValue("debug_registration")) {
@@ -252,7 +252,7 @@ export default class Registration extends React.Component<IProps, IState> {
                 // the user off to the login page to figure their account out.
                 if (ssoFlow) {
                     // Redirect to login page - server probably expects SSO only
-                    dis.dispatch({ action: 'start_login' });
+                    dis.dispatch({ action: "start_login" });
                 } else {
                     this.setState({
                         serverErrorIsFatal: true, // fatal because user cannot continue on this server
@@ -300,21 +300,21 @@ export default class Registration extends React.Component<IProps, IState> {
         if (!success) {
             let errorText: ReactNode = response.message || response.toString();
             // can we give a better error message?
-            if (response.errcode === 'M_RESOURCE_LIMIT_EXCEEDED') {
+            if (response.errcode === "M_RESOURCE_LIMIT_EXCEEDED") {
                 const errorTop = messageForResourceLimitError(
                     response.data.limit_type,
                     response.data.admin_contact,
                     {
-                        'monthly_active_user': _td("This homeserver has hit its Monthly Active User limit."),
-                        'hs_blocked': _td("This homeserver has been blocked by its administrator."),
-                        '': _td("This homeserver has exceeded one of its resource limits."),
+                        "monthly_active_user": _td("This homeserver has hit its Monthly Active User limit."),
+                        "hs_blocked": _td("This homeserver has been blocked by its administrator."),
+                        "": _td("This homeserver has exceeded one of its resource limits."),
                     },
                 );
                 const errorDetail = messageForResourceLimitError(
                     response.data.limit_type,
                     response.data.admin_contact,
                     {
-                        '': _td("Please <a>contact your service administrator</a> to continue using this service."),
+                        "": _td("Please <a>contact your service administrator</a> to continue using this service."),
                     },
                 );
                 errorText = <div>
@@ -327,7 +327,7 @@ export default class Registration extends React.Component<IProps, IState> {
                     msisdnAvailable = msisdnAvailable || flow.stages.includes(AuthType.Msisdn);
                 }
                 if (!msisdnAvailable) {
-                    errorText = _t('This server does not support authentication with a phone number.');
+                    errorText = _t("This server does not support authentication with a phone number.");
                 }
             } else if (response.errcode === "M_USER_IN_USE") {
                 errorText = _t("Someone already has that username, please try another.");
@@ -411,7 +411,7 @@ export default class Registration extends React.Component<IProps, IState> {
         return matrixClient.getPushers().then((resp) => {
             const pushers = resp.pushers;
             for (let i = 0; i < pushers.length; ++i) {
-                if (pushers[i].kind === 'email') {
+                if (pushers[i].kind === "email") {
                     const emailPusher = pushers[i];
                     emailPusher.data = { brand: this.props.brand };
                     matrixClient.setPusher(emailPusher).then(() => {
@@ -586,7 +586,7 @@ export default class Registration extends React.Component<IProps, IState> {
                 className="mx_AuthBody_changeFlow"
                 onClick={this.onGoToFormClicked}
             >
-                { _t('Go back') }
+                { _t("Go back") }
             </AccessibleButton>;
         }
 
@@ -640,7 +640,7 @@ export default class Registration extends React.Component<IProps, IState> {
             body = <Fragment>
                 <div className="mx_Register_mainContent">
                     <AuthHeaderDisplay
-                        title={_t('Create account')}
+                        title={_t("Create account")}
                         serverPicker={<ServerPicker
                             title={_t("Host account on")}
                             dialogTitle={_t("Decide where your account is hosted")}

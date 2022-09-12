@@ -18,14 +18,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
-import dis from '../../../dispatcher/dispatcher';
+import dis from "../../../dispatcher/dispatcher";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
-import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
-import { IRightPanelCardState } from '../../../stores/right-panel/RightPanelStoreIPanelState';
-import { UPDATE_EVENT } from '../../../stores/AsyncStore';
-import { NotificationColor } from '../../../stores/notifications/NotificationColor';
+import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePhases";
+import { IRightPanelCardState } from "../../../stores/right-panel/RightPanelStoreIPanelState";
+import { UPDATE_EVENT } from "../../../stores/AsyncStore";
+import { NotificationColor } from "../../../stores/notifications/NotificationColor";
 
 export enum HeaderKind {
   Room = "room",

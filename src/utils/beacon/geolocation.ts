@@ -20,15 +20,15 @@ import { logger } from "matrix-js-sdk/src/logger";
 // https://developer.mozilla.org/en-US/docs/Web/API/GeolocationPositionError
 export enum GeolocationError {
     // no navigator.geolocation
-    Unavailable = 'Unavailable',
+    Unavailable = "Unavailable",
     // The acquisition of the geolocation information failed because the page didn't have the permission to do it.
-    PermissionDenied = 'PermissionDenied',
+    PermissionDenied = "PermissionDenied",
     // The acquisition of the geolocation failed because at least one internal source of position returned an internal error.
-    PositionUnavailable = 'PositionUnavailable',
+    PositionUnavailable = "PositionUnavailable",
     // The time allowed to acquire the geolocation was reached before the information was obtained.
-    Timeout = 'Timeout',
+    Timeout = "Timeout",
     // other unexpected failure
-    Default = 'Default'
+    Default = "Default"
 }
 
 const GeolocationOptions = {
@@ -37,12 +37,12 @@ const GeolocationOptions = {
 };
 
 const isGeolocationPositionError = (error: unknown): error is GeolocationPositionError =>
-    typeof error === 'object' && !!error['PERMISSION_DENIED'];
+    typeof error === "object" && !!error["PERMISSION_DENIED"];
 /**
  * Maps GeolocationPositionError to our GeolocationError enum
  */
 export const mapGeolocationError = (error: GeolocationPositionError | Error): GeolocationError => {
-    logger.error('Geolocation failed', error?.message ?? error);
+    logger.error("Geolocation failed", error?.message ?? error);
 
     if (isGeolocationPositionError(error)) {
         switch (error?.code) {

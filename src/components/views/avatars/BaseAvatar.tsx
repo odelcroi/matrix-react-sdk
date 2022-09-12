@@ -17,19 +17,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useCallback, useContext, useEffect, useState } from 'react';
-import classNames from 'classnames';
-import { ResizeMethod } from 'matrix-js-sdk/src/@types/partials';
+import React, { useCallback, useContext, useEffect, useState } from "react";
+import classNames from "classnames";
+import { ResizeMethod } from "matrix-js-sdk/src/@types/partials";
 import { ClientEvent } from "matrix-js-sdk/src/client";
 
-import * as AvatarLogic from '../../../Avatar';
+import * as AvatarLogic from "../../../Avatar";
 import SettingsStore from "../../../settings/SettingsStore";
-import AccessibleButton from '../elements/AccessibleButton';
+import AccessibleButton from "../elements/AccessibleButton";
 import RoomContext from "../../../contexts/RoomContext";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { useTypedEventEmitter } from "../../../hooks/useEventEmitter";
 import { toPx } from "../../../utils/units";
-import { _t } from '../../../languageHandler';
+import { _t } from "../../../languageHandler";
 
 interface IProps {
     name: string; // The name (first initial used as default)

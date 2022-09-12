@@ -184,7 +184,7 @@ describe("MPollBody", () => {
         expect(votesCount(body, "italian")).toBe("");
         expect(votesCount(body, "wings")).toBe("");
         expect(body.find(".mx_MPollBody_totalVotes").text()).toBe("No votes cast");
-        expect(body.find('h2').html())
+        expect(body.find("h2").html())
             .toEqual("<h2>What should we order for the party?</h2>");
     });
 
@@ -474,7 +474,7 @@ describe("MPollBody", () => {
         const ends = [];
         const body = newMPollBody(votes, ends, answers);
         expect(
-            body.find('.mx_MPollBody_option').length,
+            body.find(".mx_MPollBody_option").length,
         ).toBe(20);
     });
 
@@ -893,7 +893,7 @@ describe("MPollBody", () => {
         });
         pollEvent.makeReplaced(replacingEvent);
         const body = newMPollBodyFromEvent(pollEvent, []);
-        expect(body.find('h2').html())
+        expect(body.find("h2").html())
             .toEqual(
                 "<h2>new question"
                 + "<span class=\"mx_MPollBody_edited\"> (edited)</span>"
@@ -904,7 +904,7 @@ describe("MPollBody", () => {
         expect(inputs.at(0).prop("value")).toEqual("n1");
         expect(inputs.at(1).prop("value")).toEqual("n2");
         expect(inputs.at(2).prop("value")).toEqual("n3");
-        const options = body.find('.mx_MPollBody_optionText');
+        const options = body.find(".mx_MPollBody_optionText");
         expect(options).toHaveLength(3);
         expect(options.at(0).text()).toEqual("new answer 1");
         expect(options.at(1).text()).toEqual("new answer 2");
@@ -1103,7 +1103,7 @@ function clickEndedOption(wrapper: ReactWrapper, value: string) {
 
 function voteButton(wrapper: ReactWrapper, value: string): ReactWrapper {
     return wrapper.find(
-        `div.mx_MPollBody_option`,
+        "div.mx_MPollBody_option",
     ).findWhere(w => w.key() === value);
 }
 

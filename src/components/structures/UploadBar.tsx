@@ -14,21 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import filesize from "filesize";
-import { IAbortablePromise, IEventRelation } from 'matrix-js-sdk/src/matrix';
+import { IAbortablePromise, IEventRelation } from "matrix-js-sdk/src/matrix";
 import { Optional } from "matrix-events-sdk";
 
-import ContentMessages from '../../ContentMessages';
+import ContentMessages from "../../ContentMessages";
 import dis from "../../dispatcher/dispatcher";
-import { _t } from '../../languageHandler';
+import { _t } from "../../languageHandler";
 import { Action } from "../../dispatcher/actions";
 import ProgressBar from "../views/elements/ProgressBar";
 import AccessibleButton, { ButtonEvent } from "../views/elements/AccessibleButton";
 import { IUpload } from "../../models/IUpload";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
-import { ActionPayload } from '../../dispatcher/payloads';
+import { ActionPayload } from "../../dispatcher/payloads";
 import { UploadPayload } from "../../dispatcher/payloads/UploadPayload";
 
 interface IProps {

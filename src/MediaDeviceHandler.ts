@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import EventEmitter from 'events';
+import EventEmitter from "events";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import SettingsStore from "./settings/SettingsStore";
@@ -65,7 +65,7 @@ export default class MediaDeviceHandler extends EventEmitter {
             devices.forEach((device) => output[device.kind].push(device));
             return output;
         } catch (error) {
-            logger.warn('Unable to refresh WebRTC Devices: ', error);
+            logger.warn("Unable to refresh WebRTC Devices: ", error);
         }
     }
 

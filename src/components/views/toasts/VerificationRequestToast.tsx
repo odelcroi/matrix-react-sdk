@@ -22,9 +22,9 @@ import {
 import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { _t } from '../../../languageHandler';
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
+import { _t } from "../../../languageHandler";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePhases";
 import { userLabelForEventRoom } from "../../../utils/KeyVerificationStateObserver";
 import dis from "../../../dispatcher/dispatcher";
 import ToastStore from "../../../stores/ToastStore";

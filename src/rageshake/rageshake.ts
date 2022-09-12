@@ -91,8 +91,8 @@ export class ConsoleLogger {
             if (arg instanceof DOMException) {
                 return arg.message + ` (${arg.name} | ${arg.code})`;
             } else if (arg instanceof Error) {
-                return arg.message + (arg.stack ? `\n${arg.stack}` : '');
-            } else if (typeof (arg) === 'object') {
+                return arg.message + (arg.stack ? `\n${arg.stack}` : "");
+            } else if (typeof (arg) === "object") {
                 return JSON.stringify(arg, getCircularReplacer());
             } else {
                 return arg;
@@ -104,9 +104,9 @@ export class ConsoleLogger {
         // run.
         // Example line:
         // 2017-01-18T11:23:53.214Z W Failed to set badge count
-        let line = `${ts} ${level} ${args.join(' ')}\n`;
+        let line = `${ts} ${level} ${args.join(" ")}\n`;
         // Do some cleanup
-        line = line.replace(/token=[a-zA-Z0-9-]+/gm, 'token=xxxxx');
+        line = line.replace(/token=[a-zA-Z0-9-]+/gm, "token=xxxxx");
         // Using + really is the quickest way in JS
         // http://jsperf.com/concat-vs-plus-vs-join
         this.logs += line;
@@ -281,8 +281,8 @@ export class IndexedDBLogStore {
             const objectStore = db.transaction("logs", "readonly").objectStore("logs");
 
             return new Promise((resolve, reject) => {
-                const query = objectStore.index("id").openCursor(IDBKeyRange.only(id), 'prev');
-                let lines = '';
+                const query = objectStore.index("id").openCursor(IDBKeyRange.only(id), "prev");
+                let lines = "";
                 query.onerror = (event) => {
                     reject(new Error("Query failed: " + event.target.errorCode));
                 };

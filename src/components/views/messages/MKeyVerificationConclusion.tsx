@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import classNames from 'classnames';
+import React from "react";
+import classNames from "classnames";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import {
     VerificationRequest,
@@ -24,9 +24,9 @@ import {
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import { _t } from '../../../languageHandler';
-import { getNameForEventRoom, userLabelForEventRoom } from '../../../utils/KeyVerificationStateObserver';
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { _t } from "../../../languageHandler";
+import { getNameForEventRoom, userLabelForEventRoom } from "../../../utils/KeyVerificationStateObserver";
 import EventTileBubble from "./EventTileBubble";
 
 interface IProps {

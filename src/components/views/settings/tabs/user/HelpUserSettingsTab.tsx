@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import AccessibleButton from "../../../elements/AccessibleButton";
@@ -25,7 +25,7 @@ import createRoom from "../../../../../createRoom";
 import Modal from "../../../../../Modal";
 import PlatformPeg from "../../../../../PlatformPeg";
 import UpdateCheckButton from "../../UpdateCheckButton";
-import BugReportDialog from '../../../dialogs/BugReportDialog';
+import BugReportDialog from "../../../dialogs/BugReportDialog";
 import { OpenToTabPayload } from "../../../../../dispatcher/payloads/OpenToTabPayload";
 import { Action } from "../../../../../dispatcher/actions";
 import { UserTab } from "../../../dialogs/UserTab";
@@ -62,11 +62,11 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
 
     private getVersionInfo(): { appVersion: string, olmVersion: string } {
         const brand = SdkConfig.get().brand;
-        const appVersion = this.state.appVersion || 'unknown';
+        const appVersion = this.state.appVersion || "unknown";
         const olmVersionTuple = MatrixClientPeg.get().olmVersion;
         const olmVersion = olmVersionTuple
             ? `${olmVersionTuple[0]}.${olmVersionTuple[1]}.${olmVersionTuple[2]}`
-            : '<not-enabled>';
+            : "<not-enabled>";
 
         return {
             appVersion: `${_t("%(brand)s version:", { brand })} ${appVersion}`,
@@ -182,12 +182,12 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
         const brand = SdkConfig.get().brand;
 
         let faqText = _t(
-            'For help with using %(brand)s, click <a>here</a>.',
+            "For help with using %(brand)s, click <a>here</a>.",
             {
                 brand,
             },
             {
-                'a': (sub) => <a
+                "a": (sub) => <a
                     href="https://element.io/help"
                     rel="noreferrer noopener"
                     target="_blank"
@@ -196,17 +196,17 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                 </a>,
             },
         );
-        if (SdkConfig.get("welcome_user_id") && getCurrentLanguage().startsWith('en')) {
+        if (SdkConfig.get("welcome_user_id") && getCurrentLanguage().startsWith("en")) {
             faqText = (
                 <div>
                     { _t(
-                        'For help with using %(brand)s, click <a>here</a> or start a chat with our ' +
-                        'bot using the button below.',
+                        "For help with using %(brand)s, click <a>here</a> or start a chat with our " +
+                        "bot using the button below.",
                         {
                             brand,
                         },
                         {
-                            'a': (sub) => <a
+                            "a": (sub) => <a
                                 href="https://element.io/help"
                                 rel='noreferrer noopener'
                                 target='_blank'
@@ -233,7 +233,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
         if (SdkConfig.get().bug_report_endpoint_url) {
             bugReportingSection = (
                 <div className="mx_SettingsTab_section">
-                    <span className='mx_SettingsTab_subheading'>{ _t('Bug reporting') }</span>
+                    <span className='mx_SettingsTab_subheading'>{ _t("Bug reporting") }</span>
                     <div className='mx_SettingsTab_subsectionText'>
                         { _t(
                             "If you've submitted a bug via GitHub, debug logs can help " +

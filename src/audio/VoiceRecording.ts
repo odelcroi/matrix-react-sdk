@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import * as Recorder from 'opus-recorder';
-import encoderPath from 'opus-recorder/dist/encoderWorker.min.js';
+import * as Recorder from "opus-recorder";
+import encoderPath from "opus-recorder/dist/encoderWorker.min.js";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { SimpleObservable } from "matrix-widget-api";
 import EventEmitter from "events";
@@ -127,15 +127,15 @@ export class VoiceRecording extends EventEmitter implements IDestroyable {
 
                 // Dev note: we can't use `addEventListener` for some reason. It just doesn't work.
                 this.recorderWorklet.port.onmessage = (ev) => {
-                    switch (ev.data['ev']) {
+                    switch (ev.data["ev"]) {
                         case PayloadEvent.Timekeep:
-                            this.processAudioUpdate(ev.data['timeSeconds']);
+                            this.processAudioUpdate(ev.data["timeSeconds"]);
                             break;
                         case PayloadEvent.AmplitudeMark:
                             // Sanity check to make sure we're adding about one sample per second
-                            if (ev.data['forIndex'] === this.amplitudes.length) {
-                                this.amplitudes.push(ev.data['amplitude']);
-                                this.liveWaveform.pushValue(ev.data['amplitude']);
+                            if (ev.data["forIndex"] === this.amplitudes.length) {
+                                this.amplitudes.push(ev.data["amplitude"]);
+                                this.liveWaveform.pushValue(ev.data["amplitude"]);
                             }
                             break;
                     }

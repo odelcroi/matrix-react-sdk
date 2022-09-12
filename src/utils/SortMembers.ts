@@ -47,7 +47,7 @@ export const compareMembers = (
 
 function joinedRooms(cli: MatrixClient): Room[] {
     return cli.getRooms()
-        .filter(r => r.getMyMembership() === 'join')
+        .filter(r => r.getMyMembership() === "join")
         // Skip low priority rooms and DMs
         .filter(r => !DMRoomMap.shared().getUserIdForRoomId(r.roomId))
         .filter(r => !Object.keys(r.tags).includes("m.lowpriority"));

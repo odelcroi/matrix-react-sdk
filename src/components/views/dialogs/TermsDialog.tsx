@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import url from 'url';
-import React from 'react';
+import url from "url";
+import React from "react";
 import { SERVICE_TYPES } from "matrix-js-sdk/src/service-types";
 
-import { _t, pickBestLanguage } from '../../../languageHandler';
+import { _t, pickBestLanguage } from "../../../languageHandler";
 import DialogButtons from "../elements/DialogButtons";
 import BaseDialog from "./BaseDialog";
 
@@ -123,7 +123,7 @@ export default class TermsDialog extends React.PureComponent<ITermsDialogProps, 
             const policyValues = Object.values(policiesAndService.policies);
             for (let i = 0; i < policyValues.length; ++i) {
                 const termDoc = policyValues[i];
-                const termsLang = pickBestLanguage(Object.keys(termDoc).filter((k) => k !== 'version'));
+                const termsLang = pickBestLanguage(Object.keys(termDoc).filter((k) => k !== "version"));
                 let serviceName;
                 let summary;
                 if (i === 0) {
@@ -159,7 +159,7 @@ export default class TermsDialog extends React.PureComponent<ITermsDialogProps, 
             for (const terms of Object.values(policiesAndService.policies)) {
                 let docAgreed = false;
                 for (const lang of Object.keys(terms)) {
-                    if (lang === 'version') continue;
+                    if (lang === "version") continue;
                     if (this.state.agreedUrls[terms[lang].url]) {
                         docAgreed = true;
                         break;
@@ -197,7 +197,7 @@ export default class TermsDialog extends React.PureComponent<ITermsDialogProps, 
                     </tbody></table>
                 </div>
 
-                <DialogButtons primaryButton={_t('Next')}
+                <DialogButtons primaryButton={_t("Next")}
                     hasCancel={true}
                     onCancel={this.onCancelClick}
                     onPrimaryButtonClick={this.onNextClick}

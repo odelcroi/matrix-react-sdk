@@ -15,14 +15,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
-import FileSaver from 'file-saver';
+import React, { createRef } from "react";
+import FileSaver from "file-saver";
 import { IPreparedKeyBackupVersion } from "matrix-js-sdk/src/crypto/backup";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { MatrixClientPeg } from '../../../../MatrixClientPeg';
-import { _t, _td } from '../../../../languageHandler';
-import { accessSecretStorage } from '../../../../SecurityManager';
+import { MatrixClientPeg } from "../../../../MatrixClientPeg";
+import { _t, _td } from "../../../../languageHandler";
+import { accessSecretStorage } from "../../../../SecurityManager";
 import AccessibleButton from "../../../../components/views/elements/AccessibleButton";
 import { copyNode } from "../../../../utils/strings";
 import PassphraseField from "../../../../components/views/auth/PassphraseField";
@@ -73,9 +73,9 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
         this.state = {
             secureSecretStorage: null,
             phase: Phase.Passphrase,
-            passPhrase: '',
+            passPhrase: "",
             passPhraseValid: false,
-            passPhraseConfirm: '',
+            passPhraseConfirm: "",
             copied: false,
             downloaded: false,
         };
@@ -106,9 +106,9 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
 
     private onDownloadClick = (): void => {
         const blob = new Blob([this.keyBackupInfo.recovery_key], {
-            type: 'text/plain;charset=us-ascii',
+            type: "text/plain;charset=us-ascii",
         });
-        FileSaver.saveAs(blob, 'security-key.txt');
+        FileSaver.saveAs(blob, "security-key.txt");
 
         this.setState({
             downloaded: true,
@@ -206,9 +206,9 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
 
     private onSetAgainClick = (): void => {
         this.setState({
-            passPhrase: '',
+            passPhrase: "",
             passPhraseValid: false,
-            passPhraseConfirm: '',
+            passPhraseConfirm: "",
             phase: Phase.Passphrase,
         });
     };
@@ -268,7 +268,7 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
             </div>
 
             <DialogButtons
-                primaryButton={_t('Next')}
+                primaryButton={_t("Next")}
                 onPrimaryButtonClick={this.onPassPhraseNextClick}
                 hasCancel={false}
                 disabled={!this.state.passPhraseValid}
@@ -329,7 +329,7 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
                 </div>
             </div>
             <DialogButtons
-                primaryButton={_t('Next')}
+                primaryButton={_t("Next")}
                 onPrimaryButtonClick={this.onPassPhraseConfirmNextClick}
                 hasCancel={false}
                 disabled={this.state.passPhrase !== this.state.passPhraseConfirm}
@@ -406,7 +406,7 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
             <p>{ _t(
                 "Your keys are being backed up (the first backup could take a few minutes).",
             ) }</p>
-            <DialogButtons primaryButton={_t('OK')}
+            <DialogButtons primaryButton={_t("OK")}
                 onPrimaryButtonClick={this.onDone}
                 hasCancel={false}
             />
@@ -419,7 +419,7 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
                 "Without setting up Secure Message Recovery, you won't be able to restore your " +
                 "encrypted message history if you log out or use another session.",
             ) }
-            <DialogButtons primaryButton={_t('Set up Secure Message Recovery')}
+            <DialogButtons primaryButton={_t("Set up Secure Message Recovery")}
                 onPrimaryButtonClick={this.onSetUpClick}
                 hasCancel={false}
             >
@@ -431,18 +431,18 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
     private titleForPhase(phase: Phase): string {
         switch (phase) {
             case Phase.Passphrase:
-                return _t('Secure your backup with a Security Phrase');
+                return _t("Secure your backup with a Security Phrase");
             case Phase.PassphraseConfirm:
-                return _t('Confirm your Security Phrase');
+                return _t("Confirm your Security Phrase");
             case Phase.OptOutConfirm:
-                return _t('Warning!');
+                return _t("Warning!");
             case Phase.ShowKey:
             case Phase.KeepItSafe:
-                return _t('Make a copy of your Security Key');
+                return _t("Make a copy of your Security Key");
             case Phase.BackingUp:
-                return _t('Starting backup...');
+                return _t("Starting backup...");
             case Phase.Done:
-                return _t('Success!');
+                return _t("Success!");
             default:
                 return _t("Create key backup");
         }
@@ -454,7 +454,7 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
             content = <div>
                 <p>{ _t("Unable to create key backup") }</p>
                 <DialogButtons
-                    primaryButton={_t('Retry')}
+                    primaryButton={_t("Retry")}
                     onPrimaryButtonClick={this.createBackup}
                     hasCancel={true}
                     onCancel={this.onCancel}

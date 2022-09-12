@@ -21,7 +21,7 @@ import { makeLegacyLocationEvent, makeLocationEvent } from "../../test-utils/loc
 describe("createMapSiteLinkFromEvent", () => {
     it("returns null if event does not contain geouri", () => {
         expect(createMapSiteLinkFromEvent(mkMessage({
-            room: '1', user: '@sender:server', event: true,
+            room: "1", user: "@sender:server", event: true,
         }))).toBeNull();
     });
 

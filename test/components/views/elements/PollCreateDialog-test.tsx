@@ -24,16 +24,16 @@ import {
     M_POLL_START,
     M_TEXT,
     PollStartEvent,
-} from 'matrix-events-sdk';
-import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
+} from "matrix-events-sdk";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 import {
     findById,
     getMockClientWithEventEmitter,
-} from '../../../test-utils';
+} from "../../../test-utils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import PollCreateDialog from "../../../../src/components/views/elements/PollCreateDialog";
-import MatrixClientContext from '../../../../src/contexts/MatrixClientContext';
+import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 
 // Fake date to give a predictable snapshot
 const realDateNow = Date.now;
@@ -50,7 +50,7 @@ afterAll(() => {
 
 describe("PollCreateDialog", () => {
     const mockClient = getMockClientWithEventEmitter({
-        sendEvent: jest.fn().mockResolvedValue({ event_id: '1' }),
+        sendEvent: jest.fn().mockResolvedValue({ event_id: "1" }),
     });
 
     beforeEach(() => {
@@ -72,20 +72,20 @@ describe("PollCreateDialog", () => {
         const dialog = mount(
             <PollCreateDialog room={createRoom()} onFinished={jest.fn()} />,
         );
-        expect(findById(dialog, 'poll-topic-input').at(0).props().autoFocus).toEqual(true);
+        expect(findById(dialog, "poll-topic-input").at(0).props().autoFocus).toEqual(true);
     });
 
     it("autofocuses the new poll option field after clicking add option button", () => {
         const dialog = mount(
             <PollCreateDialog room={createRoom()} onFinished={jest.fn()} />,
         );
-        expect(findById(dialog, 'poll-topic-input').at(0).props().autoFocus).toEqual(true);
+        expect(findById(dialog, "poll-topic-input").at(0).props().autoFocus).toEqual(true);
 
         dialog.find("div.mx_PollCreateDialog_addOption").simulate("click");
 
-        expect(findById(dialog, 'poll-topic-input').at(0).props().autoFocus).toEqual(false);
-        expect(findById(dialog, 'pollcreate_option_1').at(0).props().autoFocus).toEqual(false);
-        expect(findById(dialog, 'pollcreate_option_2').at(0).props().autoFocus).toEqual(true);
+        expect(findById(dialog, "poll-topic-input").at(0).props().autoFocus).toEqual(false);
+        expect(findById(dialog, "pollcreate_option_1").at(0).props().autoFocus).toEqual(false);
+        expect(findById(dialog, "pollcreate_option_2").at(0).props().autoFocus).toEqual(true);
     });
 
     it("renders a question and some options", () => {
@@ -156,10 +156,10 @@ describe("PollCreateDialog", () => {
             <PollCreateDialog room={createRoom()} onFinished={jest.fn()} />,
         );
         expect(
-            dialog.find('select').prop("value"),
+            dialog.find("select").prop("value"),
         ).toEqual(M_POLL_KIND_DISCLOSED.name);
         expect(
-            dialog.find('p').text(),
+            dialog.find("p").text(),
         ).toEqual("Voters see results as soon as they have voted");
     });
 
@@ -169,10 +169,10 @@ describe("PollCreateDialog", () => {
         );
         changeKind(dialog, M_POLL_KIND_UNDISCLOSED.name);
         expect(
-            dialog.find('select').prop("value"),
+            dialog.find("select").prop("value"),
         ).toEqual(M_POLL_KIND_UNDISCLOSED.name);
         expect(
-            dialog.find('p').text(),
+            dialog.find("p").text(),
         ).toEqual("Results are only revealed when you end the poll");
     });
 
@@ -183,10 +183,10 @@ describe("PollCreateDialog", () => {
         changeKind(dialog, M_POLL_KIND_UNDISCLOSED.name);
         changeKind(dialog, M_POLL_KIND_DISCLOSED.name);
         expect(
-            dialog.find('select').prop("value"),
+            dialog.find("select").prop("value"),
         ).toEqual(M_POLL_KIND_DISCLOSED.name);
         expect(
-            dialog.find('p').text(),
+            dialog.find("p").text(),
         ).toEqual("Voters see results as soon as they have voted");
     });
 
@@ -209,10 +209,10 @@ describe("PollCreateDialog", () => {
         );
 
         expect(
-            dialog.find('select').prop("value"),
+            dialog.find("select").prop("value"),
         ).toEqual(M_POLL_KIND_UNDISCLOSED.name);
         expect(
-            dialog.find('p').text(),
+            dialog.find("p").text(),
         ).toEqual("Results are only revealed when you end the poll");
     });
 

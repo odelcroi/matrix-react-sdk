@@ -14,22 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
-import classNames from 'classnames';
+import React, { createRef } from "react";
+import classNames from "classnames";
 import { IEventRelation, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { EventType } from 'matrix-js-sdk/src/@types/event';
+import { EventType } from "matrix-js-sdk/src/@types/event";
 import { Optional } from "matrix-events-sdk";
-import { THREAD_RELATION_TYPE } from 'matrix-js-sdk/src/models/thread';
+import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 
-import { _t } from '../../../languageHandler';
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import dis from '../../../dispatcher/dispatcher';
+import { _t } from "../../../languageHandler";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import dis from "../../../dispatcher/dispatcher";
 import { ActionPayload } from "../../../dispatcher/payloads";
-import Stickerpicker from './Stickerpicker';
-import { makeRoomPermalink, RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
-import E2EIcon from './E2EIcon';
+import Stickerpicker from "./Stickerpicker";
+import { makeRoomPermalink, RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
+import E2EIcon from "./E2EIcon";
 import SettingsStore from "../../../settings/SettingsStore";
 import { aboveLeftOf, AboveLeftOf } from "../../structures/ContextMenu";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
@@ -40,18 +40,18 @@ import { VoiceRecordingStore } from "../../../stores/VoiceRecordingStore";
 import { RecordingState, VoiceRecording } from "../../../audio/VoiceRecording";
 import Tooltip, { Alignment } from "../elements/Tooltip";
 import ResizeNotifier from "../../../utils/ResizeNotifier";
-import { E2EStatus } from '../../../utils/ShieldUtils';
+import { E2EStatus } from "../../../utils/ShieldUtils";
 import SendMessageComposer, { SendMessageComposer as SendMessageComposerClass } from "./SendMessageComposer";
 import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInsertPayload";
 import { Action } from "../../../dispatcher/actions";
 import EditorModel from "../../../editor/model";
-import UIStore, { UI_EVENTS } from '../../../stores/UIStore';
-import RoomContext from '../../../contexts/RoomContext';
+import UIStore, { UI_EVENTS } from "../../../stores/UIStore";
+import RoomContext from "../../../contexts/RoomContext";
 import { SettingUpdatedPayload } from "../../../dispatcher/payloads/SettingUpdatedPayload";
-import MessageComposerButtons from './MessageComposerButtons';
-import { ButtonEvent } from '../elements/AccessibleButton';
+import MessageComposerButtons from "./MessageComposerButtons";
+import { ButtonEvent } from "../elements/AccessibleButton";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
-import { isLocalRoom } from '../../../utils/localRoom/isLocalRoom';
+import { isLocalRoom } from "../../../utils/localRoom/isLocalRoom";
 
 let instanceCount = 0;
 
@@ -65,7 +65,7 @@ function SendButton(props: ISendButtonProps) {
         <AccessibleTooltipButton
             className="mx_MessageComposer_sendMessage"
             onClick={props.onClick}
-            title={props.title ?? _t('Send message')}
+            title={props.title ?? _t("Send message")}
         />
     );
 }
@@ -233,15 +233,15 @@ export default class MessageComposer extends React.Component<IProps, IState> {
     private onTombstoneClick = (ev) => {
         ev.preventDefault();
 
-        const replacementRoomId = this.context.tombstone.getContent()['replacement_room'];
+        const replacementRoomId = this.context.tombstone.getContent()["replacement_room"];
         const replacementRoom = MatrixClientPeg.get().getRoom(replacementRoomId);
         let createEventId = null;
         if (replacementRoom) {
-            const createEvent = replacementRoom.currentState.getStateEvents(EventType.RoomCreate, '');
+            const createEvent = replacementRoom.currentState.getStateEvents(EventType.RoomCreate, "");
             if (createEvent && createEvent.getId()) createEventId = createEvent.getId();
         }
 
-        const viaServers = [this.context.tombstone.getSender().split(':').slice(1).join(':')];
+        const viaServers = [this.context.tombstone.getSender().split(":").slice(1).join(":")];
         dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             highlighted: true,
@@ -260,19 +260,19 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         if (this.props.replyToEvent) {
             const replyingToThread = this.props.relation?.rel_type === THREAD_RELATION_TYPE.name;
             if (replyingToThread && this.props.e2eStatus) {
-                return _t('Reply to encrypted thread…');
+                return _t("Reply to encrypted thread…");
             } else if (replyingToThread) {
-                return _t('Reply to thread…');
+                return _t("Reply to thread…");
             } else if (this.props.e2eStatus) {
-                return _t('Send an encrypted reply…');
+                return _t("Send an encrypted reply…");
             } else {
-                return _t('Send a reply…');
+                return _t("Send a reply…");
             }
         } else {
             if (this.props.e2eStatus) {
-                return _t('Send an encrypted message…');
+                return _t("Send an encrypted message…");
             } else {
-                return _t('Send a message…');
+                return _t("Send a message…");
             }
         }
     };
@@ -395,7 +395,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                 relation={this.props.relation}
                 replyToEvent={this.props.replyToEvent} />);
         } else if (this.context.tombstone) {
-            const replacementRoomId = this.context.tombstone.getContent()['replacement_room'];
+            const replacementRoomId = this.context.tombstone.getContent()["replacement_room"];
 
             const continuesLink = replacementRoomId ? (
                 <a href={makeRoomPermalink(replacementRoomId)}
@@ -404,7 +404,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                 >
                     { _t("The conversation continues here.") }
                 </a>
-            ) : '';
+            ) : "";
 
             controls.push(<div className="mx_MessageComposer_replaced_wrapper" key="room_replaced">
                 <div className="mx_MessageComposer_replaced_valign">
@@ -420,7 +420,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         } else {
             controls.push(
                 <div key="controls_error" className="mx_MessageComposer_noperm_error">
-                    { _t('You do not have permission to post to this room') }
+                    { _t("You do not have permission to post to this room") }
                 </div>,
             );
         }

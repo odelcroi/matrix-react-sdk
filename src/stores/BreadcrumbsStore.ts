@@ -73,10 +73,10 @@ export class BreadcrumbsStore extends AsyncStoreWithClient<IState> {
     protected async onAction(payload: SettingUpdatedPayload | ViewRoomPayload | JoinRoomPayload) {
         if (!this.matrixClient) return;
         if (payload.action === Action.SettingUpdated) {
-            if (payload.settingName === 'breadcrumb_rooms') {
+            if (payload.settingName === "breadcrumb_rooms") {
                 await this.updateRooms();
-            } else if (payload.settingName === 'breadcrumbs' ||
-                payload.settingName === 'feature_breadcrumbs_v2'
+            } else if (payload.settingName === "breadcrumbs" ||
+                payload.settingName === "feature_breadcrumbs_v2"
             ) {
                 await this.updateState({ enabled: SettingsStore.getValue("breadcrumbs", null) });
             }

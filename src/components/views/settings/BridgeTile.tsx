@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -25,7 +25,7 @@ import Pill, { PillType } from "../elements/Pill";
 import { makeUserPermalink } from "../../../utils/permalinks/Permalinks";
 import BaseAvatar from "../avatars/BaseAvatar";
 import SettingsStore from "../../../settings/SettingsStore";
-import { isUrlPermitted } from '../../../HtmlUtils';
+import { isUrlPermitted } from "../../../HtmlUtils";
 import { mediaFromMxc } from "../../../customisations/Media";
 
 interface IProps {

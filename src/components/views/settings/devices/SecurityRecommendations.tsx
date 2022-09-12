@@ -14,22 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
-import { _t } from '../../../../languageHandler';
-import AccessibleButton from '../../elements/AccessibleButton';
-import SettingsSubsection from '../shared/SettingsSubsection';
-import DeviceSecurityCard from './DeviceSecurityCard';
-import { filterDevicesBySecurityRecommendation, INACTIVE_DEVICE_AGE_DAYS } from './filter';
+import { _t } from "../../../../languageHandler";
+import AccessibleButton from "../../elements/AccessibleButton";
+import SettingsSubsection from "../shared/SettingsSubsection";
+import DeviceSecurityCard from "./DeviceSecurityCard";
+import { filterDevicesBySecurityRecommendation, INACTIVE_DEVICE_AGE_DAYS } from "./filter";
 import {
     DeviceSecurityVariation,
     DeviceWithVerification,
     DevicesDictionary,
-} from './types';
+} from "./types";
 
 interface Props {
     devices: DevicesDictionary;
-    currentDeviceId: DeviceWithVerification['device_id'];
+    currentDeviceId: DeviceWithVerification["device_id"];
     goToFilteredList: (filter: DeviceSecurityVariation) => void;
 }
 
@@ -61,18 +61,18 @@ const SecurityRecommendations: React.FC<Props> = ({
     const inactiveAgeDays = INACTIVE_DEVICE_AGE_DAYS;
 
     return <SettingsSubsection
-        heading={_t('Security recommendations')}
-        description={_t('Improve your account security by following these recommendations')}
+        heading={_t("Security recommendations")}
+        description={_t("Improve your account security by following these recommendations")}
         data-testid='security-recommendations-section'
     >
         {
             !!unverifiedDevicesCount &&
             <DeviceSecurityCard
                 variation={DeviceSecurityVariation.Unverified}
-                heading={_t('Unverified sessions')}
+                heading={_t("Unverified sessions")}
                 description={_t(
-                    `Verify your sessions for enhanced secure messaging` +
-                    ` or sign out from those you don't recognize or use anymore.`,
+                    "Verify your sessions for enhanced secure messaging" +
+                    " or sign out from those you don't recognize or use anymore.",
                 )}
             >
                 <AccessibleButton
@@ -80,7 +80,7 @@ const SecurityRecommendations: React.FC<Props> = ({
                     onClick={() => goToFilteredList(DeviceSecurityVariation.Unverified)}
                     data-testid='unverified-devices-cta'
                 >
-                    { _t('View all') + ` (${unverifiedDevicesCount})` }
+                    { _t("View all") + ` (${unverifiedDevicesCount})` }
                 </AccessibleButton>
             </DeviceSecurityCard>
         }
@@ -90,10 +90,10 @@ const SecurityRecommendations: React.FC<Props> = ({
                 { !!unverifiedDevicesCount && <div className='mx_SecurityRecommendations_spacing' /> }
                 <DeviceSecurityCard
                     variation={DeviceSecurityVariation.Inactive}
-                    heading={_t('Inactive sessions')}
+                    heading={_t("Inactive sessions")}
                     description={_t(
-                        `Consider signing out from old sessions ` +
-                        `(%(inactiveAgeDays)s days or older) you don't use anymore`,
+                        "Consider signing out from old sessions " +
+                        "(%(inactiveAgeDays)s days or older) you don't use anymore",
                         { inactiveAgeDays },
                     )}
                 >
@@ -102,7 +102,7 @@ const SecurityRecommendations: React.FC<Props> = ({
                         onClick={() => goToFilteredList(DeviceSecurityVariation.Inactive)}
                         data-testid='inactive-devices-cta'
                     >
-                        { _t('View all') + ` (${inactiveDevicesCount})` }
+                        { _t("View all") + ` (${inactiveDevicesCount})` }
                     </AccessibleButton>
                 </DeviceSecurityCard>
             </>

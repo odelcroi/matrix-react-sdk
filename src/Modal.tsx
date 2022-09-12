@@ -15,13 +15,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import classNames from 'classnames';
+import React from "react";
+import ReactDOM from "react-dom";
+import classNames from "classnames";
 import { defer, sleep } from "matrix-js-sdk/src/utils";
 
-import dis from './dispatcher/dispatcher';
-import AsyncWrapper from './AsyncWrapper';
+import dis from "./dispatcher/dispatcher";
+import AsyncWrapper from "./AsyncWrapper";
 
 const DIALOG_CONTAINER_ID = "mx_Dialog_Container";
 const STATIC_DIALOG_CONTAINER_ID = "mx_Dialog_StaticContainer";
@@ -303,7 +303,7 @@ export class ModalManager {
             // If there is no modal to render, make all of Element available
             // to screen reader users again
             dis.dispatch({
-                action: 'aria_unhide_main_app',
+                action: "aria_unhide_main_app",
             });
             ReactDOM.unmountComponentAtNode(ModalManager.getOrCreateContainer());
             ReactDOM.unmountComponentAtNode(ModalManager.getOrCreateStaticContainer());
@@ -314,7 +314,7 @@ export class ModalManager {
         // so they won't be able to navigate into it and act on it using
         // screen reader specific features
         dis.dispatch({
-            action: 'aria_hide_main_app',
+            action: "aria_hide_main_app",
         });
 
         if (this.staticModal) {

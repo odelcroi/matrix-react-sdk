@@ -114,14 +114,14 @@ describe("Sliding Sync", () => {
         cy.createRoom({ name: "Pineapple" }).then(() => cy.contains(".mx_RoomSublist", "Pineapple"));
         cy.createRoom({ name: "Orange" }).then(() => cy.contains(".mx_RoomSublist", "Orange"));
         // check the rooms are in the right order
-        cy.get(".mx_RoomTile").should('have.length', 4); // due to the Test Room in beforeEach
+        cy.get(".mx_RoomTile").should("have.length", 4); // due to the Test Room in beforeEach
         checkOrder([
             "Orange", "Pineapple", "Apple", "Test Room",
         ]);
 
         cy.contains(".mx_RoomSublist", "Rooms").find(".mx_RoomSublist_menuButton").click({ force: true });
         cy.contains("A-Z").click();
-        cy.get('.mx_StyledRadioButton_checked').should("contain.text", "A-Z");
+        cy.get(".mx_StyledRadioButton_checked").should("contain.text", "A-Z");
         checkOrder([
             "Apple", "Orange", "Pineapple", "Test Room",
         ]);
@@ -283,7 +283,7 @@ describe("Sliding Sync", () => {
         });
 
         // wait for them all to be on the UI
-        cy.get(".mx_RoomTile").should('have.length', 4); // due to the Test Room in beforeEach
+        cy.get(".mx_RoomTile").should("have.length", 4); // due to the Test Room in beforeEach
 
         cy.contains(".mx_RoomTile", "Join").click();
         cy.contains(".mx_AccessibleButton", "Accept").click();
@@ -296,7 +296,7 @@ describe("Sliding Sync", () => {
         cy.get(".mx_RoomView").contains(".mx_AccessibleButton", "Reject").click();
 
         // wait for the rejected room to disappear
-        cy.get(".mx_RoomTile").should('have.length', 3);
+        cy.get(".mx_RoomTile").should("have.length", 3);
 
         // check the lists are correct
         checkOrder([
@@ -314,7 +314,7 @@ describe("Sliding Sync", () => {
         });
 
         // wait for the rescind to take effect and check the joined list once more
-        cy.get(".mx_RoomTile").should('have.length', 2);
+        cy.get(".mx_RoomTile").should("have.length", 2);
         checkOrder([
             "Join", "Test Room",
         ]);

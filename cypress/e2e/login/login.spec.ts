@@ -51,14 +51,14 @@ describe("Login", () => {
             cy.get(".mx_ServerPickerDialog_otherHomeserver").type(synapse.baseUrl);
             cy.get(".mx_ServerPickerDialog_continue").click();
             // wait for the dialog to go away
-            cy.get('.mx_ServerPickerDialog').should('not.exist');
+            cy.get(".mx_ServerPickerDialog").should("not.exist");
 
             cy.get("#mx_LoginForm_username").type(username);
             cy.get("#mx_LoginForm_password").type(password);
             cy.startMeasuring("from-submit-to-home");
             cy.get(".mx_Login_submit").click();
 
-            cy.url().should('contain', '/#/home');
+            cy.url().should("contain", "/#/home");
             cy.stopMeasuring("from-submit-to-home");
         });
     });

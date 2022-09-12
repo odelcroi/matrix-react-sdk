@@ -79,7 +79,7 @@ export default abstract class Exporter {
         const brand = SdkConfig.get().brand;
         const filenameWithoutExt = `${brand} - Chat Export - ${formatFullDateNoDay(new Date())}`;
         const filename = `${filenameWithoutExt}.zip`;
-        const { default: JSZip } = await import('jszip');
+        const { default: JSZip } = await import("jszip");
 
         const zip = new JSZip();
         // Create a writable stream to the directory
@@ -228,11 +228,11 @@ export default abstract class Exporter {
     }
 
     public splitFileName(file: string): string[] {
-        const lastDot = file.lastIndexOf('.');
+        const lastDot = file.lastIndexOf(".");
         if (lastDot === -1) return [file, ""];
         const fileName = file.slice(0, lastDot);
         const ext = file.slice(lastDot + 1);
-        return [fileName, '.' + ext];
+        return [fileName, "." + ext];
     }
 
     public getFilePath(event: MatrixEvent): string {
@@ -257,7 +257,7 @@ export default abstract class Exporter {
         if (event.getType() === "m.sticker") fileExt = ".png";
         if (isVoiceMessage(event)) fileExt = ".ogg";
 
-        return fileDirectory + "/" + fileName + '-' + fileDate + fileExt;
+        return fileDirectory + "/" + fileName + "-" + fileDate + fileExt;
     }
 
     protected isReply(event: MatrixEvent): boolean {

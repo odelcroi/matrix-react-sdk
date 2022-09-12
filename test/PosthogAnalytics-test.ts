@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { mocked } from 'jest-mock';
-import { PostHog } from 'posthog-js';
+import { mocked } from "jest-mock";
+import { PostHog } from "posthog-js";
 
 import {
     Anonymity,
@@ -23,9 +23,9 @@ import {
     getRedactedCurrentLocation,
     IPosthogEvent,
     PosthogAnalytics,
-} from '../src/PosthogAnalytics';
-import SdkConfig from '../src/SdkConfig';
-import { getMockClientWithEventEmitter } from './test-utils';
+} from "../src/PosthogAnalytics";
+import SdkConfig from "../src/SdkConfig";
+import { getMockClientWithEventEmitter } from "./test-utils";
 
 const getFakePosthog = (): PostHog => ({
     capture: jest.fn(),

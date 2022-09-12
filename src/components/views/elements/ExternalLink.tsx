@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { DetailedHTMLProps, AnchorHTMLAttributes } from 'react';
-import classNames from 'classnames';
+import React, { DetailedHTMLProps, AnchorHTMLAttributes } from "react";
+import classNames from "classnames";
 
 interface Props extends DetailedHTMLProps<AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement> {}
 
@@ -27,7 +27,7 @@ const ExternalLink: React.FC<Props> = ({ children, className, ...rest }) =>
         target="_blank"
         rel="noreferrer noopener"
         {...rest}
-        className={classNames('mx_ExternalLink', className)}
+        className={classNames("mx_ExternalLink", className)}
     >
         { children }
         <i className='mx_ExternalLink_icon' />

@@ -97,6 +97,6 @@ export class FileDownloader {
             blob: blob,
             download: name,
             auto: autoDownload,
-        }, '*');
+        }, "*");
     }
 }

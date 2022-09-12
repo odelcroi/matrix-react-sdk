@@ -403,10 +403,10 @@ export class Algorithm extends EventEmitter {
      * @param {IListOrderingMap} listOrderingMap The ordering of those tags.
      */
     public populateTags(tagSortingMap: ITagSortingMap, listOrderingMap: IListOrderingMap): void {
-        if (!tagSortingMap) throw new Error(`Sorting map cannot be null or empty`);
-        if (!listOrderingMap) throw new Error(`Ordering ma cannot be null or empty`);
+        if (!tagSortingMap) throw new Error("Sorting map cannot be null or empty");
+        if (!listOrderingMap) throw new Error("Ordering ma cannot be null or empty");
         if (arrayHasDiff(Object.keys(tagSortingMap), Object.keys(listOrderingMap))) {
-            throw new Error(`Both maps must contain the exact same tags`);
+            throw new Error("Both maps must contain the exact same tags");
         }
         this.sortAlgorithms = tagSortingMap;
         this.listAlgorithms = listOrderingMap;
@@ -443,8 +443,8 @@ export class Algorithm extends EventEmitter {
      * @param {Room[]} rooms The rooms to force the algorithm to use.
      */
     public setKnownRooms(rooms: Room[]): void {
-        if (isNullOrUndefined(rooms)) throw new Error(`Array of rooms cannot be null`);
-        if (!this.sortAlgorithms) throw new Error(`Cannot set known rooms without a tag sorting map`);
+        if (isNullOrUndefined(rooms)) throw new Error("Array of rooms cannot be null");
+        if (!this.sortAlgorithms) throw new Error("Cannot set known rooms without a tag sorting map");
 
         if (!this.updatesInhibited) {
             // We only log this if we're expecting to be publishing updates, which means that

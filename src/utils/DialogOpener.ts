@@ -56,7 +56,7 @@ export class DialogOpener {
 
     private onDispatch = (payload: ActionPayload) => {
         switch (payload.action) {
-            case 'open_room_settings':
+            case "open_room_settings":
                 Modal.createDialog(RoomSettingsDialog, {
                     roomId: payload.room_id || RoomViewStore.instance.getRoomId(),
                     initialTabId: payload.initial_tab_id,
@@ -72,7 +72,7 @@ export class DialogOpener {
             case Action.OpenReportEventDialog:
                 Modal.createDialog(ReportEventDialog, {
                     mxEvent: payload.event,
-                }, 'mx_Dialog_reportEvent');
+                }, "mx_Dialog_reportEvent");
                 break;
             case Action.OpenSpacePreferences:
                 Modal.createDialog(SpacePreferencesDialog, {

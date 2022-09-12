@@ -14,18 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
-import { Room } from 'matrix-js-sdk/src/models/room';
+import React from "react";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import { _t } from '../../../languageHandler';
-import Spinner from '../elements/Spinner';
+import { _t } from "../../../languageHandler";
+import Spinner from "../elements/Spinner";
 import { mediaFromMxc } from "../../../customisations/Media";
-import RoomAvatar from '../avatars/RoomAvatar';
-import BaseAvatar from '../avatars/BaseAvatar';
+import RoomAvatar from "../avatars/RoomAvatar";
+import BaseAvatar from "../avatars/BaseAvatar";
 import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
 
 interface IProps {
@@ -120,9 +120,9 @@ export default class ChangeAvatar extends React.Component<IProps, IState> {
             if (this.props.room) {
                 return MatrixClientPeg.get().sendStateEvent(
                     this.props.room.roomId,
-                    'm.room.avatar',
+                    "m.room.avatar",
                     { url: url },
-                    '',
+                    "",
                 );
             } else {
                 return MatrixClientPeg.get().setAvatarUrl(url);

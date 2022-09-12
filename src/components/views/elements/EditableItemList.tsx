@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from "react";
 
-import { _t } from '../../../languageHandler';
+import { _t } from "../../../languageHandler";
 import Field from "./Field";
 import AccessibleButton from "./AccessibleButton";
 

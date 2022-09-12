@@ -14,9 +14,9 @@
  limitations under the License.
  */
 
-import React from 'react';
+import React from "react";
 
-import TextWithTooltip from './TextWithTooltip';
+import TextWithTooltip from "./TextWithTooltip";
 
 interface IProps extends Omit<React.ComponentProps<typeof TextWithTooltip>, "tabIndex" | "onClick" > {}
 

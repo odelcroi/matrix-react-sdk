@@ -14,20 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { HTMLProps, useContext } from 'react';
-import { Beacon, BeaconEvent } from 'matrix-js-sdk/src/matrix';
-import { LocationAssetType } from 'matrix-js-sdk/src/@types/location';
+import React, { HTMLProps, useContext } from "react";
+import { Beacon, BeaconEvent } from "matrix-js-sdk/src/matrix";
+import { LocationAssetType } from "matrix-js-sdk/src/@types/location";
 
-import MatrixClientContext from '../../../contexts/MatrixClientContext';
-import { useEventEmitterState } from '../../../hooks/useEventEmitter';
-import { humanizeTime } from '../../../utils/humanize';
-import { preventDefaultWrapper } from '../../../utils/NativeEventUtils';
-import { _t } from '../../../languageHandler';
-import MemberAvatar from '../avatars/MemberAvatar';
-import BeaconStatus from './BeaconStatus';
-import { BeaconDisplayStatus } from './displayStatus';
-import StyledLiveBeaconIcon from './StyledLiveBeaconIcon';
-import ShareLatestLocation from './ShareLatestLocation';
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import { useEventEmitterState } from "../../../hooks/useEventEmitter";
+import { humanizeTime } from "../../../utils/humanize";
+import { preventDefaultWrapper } from "../../../utils/NativeEventUtils";
+import { _t } from "../../../languageHandler";
+import MemberAvatar from "../avatars/MemberAvatar";
+import BeaconStatus from "./BeaconStatus";
+import { BeaconDisplayStatus } from "./displayStatus";
+import StyledLiveBeaconIcon from "./StyledLiveBeaconIcon";
+import ShareLatestLocation from "./ShareLatestLocation";
 
 interface Props {
     beacon: Beacon;

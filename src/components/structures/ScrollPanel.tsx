@@ -17,8 +17,8 @@ limitations under the License.
 import React, { createRef, CSSProperties, ReactNode, KeyboardEvent } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import SettingsStore from '../../settings/SettingsStore';
-import Timer from '../../utils/Timer';
+import SettingsStore from "../../settings/SettingsStore";
+import Timer from "../../utils/Timer";
 import AutoHideScrollbar from "./AutoHideScrollbar";
 import { getKeyBindingsManager } from "../../KeyBindingsManager";
 import ResizeNotifier from "../../utils/ResizeNotifier";
@@ -443,7 +443,7 @@ export default class ScrollPanel extends React.Component<IProps> {
             }
             // The tile may not have a scroll token, so guard it
             if (tile.dataset.scrollTokens) {
-                markerScrollToken = tile.dataset.scrollTokens.split(',')[0];
+                markerScrollToken = tile.dataset.scrollTokens.split(",")[0];
             }
         }
 
@@ -463,7 +463,7 @@ export default class ScrollPanel extends React.Component<IProps> {
 
     // check if there is already a pending fill request. If not, set one off.
     private maybeFill(depth: number, backwards: boolean): Promise<void> {
-        const dir = backwards ? 'b' : 'f';
+        const dir = backwards ? "b" : "f";
         if (this.pendingFillRequests[dir]) {
             debuglog("Already a "+dir+" fill in progress - not starting another");
             return;
@@ -661,7 +661,7 @@ export default class ScrollPanel extends React.Component<IProps> {
             debuglog("unable to save scroll state: found no children in the viewport");
             return;
         }
-        const scrollToken = node.dataset.scrollTokens.split(',')[0];
+        const scrollToken = node.dataset.scrollTokens.split(",")[0];
         debuglog("saving anchored scroll state to message", node.innerText, scrollToken);
         const bottomOffset = this.topFromBottom(node);
         this.scrollState = {
@@ -781,7 +781,7 @@ export default class ScrollPanel extends React.Component<IProps> {
                 const m = messages[i] as HTMLElement;
                 // 'data-scroll-tokens' is a DOMString of comma-separated scroll tokens
                 // There might only be one scroll token
-                if (m.dataset.scrollTokens?.split(',').includes(scrollToken)) {
+                if (m.dataset.scrollTokens?.split(",").includes(scrollToken)) {
                     node = m;
                     break;
                 }

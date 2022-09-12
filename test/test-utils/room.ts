@@ -25,7 +25,7 @@ import {
 import { mkEvent } from "./test-utils";
 
 export const makeMembershipEvent = (
-    roomId: string, userId: string, membership = 'join',
+    roomId: string, userId: string, membership = "join",
 ) => mkEvent({
     event: true,
     type: EventType.RoomMember,
@@ -45,7 +45,7 @@ export const makeMembershipEvent = (
 export const makeRoomWithStateEvents = (
     stateEvents: MatrixEvent[] = [],
     { roomId, mockClient }: { roomId: string, mockClient: MockedObject<MatrixClient>}): Room => {
-    const room1 = new Room(roomId, mockClient, '@user:server.org');
+    const room1 = new Room(roomId, mockClient, "@user:server.org");
     room1.currentState.setStateEvents(stateEvents);
     mockClient.getRoom.mockReturnValue(room1);
     return room1;

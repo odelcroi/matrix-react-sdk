@@ -14,15 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { forwardRef, ReactNode, KeyboardEvent, Ref } from 'react';
-import classNames from 'classnames';
+import React, { forwardRef, ReactNode, KeyboardEvent, Ref } from "react";
+import classNames from "classnames";
 
 import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
 import { _t } from "../../../languageHandler";
 import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
-import RightPanelStore from '../../../stores/right-panel/RightPanelStore';
-import { backLabelForPhase } from '../../../stores/right-panel/RightPanelStorePhases';
-import { CardContext } from './context';
+import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
+import { backLabelForPhase } from "../../../stores/right-panel/RightPanelStorePhases";
+import { CardContext } from "./context";
 
 interface IProps {
     header?: ReactNode;

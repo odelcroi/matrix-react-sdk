@@ -169,7 +169,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
             r = await client.sendStateEvent(roomId, eventType, content, stateKey);
         } else if (eventType === EventType.RoomRedaction) {
             // special case: extract the `redacts` property and call redact
-            r = await client.redactEvent(roomId, content['redacts']);
+            r = await client.redactEvent(roomId, content["redacts"]);
         } else {
             // message event
             r = await client.sendEvent(roomId, eventType, content);
@@ -262,7 +262,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
 
                 const ev = events[i];
                 if (ev.getType() !== eventType || ev.isState()) continue;
-                if (eventType === EventType.RoomMessage && msgtype && msgtype !== ev.getContent()['msgtype']) continue;
+                if (eventType === EventType.RoomMessage && msgtype && msgtype !== ev.getContent()["msgtype"]) continue;
                 results.push(ev);
             }
 

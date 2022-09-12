@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { EventType } from 'matrix-js-sdk/src/@types/event';
+import React from "react";
+import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import { _t } from "../../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
@@ -23,7 +23,7 @@ import AccessibleButton from "../../../elements/AccessibleButton";
 import RoomUpgradeDialog from "../../../dialogs/RoomUpgradeDialog";
 import Modal from "../../../../../Modal";
 import dis from "../../../../../dispatcher/dispatcher";
-import { Action } from '../../../../../dispatcher/actions';
+import { Action } from "../../../../../dispatcher/actions";
 import CopyableText from "../../../elements/CopyableText";
 import { ViewRoomPayload } from "../../../../../dispatcher/payloads/ViewRoomPayload";
 
@@ -100,9 +100,9 @@ export default class AdvancedRoomSettingsTab extends React.Component<IProps, ISt
         const isSpace = room.isSpaceRoom();
 
         let unfederatableSection;
-        const createEvent = room.currentState.getStateEvents(EventType.RoomCreate, '');
-        if (createEvent && createEvent.getContent()['m.federate'] === false) {
-            unfederatableSection = <div>{ _t('This room is not accessible by remote Matrix servers') }</div>;
+        const createEvent = room.currentState.getStateEvents(EventType.RoomCreate, "");
+        if (createEvent && createEvent.getContent()["m.federate"] === false) {
+            unfederatableSection = <div>{ _t("This room is not accessible by remote Matrix servers") }</div>;
         }
 
         let roomUpgradeButton;

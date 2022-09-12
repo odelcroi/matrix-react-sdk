@@ -61,22 +61,22 @@ class MockClient extends EventEmitter {
 const mockDispatcher = mocked(dis);
 const flushPromises = async () => await new Promise(process.nextTick);
 
-describe('DeviceListener', () => {
+describe("DeviceListener", () => {
     let mockClient;
 
     // spy on various toasts' hide and show functions
     // easier than mocking
-    jest.spyOn(SetupEncryptionToast, 'showToast');
-    jest.spyOn(SetupEncryptionToast, 'hideToast');
-    jest.spyOn(BulkUnverifiedSessionsToast, 'showToast');
-    jest.spyOn(BulkUnverifiedSessionsToast, 'hideToast');
-    jest.spyOn(UnverifiedSessionToast, 'showToast');
-    jest.spyOn(UnverifiedSessionToast, 'hideToast');
+    jest.spyOn(SetupEncryptionToast, "showToast");
+    jest.spyOn(SetupEncryptionToast, "hideToast");
+    jest.spyOn(BulkUnverifiedSessionsToast, "showToast");
+    jest.spyOn(BulkUnverifiedSessionsToast, "hideToast");
+    jest.spyOn(UnverifiedSessionToast, "showToast");
+    jest.spyOn(UnverifiedSessionToast, "hideToast");
 
     beforeEach(() => {
         jest.resetAllMocks();
         mockClient = new MockClient();
-        jest.spyOn(MatrixClientPeg, 'get').mockReturnValue(mockClient);
+        jest.spyOn(MatrixClientPeg, "get").mockReturnValue(mockClient);
     });
 
     const createAndStart = async (): Promise<DeviceListener> => {
@@ -86,30 +86,30 @@ describe('DeviceListener', () => {
         return instance;
     };
 
-    describe('recheck', () => {
-        it('does nothing when cross signing feature is not supported', async () => {
+    describe("recheck", () => {
+        it("does nothing when cross signing feature is not supported", async () => {
             mockClient.doesServerSupportUnstableFeature.mockResolvedValue(false);
             await createAndStart();
 
             expect(mockClient.isCrossSigningReady).not.toHaveBeenCalled();
         });
-        it('does nothing when crypto is not enabled', async () => {
+        it("does nothing when crypto is not enabled", async () => {
             mockClient.isCryptoEnabled.mockReturnValue(false);
             await createAndStart();
 
             expect(mockClient.isCrossSigningReady).not.toHaveBeenCalled();
         });
-        it('does nothing when initial sync is not complete', async () => {
+        it("does nothing when initial sync is not complete", async () => {
             mockClient.isInitialSyncComplete.mockReturnValue(false);
             await createAndStart();
 
             expect(mockClient.isCrossSigningReady).not.toHaveBeenCalled();
         });
 
-        describe('set up encryption', () => {
+        describe("set up encryption", () => {
             const rooms = [
-                { roomId: '!room1' },
-                { roomId: '!room2' },
+                { roomId: "!room1" },
+                { roomId: "!room2" },
             ] as unknown as Room[];
 
             beforeEach(() => {
@@ -119,21 +119,21 @@ describe('DeviceListener', () => {
                 mockClient.isRoomEncrypted.mockReturnValue(true);
             });
 
-            it('hides setup encryption toast when cross signing and secret storage are ready', async () => {
+            it("hides setup encryption toast when cross signing and secret storage are ready", async () => {
                 mockClient.isCrossSigningReady.mockResolvedValue(true);
                 mockClient.isSecretStorageReady.mockResolvedValue(true);
                 await createAndStart();
                 expect(SetupEncryptionToast.hideToast).toHaveBeenCalled();
             });
 
-            it('hides setup encryption toast when it is dismissed', async () => {
+            it("hides setup encryption toast when it is dismissed", async () => {
                 const instance = await createAndStart();
                 instance.dismissEncryptionSetup();
                 await flushPromises();
                 expect(SetupEncryptionToast.hideToast).toHaveBeenCalled();
             });
 
-            it('does not do any checks or show any toasts when secret storage is being accessed', async () => {
+            it("does not do any checks or show any toasts when secret storage is being accessed", async () => {
                 mocked(isSecretStorageBeingAccessed).mockReturnValue(true);
                 await createAndStart();
 
@@ -141,7 +141,7 @@ describe('DeviceListener', () => {
                 expect(SetupEncryptionToast.showToast).not.toHaveBeenCalled();
             });
 
-            it('does not do any checks or show any toasts when no rooms are encrypted', async () => {
+            it("does not do any checks or show any toasts when no rooms are encrypted", async () => {
                 mockClient.isRoomEncrypted.mockReturnValue(false);
                 await createAndStart();
 
@@ -149,12 +149,12 @@ describe('DeviceListener', () => {
                 expect(SetupEncryptionToast.showToast).not.toHaveBeenCalled();
             });
 
-            describe('when user does not have a cross signing id on this device', () => {
+            describe("when user does not have a cross signing id on this device", () => {
                 beforeEach(() => {
                     mockClient.getCrossSigningId.mockReturnValue(undefined);
                 });
 
-                it('shows verify session toast when account has cross signing', async () => {
+                it("shows verify session toast when account has cross signing", async () => {
                     mockClient.getStoredCrossSigningForUser.mockReturnValue(true);
                     await createAndStart();
 
@@ -163,7 +163,7 @@ describe('DeviceListener', () => {
                         SetupEncryptionToast.Kind.VERIFY_THIS_SESSION);
                 });
 
-                it('checks key backup status when when account has cross signing', async () => {
+                it("checks key backup status when when account has cross signing", async () => {
                     mockClient.getCrossSigningId.mockReturnValue(undefined);
                     mockClient.getStoredCrossSigningForUser.mockReturnValue(true);
                     await createAndStart();
@@ -172,12 +172,12 @@ describe('DeviceListener', () => {
                 });
             });
 
-            describe('when user does have a cross signing id on this device', () => {
+            describe("when user does have a cross signing id on this device", () => {
                 beforeEach(() => {
-                    mockClient.getCrossSigningId.mockReturnValue('abc');
+                    mockClient.getCrossSigningId.mockReturnValue("abc");
                 });
 
-                it('shows upgrade encryption toast when user has a key backup available', async () => {
+                it("shows upgrade encryption toast when user has a key backup available", async () => {
                     // non falsy response
                     mockClient.getKeyBackupVersion.mockResolvedValue({});
                     await createAndStart();
@@ -188,15 +188,15 @@ describe('DeviceListener', () => {
             });
         });
 
-        describe('key backup status', () => {
-            it('checks keybackup status when cross signing and secret storage are ready', async () => {
+        describe("key backup status", () => {
+            it("checks keybackup status when cross signing and secret storage are ready", async () => {
                 // default mocks set cross signing and secret storage to ready
                 await createAndStart();
                 expect(mockClient.getKeyBackupEnabled).toHaveBeenCalled();
                 expect(mockDispatcher.dispatch).not.toHaveBeenCalled();
             });
 
-            it('checks keybackup status when setup encryption toast has been dismissed', async () => {
+            it("checks keybackup status when setup encryption toast has been dismissed", async () => {
                 mockClient.isCrossSigningReady.mockResolvedValue(false);
                 const instance = await createAndStart();
 
@@ -206,20 +206,20 @@ describe('DeviceListener', () => {
                 expect(mockClient.getKeyBackupEnabled).toHaveBeenCalled();
             });
 
-            it('does not dispatch keybackup event when key backup check is not finished', async () => {
+            it("does not dispatch keybackup event when key backup check is not finished", async () => {
                 // returns null when key backup status hasn't finished being checked
                 mockClient.getKeyBackupEnabled.mockReturnValue(null);
                 await createAndStart();
                 expect(mockDispatcher.dispatch).not.toHaveBeenCalled();
             });
 
-            it('dispatches keybackup event when key backup is not enabled', async () => {
+            it("dispatches keybackup event when key backup is not enabled", async () => {
                 mockClient.getKeyBackupEnabled.mockReturnValue(false);
                 await createAndStart();
                 expect(mockDispatcher.dispatch).toHaveBeenCalledWith({ action: Action.ReportKeyBackupNotEnabled });
             });
 
-            it('does not check key backup status again after check is complete', async () => {
+            it("does not check key backup status again after check is complete", async () => {
                 mockClient.getKeyBackupEnabled.mockReturnValue(null);
                 const instance = await createAndStart();
                 expect(mockClient.getKeyBackupEnabled).toHaveBeenCalled();

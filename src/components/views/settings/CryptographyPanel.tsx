@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ComponentType } from 'react';
+import React, { ComponentType } from "react";
 
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import { _t } from '../../../languageHandler';
-import Modal from '../../../Modal';
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { _t } from "../../../languageHandler";
+import Modal from "../../../Modal";
 import AccessibleButton from "../elements/AccessibleButton";
 import * as FormattingUtils from "../../../utils/FormattingUtils";
 import SettingsStore from "../../../settings/SettingsStore";
@@ -93,7 +93,7 @@ export default class CryptographyPanel extends React.Component<IProps, IState> {
     private onExportE2eKeysClicked = (): void => {
         Modal.createDialogAsync(
             import(
-                '../../../async-components/views/dialogs/security/ExportE2eKeysDialog'
+                "../../../async-components/views/dialogs/security/ExportE2eKeysDialog"
             ) as unknown as Promise<ComponentType<{}>>,
             { matrixClient: MatrixClientPeg.get() },
         );
@@ -102,7 +102,7 @@ export default class CryptographyPanel extends React.Component<IProps, IState> {
     private onImportE2eKeysClicked = (): void => {
         Modal.createDialogAsync(
             import(
-                '../../../async-components/views/dialogs/security/ImportE2eKeysDialog'
+                "../../../async-components/views/dialogs/security/ImportE2eKeysDialog"
             ) as unknown as Promise<ComponentType<{}>>,
             { matrixClient: MatrixClientPeg.get() },
         );

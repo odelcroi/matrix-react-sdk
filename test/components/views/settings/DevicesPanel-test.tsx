@@ -13,12 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
-import { CrossSigningInfo } from 'matrix-js-sdk/src/crypto/CrossSigning';
-import { DeviceInfo } from 'matrix-js-sdk/src/crypto/deviceinfo';
-import { sleep } from 'matrix-js-sdk/src/utils';
+import React from "react";
+import { fireEvent, render } from "@testing-library/react";
+import { act } from "react-dom/test-utils";
+import { CrossSigningInfo } from "matrix-js-sdk/src/crypto/CrossSigning";
+import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
+import { sleep } from "matrix-js-sdk/src/utils";
 
 import DevicesPanel from "../../../../src/components/views/settings/DevicesPanel";
 import {
@@ -27,18 +27,18 @@ import {
     mockClientMethodsUser,
 } from "../../../test-utils";
 
-describe('<DevicesPanel />', () => {
-    const userId = '@alice:server.org';
-    const device1 = { device_id: 'device_1' };
-    const device2 = { device_id: 'device_2' };
-    const device3 = { device_id: 'device_3' };
+describe("<DevicesPanel />", () => {
+    const userId = "@alice:server.org";
+    const device1 = { device_id: "device_1" };
+    const device2 = { device_id: "device_2" };
+    const device3 = { device_id: "device_3" };
     const mockClient = getMockClientWithEventEmitter({
         ...mockClientMethodsUser(userId),
         getDevices: jest.fn(),
         getDeviceId: jest.fn().mockReturnValue(device1.device_id),
         deleteMultipleDevices: jest.fn(),
         getStoredCrossSigningForUser: jest.fn().mockReturnValue(new CrossSigningInfo(userId, {}, {})),
-        getStoredDevice: jest.fn().mockReturnValue(new DeviceInfo('id')),
+        getStoredDevice: jest.fn().mockReturnValue(new DeviceInfo("id")),
         generateClientSecret: jest.fn(),
     });
 
@@ -52,13 +52,13 @@ describe('<DevicesPanel />', () => {
             .mockResolvedValue({ devices: [device1, device2, device3] });
     });
 
-    it('renders device panel with devices', async () => {
+    it("renders device panel with devices", async () => {
         const { container } = render(getComponent());
         await flushPromises();
         expect(container).toMatchSnapshot();
     });
 
-    describe('device deletion', () => {
+    describe("device deletion", () => {
         const interactiveAuthError = { httpStatus: 401, data: { flows: [{ stages: ["m.login.password"] }] } };
 
         const toggleDeviceSelection = (container: HTMLElement, deviceId: string) => act(() => {
@@ -70,7 +70,7 @@ describe('<DevicesPanel />', () => {
             mockClient.deleteMultipleDevices.mockReset();
         });
 
-        it('deletes selected devices when interactive auth is not required', async () => {
+        it("deletes selected devices when interactive auth is not required", async () => {
             mockClient.deleteMultipleDevices.mockResolvedValue({});
             mockClient.getDevices
                 .mockResolvedValueOnce({ devices: [device1, device2, device3] })
@@ -80,17 +80,17 @@ describe('<DevicesPanel />', () => {
             const { container, getByTestId } = render(getComponent());
             await flushPromises();
 
-            expect(container.getElementsByClassName('mx_DevicesPanel_device').length).toEqual(3);
+            expect(container.getElementsByClassName("mx_DevicesPanel_device").length).toEqual(3);
 
             toggleDeviceSelection(container, device2.device_id);
 
             mockClient.getDevices.mockClear();
 
             act(() => {
-                fireEvent.click(getByTestId('sign-out-devices-btn'));
+                fireEvent.click(getByTestId("sign-out-devices-btn"));
             });
 
-            expect(container.getElementsByClassName('mx_Spinner').length).toBeTruthy();
+            expect(container.getElementsByClassName("mx_Spinner").length).toBeTruthy();
             expect(mockClient.deleteMultipleDevices).toHaveBeenCalledWith([device2.device_id], undefined);
 
             await flushPromises();
@@ -98,10 +98,10 @@ describe('<DevicesPanel />', () => {
             // devices refreshed
             expect(mockClient.getDevices).toHaveBeenCalled();
             // and rerendered
-            expect(container.getElementsByClassName('mx_DevicesPanel_device').length).toEqual(2);
+            expect(container.getElementsByClassName("mx_DevicesPanel_device").length).toEqual(2);
         });
 
-        it('deletes selected devices when interactive auth is required', async () => {
+        it("deletes selected devices when interactive auth is required", async () => {
             mockClient.deleteMultipleDevices
                 // require auth
                 .mockRejectedValueOnce(interactiveAuthError)
@@ -123,7 +123,7 @@ describe('<DevicesPanel />', () => {
             toggleDeviceSelection(container, device2.device_id);
 
             act(() => {
-                fireEvent.click(getByTestId('sign-out-devices-btn'));
+                fireEvent.click(getByTestId("sign-out-devices-btn"));
             });
 
             await flushPromises();
@@ -132,13 +132,13 @@ describe('<DevicesPanel />', () => {
 
             expect(mockClient.deleteMultipleDevices).toHaveBeenCalledWith([device2.device_id], undefined);
 
-            const modal = document.getElementsByClassName('mx_Dialog');
+            const modal = document.getElementsByClassName("mx_Dialog");
             expect(modal).toMatchSnapshot();
 
             // fill password and submit for interactive auth
             act(() => {
-                fireEvent.change(getByLabelText('Password'), { target: { value: 'topsecret' } });
-                fireEvent.submit(getByLabelText('Password'));
+                fireEvent.change(getByLabelText("Password"), { target: { value: "topsecret" } });
+                fireEvent.submit(getByLabelText("Password"));
             });
 
             await flushPromises();
@@ -152,10 +152,10 @@ describe('<DevicesPanel />', () => {
             // devices refreshed
             expect(mockClient.getDevices).toHaveBeenCalled();
             // and rerendered
-            expect(container.getElementsByClassName('mx_DevicesPanel_device').length).toEqual(2);
+            expect(container.getElementsByClassName("mx_DevicesPanel_device").length).toEqual(2);
         });
 
-        it('clears loading state when interactive auth fail is cancelled', async () => {
+        it("clears loading state when interactive auth fail is cancelled", async () => {
             mockClient.deleteMultipleDevices
                 // require auth
                 .mockRejectedValueOnce(interactiveAuthError)
@@ -177,10 +177,10 @@ describe('<DevicesPanel />', () => {
             toggleDeviceSelection(container, device2.device_id);
 
             act(() => {
-                fireEvent.click(getByTestId('sign-out-devices-btn'));
+                fireEvent.click(getByTestId("sign-out-devices-btn"));
             });
 
-            expect(container.getElementsByClassName('mx_Spinner').length).toBeTruthy();
+            expect(container.getElementsByClassName("mx_Spinner").length).toBeTruthy();
 
             await flushPromises();
             // modal rendering has some weird sleeps
@@ -197,7 +197,7 @@ describe('<DevicesPanel />', () => {
             // not refreshed
             expect(mockClient.getDevices).not.toHaveBeenCalled();
             // spinner removed
-            expect(container.getElementsByClassName('mx_Spinner').length).toBeFalsy();
+            expect(container.getElementsByClassName("mx_Spinner").length).toBeFalsy();
         });
     });
 });

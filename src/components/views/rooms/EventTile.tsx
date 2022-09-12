@@ -15,74 +15,74 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, forwardRef, MouseEvent, RefObject } from 'react';
+import React, { createRef, forwardRef, MouseEvent, RefObject } from "react";
 import classNames from "classnames";
 import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
 import { EventStatus, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
 import { Relations } from "matrix-js-sdk/src/models/relations";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { Thread, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
+import { Thread, ThreadEvent } from "matrix-js-sdk/src/models/thread";
 import { logger } from "matrix-js-sdk/src/logger";
-import { NotificationCountType, Room, RoomEvent } from 'matrix-js-sdk/src/models/room';
+import { NotificationCountType, Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { CallErrorCode } from "matrix-js-sdk/src/webrtc/call";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
-import { UserTrustLevel } from 'matrix-js-sdk/src/crypto/CrossSigning';
+import { UserTrustLevel } from "matrix-js-sdk/src/crypto/CrossSigning";
 
-import { Icon as LinkIcon } from '../../../../res/img/element-icons/link.svg';
-import { Icon as ViewInRoomIcon } from '../../../../res/img/element-icons/view-in-room.svg';
+import { Icon as LinkIcon } from "../../../../res/img/element-icons/link.svg";
+import { Icon as ViewInRoomIcon } from "../../../../res/img/element-icons/view-in-room.svg";
 import ReplyChain from "../elements/ReplyChain";
-import { _t } from '../../../languageHandler';
-import dis from '../../../dispatcher/dispatcher';
+import { _t } from "../../../languageHandler";
+import dis from "../../../dispatcher/dispatcher";
 import { Layout } from "../../../settings/enums/Layout";
 import { formatTime } from "../../../DateUtils";
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { E2EState } from "./E2EIcon";
 import RoomAvatar from "../avatars/RoomAvatar";
 import MessageContextMenu from "../context_menus/MessageContextMenu";
-import { aboveRightOf } from '../../structures/ContextMenu';
+import { aboveRightOf } from "../../structures/ContextMenu";
 import { objectHasDiff } from "../../../utils/objects";
 import Tooltip, { Alignment } from "../elements/Tooltip";
 import EditorStateTransfer from "../../../utils/EditorStateTransfer";
-import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
+import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
 import { StaticNotificationState } from "../../../stores/notifications/StaticNotificationState";
 import NotificationBadge from "./NotificationBadge";
 import LegacyCallEventGrouper from "../../structures/LegacyCallEventGrouper";
 import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInsertPayload";
-import { Action } from '../../../dispatcher/actions';
-import PlatformPeg from '../../../PlatformPeg';
-import MemberAvatar from '../avatars/MemberAvatar';
-import SenderProfile from '../messages/SenderProfile';
-import MessageTimestamp from '../messages/MessageTimestamp';
-import TooltipButton from '../elements/TooltipButton';
+import { Action } from "../../../dispatcher/actions";
+import PlatformPeg from "../../../PlatformPeg";
+import MemberAvatar from "../avatars/MemberAvatar";
+import SenderProfile from "../messages/SenderProfile";
+import MessageTimestamp from "../messages/MessageTimestamp";
+import TooltipButton from "../elements/TooltipButton";
 import { IReadReceiptInfo } from "./ReadReceiptMarker";
 import MessageActionBar from "../messages/MessageActionBar";
-import ReactionsRow from '../messages/ReactionsRow';
-import { getEventDisplayInfo } from '../../../utils/EventRenderingUtils';
+import ReactionsRow from "../messages/ReactionsRow";
+import { getEventDisplayInfo } from "../../../utils/EventRenderingUtils";
 import SettingsStore from "../../../settings/SettingsStore";
-import { MessagePreviewStore } from '../../../stores/room-list/MessagePreviewStore';
+import { MessagePreviewStore } from "../../../stores/room-list/MessagePreviewStore";
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import { MediaEventHelper } from "../../../utils/MediaEventHelper";
-import Toolbar from '../../../accessibility/Toolbar';
-import { RovingAccessibleTooltipButton } from '../../../accessibility/roving/RovingAccessibleTooltipButton';
-import { ThreadNotificationState } from '../../../stores/notifications/ThreadNotificationState';
-import { RoomNotificationStateStore } from '../../../stores/notifications/RoomNotificationStateStore';
-import { NotificationStateEvents } from '../../../stores/notifications/NotificationState';
-import { NotificationColor } from '../../../stores/notifications/NotificationColor';
-import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
-import { copyPlaintext, getSelectedText } from '../../../utils/strings';
-import { DecryptionFailureTracker } from '../../../DecryptionFailureTracker';
-import RedactedBody from '../messages/RedactedBody';
+import Toolbar from "../../../accessibility/Toolbar";
+import { RovingAccessibleTooltipButton } from "../../../accessibility/roving/RovingAccessibleTooltipButton";
+import { ThreadNotificationState } from "../../../stores/notifications/ThreadNotificationState";
+import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
+import { NotificationStateEvents } from "../../../stores/notifications/NotificationState";
+import { NotificationColor } from "../../../stores/notifications/NotificationColor";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
+import { copyPlaintext, getSelectedText } from "../../../utils/strings";
+import { DecryptionFailureTracker } from "../../../DecryptionFailureTracker";
+import RedactedBody from "../messages/RedactedBody";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
-import { shouldDisplayReply } from '../../../utils/Reply';
+import { shouldDisplayReply } from "../../../utils/Reply";
 import PosthogTrackers from "../../../PosthogTrackers";
-import TileErrorBoundary from '../messages/TileErrorBoundary';
+import TileErrorBoundary from "../messages/TileErrorBoundary";
 import { haveRendererForEvent, isMessageEvent, renderTile } from "../../../events/EventTileFactory";
 import ThreadSummary, { ThreadMessagePreview } from "./ThreadSummary";
-import { ReadReceiptGroup } from './ReadReceiptGroup';
+import { ReadReceiptGroup } from "./ReadReceiptGroup";
 import { useTooltip } from "../../../utils/useTooltip";
 import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayload";
-import { isLocalRoom } from '../../../utils/localRoom/isLocalRoom';
+import { isLocalRoom } from "../../../utils/localRoom/isLocalRoom";
 
 export type GetRelationsForEvent = (eventId: string, relationType: string, eventType: string) => Relations;
 
@@ -680,7 +680,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
             }
 
             // need to deep-compare readReceipts
-            if (key === 'readReceipts') {
+            if (key === "readReceipts") {
                 const rA = objA[key];
                 const rB = objB[key];
                 if (rA === rB) {
@@ -773,7 +773,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         if (isLocalRoom(ev.getRoomId())) return;
 
         // event could not be decrypted
-        if (ev.getContent().msgtype === 'm.bad.encrypted') {
+        if (ev.getContent().msgtype === "m.bad.encrypted") {
             return <E2ePadlockUndecryptable />;
         }
 
@@ -952,7 +952,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
             logger.warn(`Event type not supported: type:${eventType} isState:${mxEvent.isState()}`);
             return <div className="mx_EventTile mx_EventTile_info mx_MNoticeBody">
                 <div className="mx_EventTile_line">
-                    { _t('This event could not be displayed') }
+                    { _t("This event could not be displayed") }
                 </div>
             </div>;
         }
@@ -972,7 +972,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
             ),
         });
 
-        const isSending = (['sending', 'queued', 'encrypting'].indexOf(this.props.eventSendStatus) !== -1);
+        const isSending = (["sending", "queued", "encrypting"].indexOf(this.props.eventSendStatus) !== -1);
         const isRedacted = isMessageEvent(this.props.mxEvent) && this.props.isRedacted;
         const isEncryptionFailure = this.props.mxEvent.isDecryptionFailure();
 
@@ -1013,7 +1013,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         });
 
         // If the tile is in the Sending state, don't speak the message.
-        const ariaLive = (this.props.eventSendStatus !== null) ? 'off' : undefined;
+        const ariaLive = (this.props.eventSendStatus !== null) ? "off" : undefined;
 
         let permalink = "#";
         if (this.props.permalinkCreator) {
@@ -1143,26 +1143,26 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
             <div className="mx_EventTile_keyRequestInfo_tooltip_contents">
                 <p>
                     { this.state.previouslyRequestedKeys ?
-                        _t('Your key share request has been sent - please check your other sessions ' +
-                           'for key share requests.') :
-                        _t('Key share requests are sent to your other sessions automatically. If you ' +
-                           'rejected or dismissed the key share request on your other sessions, click ' +
-                           'here to request the keys for this session again.')
+                        _t("Your key share request has been sent - please check your other sessions " +
+                           "for key share requests.") :
+                        _t("Key share requests are sent to your other sessions automatically. If you " +
+                           "rejected or dismissed the key share request on your other sessions, click " +
+                           "here to request the keys for this session again.")
                     }
                 </p>
                 <p>
-                    { _t('If your other sessions do not have the key for this message you will not ' +
-                         'be able to decrypt them.')
+                    { _t("If your other sessions do not have the key for this message you will not " +
+                         "be able to decrypt them.")
                     }
                 </p>
             </div>;
         const keyRequestInfoContent = this.state.previouslyRequestedKeys ?
-            _t('Key request sent.') :
+            _t("Key request sent.") :
             _t(
-                '<requestLink>Re-request encryption keys</requestLink> from your other sessions.',
+                "<requestLink>Re-request encryption keys</requestLink> from your other sessions.",
                 {},
                 {
-                    'requestLink': (sub) =>
+                    "requestLink": (sub) =>
                         <AccessibleButton
                             className="mx_EventTile_rerequestKeysCta"
                             kind='link_inline'
@@ -1256,7 +1256,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                     <div className="mx_EventTile_roomName" key="mx_EventTile_roomName">
                         <RoomAvatar room={room} width={28} height={28} />
                         <a href={permalink} onClick={this.onPermalinkClicked}>
-                            { room ? room.name : '' }
+                            { room ? room.name : "" }
                         </a>
                     </div>,
                     <div className="mx_EventTile_senderDetails" key="mx_EventTile_senderDetails">
@@ -1306,7 +1306,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                     <div className="mx_EventTile_roomName" key="mx_EventTile_roomName">
                         <RoomAvatar room={room} width={28} height={28} />
                         <a href={permalink} onClick={this.onPermalinkClicked}>
-                            { room ? room.name : '' }
+                            { room ? room.name : "" }
                         </a>
                     </div>,
                     <div className="mx_EventTile_senderDetails" key="mx_EventTile_senderDetails">
@@ -1596,11 +1596,11 @@ interface ISentReceiptProps {
 }
 
 function SentReceipt({ messageState }: ISentReceiptProps) {
-    const isSent = !messageState || messageState === 'sent';
-    const isFailed = messageState === 'not_sent';
+    const isSent = !messageState || messageState === "sent";
+    const isFailed = messageState === "not_sent";
     const receiptClasses = classNames({
-        'mx_EventTile_receiptSent': isSent,
-        'mx_EventTile_receiptSending': !isSent && !isFailed,
+        "mx_EventTile_receiptSent": isSent,
+        "mx_EventTile_receiptSending": !isSent && !isFailed,
     });
 
     let nonCssBadge = null;
@@ -1611,7 +1611,7 @@ function SentReceipt({ messageState }: ISentReceiptProps) {
     }
 
     let label = _t("Sending your message...");
-    if (messageState === 'encrypting') {
+    if (messageState === "encrypting") {
         label = _t("Encrypting your message...");
     } else if (isSent) {
         label = _t("Your message was sent");

@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import classNames from 'classnames';
-import { EventType } from 'matrix-js-sdk/src/@types/event';
-import React, { useContext, useRef, useState, MouseEvent } from 'react';
+import classNames from "classnames";
+import { EventType } from "matrix-js-sdk/src/@types/event";
+import React, { useContext, useRef, useState, MouseEvent } from "react";
 
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import RoomContext from "../../../contexts/RoomContext";
 import { useTimeout } from "../../../hooks/useTimeout";
-import { TranslatedString } from '../../../languageHandler';
+import { TranslatedString } from "../../../languageHandler";
 import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
 import AccessibleButton from "./AccessibleButton";
 import Spinner from "./Spinner";

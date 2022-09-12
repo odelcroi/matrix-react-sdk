@@ -30,7 +30,7 @@ import {
     ChevronFace,
     ContextMenuTooltipButton,
     useContextMenu,
-} from '../../../structures/ContextMenu';
+} from "../../../structures/ContextMenu";
 import { _t } from "../../../../languageHandler";
 import DeviceContextMenu from "../../context_menus/DeviceContextMenu";
 import { MediaDeviceKindEnum } from "../../../../MediaDeviceHandler";

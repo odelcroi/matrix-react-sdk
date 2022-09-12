@@ -15,8 +15,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import dis from './dispatcher/dispatcher';
-import Timer from './utils/Timer';
+import dis from "./dispatcher/dispatcher";
+import Timer from "./utils/Timer";
 
 // important these are larger than the timeouts of timers
 // used with UserActivity.timeWhileActive*,
@@ -110,9 +110,9 @@ export default class UserActivity {
      * Start listening to user activity
      */
     public start() {
-        this.document.addEventListener('mousedown', this.onUserActivity);
-        this.document.addEventListener('mousemove', this.onUserActivity);
-        this.document.addEventListener('keydown', this.onUserActivity);
+        this.document.addEventListener("mousedown", this.onUserActivity);
+        this.document.addEventListener("mousemove", this.onUserActivity);
+        this.document.addEventListener("keydown", this.onUserActivity);
         this.document.addEventListener("visibilitychange", this.onPageVisibilityChanged);
         this.window.addEventListener("blur", this.onWindowBlurred);
         this.window.addEventListener("focus", this.onUserActivity);
@@ -120,7 +120,7 @@ export default class UserActivity {
         // itself being scrolled. Need to use addEventListener's useCapture.
         // also this needs to be the wheel event, not scroll, as scroll is
         // fired when the view scrolls down for a new message.
-        this.window.addEventListener('wheel', this.onUserActivity, {
+        this.window.addEventListener("wheel", this.onUserActivity, {
             passive: true,
             capture: true,
         });
@@ -130,10 +130,10 @@ export default class UserActivity {
      * Stop tracking user activity
      */
     public stop() {
-        this.document.removeEventListener('mousedown', this.onUserActivity);
-        this.document.removeEventListener('mousemove', this.onUserActivity);
-        this.document.removeEventListener('keydown', this.onUserActivity);
-        this.window.removeEventListener('wheel', this.onUserActivity, {
+        this.document.removeEventListener("mousedown", this.onUserActivity);
+        this.document.removeEventListener("mousemove", this.onUserActivity);
+        this.document.removeEventListener("keydown", this.onUserActivity);
+        this.window.removeEventListener("wheel", this.onUserActivity, {
             capture: true,
         });
         this.document.removeEventListener("visibilitychange", this.onPageVisibilityChanged);
@@ -191,10 +191,10 @@ export default class UserActivity {
             this.lastScreenY = event.screenY;
         }
 
-        dis.dispatch({ action: 'user_activity' });
+        dis.dispatch({ action: "user_activity" });
         if (!this.activeNowTimeout.isRunning()) {
             this.activeNowTimeout.start();
-            dis.dispatch({ action: 'user_activity_start' });
+            dis.dispatch({ action: "user_activity_start" });
 
             UserActivity.runTimersUntilTimeout(this.attachedActiveNowTimers, this.activeNowTimeout);
         } else {

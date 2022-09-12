@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useCallback, useEffect, useState } from 'react';
-import { BeaconEvent, Beacon } from 'matrix-js-sdk/src/matrix';
+import React, { useCallback, useEffect, useState } from "react";
+import { BeaconEvent, Beacon } from "matrix-js-sdk/src/matrix";
 
-import { formatDuration } from '../../../DateUtils';
-import { useEventEmitterState } from '../../../hooks/useEventEmitter';
-import { useInterval } from '../../../hooks/useTimeout';
-import { _t } from '../../../languageHandler';
-import { getBeaconMsUntilExpiry } from '../../../utils/beacon';
+import { formatDuration } from "../../../DateUtils";
+import { useEventEmitterState } from "../../../hooks/useEventEmitter";
+import { useInterval } from "../../../hooks/useTimeout";
+import { _t } from "../../../languageHandler";
+import { getBeaconMsUntilExpiry } from "../../../utils/beacon";
 
 const MINUTE_MS = 60000;
 const HOUR_MS = MINUTE_MS * 60;
@@ -64,7 +64,7 @@ const LiveTimeRemaining: React.FC<{ beacon: Beacon }> = ({ beacon }) => {
     const msRemaining = useMsRemaining(beacon);
 
     const timeRemaining = formatDuration(msRemaining);
-    const liveTimeRemaining = _t(`%(timeRemaining)s left`, { timeRemaining });
+    const liveTimeRemaining = _t("%(timeRemaining)s left", { timeRemaining });
 
     return <span
         data-test-id='room-live-share-expiry'

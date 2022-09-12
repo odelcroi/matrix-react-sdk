@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import ReactTestUtils from 'react-dom/test-utils';
-import { mocked } from 'jest-mock';
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+import ReactTestUtils from "react-dom/test-utils";
+import { mocked } from "jest-mock";
 import { createClient, MatrixClient } from "matrix-js-sdk/src/matrix";
 
-import SdkConfig from '../../../../src/SdkConfig';
+import SdkConfig from "../../../../src/SdkConfig";
 import { mkServerConfig } from "../../../test-utils";
 import Login from "../../../../src/components/structures/auth/Login";
 import PasswordLogin from "../../../../src/components/views/auth/PasswordLogin";
@@ -31,7 +31,7 @@ const flushPromises = async () => await new Promise(process.nextTick);
 
 jest.useRealTimers();
 
-describe('Login', function() {
+describe("Login", function() {
     let parentDiv;
     const mockClient = mocked({
         login: jest.fn().mockResolvedValue({}),
@@ -47,7 +47,7 @@ describe('Login', function() {
         mockClient.loginFlows.mockClear().mockResolvedValue({ flows: [{ type: "m.login.password" }] });
         mocked(createClient).mockReturnValue(mockClient);
 
-        parentDiv = document.createElement('div');
+        parentDiv = document.createElement("div");
         document.body.appendChild(parentDiv);
     });
 
@@ -66,7 +66,7 @@ describe('Login', function() {
         />, parentDiv) as unknown as Component<any, any, any>;
     }
 
-    it('should show form with change server link', async () => {
+    it("should show form with change server link", async () => {
         SdkConfig.put({
             brand: "test-brand",
             disable_custom_urls: false,
@@ -81,11 +81,11 @@ describe('Login', function() {
         );
         expect(form).toBeTruthy();
 
-        const changeServerLink = ReactTestUtils.findRenderedDOMComponentWithClass(root, 'mx_ServerPicker_change');
+        const changeServerLink = ReactTestUtils.findRenderedDOMComponentWithClass(root, "mx_ServerPicker_change");
         expect(changeServerLink).toBeTruthy();
     });
 
-    it('should show form without change server link when custom URLs disabled', async () => {
+    it("should show form without change server link when custom URLs disabled", async () => {
         const root = render();
         await flushPromises();
 
@@ -95,7 +95,7 @@ describe('Login', function() {
         );
         expect(form).toBeTruthy();
 
-        const changeServerLinks = ReactTestUtils.scryRenderedDOMComponentsWithClass(root, 'mx_ServerPicker_change');
+        const changeServerLinks = ReactTestUtils.scryRenderedDOMComponentsWithClass(root, "mx_ServerPicker_change");
         expect(changeServerLinks).toHaveLength(0);
     });
 

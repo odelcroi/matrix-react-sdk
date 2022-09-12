@@ -23,7 +23,7 @@ import SyntaxHighlight from "../views/elements/SyntaxHighlight";
 import { _t } from "../../languageHandler";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import { canEditContent } from "../../utils/EventUtils";
-import { MatrixClientPeg } from '../../MatrixClientPeg';
+import { MatrixClientPeg } from "../../MatrixClientPeg";
 import { IDialogProps } from "../views/dialogs/IDialogProps";
 import BaseDialog from "../views/dialogs/BaseDialog";
 import { DevtoolsContext } from "../views/dialogs/devtools/BaseTool";

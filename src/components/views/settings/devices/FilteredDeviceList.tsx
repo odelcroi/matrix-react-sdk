@@ -14,31 +14,31 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ForwardedRef, forwardRef } from 'react';
+import React, { ForwardedRef, forwardRef } from "react";
 
-import { _t } from '../../../../languageHandler';
-import AccessibleButton from '../../elements/AccessibleButton';
-import { FilterDropdown, FilterDropdownOption } from '../../elements/FilterDropdown';
-import DeviceDetails from './DeviceDetails';
-import DeviceExpandDetailsButton from './DeviceExpandDetailsButton';
-import DeviceSecurityCard from './DeviceSecurityCard';
-import DeviceTile from './DeviceTile';
+import { _t } from "../../../../languageHandler";
+import AccessibleButton from "../../elements/AccessibleButton";
+import { FilterDropdown, FilterDropdownOption } from "../../elements/FilterDropdown";
+import DeviceDetails from "./DeviceDetails";
+import DeviceExpandDetailsButton from "./DeviceExpandDetailsButton";
+import DeviceSecurityCard from "./DeviceSecurityCard";
+import DeviceTile from "./DeviceTile";
 import {
     filterDevicesBySecurityRecommendation,
     INACTIVE_DEVICE_AGE_DAYS,
-} from './filter';
+} from "./filter";
 import {
     DevicesDictionary,
     DeviceSecurityVariation,
     DeviceWithVerification,
-} from './types';
+} from "./types";
 
 interface Props {
     devices: DevicesDictionary;
-    expandedDeviceIds: DeviceWithVerification['device_id'][];
+    expandedDeviceIds: DeviceWithVerification["device_id"][];
     filter?: DeviceSecurityVariation;
     onFilterChange: (filter: DeviceSecurityVariation | undefined) => void;
-    onDeviceExpandToggle: (deviceId: DeviceWithVerification['device_id']) => void;
+    onDeviceExpandToggle: (deviceId: DeviceWithVerification["device_id"]) => void;
 }
 
 // devices without timestamp metadata should be sorted last
@@ -49,7 +49,7 @@ const getFilteredSortedDevices = (devices: DevicesDictionary, filter?: DeviceSec
     filterDevicesBySecurityRecommendation(Object.values(devices), filter ? [filter] : [])
         .sort(sortDevicesByLatestActivity);
 
-const ALL_FILTER_ID = 'ALL';
+const ALL_FILTER_ID = "ALL";
 type DeviceFilterKey = DeviceSecurityVariation | typeof ALL_FILTER_ID;
 
 const FilterSecurityCard: React.FC<{ filter?: DeviceFilterKey }> = ({ filter }) => {
@@ -58,10 +58,10 @@ const FilterSecurityCard: React.FC<{ filter?: DeviceFilterKey }> = ({ filter }) 
             return <div className='mx_FilteredDeviceList_securityCard'>
                 <DeviceSecurityCard
                     variation={DeviceSecurityVariation.Verified}
-                    heading={_t('Verified sessions')}
+                    heading={_t("Verified sessions")}
                     description={_t(
-                        `For best security, sign out from any session` +
-                    ` that you don't recognize or use anymore.`,
+                        "For best security, sign out from any session" +
+                    " that you don't recognize or use anymore.",
                     )}
                 />
             </div>
@@ -70,10 +70,10 @@ const FilterSecurityCard: React.FC<{ filter?: DeviceFilterKey }> = ({ filter }) 
             return <div className='mx_FilteredDeviceList_securityCard'>
                 <DeviceSecurityCard
                     variation={DeviceSecurityVariation.Unverified}
-                    heading={_t('Unverified sessions')}
+                    heading={_t("Unverified sessions")}
                     description={_t(
-                        `Verify your sessions for enhanced secure messaging or sign out`
-                    + ` from those you don't recognize or use anymore.`,
+                        "Verify your sessions for enhanced secure messaging or sign out"
+                    + " from those you don't recognize or use anymore.",
                     )}
                 />
             </div>
@@ -82,10 +82,10 @@ const FilterSecurityCard: React.FC<{ filter?: DeviceFilterKey }> = ({ filter }) 
             return <div className='mx_FilteredDeviceList_securityCard'>
                 <DeviceSecurityCard
                     variation={DeviceSecurityVariation.Inactive}
-                    heading={_t('Inactive sessions')}
+                    heading={_t("Inactive sessions")}
                     description={_t(
-                        `Consider signing out from old sessions ` +
-                    `(%(inactiveAgeDays)s days or older) you don't use anymore`,
+                        "Consider signing out from old sessions " +
+                    "(%(inactiveAgeDays)s days or older) you don't use anymore",
                         { inactiveAgeDays: INACTIVE_DEVICE_AGE_DAYS },
                     )}
                 />
@@ -99,13 +99,13 @@ const FilterSecurityCard: React.FC<{ filter?: DeviceFilterKey }> = ({ filter }) 
 const getNoResultsMessage = (filter?: DeviceSecurityVariation): string => {
     switch (filter) {
         case DeviceSecurityVariation.Verified:
-            return _t('No verified sessions found.');
+            return _t("No verified sessions found.");
         case DeviceSecurityVariation.Unverified:
-            return _t('No unverified sessions found.');
+            return _t("No unverified sessions found.");
         case DeviceSecurityVariation.Inactive:
-            return _t('No inactive sessions found.');
+            return _t("No inactive sessions found.");
         default:
-            return _t('No sessions found.');
+            return _t("No sessions found.");
     }
 };
 interface NoResultsProps { filter?: DeviceSecurityVariation, clearFilter: () => void}
@@ -122,7 +122,7 @@ const NoResults: React.FC<NoResultsProps> = ({ filter, clearFilter }) =>
                     onClick={clearFilter}
                     data-testid='devices-clear-filter-btn'
                 >
-                    { _t('Show all') }
+                    { _t("Show all") }
                 </AccessibleButton>
             </>
         }
@@ -161,22 +161,22 @@ export const FilteredDeviceList =
         const sortedDevices = getFilteredSortedDevices(devices, filter);
 
         const options: FilterDropdownOption<DeviceFilterKey>[] = [
-            { id: ALL_FILTER_ID, label: _t('All') },
+            { id: ALL_FILTER_ID, label: _t("All") },
             {
                 id: DeviceSecurityVariation.Verified,
-                label: _t('Verified'),
-                description: _t('Ready for secure messaging'),
+                label: _t("Verified"),
+                description: _t("Ready for secure messaging"),
             },
             {
                 id: DeviceSecurityVariation.Unverified,
-                label: _t('Unverified'),
-                description: _t('Not ready for secure messaging'),
+                label: _t("Unverified"),
+                description: _t("Not ready for secure messaging"),
             },
             {
                 id: DeviceSecurityVariation.Inactive,
-                label: _t('Inactive'),
+                label: _t("Inactive"),
                 description: _t(
-                    'Inactive for %(inactiveAgeDays)s days or longer',
+                    "Inactive for %(inactiveAgeDays)s days or longer",
                     { inactiveAgeDays: INACTIVE_DEVICE_AGE_DAYS },
                 ),
             },
@@ -189,15 +189,15 @@ export const FilteredDeviceList =
         return <div className='mx_FilteredDeviceList' ref={ref}>
             <div className='mx_FilteredDeviceList_header'>
                 <span className='mx_FilteredDeviceList_headerLabel'>
-                    { _t('Sessions') }
+                    { _t("Sessions") }
                 </span>
                 <FilterDropdown<DeviceFilterKey>
                     id='device-list-filter'
-                    label={_t('Filter devices')}
+                    label={_t("Filter devices")}
                     value={filter || ALL_FILTER_ID}
                     onOptionChange={onFilterOptionChange}
                     options={options}
-                    selectedLabel={_t('Show')}
+                    selectedLabel={_t("Show")}
                 />
             </div>
             { !!sortedDevices.length

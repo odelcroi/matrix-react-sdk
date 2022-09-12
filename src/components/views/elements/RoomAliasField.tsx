@@ -16,8 +16,8 @@ limitations under the License.
 
 import React, { createRef, KeyboardEventHandler } from "react";
 
-import { _t } from '../../../languageHandler';
-import withValidation from './Validation';
+import { _t } from "../../../languageHandler";
+import withValidation from "./Validation";
 import Field, { IValidateOpts } from "./Field";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 
@@ -114,7 +114,7 @@ export default class RoomAliasField extends React.PureComponent<IProps, IState> 
                         return true;
                     }
 
-                    if (value.split(':').length < 2) {
+                    if (value.split(":").length < 2) {
                         return false;
                     }
                     return true;
@@ -128,7 +128,7 @@ export default class RoomAliasField extends React.PureComponent<IProps, IState> 
                         return true;
                     }
 
-                    const split = value.split(':');
+                    const split = value.split(":");
                     if (split.length < 2) {
                         return true; // hasDomain check will fail here instead
                     }

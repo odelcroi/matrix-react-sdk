@@ -16,7 +16,7 @@ limitations under the License.
 
 import * as React from "react";
 
-import AutoHideScrollbar from './AutoHideScrollbar';
+import AutoHideScrollbar from "./AutoHideScrollbar";
 import { _t } from "../../languageHandler";
 import SdkConfig, { DEFAULTS } from "../../SdkConfig";
 
@@ -30,7 +30,7 @@ const LegacyGroupView: React.FC<IProps> = ({ groupId }) => {
     const learnMoreUrl = SdkConfig.get().spaces_learn_more_url ?? DEFAULTS.spaces_learn_more_url;
     return <AutoHideScrollbar className="mx_HomePage mx_HomePage_default">
         <div className="mx_HomePage_default_wrapper">
-            <h1 style={{ fontSize: '24px' }}>{ _t("That link is no longer supported") }</h1>
+            <h1 style={{ fontSize: "24px" }}>{ _t("That link is no longer supported") }</h1>
             <p>
                 { _t(
                     "You're trying to access a community link (%(groupId)s).<br/>" +

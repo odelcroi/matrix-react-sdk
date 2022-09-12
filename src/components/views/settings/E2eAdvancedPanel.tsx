@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
 import { _t } from "../../../languageHandler";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import SettingsStore from "../../../settings/SettingsStore";
-import SettingsFlag from '../elements/SettingsFlag';
+import SettingsFlag from "../elements/SettingsFlag";
 
 const SETTING_MANUALLY_VERIFY_ALL_SESSIONS = "e2ee.manuallyVerifyAllSessions";
 

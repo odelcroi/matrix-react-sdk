@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import filesize from 'filesize';
-import React from 'react';
+import filesize from "filesize";
+import React from "react";
 
-import { _t } from '../../../languageHandler';
-import ContentMessages from '../../../ContentMessages';
+import { _t } from "../../../languageHandler";
+import ContentMessages from "../../../ContentMessages";
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
 import { IDialogProps } from "./IDialogProps";
@@ -58,7 +58,7 @@ export default class UploadFailureDialog extends React.Component<IProps> {
                     b: sub => <b>{ sub }</b>,
                 },
             );
-            buttons = <DialogButtons primaryButton={_t('OK')}
+            buttons = <DialogButtons primaryButton={_t("OK")}
                 hasCancel={false}
                 onPrimaryButtonClick={this.onCancelClick}
                 focus={true}
@@ -73,7 +73,7 @@ export default class UploadFailureDialog extends React.Component<IProps> {
                     b: sub => <b>{ sub }</b>,
                 },
             );
-            buttons = <DialogButtons primaryButton={_t('OK')}
+            buttons = <DialogButtons primaryButton={_t("OK")}
                 hasCancel={false}
                 onPrimaryButtonClick={this.onCancelClick}
                 focus={true}
@@ -90,7 +90,7 @@ export default class UploadFailureDialog extends React.Component<IProps> {
             );
             const howManyOthers = this.props.totalFiles - this.props.badFiles.length;
             buttons = <DialogButtons
-                primaryButton={_t('Upload %(count)s other files', { count: howManyOthers })}
+                primaryButton={_t("Upload %(count)s other files", { count: howManyOthers })}
                 onPrimaryButtonClick={this.onUploadClick}
                 hasCancel={true}
                 cancelButton={_t("Cancel All")}

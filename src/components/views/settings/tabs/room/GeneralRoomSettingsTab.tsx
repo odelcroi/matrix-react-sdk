@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ContextType } from 'react';
+import React, { ContextType } from "react";
 
 import { _t } from "../../../../../languageHandler";
 import RoomProfileSettings from "../../../room_settings/RoomProfileSettings";
@@ -49,7 +49,7 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
 
     private onLeaveClick = (ev: ButtonEvent): void => {
         dis.dispatch({
-            action: 'leave_room',
+            action: "leave_room",
             room_id: this.props.roomId,
         });
 
@@ -62,7 +62,7 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
 
         const canSetAliases = true; // Previously, we arbitrarily only allowed admins to do this
         const canSetCanonical = room.currentState.mayClientSendStateEvent("m.room.canonical_alias", client);
-        const canonicalAliasEv = room.currentState.getStateEvents("m.room.canonical_alias", '');
+        const canonicalAliasEv = room.currentState.getStateEvents("m.room.canonical_alias", "");
 
         const urlPreviewSettings = SettingsStore.getValue(UIFeature.URLPreviews) ?
             <UrlPreviewSettings room={room} /> :
@@ -74,7 +74,7 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
                 <span className='mx_SettingsTab_subheading'>{ _t("Leave room") }</span>
                 <div className='mx_SettingsTab_section'>
                     <AccessibleButton kind='danger' onClick={this.onLeaveClick}>
-                        { _t('Leave room') }
+                        { _t("Leave room") }
                     </AccessibleButton>
                 </div>
             </>;

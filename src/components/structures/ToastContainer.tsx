@@ -36,11 +36,11 @@ export default class ToastContainer extends React.Component<{}, IState> {
         // toasts may dismiss themselves in their didMount if they find
         // they're already irrelevant by the time they're mounted, and
         // our own componentDidMount is too late.
-        ToastStore.sharedInstance().on('update', this.onToastStoreUpdate);
+        ToastStore.sharedInstance().on("update", this.onToastStoreUpdate);
     }
 
     componentWillUnmount() {
-        ToastStore.sharedInstance().removeListener('update', this.onToastStoreUpdate);
+        ToastStore.sharedInstance().removeListener("update", this.onToastStoreUpdate);
     }
 
     private onToastStoreUpdate = () => {

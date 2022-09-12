@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { MatrixClient } from 'matrix-js-sdk/src/matrix';
-import { logger } from 'matrix-js-sdk/src/logger';
+import React from "react";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
+import { logger } from "matrix-js-sdk/src/logger";
 
-import { _t } from '../../../languageHandler';
+import { _t } from "../../../languageHandler";
 import { IDialogProps } from "./IDialogProps";
 import SettingsStore from "../../../settings/SettingsStore";
 import TextInputDialog from "./TextInputDialog";
@@ -114,7 +114,7 @@ export const SlidingSyncOptionsDialog: React.FC<IDialogProps> = ({ onFinished })
             <div><b>{ _t("To disable you will need to log out and back in, use with caution!") }</b></div>
             { nativeSupport }
         </div>}
-        placeholder={hasNativeSupport ? _t('Proxy URL (optional)') : _t('Proxy URL')}
+        placeholder={hasNativeSupport ? _t("Proxy URL (optional)") : _t("Proxy URL")}
         value={currentProxy}
         button={_t("Enable")}
         validator={validProxy}

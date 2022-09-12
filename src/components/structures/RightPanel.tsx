@@ -15,15 +15,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomState, RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { throttle } from 'lodash';
+import { throttle } from "lodash";
 
-import dis from '../../dispatcher/dispatcher';
-import { RightPanelPhases } from '../../stores/right-panel/RightPanelStorePhases';
+import dis from "../../dispatcher/dispatcher";
+import { RightPanelPhases } from "../../stores/right-panel/RightPanelStorePhases";
 import RightPanelStore from "../../stores/right-panel/RightPanelStore";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import RoomSummaryCard from "../views/right_panel/RoomSummaryCard";
@@ -38,12 +38,12 @@ import ThreadPanel from "./ThreadPanel";
 import NotificationPanel from "./NotificationPanel";
 import ResizeNotifier from "../../utils/ResizeNotifier";
 import PinnedMessagesCard from "../views/right_panel/PinnedMessagesCard";
-import { RoomPermalinkCreator } from '../../utils/permalinks/Permalinks';
-import { E2EStatus } from '../../utils/ShieldUtils';
-import TimelineCard from '../views/right_panel/TimelineCard';
-import { UPDATE_EVENT } from '../../stores/AsyncStore';
-import { IRightPanelCard, IRightPanelCardState } from '../../stores/right-panel/RightPanelStoreIPanelState';
-import { Action } from '../../dispatcher/actions';
+import { RoomPermalinkCreator } from "../../utils/permalinks/Permalinks";
+import { E2EStatus } from "../../utils/ShieldUtils";
+import TimelineCard from "../views/right_panel/TimelineCard";
+import { UPDATE_EVENT } from "../../stores/AsyncStore";
+import { IRightPanelCard, IRightPanelCardState } from "../../stores/right-panel/RightPanelStoreIPanelState";
+import { Action } from "../../dispatcher/actions";
 
 interface IProps {
     room?: Room; // if showing panels for a given room, this is set

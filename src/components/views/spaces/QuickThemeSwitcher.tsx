@@ -31,7 +31,7 @@ type Props = {
     requestClose: () => void;
 };
 
-const MATCH_SYSTEM_THEME_ID = 'MATCH_SYSTEM_THEME_ID';
+const MATCH_SYSTEM_THEME_ID = "MATCH_SYSTEM_THEME_ID";
 
 const QuickThemeSwitcher: React.FC<Props> = ({ requestClose }) => {
     const orderedThemes = useMemo(getOrderedThemes, []);

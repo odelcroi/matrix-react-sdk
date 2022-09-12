@@ -24,9 +24,9 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import dis from "../../dispatcher/dispatcher";
 import Modal from "../../Modal";
-import { _t } from '../../languageHandler';
-import SdkConfig from '../../SdkConfig';
-import { instanceForInstanceId, protocolNameForInstanceId, ALL_ROOMS, Protocols } from '../../utils/DirectoryUtils';
+import { _t } from "../../languageHandler";
+import SdkConfig from "../../SdkConfig";
+import { instanceForInstanceId, protocolNameForInstanceId, ALL_ROOMS, Protocols } from "../../utils/DirectoryUtils";
 import SettingsStore from "../../settings/SettingsStore";
 import { IDialogProps } from "../views/dialogs/IDialogProps";
 import { IPublicRoomDirectoryConfig, NetworkDropdown } from "../views/directory/NetworkDropdown";
@@ -118,8 +118,8 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
                 const brand = SdkConfig.get().brand;
                 this.setState({
                     error: _t(
-                        '%(brand)s failed to get the protocol list from the homeserver. ' +
-                        'The homeserver may be too old to support third party networks.',
+                        "%(brand)s failed to get the protocol list from the homeserver. " +
+                        "The homeserver may be too old to support third party networks.",
                         { brand },
                     ),
                 });
@@ -230,8 +230,8 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
             this.setState({
                 loading: false,
                 error: (
-                    _t('%(brand)s failed to get the public room list.', { brand }) +
-                    (err && err.message) ? err.message : _t('The homeserver may be unavailable or overloaded.')
+                    _t("%(brand)s failed to get the public room list.", { brand }) +
+                    (err && err.message) ? err.message : _t("The homeserver may be unavailable or overloaded.")
                 ),
             });
             return false;
@@ -247,27 +247,27 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
      */
     private removeFromDirectory = (room: IPublicRoomsChunkRoom) => {
         const alias = getDisplayAliasForRoom(room);
-        const name = room.name || alias || _t('Unnamed room');
+        const name = room.name || alias || _t("Unnamed room");
 
         let desc;
         if (alias) {
-            desc = _t('Delete the room address %(alias)s and remove %(name)s from the directory?', { alias, name });
+            desc = _t("Delete the room address %(alias)s and remove %(name)s from the directory?", { alias, name });
         } else {
-            desc = _t('Remove %(name)s from the directory?', { name: name });
+            desc = _t("Remove %(name)s from the directory?", { name: name });
         }
 
         Modal.createDialog(QuestionDialog, {
-            title: _t('Remove from Directory'),
+            title: _t("Remove from Directory"),
             description: desc,
             onFinished: (shouldDelete: boolean) => {
                 if (!shouldDelete) return;
 
                 const modal = Modal.createDialog(Spinner);
-                let step = _t('remove %(name)s from the directory.', { name: name });
+                let step = _t("remove %(name)s from the directory.", { name: name });
 
                 MatrixClientPeg.get().setRoomDirectoryVisibility(room.room_id, Visibility.Private).then(() => {
                     if (!alias) return;
-                    step = _t('delete the address.');
+                    step = _t("delete the address.");
                     return MatrixClientPeg.get().deleteAlias(alias);
                 }).then(() => {
                     modal.close();
@@ -277,10 +277,10 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
                     this.refreshRoomList();
                     logger.error("Failed to " + step + ": " + err);
                     Modal.createDialog(ErrorDialog, {
-                        title: _t('Error'),
+                        title: _t("Error"),
                         description: (err && err.message)
                             ? err.message
-                            : _t('The server may be unavailable or overloaded'),
+                            : _t("The server may be unavailable or overloaded"),
                     });
                 });
             },
@@ -373,7 +373,7 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
     private onCreateRoomClick = (ev: ButtonEvent) => {
         this.onFinished();
         dis.dispatch({
-            action: 'view_create_room',
+            action: "view_create_room",
             public: true,
             defaultName: this.state.filterString.trim(),
         });
@@ -485,7 +485,7 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
                 instanceExpectedFieldType = this.protocols[protocolName].field_types[lastField];
             }
 
-            let placeholder = _t('Find a room…');
+            let placeholder = _t("Find a room…");
             if (!this.state.serverConfig?.instanceId || this.state.serverConfig?.instanceId === ALL_ROOMS) {
                 placeholder = _t("Find a room… (e.g. %(exampleRoom)s)", {
                     exampleRoom: "#example:" + this.state.serverConfig?.roomServer,

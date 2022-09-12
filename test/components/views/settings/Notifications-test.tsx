@@ -12,17 +12,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 // eslint-disable-next-line deprecate/import
-import { mount, ReactWrapper } from 'enzyme';
-import { IPushRule, IPushRules, RuleId, IPusher } from 'matrix-js-sdk/src/matrix';
-import { IThreepid, ThreepidMedium } from 'matrix-js-sdk/src/@types/threepids';
-import { act } from 'react-dom/test-utils';
+import { mount, ReactWrapper } from "enzyme";
+import { IPushRule, IPushRules, RuleId, IPusher } from "matrix-js-sdk/src/matrix";
+import { IThreepid, ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
+import { act } from "react-dom/test-utils";
 
-import Notifications from '../../../../src/components/views/settings/Notifications';
+import Notifications from "../../../../src/components/views/settings/Notifications";
 import SettingsStore from "../../../../src/settings/SettingsStore";
-import { StandardActions } from '../../../../src/notifications/StandardActions';
-import { getMockClientWithEventEmitter } from '../../../test-utils';
+import { StandardActions } from "../../../../src/notifications/StandardActions";
+import { getMockClientWithEventEmitter } from "../../../test-utils";
 
 // don't pollute test output with error logs from mock rejections
 jest.mock("matrix-js-sdk/src/logger");
@@ -48,7 +48,7 @@ const pushRules: IPushRules = { "global": { "underride": [{ "conditions": [{ "ki
 
 const flushPromises = async () => await new Promise(resolve => setTimeout(resolve));
 
-describe('<Notifications />', () => {
+describe("<Notifications />", () => {
     const getComponent = () => mount(<Notifications />);
 
     // get component, wait for async data and force a render
@@ -79,29 +79,29 @@ describe('<Notifications />', () => {
         mockClient.setPusher.mockClear().mockResolvedValue({});
     });
 
-    it('renders spinner while loading', () => {
+    it("renders spinner while loading", () => {
         const component = getComponent();
-        expect(component.find('.mx_Spinner').length).toBeTruthy();
+        expect(component.find(".mx_Spinner").length).toBeTruthy();
     });
 
-    it('renders error message when fetching push rules fails', async () => {
+    it("renders error message when fetching push rules fails", async () => {
         mockClient.getPushRules.mockRejectedValue({});
         const component = await getComponentAndWait();
-        expect(findByTestId(component, 'error-message').length).toBeTruthy();
+        expect(findByTestId(component, "error-message").length).toBeTruthy();
     });
-    it('renders error message when fetching pushers fails', async () => {
+    it("renders error message when fetching pushers fails", async () => {
         mockClient.getPushers.mockRejectedValue({});
         const component = await getComponentAndWait();
-        expect(findByTestId(component, 'error-message').length).toBeTruthy();
+        expect(findByTestId(component, "error-message").length).toBeTruthy();
     });
-    it('renders error message when fetching threepids fails', async () => {
+    it("renders error message when fetching threepids fails", async () => {
         mockClient.getThreePids.mockRejectedValue({});
         const component = await getComponentAndWait();
-        expect(findByTestId(component, 'error-message').length).toBeTruthy();
+        expect(findByTestId(component, "error-message").length).toBeTruthy();
     });
 
-    describe('main notification switches', () => {
-        it('renders only enable notifications switch when notifications are disabled', async () => {
+    describe("main notification switches", () => {
+        it("renders only enable notifications switch when notifications are disabled", async () => {
             const disableNotificationsPushRules = {
                 global: {
                     ...pushRules.global,
@@ -113,17 +113,17 @@ describe('<Notifications />', () => {
 
             expect(component).toMatchSnapshot();
         });
-        it('renders switches correctly', async () => {
+        it("renders switches correctly", async () => {
             const component = await getComponentAndWait();
 
-            expect(findByTestId(component, 'notif-master-switch').length).toBeTruthy();
-            expect(findByTestId(component, 'notif-setting-notificationsEnabled').length).toBeTruthy();
-            expect(findByTestId(component, 'notif-setting-notificationBodyEnabled').length).toBeTruthy();
-            expect(findByTestId(component, 'notif-setting-audioNotificationsEnabled').length).toBeTruthy();
+            expect(findByTestId(component, "notif-master-switch").length).toBeTruthy();
+            expect(findByTestId(component, "notif-setting-notificationsEnabled").length).toBeTruthy();
+            expect(findByTestId(component, "notif-setting-notificationBodyEnabled").length).toBeTruthy();
+            expect(findByTestId(component, "notif-setting-audioNotificationsEnabled").length).toBeTruthy();
         });
 
-        describe('email switches', () => {
-            const testEmail = 'tester@test.com';
+        describe("email switches", () => {
+            const testEmail = "tester@test.com";
             beforeEach(() => {
                 mockClient.getThreePids.mockResolvedValue({
                     threepids: [
@@ -136,31 +136,31 @@ describe('<Notifications />', () => {
                 });
             });
 
-            it('renders email switches correctly when email 3pids exist', async () => {
+            it("renders email switches correctly when email 3pids exist", async () => {
                 const component = await getComponentAndWait();
 
-                expect(findByTestId(component, 'notif-email-switch')).toMatchSnapshot();
+                expect(findByTestId(component, "notif-email-switch")).toMatchSnapshot();
             });
 
-            it('renders email switches correctly when notifications are on for email', async () => {
+            it("renders email switches correctly when notifications are on for email", async () => {
                 mockClient.getPushers.mockResolvedValue({
                     pushers: [
-                        { kind: 'email', pushkey: testEmail } as unknown as IPusher,
+                        { kind: "email", pushkey: testEmail } as unknown as IPusher,
                     ],
                 });
                 const component = await getComponentAndWait();
 
-                expect(findByTestId(component, 'notif-email-switch').props().value).toEqual(true);
+                expect(findByTestId(component, "notif-email-switch").props().value).toEqual(true);
             });
 
-            it('enables email notification when toggling on', async () => {
+            it("enables email notification when toggling on", async () => {
                 const component = await getComponentAndWait();
 
-                const emailToggle = findByTestId(component, 'notif-email-switch')
+                const emailToggle = findByTestId(component, "notif-email-switch")
                     .find('div[role="switch"]');
 
                 await act(async () => {
-                    emailToggle.simulate('click');
+                    emailToggle.simulate("click");
                 });
 
                 expect(mockClient.setPusher).toHaveBeenCalledWith(expect.objectContaining({
@@ -173,34 +173,34 @@ describe('<Notifications />', () => {
                 }));
             });
 
-            it('displays error when pusher update fails', async () => {
+            it("displays error when pusher update fails", async () => {
                 mockClient.setPusher.mockRejectedValue({});
                 const component = await getComponentAndWait();
 
-                const emailToggle = findByTestId(component, 'notif-email-switch')
+                const emailToggle = findByTestId(component, "notif-email-switch")
                     .find('div[role="switch"]');
 
                 await act(async () => {
-                    emailToggle.simulate('click');
+                    emailToggle.simulate("click");
                 });
 
                 // force render
                 await flushPromises();
                 await component.setProps({});
 
-                expect(findByTestId(component, 'error-message').length).toBeTruthy();
+                expect(findByTestId(component, "error-message").length).toBeTruthy();
             });
 
-            it('enables email notification when toggling off', async () => {
-                const testPusher = { kind: 'email', pushkey: 'tester@test.com' } as unknown as IPusher;
+            it("enables email notification when toggling off", async () => {
+                const testPusher = { kind: "email", pushkey: "tester@test.com" } as unknown as IPusher;
                 mockClient.getPushers.mockResolvedValue({ pushers: [testPusher] });
                 const component = await getComponentAndWait();
 
-                const emailToggle = findByTestId(component, 'notif-email-switch')
+                const emailToggle = findByTestId(component, "notif-email-switch")
                     .find('div[role="switch"]');
 
                 await act(async () => {
-                    emailToggle.simulate('click');
+                    emailToggle.simulate("click");
                 });
 
                 expect(mockClient.setPusher).toHaveBeenCalledWith({
@@ -209,12 +209,12 @@ describe('<Notifications />', () => {
             });
         });
 
-        it('toggles and sets settings correctly', async () => {
+        it("toggles and sets settings correctly", async () => {
             const component = await getComponentAndWait();
             let audioNotifsToggle: ReactWrapper;
 
             const update = () => {
-                audioNotifsToggle = findByTestId(component, 'notif-setting-audioNotificationsEnabled')
+                audioNotifsToggle = findByTestId(component, "notif-setting-audioNotificationsEnabled")
                     .find('div[role="switch"]');
             };
             update();
@@ -222,7 +222,7 @@ describe('<Notifications />', () => {
             expect(audioNotifsToggle.getDOMNode<HTMLElement>().getAttribute("aria-checked")).toEqual("true");
             expect(SettingsStore.getValue("audioNotificationsEnabled")).toEqual(true);
 
-            act(() => { audioNotifsToggle.simulate('click'); });
+            act(() => { audioNotifsToggle.simulate("click"); });
             update();
 
             expect(audioNotifsToggle.getDOMNode<HTMLElement>().getAttribute("aria-checked")).toEqual("false");
@@ -230,38 +230,38 @@ describe('<Notifications />', () => {
         });
     });
 
-    describe('individual notification level settings', () => {
+    describe("individual notification level settings", () => {
         const getCheckedRadioForRule = (ruleEl) =>
-            ruleEl.find('input[type="radio"][checked=true]').props()['aria-label'];
-        it('renders categories correctly', async () => {
+            ruleEl.find('input[type="radio"][checked=true]').props()["aria-label"];
+        it("renders categories correctly", async () => {
             const component = await getComponentAndWait();
 
-            expect(findByTestId(component, 'notif-section-vector_global').length).toBeTruthy();
-            expect(findByTestId(component, 'notif-section-vector_mentions').length).toBeTruthy();
-            expect(findByTestId(component, 'notif-section-vector_other').length).toBeTruthy();
+            expect(findByTestId(component, "notif-section-vector_global").length).toBeTruthy();
+            expect(findByTestId(component, "notif-section-vector_mentions").length).toBeTruthy();
+            expect(findByTestId(component, "notif-section-vector_other").length).toBeTruthy();
         });
 
-        it('renders radios correctly', async () => {
+        it("renders radios correctly", async () => {
             const component = await getComponentAndWait();
-            const section = 'vector_global';
+            const section = "vector_global";
 
             const globalSection = findByTestId(component, `notif-section-${section}`);
             // 4 notification rules with class 'global'
-            expect(globalSection.find('fieldset').length).toEqual(4);
+            expect(globalSection.find("fieldset").length).toEqual(4);
             // oneToOneRule is set to 'on'
             const oneToOneRuleElement = findByTestId(component, section + oneToOneRule.rule_id);
-            expect(getCheckedRadioForRule(oneToOneRuleElement)).toEqual('On');
+            expect(getCheckedRadioForRule(oneToOneRuleElement)).toEqual("On");
             // encryptedOneToOneRule is set to 'loud'
             const encryptedOneToOneElement = findByTestId(component, section + encryptedOneToOneRule.rule_id);
-            expect(getCheckedRadioForRule(encryptedOneToOneElement)).toEqual('Noisy');
+            expect(getCheckedRadioForRule(encryptedOneToOneElement)).toEqual("Noisy");
             // encryptedGroupRule is set to 'off'
             const encryptedGroupElement = findByTestId(component, section + encryptedGroupRule.rule_id);
-            expect(getCheckedRadioForRule(encryptedGroupElement)).toEqual('Off');
+            expect(getCheckedRadioForRule(encryptedGroupElement)).toEqual("Off");
         });
 
-        it('updates notification level when changed', async () => {
+        it("updates notification level when changed", async () => {
             const component = await getComponentAndWait();
-            const section = 'vector_global';
+            const section = "vector_global";
 
             // oneToOneRule is set to 'on'
             // and is kind: 'underride'
@@ -270,15 +270,15 @@ describe('<Notifications />', () => {
             await act(async () => {
                 // toggle at 0 is 'off'
                 const offToggle = oneToOneRuleElement.find('input[type="radio"]').at(0);
-                offToggle.simulate('change');
+                offToggle.simulate("change");
             });
 
             expect(mockClient.setPushRuleEnabled).toHaveBeenCalledWith(
-                'global', 'underride', oneToOneRule.rule_id, true);
+                "global", "underride", oneToOneRule.rule_id, true);
 
             // actions for '.m.rule.room_one_to_one' state is ACTION_DONT_NOTIFY
             expect(mockClient.setPushRuleActions).toHaveBeenCalledWith(
-                'global', 'underride', oneToOneRule.rule_id, StandardActions.ACTION_DONT_NOTIFY);
+                "global", "underride", oneToOneRule.rule_id, StandardActions.ACTION_DONT_NOTIFY);
         });
     });
 });

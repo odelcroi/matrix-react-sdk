@@ -16,15 +16,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import request from 'browser-request';
-import sanitizeHtml from 'sanitize-html';
-import classnames from 'classnames';
+import React from "react";
+import request from "browser-request";
+import sanitizeHtml from "sanitize-html";
+import classnames from "classnames";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { _t } from '../../languageHandler';
-import dis from '../../dispatcher/dispatcher';
-import { MatrixClientPeg } from '../../MatrixClientPeg';
+import { _t } from "../../languageHandler";
+import dis from "../../dispatcher/dispatcher";
+import { MatrixClientPeg } from "../../MatrixClientPeg";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import AutoHideScrollbar from "./AutoHideScrollbar";
 import { ActionPayload } from "../../dispatcher/payloads";
@@ -53,7 +53,7 @@ export default class EmbeddedPage extends React.PureComponent<IProps, IState> {
         super(props, context);
 
         this.state = {
-            page: '',
+            page: "",
         };
     }
 
@@ -107,7 +107,7 @@ export default class EmbeddedPage extends React.PureComponent<IProps, IState> {
 
     private onAction = (payload: ActionPayload): void => {
         // HACK: Workaround for the context's MatrixClient not being set up at render time.
-        if (payload.action === 'client_started') {
+        if (payload.action === "client_started") {
             this.forceUpdate();
         }
     };

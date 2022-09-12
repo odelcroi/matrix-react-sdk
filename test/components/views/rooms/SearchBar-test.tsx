@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 // eslint-disable-next-line deprecate/import
 import { mount } from "enzyme";
 
@@ -41,7 +41,7 @@ jest.mock("../../../../src/KeyBindingsManager", () => ({
 }));
 
 /** mock out SearchWarning component so it doesn't affect the result of our test */
-jest.mock('../../../../src/components/views/elements/SearchWarning', () => ({
+jest.mock("../../../../src/components/views/elements/SearchWarning", () => ({
     __esModule: true,
     WarningKind: {
         get Search() { // eslint-disable-line @typescript-eslint/naming-convention
@@ -54,7 +54,7 @@ jest.mock('../../../../src/components/views/elements/SearchWarning', () => ({
 }));
 
 /** mock out PosthogTrackers component so it doesn't affect the result of our test */
-jest.mock('../../../../src/PosthogTrackers', () => ({
+jest.mock("../../../../src/PosthogTrackers", () => ({
     __esModule: true,
     PosthogScreenTracker: jest.fn(({ children }) => (
         <div>{ children }</div>

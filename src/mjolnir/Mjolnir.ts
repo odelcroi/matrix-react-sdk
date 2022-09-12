@@ -53,12 +53,12 @@ export class Mjolnir {
         this.dispatcherRef = dis.register(this.onAction);
         dis.dispatch<DoAfterSyncPreparedPayload<ActionPayload>>({
             action: Action.DoAfterSyncPrepared,
-            deferred_action: { action: 'setup_mjolnir' },
+            deferred_action: { action: "setup_mjolnir" },
         });
     }
 
     private onAction = (payload: ActionPayload) => {
-        if (payload['action'] === 'setup_mjolnir') {
+        if (payload["action"] === "setup_mjolnir") {
             logger.log("Setting up Mjolnir: after sync");
             this.setup();
         }
@@ -93,7 +93,7 @@ export class Mjolnir {
                 topic: _t("This is your list of users/servers you have blocked - don't leave the room!"),
                 preset: Preset.PrivateChat,
             });
-            personalRoomId = resp['room_id'];
+            personalRoomId = resp["room_id"];
             await SettingsStore.setValue(
                 "mjolnirPersonalRoom", null, SettingLevel.ACCOUNT, personalRoomId);
             await SettingsStore.setValue(

@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactNode } from 'react';
-import { EventType } from 'matrix-js-sdk/src/@types/event';
-import { JoinRule } from 'matrix-js-sdk/src/@types/partials';
+import React, { ReactNode } from "react";
+import { EventType } from "matrix-js-sdk/src/@types/event";
+import { JoinRule } from "matrix-js-sdk/src/@types/partials";
 
 import { _t } from "../../../languageHandler";
 import SdkConfig from "../../../SdkConfig";
@@ -24,11 +24,11 @@ import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import Modal from "../../../Modal";
 import { IDialogProps } from "./IDialogProps";
-import BugReportDialog from './BugReportDialog';
+import BugReportDialog from "./BugReportDialog";
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
 import ProgressBar from "../elements/ProgressBar";
-import AccessibleButton from '../elements/AccessibleButton';
+import AccessibleButton from "../elements/AccessibleButton";
 
 export interface IFinishedOpts {
     continue: boolean;
@@ -58,7 +58,7 @@ export default class RoomUpgradeWarningDialog extends React.Component<IProps, IS
 
         const room = MatrixClientPeg.get().getRoom(this.props.roomId);
         const joinRules = room?.currentState.getStateEvents(EventType.RoomJoinRules, "");
-        this.isPrivate = joinRules?.getContent()['join_rule'] !== JoinRule.Public ?? true;
+        this.isPrivate = joinRules?.getContent()["join_rule"] !== JoinRule.Public ?? true;
         this.currentVersion = room?.getVersion();
 
         this.state = {

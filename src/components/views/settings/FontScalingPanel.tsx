@@ -14,17 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent } from "react";
 
-import EventTilePreview from '../elements/EventTilePreview';
-import Field from '../elements/Field';
-import SettingsFlag from '../elements/SettingsFlag';
+import EventTilePreview from "../elements/EventTilePreview";
+import Field from "../elements/Field";
+import SettingsFlag from "../elements/SettingsFlag";
 import SettingsStore from "../../../settings/SettingsStore";
 import Slider from "../elements/Slider";
 import { FontWatcher } from "../../../settings/watchers/FontWatcher";
-import { IValidationResult, IFieldState } from '../elements/Validation';
+import { IValidationResult, IFieldState } from "../elements/Validation";
 import { Layout } from "../../../settings/enums/Layout";
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import { _t } from "../../../languageHandler";
 
@@ -97,7 +97,7 @@ export default class FontScalingPanel extends React.Component<IProps, IState> {
         if (!(min <= parsedSize && parsedSize <= max)) {
             return {
                 valid: false,
-                feedback: _t('Custom font size can only be between %(min)s pt and %(max)s pt', { min, max }),
+                feedback: _t("Custom font size can only be between %(min)s pt and %(max)s pt", { min, max }),
             };
         }
 
@@ -108,7 +108,7 @@ export default class FontScalingPanel extends React.Component<IProps, IState> {
             parseInt(value, 10) - FontWatcher.SIZE_DIFF,
         );
 
-        return { valid: true, feedback: _t('Use between %(min)s pt and %(max)s pt', { min, max }) };
+        return { valid: true, feedback: _t("Use between %(min)s pt and %(max)s pt", { min, max }) };
     };
 
     public render() {

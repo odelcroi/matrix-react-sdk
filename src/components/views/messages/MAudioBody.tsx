@@ -18,7 +18,7 @@ import React from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { Playback } from "../../../audio/Playback";
-import InlineSpinner from '../elements/InlineSpinner';
+import InlineSpinner from "../elements/InlineSpinner";
 import { _t } from "../../../languageHandler";
 import AudioPlayer from "../audio_messages/AudioPlayer";
 import { IMediaEventContent } from "../../../customisations/models/IMediaEventContent";

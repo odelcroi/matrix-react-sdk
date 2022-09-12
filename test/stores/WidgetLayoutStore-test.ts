@@ -41,7 +41,7 @@ const mockApps = [
 ];
 
 // fake the WidgetStore.instance to just return an object with `getApps`
-jest.spyOn(WidgetStore, 'instance', 'get').mockReturnValue(<WidgetStore>{ getApps: (_room) => mockApps });
+jest.spyOn(WidgetStore, "instance", "get").mockReturnValue(<WidgetStore>{ getApps: (_room) => mockApps });
 
 describe("WidgetLayoutStore", () => {
     // we need to init a client so it does not error, when asking for DeviceStorage handlers (SettingsStore.setValue("Widgets.layout"))

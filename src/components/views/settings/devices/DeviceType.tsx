@@ -14,22 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import classNames from 'classnames';
+import React from "react";
+import classNames from "classnames";
 
-import { Icon as UnknownDeviceIcon } from '../../../../../res/img/element-icons/settings/unknown-device.svg';
-import { Icon as VerifiedIcon } from '../../../../../res/img/e2e/verified.svg';
-import { Icon as UnverifiedIcon } from '../../../../../res/img/e2e/warning.svg';
-import { _t } from '../../../../languageHandler';
-import { DeviceWithVerification } from './types';
+import { Icon as UnknownDeviceIcon } from "../../../../../res/img/element-icons/settings/unknown-device.svg";
+import { Icon as VerifiedIcon } from "../../../../../res/img/e2e/verified.svg";
+import { Icon as UnverifiedIcon } from "../../../../../res/img/e2e/warning.svg";
+import { _t } from "../../../../languageHandler";
+import { DeviceWithVerification } from "./types";
 
 interface Props {
-    isVerified?: DeviceWithVerification['isVerified'];
+    isVerified?: DeviceWithVerification["isVerified"];
     isSelected?: boolean;
 }
 
 export const DeviceType: React.FC<Props> = ({ isVerified, isSelected }) => (
-    <div className={classNames('mx_DeviceType', {
+    <div className={classNames("mx_DeviceType", {
         mx_DeviceType_selected: isSelected,
     })}
     >
@@ -37,19 +37,19 @@ export const DeviceType: React.FC<Props> = ({ isVerified, isSelected }) => (
         <UnknownDeviceIcon
             className='mx_DeviceType_deviceIcon'
             role='img'
-            aria-label={_t('Unknown device type')}
+            aria-label={_t("Unknown device type")}
         />
         {
             isVerified
                 ? <VerifiedIcon
-                    className={classNames('mx_DeviceType_verificationIcon', 'verified')}
+                    className={classNames("mx_DeviceType_verificationIcon", "verified")}
                     role='img'
-                    aria-label={_t('Verified')}
+                    aria-label={_t("Verified")}
                 />
                 : <UnverifiedIcon
-                    className={classNames('mx_DeviceType_verificationIcon', 'unverified')}
+                    className={classNames("mx_DeviceType_verificationIcon", "unverified")}
                     role='img'
-                    aria-label={_t('Unverified')}
+                    aria-label={_t("Unverified")}
                 />
         }
     </div>);

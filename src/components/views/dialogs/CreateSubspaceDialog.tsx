@@ -19,7 +19,7 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import { JoinRule } from "matrix-js-sdk/src/@types/partials";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { _t } from '../../../languageHandler';
+import { _t } from "../../../languageHandler";
 import BaseDialog from "./BaseDialog";
 import AccessibleButton from "../elements/AccessibleButton";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";

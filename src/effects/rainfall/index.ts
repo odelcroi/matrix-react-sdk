@@ -14,7 +14,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-import ICanvasEffect from '../ICanvasEffect';
+import ICanvasEffect from "../ICanvasEffect";
 import { arrayFastClone } from "../../utils/arrays";
 
 export type RainfallOptions = {
@@ -60,7 +60,7 @@ export default class Rainfall implements ICanvasEffect {
         if (!canvas) {
             return;
         }
-        this.context = canvas.getContext('2d');
+        this.context = canvas.getContext("2d");
         this.particles = [];
         const count = this.options.maxCount;
         while (this.particles.length < count) {
@@ -115,7 +115,7 @@ export default class Rainfall implements ICanvasEffect {
             this.context.save();
             this.context.beginPath();
             this.context.rect(particle.x, particle.y, particle.width, particle.height);
-            this.context.fillStyle = '#5dadec'; // light blue
+            this.context.fillStyle = "#5dadec"; // light blue
             this.context.fill();
             this.context.closePath();
             this.context.restore();

@@ -17,33 +17,33 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
-import { Room, RoomEvent } from 'matrix-js-sdk/src/models/room';
-import { RoomMember, RoomMemberEvent } from 'matrix-js-sdk/src/models/room-member';
-import { RoomState, RoomStateEvent } from 'matrix-js-sdk/src/models/room-state';
+import React from "react";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
+import { RoomMember, RoomMemberEvent } from "matrix-js-sdk/src/models/room-member";
+import { RoomState, RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { User, UserEvent } from "matrix-js-sdk/src/models/user";
-import { throttle } from 'lodash';
+import { throttle } from "lodash";
 import { JoinRule } from "matrix-js-sdk/src/@types/partials";
 import { ClientEvent } from "matrix-js-sdk/src/client";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 
-import { _t } from '../../../languageHandler';
-import SdkConfig from '../../../SdkConfig';
-import dis from '../../../dispatcher/dispatcher';
+import { _t } from "../../../languageHandler";
+import SdkConfig from "../../../SdkConfig";
+import dis from "../../../dispatcher/dispatcher";
 import { isValid3pidInvite } from "../../../RoomInvite";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import BaseCard from "../right_panel/BaseCard";
 import RoomAvatar from "../avatars/RoomAvatar";
 import RoomName from "../elements/RoomName";
 import SettingsStore from "../../../settings/SettingsStore";
-import TruncatedList from '../elements/TruncatedList';
+import TruncatedList from "../elements/TruncatedList";
 import Spinner from "../elements/Spinner";
 import SearchBox from "../../structures/SearchBox";
-import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import EntityTile from "./EntityTile";
 import MemberTile from "./MemberTile";
-import BaseAvatar from '../avatars/BaseAvatar';
+import BaseAvatar from "../avatars/BaseAvatar";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
 import PosthogTrackers from "../../../PosthogTrackers";
@@ -183,8 +183,8 @@ export default class MemberList extends React.Component<IProps, IState> {
         return {
             loading: false,
             members: members,
-            filteredJoinedMembers: this.filterMembers(members, 'join', this.props.searchQuery),
-            filteredInvitedMembers: this.filterMembers(members, 'invite', this.props.searchQuery),
+            filteredJoinedMembers: this.filterMembers(members, "join", this.props.searchQuery),
+            filteredInvitedMembers: this.filterMembers(members, "invite", this.props.searchQuery),
             canInvite: this.canInvite,
 
             // ideally we'd size this to the page height, but
@@ -251,8 +251,8 @@ export default class MemberList extends React.Component<IProps, IState> {
         this.setState({
             loading: false,
             members: members,
-            filteredJoinedMembers: this.filterMembers(members, 'join', this.props.searchQuery),
-            filteredInvitedMembers: this.filterMembers(members, 'invite', this.props.searchQuery),
+            filteredJoinedMembers: this.filterMembers(members, "join", this.props.searchQuery),
+            filteredInvitedMembers: this.filterMembers(members, "invite", this.props.searchQuery),
         });
     }
 
@@ -274,7 +274,7 @@ export default class MemberList extends React.Component<IProps, IState> {
 
             this.sortNames.set(
                 member,
-                (member.name[0] === '@' ? member.name.slice(1) : member.name).replace(SORT_REGEX, ""),
+                (member.name[0] === "@" ? member.name.slice(1) : member.name).replace(SORT_REGEX, ""),
             );
 
             // XXX: this user may have no lastPresenceTs value!
@@ -288,11 +288,11 @@ export default class MemberList extends React.Component<IProps, IState> {
         const allMembers = this.getMembersWithUser();
         const filteredAndSortedMembers = allMembers.filter((m) => {
             return (
-                m.membership === 'join' || m.membership === 'invite'
+                m.membership === "join" || m.membership === "invite"
             );
         });
         const language = SettingsStore.getValue("language");
-        this.collator = new Intl.Collator(language, { sensitivity: 'base', ignorePunctuation: false });
+        this.collator = new Intl.Collator(language, { sensitivity: "base", ignorePunctuation: false });
         filteredAndSortedMembers.sort(this.memberSort);
         return filteredAndSortedMembers;
     }
@@ -384,15 +384,15 @@ export default class MemberList extends React.Component<IProps, IState> {
 
         // First by presence
         if (this.showPresence) {
-            const convertPresence = (p) => p === 'unavailable' ? 'online' : p;
+            const convertPresence = (p) => p === "unavailable" ? "online" : p;
             const presenceIndex = p => {
-                const order = ['active', 'online', 'offline'];
+                const order = ["active", "online", "offline"];
                 const idx = order.indexOf(convertPresence(p));
                 return idx === -1 ? order.length : idx; // unknown states at the end
             };
 
-            const idxA = presenceIndex(userA.currentlyActive ? 'active' : userA.presence);
-            const idxB = presenceIndex(userB.currentlyActive ? 'active' : userB.presence);
+            const idxA = presenceIndex(userA.currentlyActive ? "active" : userA.presence);
+            const idxB = presenceIndex(userB.currentlyActive ? "active" : userB.presence);
             // console.log(`userA_presenceGroup=${idxA} userB_presenceGroup=${idxB}`);
             if (idxA !== idxB) {
                 // console.log("Comparing on presence group - returning");
@@ -419,14 +419,14 @@ export default class MemberList extends React.Component<IProps, IState> {
     private onSearchQueryChanged = (searchQuery: string): void => {
         this.props.onSearchQueryChanged(searchQuery);
         this.setState({
-            filteredJoinedMembers: this.filterMembers(this.state.members, 'join', searchQuery),
-            filteredInvitedMembers: this.filterMembers(this.state.members, 'invite', searchQuery),
+            filteredJoinedMembers: this.filterMembers(this.state.members, "join", searchQuery),
+            filteredInvitedMembers: this.filterMembers(this.state.members, "invite", searchQuery),
         });
     };
 
     private onPending3pidInviteClick = (inviteEvent: MatrixEvent): void => {
         dis.dispatch({
-            action: 'view_3pid_invite',
+            action: "view_3pid_invite",
             event: inviteEvent,
         });
     };
@@ -517,7 +517,7 @@ export default class MemberList extends React.Component<IProps, IState> {
         const room = cli.getRoom(this.props.roomId);
         let inviteButton;
 
-        if (room?.getMyMembership() === 'join' && shouldShowComponent(UIComponent.InviteUsers)) {
+        if (room?.getMyMembership() === "join" && shouldShowComponent(UIComponent.InviteUsers)) {
             let inviteButtonText = _t("Invite to this room");
             if (room.isSpaceRoom()) {
                 inviteButtonText = _t("Invite to this space");
@@ -552,7 +552,7 @@ export default class MemberList extends React.Component<IProps, IState> {
         const footer = (
             <SearchBox
                 className="mx_MemberList_query mx_textinput_icon mx_textinput_search"
-                placeholder={_t('Filter room members')}
+                placeholder={_t("Filter room members")}
                 onSearch={this.onSearchQueryChanged}
                 initialValue={this.props.searchQuery}
             />
@@ -592,13 +592,13 @@ export default class MemberList extends React.Component<IProps, IState> {
         PosthogTrackers.trackInteraction("WebRightPanelMemberListInviteButton", ev);
 
         if (MatrixClientPeg.get().isGuest()) {
-            dis.dispatch({ action: 'require_registration' });
+            dis.dispatch({ action: "require_registration" });
             return;
         }
 
         // open the room inviter
         dis.dispatch({
-            action: 'view_invite',
+            action: "view_invite",
             roomId: this.props.roomId,
         });
     };

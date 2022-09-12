@@ -34,7 +34,7 @@ import {
  * have to be manually mirrored in KeyBindingDefaults.
  */
 const getUIOnlyShortcuts = (): IKeyboardShortcuts => {
-    const ctrlEnterToSend = SettingsStore.getValue('MessageComposerInput.ctrlEnterToSend');
+    const ctrlEnterToSend = SettingsStore.getValue("MessageComposerInput.ctrlEnterToSend");
 
     const keyboardShortcuts: IKeyboardShortcuts = {
         [KeyBindingAction.SendMessage]: {

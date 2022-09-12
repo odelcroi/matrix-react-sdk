@@ -14,33 +14,33 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import { EventTimelineSet } from 'matrix-js-sdk/src/models/event-timeline-set';
-import { Thread, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
-import { Room } from 'matrix-js-sdk/src/models/room';
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { EventTimelineSet } from "matrix-js-sdk/src/models/event-timeline-set";
+import { Thread, ThreadEvent } from "matrix-js-sdk/src/models/thread";
+import { Room } from "matrix-js-sdk/src/models/room";
 
 import BaseCard from "../views/right_panel/BaseCard";
-import ResizeNotifier from '../../utils/ResizeNotifier';
-import MatrixClientContext from '../../contexts/MatrixClientContext';
-import { _t } from '../../languageHandler';
-import { ContextMenuButton } from '../../accessibility/context_menu/ContextMenuButton';
-import ContextMenu, { ChevronFace, MenuItemRadio, useContextMenu } from './ContextMenu';
-import RoomContext, { TimelineRenderingType } from '../../contexts/RoomContext';
-import TimelinePanel from './TimelinePanel';
-import { Layout } from '../../settings/enums/Layout';
-import { RoomPermalinkCreator } from '../../utils/permalinks/Permalinks';
-import Measured from '../views/elements/Measured';
+import ResizeNotifier from "../../utils/ResizeNotifier";
+import MatrixClientContext from "../../contexts/MatrixClientContext";
+import { _t } from "../../languageHandler";
+import { ContextMenuButton } from "../../accessibility/context_menu/ContextMenuButton";
+import ContextMenu, { ChevronFace, MenuItemRadio, useContextMenu } from "./ContextMenu";
+import RoomContext, { TimelineRenderingType } from "../../contexts/RoomContext";
+import TimelinePanel from "./TimelinePanel";
+import { Layout } from "../../settings/enums/Layout";
+import { RoomPermalinkCreator } from "../../utils/permalinks/Permalinks";
+import Measured from "../views/elements/Measured";
 import PosthogTrackers from "../../PosthogTrackers";
 import AccessibleButton, { ButtonEvent } from "../views/elements/AccessibleButton";
-import { BetaPill } from '../views/beta/BetaCard';
-import SdkConfig from '../../SdkConfig';
-import Modal from '../../Modal';
-import BetaFeedbackDialog from '../views/dialogs/BetaFeedbackDialog';
-import { Action } from '../../dispatcher/actions';
-import { UserTab } from '../views/dialogs/UserTab';
-import dis from '../../dispatcher/dispatcher';
+import { BetaPill } from "../views/beta/BetaCard";
+import SdkConfig from "../../SdkConfig";
+import Modal from "../../Modal";
+import BetaFeedbackDialog from "../views/dialogs/BetaFeedbackDialog";
+import { Action } from "../../dispatcher/actions";
+import { UserTab } from "../views/dialogs/UserTab";
+import dis from "../../dispatcher/dispatcher";
 import Spinner from "../views/elements/Spinner";
-import Heading from '../views/typography/Heading';
+import Heading from "../views/typography/Heading";
 
 interface IProps {
     roomId: string;
@@ -88,7 +88,7 @@ export const ThreadPanelHeader = ({ filterOption, setFilterOption, empty }: {
     const options: readonly ThreadPanelHeaderOption[] = [
         {
             label: _t("All threads"),
-            description: _t('Shows all threads from current room'),
+            description: _t("Shows all threads from current room"),
             key: ThreadFilterType.All,
         },
         {
@@ -130,7 +130,7 @@ export const ThreadPanelHeader = ({ filterOption, setFilterOption, empty }: {
                     PosthogTrackers.trackInteraction("WebRightPanelThreadPanelFilterDropdown", ev);
                 }}
             >
-                { `${_t('Show:')} ${value.label}` }
+                { `${_t("Show:")} ${value.label}` }
             </ContextMenuButton>
             { contextMenu }
         </> }
@@ -165,7 +165,7 @@ const EmptyThread: React.FC<EmptyThreadIProps> = ({ hasThreads, filterOption, sh
         body = <>
             <p>{ _t("Threads help keep your conversations on-topic and easy to track.") }</p>
             <p className="mx_ThreadPanel_empty_tip">
-                { _t('<b>Tip:</b> Use “%(replyInThread)s” when hovering over a message.', {
+                { _t("<b>Tip:</b> Use “%(replyInThread)s” when hovering over a message.", {
                     replyInThread: _t("Reply in thread"),
                 }, {
                     b: sub => <b>{ sub }</b>,

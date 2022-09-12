@@ -14,35 +14,35 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState, useEffect } from 'react';
-import { MatrixClient } from 'matrix-js-sdk/src/client';
+import React, { useState, useEffect } from "react";
+import { MatrixClient } from "matrix-js-sdk/src/client";
 import {
     Beacon,
     Room,
-} from 'matrix-js-sdk/src/matrix';
-import maplibregl from 'maplibre-gl';
+} from "matrix-js-sdk/src/matrix";
+import maplibregl from "maplibre-gl";
 
-import { Icon as LiveLocationIcon } from '../../../../res/img/location/live-location.svg';
-import { useLiveBeacons } from '../../../utils/beacon/useLiveBeacons';
-import MatrixClientContext from '../../../contexts/MatrixClientContext';
+import { Icon as LiveLocationIcon } from "../../../../res/img/location/live-location.svg";
+import { useLiveBeacons } from "../../../utils/beacon/useLiveBeacons";
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import BaseDialog from "../dialogs/BaseDialog";
 import { IDialogProps } from "../dialogs/IDialogProps";
-import Map from '../location/Map';
-import ZoomButtons from '../location/ZoomButtons';
-import BeaconMarker from './BeaconMarker';
-import { Bounds, getBeaconBounds } from '../../../utils/beacon/bounds';
-import { getGeoUri } from '../../../utils/beacon';
-import { _t } from '../../../languageHandler';
-import AccessibleButton from '../elements/AccessibleButton';
-import DialogSidebar from './DialogSidebar';
-import DialogOwnBeaconStatus from './DialogOwnBeaconStatus';
-import BeaconStatusTooltip from './BeaconStatusTooltip';
-import MapFallback from '../location/MapFallback';
-import { MapError } from '../location/MapError';
-import { LocationShareError } from '../../../utils/location';
+import Map from "../location/Map";
+import ZoomButtons from "../location/ZoomButtons";
+import BeaconMarker from "./BeaconMarker";
+import { Bounds, getBeaconBounds } from "../../../utils/beacon/bounds";
+import { getGeoUri } from "../../../utils/beacon";
+import { _t } from "../../../languageHandler";
+import AccessibleButton from "../elements/AccessibleButton";
+import DialogSidebar from "./DialogSidebar";
+import DialogOwnBeaconStatus from "./DialogOwnBeaconStatus";
+import BeaconStatusTooltip from "./BeaconStatusTooltip";
+import MapFallback from "../location/MapFallback";
+import { MapError } from "../location/MapError";
+import { LocationShareError } from "../../../utils/location";
 
 interface IProps extends IDialogProps {
-    roomId: Room['roomId'];
+    roomId: Room["roomId"];
     matrixClient: MatrixClient;
     // open the map centered on this beacon's location
     initialFocusedBeacon?: Beacon;
@@ -167,13 +167,13 @@ const BeaconViewDialog: React.FC<IProps> = ({
                         data-test-id='beacon-view-dialog-map-fallback'
                         className='mx_BeaconViewDialog_map'
                     >
-                        <span className='mx_BeaconViewDialog_mapFallbackMessage'>{ _t('No live locations') }</span>
+                        <span className='mx_BeaconViewDialog_mapFallbackMessage'>{ _t("No live locations") }</span>
                         <AccessibleButton
                             kind='primary'
                             onClick={onFinished}
                             data-test-id='beacon-view-dialog-fallback-close'
                         >
-                            { _t('Close') }
+                            { _t("Close") }
                         </AccessibleButton>
                     </MapFallback>
                 }
@@ -186,7 +186,7 @@ const BeaconViewDialog: React.FC<IProps> = ({
                         className='mx_BeaconViewDialog_viewListButton'
                     >
                         <LiveLocationIcon height={12} />&nbsp;
-                        { _t('View list') }
+                        { _t("View list") }
                     </AccessibleButton>
                 }
                 <DialogOwnBeaconStatus roomId={roomId} />

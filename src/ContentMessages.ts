@@ -27,9 +27,9 @@ import { IEventRelation, ISendEventResponse, MatrixError, MatrixEvent } from "ma
 import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 
 import { IEncryptedFile, IMediaEventInfo } from "./customisations/models/IMediaEventContent";
-import dis from './dispatcher/dispatcher';
-import { _t } from './languageHandler';
-import Modal from './Modal';
+import dis from "./dispatcher/dispatcher";
+import { _t } from "./languageHandler";
+import Modal from "./Modal";
 import Spinner from "./components/views/elements/Spinner";
 import { Action } from "./dispatcher/actions";
 import {
@@ -104,7 +104,7 @@ async function loadImageElement(imageFile: File) {
             const buffer = new Uint8Array(arrayBuffer);
             const chunks = extractPngChunks(buffer);
             for (const chunk of chunks) {
-                if (chunk.name === 'pHYs') {
+                if (chunk.name === "pHYs") {
                     if (chunk.data.byteLength !== PHYS_HIDPI.length) return;
                     return chunk.data.every((val, i) => val === PHYS_HIDPI[i]);
                 }
@@ -378,13 +378,13 @@ export default class ContentMessages {
         context = TimelineRenderingType.Room,
     ): Promise<void> {
         if (matrixClient.isGuest()) {
-            dis.dispatch({ action: 'require_registration' });
+            dis.dispatch({ action: "require_registration" });
             return;
         }
 
         const replyToEvent = RoomViewStore.instance.getQuotingEvent();
         if (!this.mediaConfig) { // hot-path optimization to not flash a spinner if we don't need to
-            const modal = Modal.createDialog(Spinner, null, 'mx_Dialog_spinner');
+            const modal = Modal.createDialog(Spinner, null, "mx_Dialog_spinner");
             await this.ensureMediaConfigFetched(matrixClient);
             modal.close();
         }
@@ -489,7 +489,7 @@ export default class ContentMessages {
         promBefore: Promise<any>,
     ) {
         const content: Omit<IContent, "info"> & { info: Partial<IMediaEventInfo> } = {
-            body: file.name || 'Attachment',
+            body: file.name || "Attachment",
             info: {
                 size: file.size,
             },
@@ -513,7 +513,7 @@ export default class ContentMessages {
         }
 
         const prom = new Promise<void>((resolve) => {
-            if (file.type.indexOf('image/') === 0) {
+            if (file.type.indexOf("image/") === 0) {
                 content.msgtype = MsgType.Image;
                 infoForImageFile(matrixClient, roomId, file).then((imageInfo) => {
                     Object.assign(content.info, imageInfo);
@@ -524,10 +524,10 @@ export default class ContentMessages {
                     content.msgtype = MsgType.File;
                     resolve();
                 });
-            } else if (file.type.indexOf('audio/') === 0) {
+            } else if (file.type.indexOf("audio/") === 0) {
                 content.msgtype = MsgType.Audio;
                 resolve();
-            } else if (file.type.indexOf('video/') === 0) {
+            } else if (file.type.indexOf("video/") === 0) {
                 content.msgtype = MsgType.Video;
                 infoForVideoFile(matrixClient, roomId, file).then((videoInfo) => {
                     Object.assign(content.info, videoInfo);
@@ -550,7 +550,7 @@ export default class ContentMessages {
         };
 
         const upload: IUpload = {
-            fileName: file.name || 'Attachment',
+            fileName: file.name || "Attachment",
             roomId,
             relation,
             total: file.size,
@@ -603,7 +603,7 @@ export default class ContentMessages {
                     );
                 }
                 Modal.createDialog(ErrorDialog, {
-                    title: _t('Upload Failed'),
+                    title: _t("Upload Failed"),
                     description: desc,
                 });
             }
@@ -624,7 +624,7 @@ export default class ContentMessages {
                 dis.dispatch<UploadErrorPayload>({ action: Action.UploadFailed, upload, error });
             } else {
                 dis.dispatch<UploadFinishedPayload>({ action: Action.UploadFinished, upload });
-                dis.dispatch({ action: 'message_sent' });
+                dis.dispatch({ action: "message_sent" });
             }
         });
     }

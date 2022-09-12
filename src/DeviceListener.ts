@@ -20,7 +20,7 @@ import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { ClientEvent, EventType, RoomStateEvent } from "matrix-js-sdk/src/matrix";
 import { SyncState } from "matrix-js-sdk/src/sync";
 
-import { MatrixClientPeg } from './MatrixClientPeg';
+import { MatrixClientPeg } from "./MatrixClientPeg";
 import dis from "./dispatcher/dispatcher";
 import {
     hideToast as hideBulkUnverifiedSessionsToast,
@@ -36,7 +36,7 @@ import {
     showToast as showUnverifiedSessionsToast,
 } from "./toasts/UnverifiedSessionToast";
 import { accessSecretStorage, isSecretStorageBeingAccessed } from "./SecurityManager";
-import { isSecureBackupRequired } from './utils/WellKnownUtils';
+import { isSecureBackupRequired } from "./utils/WellKnownUtils";
 import { ActionPayload } from "./dispatcher/payloads";
 import { Action } from "./dispatcher/actions";
 import { isLoggedIn } from "./utils/login";
@@ -114,7 +114,7 @@ export default class DeviceListener {
      * @param {String[]} deviceIds List of device IDs to dismiss notifications for
      */
     public async dismissUnverifiedSessions(deviceIds: Iterable<string>) {
-        logger.log("Dismissing unverified sessions: " + Array.from(deviceIds).join(','));
+        logger.log("Dismissing unverified sessions: " + Array.from(deviceIds).join(","));
         for (const d of deviceIds) {
             this.dismissed.add(d);
         }
@@ -175,16 +175,16 @@ export default class DeviceListener {
         // * completed secret storage creation
         // which result in account data changes affecting checks below.
         if (
-            ev.getType().startsWith('m.secret_storage.') ||
-            ev.getType().startsWith('m.cross_signing.') ||
-            ev.getType() === 'm.megolm_backup.v1'
+            ev.getType().startsWith("m.secret_storage.") ||
+            ev.getType().startsWith("m.cross_signing.") ||
+            ev.getType() === "m.megolm_backup.v1"
         ) {
             this.recheck();
         }
     };
 
     private onSync = (state: SyncState, prevState?: SyncState) => {
-        if (state === 'PREPARED' && prevState === null) {
+        if (state === "PREPARED" && prevState === null) {
             this.recheck();
         }
     };
@@ -304,9 +304,9 @@ export default class DeviceListener {
             }
         }
 
-        logger.debug("Old unverified sessions: " + Array.from(oldUnverifiedDeviceIds).join(','));
-        logger.debug("New unverified sessions: " + Array.from(newUnverifiedDeviceIds).join(','));
-        logger.debug("Currently showing toasts for: " + Array.from(this.displayingToastsForDeviceIds).join(','));
+        logger.debug("Old unverified sessions: " + Array.from(oldUnverifiedDeviceIds).join(","));
+        logger.debug("New unverified sessions: " + Array.from(newUnverifiedDeviceIds).join(","));
+        logger.debug("Currently showing toasts for: " + Array.from(this.displayingToastsForDeviceIds).join(","));
 
         // Display or hide the batch toast for old unverified sessions
         if (oldUnverifiedDeviceIds.size > 0) {

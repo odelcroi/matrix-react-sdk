@@ -14,20 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
-import classNames from 'classnames';
+import React, { createRef } from "react";
+import classNames from "classnames";
 import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
-import { EventType, MsgType } from 'matrix-js-sdk/src/@types/event';
+import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
-import { Relations } from 'matrix-js-sdk/src/models/relations';
+import { Relations } from "matrix-js-sdk/src/models/relations";
 
-import { _t } from '../../../languageHandler';
-import dis from '../../../dispatcher/dispatcher';
-import { Action } from '../../../dispatcher/actions';
-import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
+import { _t } from "../../../languageHandler";
+import dis from "../../../dispatcher/dispatcher";
+import { Action } from "../../../dispatcher/actions";
+import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
 import SenderProfile from "../messages/SenderProfile";
 import MImageReplyBody from "../messages/MImageReplyBody";
-import { isVoiceMessage } from '../../../utils/EventUtils';
+import { isVoiceMessage } from "../../../utils/EventUtils";
 import { getEventDisplayInfo } from "../../../utils/EventRenderingUtils";
 import MFileBody from "../messages/MFileBody";
 import MVoiceMessageBody from "../messages/MVoiceMessageBody";
@@ -119,7 +119,7 @@ export default class ReplyTile extends React.PureComponent<IProps> {
             const { mxEvent } = this.props;
             logger.warn(`Event type not supported: type:${mxEvent.getType()} isState:${mxEvent.isState()}`);
             return <div className="mx_ReplyTile mx_ReplyTile_info mx_MNoticeBody">
-                { _t('This event could not be displayed') }
+                { _t("This event could not be displayed") }
             </div>;
         }
 

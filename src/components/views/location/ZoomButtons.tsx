@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import maplibregl from 'maplibre-gl';
+import React from "react";
+import maplibregl from "maplibre-gl";
 
-import { _t } from '../../../languageHandler';
-import AccessibleButton from '../elements/AccessibleButton';
-import { Icon as PlusIcon } from '../../../../res/img/element-icons/plus-button.svg';
-import { Icon as MinusIcon } from '../../../../res/img/element-icons/minus-button.svg';
+import { _t } from "../../../languageHandler";
+import AccessibleButton from "../elements/AccessibleButton";
+import { Icon as PlusIcon } from "../../../../res/img/element-icons/plus-button.svg";
+import { Icon as MinusIcon } from "../../../../res/img/element-icons/minus-button.svg";
 
 interface Props {
     map: maplibregl.Map;

@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import { RoomEvent } from "matrix-js-sdk/src/models/room";
 
 import TabbedView, { Tab } from "../../structures/TabbedView";
@@ -31,7 +31,7 @@ import dis from "../../../dispatcher/dispatcher";
 import SettingsStore from "../../../settings/SettingsStore";
 import { UIFeature } from "../../../settings/UIFeature";
 import BaseDialog from "./BaseDialog";
-import { Action } from '../../../dispatcher/actions';
+import { Action } from "../../../dispatcher/actions";
 
 export const ROOM_GENERAL_TAB = "ROOM_GENERAL_TAB";
 export const ROOM_SECURITY_TAB = "ROOM_SECURITY_TAB";
@@ -55,7 +55,7 @@ export default class RoomSettingsDialog extends React.Component<IProps, IState> 
 
     constructor(props: IProps) {
         super(props);
-        this.state = { roomName: '' };
+        this.state = { roomName: "" };
     }
 
     public componentDidMount() {

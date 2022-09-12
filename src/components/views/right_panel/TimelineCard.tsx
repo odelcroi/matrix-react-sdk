@@ -14,34 +14,34 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import { EventSubscription } from "fbemitter";
-import { IEventRelation, MatrixEvent } from 'matrix-js-sdk/src/models/event';
-import { EventTimelineSet } from 'matrix-js-sdk/src/models/event-timeline-set';
-import { NotificationCountType, Room } from 'matrix-js-sdk/src/models/room';
-import { Thread } from 'matrix-js-sdk/src/models/thread';
+import { IEventRelation, MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { EventTimelineSet } from "matrix-js-sdk/src/models/event-timeline-set";
+import { NotificationCountType, Room } from "matrix-js-sdk/src/models/room";
+import { Thread } from "matrix-js-sdk/src/models/thread";
 
 import BaseCard from "./BaseCard";
-import ResizeNotifier from '../../../utils/ResizeNotifier';
-import MessageComposer from '../rooms/MessageComposer';
-import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
-import { Layout } from '../../../settings/enums/Layout';
-import TimelinePanel from '../../structures/TimelinePanel';
-import { E2EStatus } from '../../../utils/ShieldUtils';
-import EditorStateTransfer from '../../../utils/EditorStateTransfer';
-import RoomContext, { TimelineRenderingType } from '../../../contexts/RoomContext';
-import dis from '../../../dispatcher/dispatcher';
-import { _t } from '../../../languageHandler';
-import { ActionPayload } from '../../../dispatcher/payloads';
-import { Action } from '../../../dispatcher/actions';
-import { RoomViewStore } from '../../../stores/RoomViewStore';
-import ContentMessages from '../../../ContentMessages';
-import UploadBar from '../../structures/UploadBar';
-import SettingsStore from '../../../settings/SettingsStore';
-import JumpToBottomButton from '../rooms/JumpToBottomButton';
+import ResizeNotifier from "../../../utils/ResizeNotifier";
+import MessageComposer from "../rooms/MessageComposer";
+import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
+import { Layout } from "../../../settings/enums/Layout";
+import TimelinePanel from "../../structures/TimelinePanel";
+import { E2EStatus } from "../../../utils/ShieldUtils";
+import EditorStateTransfer from "../../../utils/EditorStateTransfer";
+import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
+import dis from "../../../dispatcher/dispatcher";
+import { _t } from "../../../languageHandler";
+import { ActionPayload } from "../../../dispatcher/payloads";
+import { Action } from "../../../dispatcher/actions";
+import { RoomViewStore } from "../../../stores/RoomViewStore";
+import ContentMessages from "../../../ContentMessages";
+import UploadBar from "../../structures/UploadBar";
+import SettingsStore from "../../../settings/SettingsStore";
+import JumpToBottomButton from "../rooms/JumpToBottomButton";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
-import Measured from '../elements/Measured';
-import Heading from '../typography/Heading';
+import Measured from "../elements/Measured";
+import Heading from "../typography/Heading";
 
 interface IProps {
     room: Room;

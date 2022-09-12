@@ -1206,7 +1206,7 @@ export const Commands = [
             // easter-egg for now: look up phone numbers through the thirdparty API
             // (very dumb phone number detection...)
             const isPhoneNumber = userId && /^\+?[0123456789]+$/.test(userId);
-            if (!userId || (!userId.startsWith("@") || !userId.includes(":")) && !isPhoneNumber) {
+            if (!userId || ((!userId.startsWith("@") || !userId.includes(":")) && !isPhoneNumber)) {
                 return reject(this.getUsage());
             }
 

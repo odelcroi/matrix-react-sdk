@@ -172,7 +172,7 @@ export const Notifier = {
 
     _playAudioNotification: async function(ev: MatrixEvent, room: Room) {
         const sound = this.getSoundForRoom(room.roomId);
-        logger.log(`Got sound ${sound && sound.name || "default"} for ${room.roomId}`);
+        logger.log(`Got sound ${(sound && sound.name) || "default"} for ${room.roomId}`);
 
         try {
             const selector =

@@ -70,7 +70,7 @@ export default class ToastContainer extends React.Component<{}, IState> {
             const content = React.createElement(component, toastProps);
 
             let countIndicator;
-            if (title && isStacked || this.state.countSeen > 0) {
+            if ((title && isStacked) || this.state.countSeen > 0) {
                 countIndicator = ` (${this.state.countSeen + 1}/${this.state.countSeen + totalCount})`;
             }
 

@@ -46,10 +46,12 @@ export async function shieldStatusForRoom(client: MatrixClient, room: Room): Pro
 
     /* Check all verified user devices. */
     /* Don't alarm if no other users are verified  */
-    const includeUser = (verified.length > 0) &&    // Don't alarm for self in rooms where nobody else is verified
-                        !inDMMap &&                 // Don't alarm for self in DMs with other users
-                        (members.length !== 2) ||   // Don't alarm for self in 1:1 chats with other users
-                        (members.length === 1);     // Do alarm for self if we're alone in a room
+    const includeUser = (
+        (verified.length > 0) &&    // Don't alarm for self in rooms where nobody else is verified
+        !inDMMap &&                 // Don't alarm for self in DMs with other users
+        (members.length !== 2)
+    ) ||   // Don't alarm for self in 1:1 chats with other users
+    (members.length === 1);     // Do alarm for self if we're alone in a room
     const targets = includeUser ? [...verified, client.getUserId()] : verified;
     for (const userId of targets) {
         const devices = client.getStoredDevicesForUser(userId);

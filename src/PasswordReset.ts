@@ -19,6 +19,8 @@ import { createClient, IRequestTokenResponse, MatrixClient } from 'matrix-js-sdk
 
 import { _t } from './languageHandler';
 
+const CHECK_EMAIL_VERIFIED_POLL_INTERVAL = 1000;
+
 /**
  * Allows a user to reset their password on a homeserver.
  *
@@ -29,9 +31,9 @@ import { _t } from './languageHandler';
 export default class PasswordReset {
     private client: MatrixClient;
     private clientSecret: string;
-    private password: string;
-    private sessionId: string;
-    private logoutDevices: boolean;
+    private password = "";
+    private sessionId = "";
+    private logoutDevices = false;
 
     /**
      * Configure the endpoints for password resetting.
@@ -75,6 +77,42 @@ export default class PasswordReset {
     }
 
     /**
+     * Request a password reset token.
+     * This will trigger a side-effect of sending an email to the provided email address.
+     */
+    public requestResetToken(emailAddress: string): Promise<IRequestTokenResponse> {
+        return this.client.requestPasswordEmailToken(emailAddress, this.clientSecret, 1).then((res) => {
+            this.sessionId = res.sid;
+            return res;
+        }, function(err) {
+            if (err.errcode === 'M_THREEPID_NOT_FOUND') {
+                err.message = _t('This email address was not found');
+            } else if (err.httpStatus) {
+                err.message = err.message + ` (Status ${err.httpStatus})`;
+            }
+            throw err;
+        });
+    }
+
+    public async setNewPassword(password: string): Promise<void> {
+        this.password = password;
+        return new Promise((resolve) => {
+            this.tryCheckEmailLinkClicked(resolve);
+        });
+    }
+
+    private tryCheckEmailLinkClicked(resolve: Function) {
+        this.checkEmailLinkClicked()
+            .then(() => resolve())
+            .catch(() => {
+                setTimeout(
+                    () => this.tryCheckEmailLinkClicked(resolve),
+                    CHECK_EMAIL_VERIFIED_POLL_INTERVAL,
+                );
+            });
+    }
+
+    /**
      * Checks if the email link has been clicked by attempting to change the password
      * for the mxid linked to the email.
      * @return {Promise} Resolves if the password was reset. Rejects with an object
@@ -98,7 +136,7 @@ export default class PasswordReset {
                 threepid_creds: creds,
                 threepidCreds: creds,
             }, this.password, this.logoutDevices);
-        } catch (err) {
+        } catch (err: any) {
             if (err.httpStatus === 401) {
                 err.message = _t('Failed to verify email address: make sure you clicked the link in the email');
             } else if (err.httpStatus === 404) {

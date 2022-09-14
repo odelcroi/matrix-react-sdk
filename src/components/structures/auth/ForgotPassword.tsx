@@ -17,64 +17,60 @@ limitations under the License.
 */
 
 import React from 'react';
-import classNames from 'classnames';
-import { logger } from "matrix-js-sdk/src/logger";
+import { logger } from 'matrix-js-sdk/src/logger';
 import { createClient } from "matrix-js-sdk/src/matrix";
 
 import { _t, _td } from '../../../languageHandler';
 import Modal from "../../../Modal";
 import PasswordReset from "../../../PasswordReset";
-import AutoDiscoveryUtils from "../../../utils/AutoDiscoveryUtils";
 import AuthPage from "../../views/auth/AuthPage";
-import ServerPicker from "../../views/elements/ServerPicker";
-import EmailField from "../../views/auth/EmailField";
 import PassphraseField from '../../views/auth/PassphraseField';
 import { PASSWORD_MIN_SCORE } from '../../views/auth/RegistrationForm';
-import InlineSpinner from '../../views/elements/InlineSpinner';
-import Spinner from "../../views/elements/Spinner";
-import QuestionDialog from "../../views/dialogs/QuestionDialog";
-import ErrorDialog from "../../views/dialogs/ErrorDialog";
 import AuthHeader from "../../views/auth/AuthHeader";
 import AuthBody from "../../views/auth/AuthBody";
 import PassphraseConfirmField from "../../views/auth/PassphraseConfirmField";
 import AccessibleButton from '../../views/elements/AccessibleButton';
 import StyledCheckbox from '../../views/elements/StyledCheckbox';
 import { ValidatedServerConfig } from '../../../utils/ValidatedServerConfig';
+import emailPromptIcon from "../../../../res/img/element-icons/email-prompt.svg";
+import lockIcon from "../../../../res/img/element-icons/lock.svg";
+import retryIcon from "../../../../res/img/element-icons/retry.svg";
+import { CompoundIcon } from '../CompoundIcon';
+import QuestionDialog from '../../views/dialogs/QuestionDialog';
+import { ErrorMessage } from '../ErrorMessage';
+import { EnterEmail } from './forgot-password/EnterEmail';
+import { CheckEmail } from './forgot-password/CheckEmail';
 
 enum Phase {
-    // Show the forgot password inputs
-    Forgot = 1,
+    // Show email input
+    EnterEmail = 1,
     // Email is in the process of being sent
     SendingEmail = 2,
     // Email has been sent
     EmailSent = 3,
-    // User has clicked the link in email and completed reset
-    Done = 4,
+    // Show new password input
+    PasswordInput = 4,
+    // Password is being resetted
+    ResettingPassword = 5,
+    // All done
+    Done = 6,
+    // Email verification pending
+    EMailPending = 7,
 }
 
-interface IProps {
+interface Props {
     serverConfig: ValidatedServerConfig;
     onServerConfigChange: (serverConfig: ValidatedServerConfig) => void;
     onLoginClick?: () => void;
     onComplete: () => void;
 }
 
-interface IState {
+interface State {
     phase: Phase;
     email: string;
     password: string;
     password2: string;
-    errorText: string;
-
-    // We perform liveliness checks later, but for now suppress the errors.
-    // We also track the server dead errors independently of the regular errors so
-    // that we can render it differently, and override any other error the user may
-    // be seeing.
-    serverIsAlive: boolean;
-    serverErrorIsFatal: boolean;
-    serverDeadError: string;
-
-    currentHttpRequest?: Promise<any>;
+    errorText: string | null;
 
     serverSupportsControlOfDevicesLogout: boolean;
     logoutDevices: boolean;
@@ -86,59 +82,36 @@ enum ForgotPasswordField {
     PasswordConfirm = 'field_password_confirm',
 }
 
-export default class ForgotPassword extends React.Component<IProps, IState> {
+export default class ForgotPassword extends React.Component<Props, State> {
     private reset: PasswordReset;
 
-    state: IState = {
-        phase: Phase.Forgot,
+    state: State = {
+        phase: Phase.EnterEmail,
         email: "",
         password: "",
         password2: "",
         errorText: null,
-
-        // We perform liveliness checks later, but for now suppress the errors.
-        // We also track the server dead errors independently of the regular errors so
-        // that we can render it differently, and override any other error the user may
-        // be seeing.
-        serverIsAlive: true,
-        serverErrorIsFatal: false,
-        serverDeadError: "",
         serverSupportsControlOfDevicesLogout: false,
         logoutDevices: false,
     };
 
+    public constructor(props: Props) {
+        super(props);
+        this.reset = new PasswordReset(this.props.serverConfig.hsUrl, this.props.serverConfig.isUrl);
+    }
+
     public componentDidMount() {
-        this.reset = null;
-        this.checkServerLiveliness(this.props.serverConfig);
         this.checkServerCapabilities(this.props.serverConfig);
     }
 
     // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
     // eslint-disable-next-line
-    public UNSAFE_componentWillReceiveProps(newProps: IProps): void {
+    public UNSAFE_componentWillReceiveProps(newProps: Props): void {
         if (newProps.serverConfig.hsUrl === this.props.serverConfig.hsUrl &&
             newProps.serverConfig.isUrl === this.props.serverConfig.isUrl) return;
 
-        // Do a liveliness check on the new URLs
-        this.checkServerLiveliness(newProps.serverConfig);
-
         // Do capabilities check on new URLs
         this.checkServerCapabilities(newProps.serverConfig);
-    }
-
-    private async checkServerLiveliness(serverConfig): Promise<void> {
-        try {
-            await AutoDiscoveryUtils.validateServerConfigWithStaticUrls(
-                serverConfig.hsUrl,
-                serverConfig.isUrl,
-            );
-
-            this.setState({
-                serverIsAlive: true,
-            });
-        } catch (e) {
-            this.setState(AutoDiscoveryUtils.authComponentStateForError(e, "forgot_password") as IState);
-        }
     }
 
     private async checkServerCapabilities(serverConfig: ValidatedServerConfig): Promise<void> {
@@ -154,108 +127,102 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
         });
     }
 
-    public submitPasswordReset(email: string, password: string, logoutDevices = true): void {
-        this.setState({
-            phase: Phase.SendingEmail,
-        });
-        this.reset = new PasswordReset(this.props.serverConfig.hsUrl, this.props.serverConfig.isUrl);
-        this.reset.resetPassword(email, password, logoutDevices).then(() => {
-            this.setState({
-                phase: Phase.EmailSent,
-            });
-        }, (err) => {
-            this.showErrorDialog(_t('Failed to send email') + ": " + err.message);
-            this.setState({
-                phase: Phase.Forgot,
-            });
-        });
-    }
-
-    private onVerify = async (ev: React.MouseEvent): Promise<void> => {
-        ev.preventDefault();
-        if (!this.reset) {
-            logger.error("onVerify called before submitPasswordReset!");
-            return;
-        }
-        if (this.state.currentHttpRequest) return;
+    private async onPhaseEmailInputSubmit() {
+        this.phase = Phase.SendingEmail;
 
         try {
-            await this.handleHttpRequest(this.reset.checkEmailLinkClicked());
-            this.setState({ phase: Phase.Done });
-        } catch (err) {
-            this.showErrorDialog(err.message);
-        }
-    };
-
-    private onSubmitForm = async (ev: React.FormEvent): Promise<void> => {
-        ev.preventDefault();
-        if (this.state.currentHttpRequest) return;
-
-        // refresh the server errors, just in case the server came back online
-        await this.handleHttpRequest(this.checkServerLiveliness(this.props.serverConfig));
-
-        const allFieldsValid = await this.verifyFieldsBeforeSubmit();
-        if (!allFieldsValid) {
+            await this.reset.requestResetToken(this.state.email);
+        } catch (err: any) {
+            this.setState({
+                errorText: err.message,
+                phase: Phase.EnterEmail,
+            });
             return;
         }
 
-        if (this.state.logoutDevices) {
-            const { finished } = Modal.createDialog<[boolean]>(QuestionDialog, {
-                title: _t('Warning!'),
-                description:
-                    <div>
-                        <p>{ !this.state.serverSupportsControlOfDevicesLogout ?
-                            _t(
-                                "Resetting your password on this homeserver will cause all of your devices to be " +
-                                "signed out. This will delete the message encryption keys stored on them, " +
-                                "making encrypted chat history unreadable.",
-                            ) :
-                            _t(
-                                "Signing out your devices will delete the message encryption keys stored on them, " +
-                                "making encrypted chat history unreadable.",
-                            )
-                        }</p>
-                        <p>{ _t(
-                            "If you want to retain access to your chat history in encrypted rooms, set up Key Backup " +
-                            "or export your message keys from one of your other devices before proceeding.",
-                        ) }</p>
-                    </div>,
-                button: _t('Continue'),
-            });
-            const [confirmed] = await finished;
-
-            if (!confirmed) return;
-        }
-
-        this.submitPasswordReset(this.state.email, this.state.password, this.state.logoutDevices);
-    };
-
-    private async verifyFieldsBeforeSubmit() {
-        const fieldIdsInDisplayOrder = [
-            ForgotPasswordField.Email,
-            ForgotPasswordField.Password,
-            ForgotPasswordField.PasswordConfirm,
-        ];
-
-        const invalidFields = [];
-        for (const fieldId of fieldIdsInDisplayOrder) {
-            const valid = await this[fieldId].validate({ allowEmpty: false });
-            if (!valid) {
-                invalidFields.push(this[fieldId]);
-            }
-        }
-
-        if (invalidFields.length === 0) {
-            return true;
-        }
-
-        // Focus on the first invalid field, then re-validate,
-        // which will result in the error tooltip being displayed for that field.
-        invalidFields[0].focus();
-        invalidFields[0].validate({ allowEmpty: false, focused: true });
-
-        return false;
+        this.phase = Phase.EmailSent;
     }
+
+    private async onPhaseEmailSentSubmit() {
+        this.setState({
+            phase: Phase.PasswordInput,
+        });
+    }
+
+    private set phase(phase: Phase) {
+        this.setState({ phase });
+    }
+
+    private renderVerifyEmailModal() {
+        // to do extract component
+        return () => <div>
+            <img src={emailPromptIcon} />
+            <h1>{ _t("Verify your email to continue") }</h1>
+            <p>
+                { _t(
+                    `We ned to know it’s you before resetting your password.<br>
+                    Click the link in the email we just sent to %(email)s`,
+                    {
+                        email: "mail@example.com",
+                    },
+                    {
+                        br: () => <br />,
+                    },
+                ) }
+            </p>
+            <p className="mx_VerifyEMailDialog_did-not-receive">
+                <span className="mx_VerifyEMailDialog_text-light">{ _t("Did not receive it?") }</span>
+                <AccessibleButton className="mx_VerifyEMailDialog_resend-button" kind="link" onClick={() => { }}>
+                    <CompoundIcon src={`url(${retryIcon})`} />
+                    Resend
+                </AccessibleButton>
+            </p>
+        </div>;
+    }
+
+    private async onPhasePasswordInputSubmit() {
+        if (this.state.logoutDevices) {
+            const logoutDevicesConfirmation = await this.renderConfirmLogoutDevicesDialog();
+            if (!logoutDevicesConfirmation) return;
+        }
+
+        // to do: try one time before set to pending
+
+        this.setState({
+            phase: Phase.EMailPending,
+        });
+
+        const modal = Modal.createDialog(
+            this.renderVerifyEmailModal(),
+            {},
+            "mx_VerifyEMailDialog",
+        );
+        await this.reset.setNewPassword(this.state.password);
+        modal.close();
+
+        this.setState({
+            phase: Phase.Done,
+        });
+    }
+
+    private onSubmitForm = (ev: React.FormEvent): void => {
+        ev.preventDefault();
+        this.setState({
+            errorText: "",
+        });
+
+        switch (this.state.phase) {
+            case Phase.EnterEmail:
+                this.onPhaseEmailInputSubmit();
+                break;
+            case Phase.EmailSent:
+                this.onPhaseEmailSentSubmit();
+                break;
+            case Phase.PasswordInput:
+                this.onPhasePasswordInputSubmit();
+                break;
+        }
+    };
 
     private onInputChanged = (stateKey: string, ev: React.FormEvent<HTMLInputElement>) => {
         let value = ev.currentTarget.value;
@@ -265,75 +232,64 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
         } as any);
     };
 
-    private onLoginClick = (ev: React.MouseEvent): void => {
-        ev.preventDefault();
-        ev.stopPropagation();
-        this.props.onLoginClick();
-    };
-
-    public showErrorDialog(description: string, title?: string) {
-        Modal.createDialog(ErrorDialog, {
-            title,
-            description,
-        });
+    renderError(message: string): JSX.Element {
+        return <ErrorMessage message={message} />;
     }
 
-    private handleHttpRequest<T = unknown>(request: Promise<T>): Promise<T> {
-        this.setState({
-            currentHttpRequest: request,
-        });
-        return request.finally(() => {
-            this.setState({
-                currentHttpRequest: undefined,
-            });
-        });
+    renderEnterEmail(): JSX.Element {
+        return <EnterEmail
+            email={this.state.email}
+            errorMessage={this.state.errorText}
+            loading={this.state.phase === Phase.SendingEmail}
+            onInputChanged={this.onInputChanged}
+            onSubmitForm={this.onSubmitForm}
+        />;
     }
 
-    renderForgot() {
-        let errorText = null;
-        const err = this.state.errorText;
-        if (err) {
-            errorText = <div className="mx_Login_error">{ err }</div>;
-        }
+    async renderConfirmLogoutDevicesDialog(): Promise<boolean> {
+        const { finished } = Modal.createDialog<[boolean]>(QuestionDialog, {
+            title: _t('Warning!'),
+            description:
+                <div>
+                    <p>{ !this.state.serverSupportsControlOfDevicesLogout ?
+                        _t(
+                            "Resetting your password on this homeserver will cause all of your devices to be " +
+                            "signed out. This will delete the message encryption keys stored on them, " +
+                            "making encrypted chat history unreadable.",
+                        ) :
+                        _t(
+                            "Signing out your devices will delete the message encryption keys stored on them, " +
+                            "making encrypted chat history unreadable.",
+                        )
+                    }</p>
+                    <p>{ _t(
+                        "If you want to retain access to your chat history in encrypted rooms, set up Key Backup " +
+                        "or export your message keys from one of your other devices before proceeding.",
+                    ) }</p>
+                </div>,
+            button: _t('Continue'),
+        });
+        const [confirmed] = await finished;
+        return confirmed;
+    }
 
-        let serverDeadSection;
-        if (!this.state.serverIsAlive) {
-            const classes = classNames({
-                "mx_Login_error": true,
-                "mx_Login_serverError": true,
-                "mx_Login_serverErrorNonFatal": !this.state.serverErrorIsFatal,
-            });
-            serverDeadSection = (
-                <div className={classes}>
-                    { this.state.serverDeadError }
-                </div>
-            );
-        }
+    renderCheckEmail(): JSX.Element {
+        return <CheckEmail
+            email={this.state.email}
+            onSubmitForm={this.onSubmitForm}
+        />;
+    }
 
+    renderSetPassword(): JSX.Element {
         return <div>
-            { errorText }
-            { serverDeadSection }
-            <ServerPicker
-                serverConfig={this.props.serverConfig}
-                onServerConfigChange={this.props.onServerConfigChange}
-            />
+            <img src={lockIcon} />
+            <h1>{ _t("Reset your password") }</h1>
             <form onSubmit={this.onSubmitForm}>
-                <div className="mx_AuthBody_fieldRow">
-                    <EmailField
-                        name="reset_email" // define a name so browser's password autofill gets less confused
-                        labelRequired={_td('The email address linked to your account must be entered.')}
-                        labelInvalid={_td("The email address doesn't appear to be valid.")}
-                        value={this.state.email}
-                        fieldRef={field => this[ForgotPasswordField.Email] = field}
-                        autoFocus={true}
-                        onChange={this.onInputChanged.bind(this, "email")}
-                    />
-                </div>
                 <div className="mx_AuthBody_fieldRow">
                     <PassphraseField
                         name="reset_password"
                         type="password"
-                        label={_td('New Password')}
+                        label={_td("New Password")}
                         value={this.state.password}
                         minScore={PASSWORD_MIN_SCORE}
                         fieldRef={field => this[ForgotPasswordField.Password] = field}
@@ -342,7 +298,7 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                     />
                     <PassphraseConfirmField
                         name="reset_password_confirm"
-                        label={_td('Confirm')}
+                        label={_td("Confirm new password")}
                         labelRequired={_td("A new password must be entered.")}
                         labelInvalid={_td("New passwords must match each other.")}
                         value={this.state.password2}
@@ -355,43 +311,16 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                 { this.state.serverSupportsControlOfDevicesLogout ?
                     <div className="mx_AuthBody_fieldRow">
                         <StyledCheckbox onChange={() => this.setState({ logoutDevices: !this.state.logoutDevices })} checked={this.state.logoutDevices}>
-                            { _t("Sign out all devices") }
+                            { _t("Sign out of all devices") }
                         </StyledCheckbox>
                     </div> : null
                 }
-                <span>{ _t(
-                    'A verification email will be sent to your inbox to confirm ' +
-                    'setting your new password.',
-                ) }</span>
                 <input
                     className="mx_Login_submit"
                     type="submit"
-                    value={_t('Send Reset Email')}
+                    value={_t("Reset password")}
                 />
             </form>
-            <AccessibleButton kind='link' className="mx_AuthBody_changeFlow" onClick={this.onLoginClick}>
-                { _t('Sign in instead') }
-            </AccessibleButton>
-        </div>;
-    }
-
-    renderSendingEmail() {
-        return <Spinner />;
-    }
-
-    renderEmailSent() {
-        return <div>
-            { _t("An email has been sent to %(emailAddress)s. Once you've followed the " +
-                "link it contains, click below.", { emailAddress: this.state.email }) }
-            <br />
-            <input
-                className="mx_Login_submit"
-                type="button"
-                onClick={this.onVerify}
-                value={_t('I have verified my email address')} />
-            { this.state.currentHttpRequest && (
-                <div className="mx_Login_spinner"><InlineSpinner w={64} h={64} /></div>)
-            }
         </div>;
     }
 
@@ -415,29 +344,41 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
     }
 
     render() {
-        let resetPasswordJsx;
+        let resetPasswordJsx: JSX.Element;
+
         switch (this.state.phase) {
-            case Phase.Forgot:
-                resetPasswordJsx = this.renderForgot();
-                break;
+            case Phase.EnterEmail:
             case Phase.SendingEmail:
-                resetPasswordJsx = this.renderSendingEmail();
+                resetPasswordJsx = this.renderEnterEmail();
                 break;
             case Phase.EmailSent:
-                resetPasswordJsx = this.renderEmailSent();
+                resetPasswordJsx = this.renderCheckEmail();
+                break;
+            case Phase.PasswordInput:
+                resetPasswordJsx = this.renderSetPassword();
+                break;
+            case Phase.ResettingPassword:
+                resetPasswordJsx = <div>resetting password</div>;
                 break;
             case Phase.Done:
                 resetPasswordJsx = this.renderDone();
                 break;
+            case Phase.EMailPending:
+                resetPasswordJsx = <div>email pending</div>;
+                break;
             default:
-                resetPasswordJsx = <div className="mx_Login_spinner"><InlineSpinner w={64} h={64} /></div>;
+                // This should not happen. However, it is logged and the user is sent to the start.
+                logger.error(`unknown forgot passwort phase ${this.state.phase}`);
+                this.setState({
+                    phase: Phase.EnterEmail,
+                });
+                return;
         }
 
         return (
             <AuthPage>
                 <AuthHeader />
                 <AuthBody>
-                    <h1> { _t('Set a new password') } </h1>
                     { resetPasswordJsx }
                 </AuthBody>
             </AuthPage>

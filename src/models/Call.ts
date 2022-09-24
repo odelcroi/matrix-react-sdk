@@ -41,6 +41,9 @@ import { ElementWidgetActions } from "../stores/widgets/ElementWidgetActions";
 import WidgetStore from "../stores/WidgetStore";
 import { WidgetMessagingStore, WidgetMessagingStoreEvent } from "../stores/widgets/WidgetMessagingStore";
 import ActiveWidgetStore, { ActiveWidgetStoreEvent } from "../stores/ActiveWidgetStore";
+import PlatformPeg from "../PlatformPeg";
+import DesktopCapturerSourcePicker from "../components/views/elements/DesktopCapturerSourcePicker";
+import Modal from "../Modal";
 
 const TIMEOUT_MS = 16000;
 
@@ -770,6 +773,7 @@ export class ElementCall extends Call {
         }
 
         this.messaging!.on(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
+        this.messaging!.on(`action:${ElementWidgetActions.Screenshare}`, this.onScreenshare);
     }
 
     protected async performDisconnection(): Promise<void> {
@@ -812,5 +816,21 @@ export class ElementCall extends Call {
         ev.preventDefault();
         await this.messaging!.transport.reply(ev.detail, {}); // ack
         this.setDisconnected();
+    };
+
+    private onScreenshare = async (ev: CustomEvent<IWidgetApiRequest>) => {
+        ev.preventDefault();
+
+        if (PlatformPeg.get().supportsDesktopCapturer()) {
+            const { finished } = Modal.createDialog(DesktopCapturerSourcePicker);
+            const [source] = await finished;
+
+            await this.messaging!.transport.reply(ev.detail, {
+                failed: !source,
+                desktopCapturerSourceId: source,
+            });
+        } else {
+            await this.messaging!.transport.reply(ev.detail, {});
+        }
     };
 }

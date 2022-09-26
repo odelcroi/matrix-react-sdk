@@ -40,7 +40,7 @@ const formatUrl = (): string | undefined => {
     ].join("");
 };
 
-const getClientInformationEventType = (deviceId: string): string =>
+export const getClientInformationEventType = (deviceId: string): string =>
     `io.element.matrix_client_information.${deviceId}`;
 
 export const recordClientInformation = async (

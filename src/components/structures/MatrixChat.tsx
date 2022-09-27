@@ -33,6 +33,7 @@ import { throttle } from "lodash";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { RoomType } from "matrix-js-sdk/src/@types/event";
 import { DecryptionError } from 'matrix-js-sdk/src/crypto/algorithms';
+import KeyRequestHandler from '../../KeyRequestHandler';
 
 // focus-visible is a Polyfill for the :focus-visible CSS pseudo-attribute used by various components
 import 'focus-visible';
@@ -1531,6 +1532,16 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         // When logging out, stop tracking failures and destroy state
         cli.on(HttpApiEvent.SessionLoggedOut, () => dft.stop());
         cli.on(MatrixEventEvent.Decrypted, (e, err) => dft.eventDecrypted(e, err as DecryptionError));
+
+        // TODO: We can remove this once cross-signing is the only way.
+        // https://github.com/vector-im/riot-web/issues/11908
+        const krh = new KeyRequestHandler(cli);
+        cli.on("crypto.roomKeyRequest", (req) => {
+            krh.handleKeyRequest(req);
+        });
+        cli.on("crypto.roomKeyRequestCancellation", (req) => {
+            krh.handleKeyRequestCancellation(req);
+        });
 
         cli.on(ClientEvent.Room, (room) => {
             if (MatrixClientPeg.get().isCryptoEnabled()) {

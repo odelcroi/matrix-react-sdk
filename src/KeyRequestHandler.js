@@ -16,12 +16,14 @@ limitations under the License.
 */
 
 
-import * as sdk from './index';
 import Modal from './Modal';
-import SettingsStore from './settings/SettingsStore';
+import VerificationRequestDialog from "./components/views/dialogs/VerificationRequestDialog";
+import { verificationMethods } from 'matrix-js-sdk/src/crypto';
 
-// TODO: We can remove this once cross-signing is the only way.
-// https://github.com/vector-im/riot-web/issues/11908
+/**
+ * :tchap: copied from 
+ * https://github.com/matrix-org/matrix-react-sdk/blob/515304d32ebcfee403791c6f4f11a5ecc29e9e65/src/KeyRequestHandler.js
+ */
 export default class KeyRequestHandler {
     constructor(matrixClient) {
         this._matrixClient = matrixClient;
@@ -30,12 +32,17 @@ export default class KeyRequestHandler {
         this._currentUser = null;
         this._currentDevice = null;
 
-        // userId -> deviceId -> [keyRequest]
+        // userId -> deviceId -> [keyRequest] 
+        //TODO should be change to a MAP
         this._pendingKeyRequests = Object.create(null);
     }
 
+    /**
+     * Handle incoming key request event
+     * @param keyRequest 
+     * @returns 
+     */
     handleKeyRequest(keyRequest) {
-        // Ignore own device key requests if cross-signing lab enabled
 
         const userId = keyRequest.userId;
         const deviceId = keyRequest.deviceId;
@@ -51,7 +58,7 @@ export default class KeyRequestHandler {
         // check if we already have this request
         const requests = this._pendingKeyRequests[userId][deviceId];
         if (requests.find((r) => r.requestId === requestId)) {
-            console.log("Already have this key request, ignoring");
+            console.log(":tchap: Already have this key request, ignoring");
             return;
         }
 
@@ -59,13 +66,18 @@ export default class KeyRequestHandler {
 
         if (this._currentUser) {
             // ignore for now
-            console.log("Key request, but we already have a dialog open");
+            console.log(":tchap: Key request, but we already have a dialog open");
             return;
         }
 
         this._processNextRequest();
     }
 
+    /**
+     * Handle incoming key request cancellation event
+     * @param keyRequest 
+     * @returns 
+     */
     handleKeyRequestCancellation(cancellation) {
 
         // see if we can find the request in the queue
@@ -75,7 +87,7 @@ export default class KeyRequestHandler {
 
         if (userId === this._currentUser && deviceId === this._currentDevice) {
             console.log(
-                "room key request cancellation for the user we currently have a"
+                ":tchap: room key request cancellation for the user we currently have a"
                 + " dialog open for",
             );
             // TODO: update the dialog. For now, we just ignore the
@@ -105,6 +117,9 @@ export default class KeyRequestHandler {
     }
 
     _processNextRequest() {
+        console.log(":tchap: _processNextRequest, pending requests:", Object.keys(this._pendingKeyRequests).length)
+        console.log(":tchap: _processNextRequest, pending requests:", JSON.stringify(this._pendingKeyRequests))
+
         const userId = Object.keys(this._pendingKeyRequests)[0];
         if (!userId) {
             return;
@@ -113,9 +128,11 @@ export default class KeyRequestHandler {
         if (!deviceId) {
             return;
         }
-        console.log(`Starting KeyShareDialog for ${userId}:${deviceId}`);
+        console.log(`:tchap: Starting KeyShareDialog for ${userId}:${deviceId}`);
 
         const finished = (r) => {
+            console.log(`:tchap: key request handler finished  for ${userId}:${deviceId}`)
+
             this._currentUser = null;
             this._currentDevice = null;
 
@@ -125,8 +142,10 @@ export default class KeyRequestHandler {
                 return;
             }
 
+            //tchap: this will share keys without taking care of the state of "r" ?!
             if (r) {
                 for (const req of this._pendingKeyRequests[userId][deviceId]) {
+                    console.log(":tchap: share for req :", JSON.stringify(req))
                     req.share();
                 }
             }
@@ -137,7 +156,27 @@ export default class KeyRequestHandler {
             this._processNextRequest();
         };
 
-        console.log(":tchap: should show modal")
+        const removeCurrentRequest = () => {
+            console.log(`:tchap: key request handler finished  for ${userId}:${deviceId}`)
+
+            this._currentUser = null;
+            this._currentDevice = null;
+
+            if (!this._pendingKeyRequests[userId] || !this._pendingKeyRequests[userId][deviceId]) {
+                // request was removed in the time the dialog was displayed
+                this._processNextRequest();
+                return;
+            }
+
+            delete this._pendingKeyRequests[userId][deviceId];
+            if (Object.keys(this._pendingKeyRequests[userId]).length === 0) {
+                delete this._pendingKeyRequests[userId];
+            }
+            this._processNextRequest();
+        }
+
+        console.log(`:tchap: should show modal for ${userId}:${deviceId}`)
+
         /* const KeyShareDialog = sdk.getComponent("dialogs.KeyShareDialog");
         Modal.appendTrackedDialog('Key Share', 'Process Next Request', KeyShareDialog, {
             matrixClient: this._matrixClient,
@@ -145,6 +184,33 @@ export default class KeyRequestHandler {
             deviceId: deviceId,
             onFinished: finished,
         }); */
+
+        const cli = this._matrixClient;
+        const verificationRequestPromise = cli.legacyDeviceVerification(
+            userId,
+            deviceId,
+            verificationMethods.SAS,
+        );
+/*         Modal.createDialog(VerificationRequestDialog, {
+            verificationRequestPromise,
+            member: cli.getUser(userId),
+            onFinished: async () => {
+                const request = await verificationRequestPromise;
+                request.cancel();
+            },
+        }); */
+        Modal.createDialog(VerificationRequestDialog, {
+            verificationRequestPromise: verificationRequestPromise,
+            member: cli.getUser(userId),
+            onFinished: async (r) => {
+                const request = await verificationRequestPromise;
+                //tchap: why cancel?
+                request.cancel();
+                removeCurrentRequest()
+            }
+        });
+
+        console.log(`:tchap: end of _processNextRequest for ${userId}:${deviceId}`)
         this._currentUser = userId;
         this._currentDevice = deviceId;
     }

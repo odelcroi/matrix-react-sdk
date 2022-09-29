@@ -1536,10 +1536,11 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         // TODO: We can remove this once cross-signing is the only way.
         // https://github.com/vector-im/riot-web/issues/11908
         const krh = new KeyRequestHandler(cli);
-        cli.on("crypto.roomKeyRequest", (req) => {
+        cli.on(CryptoEvent.RoomKeyRequest, (req) => {
             krh.handleKeyRequest(req);
         });
-        cli.on("crypto.roomKeyRequestCancellation", (req) => {
+
+         cli.on(CryptoEvent.RoomKeyRequestCancellation, (req) => {
             krh.handleKeyRequestCancellation(req);
         });
 

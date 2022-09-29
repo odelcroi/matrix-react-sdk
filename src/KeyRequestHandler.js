@@ -130,32 +130,26 @@ export default class KeyRequestHandler {
         }
         console.log(`:tchap: Starting KeyShareDialog for ${userId}:${deviceId}`);
 
-        const finished = (r) => {
+        /**
+         * Share keys to the verified session
+         */
+        const shareKeys = () => {
             console.log(`:tchap: key request handler finished  for ${userId}:${deviceId}`)
-
-            this._currentUser = null;
-            this._currentDevice = null;
-
-            if (!this._pendingKeyRequests[userId] || !this._pendingKeyRequests[userId][deviceId]) {
-                // request was removed in the time the dialog was displayed
-                this._processNextRequest();
-                return;
-            }
+            const cli = this._matrixClient;
 
             //tchap: this will share keys without taking care of the state of "r" ?!
-            if (r) {
-                for (const req of this._pendingKeyRequests[userId][deviceId]) {
+            for (const req of this._pendingKeyRequests[userId][deviceId]) {
+                if (cli.checkDeviceTrust(userId, deviceId).isVerified()) {
                     console.log(":tchap: share for req :", JSON.stringify(req))
-                    req.share();
+                    req.share();   
                 }
             }
-            delete this._pendingKeyRequests[userId][deviceId];
-            if (Object.keys(this._pendingKeyRequests[userId]).length === 0) {
-                delete this._pendingKeyRequests[userId];
-            }
-            this._processNextRequest();
         };
 
+        /**
+         * Remove current request from the list of pending request
+         * TODO refactor to map
+         */
         const removeCurrentRequest = () => {
             console.log(`:tchap: key request handler finished  for ${userId}:${deviceId}`)
 
@@ -204,9 +198,10 @@ export default class KeyRequestHandler {
             member: cli.getUser(userId),
             onFinished: async (r) => {
                 const request = await verificationRequestPromise;
+                shareKeys();
+                removeCurrentRequest();
                 //tchap: why cancel?
                 request.cancel();
-                removeCurrentRequest()
             }
         });
 

@@ -33,6 +33,7 @@ import { throttle } from "lodash";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { RoomType } from "matrix-js-sdk/src/@types/event";
 import { DecryptionError } from 'matrix-js-sdk/src/crypto/algorithms';
+//:tchap: import incoming key request handler from tchap project
 import KeyRequestHandler from '../../../../../src/lib/IncomingKeyRequestHandler';
 
 // focus-visible is a Polyfill for the :focus-visible CSS pseudo-attribute used by various components
@@ -1533,8 +1534,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         cli.on(HttpApiEvent.SessionLoggedOut, () => dft.stop());
         cli.on(MatrixEventEvent.Decrypted, (e, err) => dft.eventDecrypted(e, err as DecryptionError));
 
-        // TODO: We can remove this once cross-signing is the only way.
-        // https://github.com/vector-im/riot-web/issues/11908
+        //:tchap: add listener to handle incomingKeyRequest and trigger legacy verification process
+        //the one with the emoji
         const krh = new KeyRequestHandler(cli);
         cli.on(CryptoEvent.RoomKeyRequest, (req) => {
             krh.handleKeyRequest(req);
@@ -1543,6 +1544,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
          cli.on(CryptoEvent.RoomKeyRequestCancellation, (req) => {
             krh.handleKeyRequestCancellation(req);
         });
+        //:tchap: end of tchap
 
         cli.on(ClientEvent.Room, (room) => {
             if (MatrixClientPeg.get().isCryptoEnabled()) {

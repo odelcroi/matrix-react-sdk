@@ -33,7 +33,7 @@ import { throttle } from "lodash";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { RoomType } from "matrix-js-sdk/src/@types/event";
 import { DecryptionError } from 'matrix-js-sdk/src/crypto/algorithms';
-import KeyRequestHandler from '../../KeyRequestHandler';
+import KeyRequestHandler from '../../../../../src/lib/IncomingKeyRequestHandler';
 
 // focus-visible is a Polyfill for the :focus-visible CSS pseudo-attribute used by various components
 import 'focus-visible';

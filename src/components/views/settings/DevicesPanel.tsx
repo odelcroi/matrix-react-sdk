@@ -26,6 +26,7 @@ import DevicesPanelEntry from "./DevicesPanelEntry";
 import Spinner from "../elements/Spinner";
 import AccessibleButton from "../elements/AccessibleButton";
 import { deleteDevicesWithInteractiveAuth } from './devices/deleteDevices';
+import TchapUtils from '../../../../../../src/util/TchapUtils';
 
 interface IProps {
     className?: string;
@@ -37,7 +38,7 @@ interface IState {
     deviceLoadError?: string;
     selectedDevices: string[];
     deleting?: boolean;
-    isCrossSigningActivated?: boolean;
+    isCrossSigningSupported?: boolean;//:tchap: add a state to detect if crossSigning is supported
 }
 
 export default class DevicesPanel extends React.Component<IProps, IState> {
@@ -53,19 +54,16 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
     }
 
     public componentDidMount(): void {
-        this.detectCrossSigning();
+        //:tchap: Detect cross signing support once
+        TchapUtils.isCrossSigningSupportedByServer().then((isCrossSigningSupported)=>{
+            this.setState({isCrossSigningSupported: isCrossSigningSupported})
+        });
+        //:end of tchap
         this.loadDevices();
     }
 
     public componentWillUnmount(): void {
         this.unmounted = true;
-    }
-
-    private detectCrossSigning(): void {
-        const cli = MatrixClientPeg.get();
-        cli.doesServerSupportUnstableFeature("org.matrix.e2e_cross_signing").then((isCrossSigningActivated)=>{
-            this.setState({isCrossSigningActivated: isCrossSigningActivated})
-        })
     }
 
     private loadDevices(): void {
@@ -121,17 +119,20 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
     private isDeviceVerified(device: IMyDevice): boolean | null {
         try {
             const cli = MatrixClientPeg.get();
-            if (!this.state.isCrossSigningActivated){
+            //:tchap: if cross signing is not supported, use the legacy device check
+            if (!this.state.isCrossSigningSupported){
                 return cli.checkDeviceTrust(cli.getUserId(), device.device_id).isVerified();
-            }else{
-                const deviceInfo = cli.getStoredDevice(cli.getUserId(), device.device_id);
-                return this.state.crossSigningInfo.checkDeviceTrust(
-                    this.state.crossSigningInfo,
-                    deviceInfo,
-                    false,
-                    true,
-                ).isCrossSigningVerified();
             }
+            //:tchap: end
+            
+            const deviceInfo = cli.getStoredDevice(cli.getUserId(), device.device_id);
+            return this.state.crossSigningInfo.checkDeviceTrust(
+                this.state.crossSigningInfo,
+                deviceInfo,
+                false,
+                true,
+            ).isCrossSigningVerified();
+            
         } catch (e) {
             console.error("Error getting device cross-signing info", e);
             return null;

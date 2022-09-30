@@ -1,30 +1,18 @@
-/*
-Copyright 2017 Vector Creations Ltd
-Copyright 2020 The Matrix.org Foundation C.I.C.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
-
-
 import Modal from './Modal';
 import VerificationRequestDialog from "./components/views/dialogs/VerificationRequestDialog";
-import { verificationMethods } from 'matrix-js-sdk/src/crypto';
+import { IncomingRoomKeyRequest, verificationMethods } from 'matrix-js-sdk/src/crypto';
 
 /**
- * :tchap: copied from 
+ * :tchap: inspired from 
  * https://github.com/matrix-org/matrix-react-sdk/blob/515304d32ebcfee403791c6f4f11a5ecc29e9e65/src/KeyRequestHandler.js
  */
 export default class KeyRequestHandler {
+    private _matrixClient;
+    private _currentUser: string;
+    private _currentDevice: string;
+    // MAP <userId,  MAP <deviceId, [keyRequest] >
+    private _pendingKeyRequests= new Map<string, Map<string, Array<IncomingRoomKeyRequest>>>();//Map<userId, Map<deviceId, array of requests>>
+
     constructor(matrixClient) {
         this._matrixClient = matrixClient;
 
@@ -32,9 +20,10 @@ export default class KeyRequestHandler {
         this._currentUser = null;
         this._currentDevice = null;
 
-        // userId -> deviceId -> [keyRequest] 
+        // MAP <userId,  MAP <deviceId, [keyRequest] >
         //TODO should be change to a MAP
-        this._pendingKeyRequests = Object.create(null);
+        //this._pendingKeyRequests = Object.create(null);
+        //this._pendingKeyRequests = new Map();
     }
 
     /**
@@ -42,21 +31,21 @@ export default class KeyRequestHandler {
      * @param keyRequest 
      * @returns 
      */
-    handleKeyRequest(keyRequest) {
+    public handleKeyRequest(keyRequest: IncomingRoomKeyRequest) {
 
-        const userId = keyRequest.userId;
-        const deviceId = keyRequest.deviceId;
-        const requestId = keyRequest.requestId;
+        const userId: string = keyRequest.userId;
+        const deviceId: string = keyRequest.deviceId;
+        const requestId: string = keyRequest.requestId;
 
-        if (!this._pendingKeyRequests[userId]) {
-            this._pendingKeyRequests[userId] = Object.create(null);
+        if (!this._pendingKeyRequests.has(userId)) {
+            this._pendingKeyRequests.set(userId, new Map<string, Array<IncomingRoomKeyRequest>>());
         }
-        if (!this._pendingKeyRequests[userId][deviceId]) {
-            this._pendingKeyRequests[userId][deviceId] = [];
+        if (!this._pendingKeyRequests.get(userId).has(deviceId)) {
+            this._pendingKeyRequests.get(userId).set(deviceId, new Array());
         }
 
         // check if we already have this request
-        const requests = this._pendingKeyRequests[userId][deviceId];
+        const requests: Array<IncomingRoomKeyRequest> = this._pendingKeyRequests.get(userId).get(deviceId);
         if (requests.find((r) => r.requestId === requestId)) {
             console.log(":tchap: Already have this key request, ignoring");
             return;
@@ -75,10 +64,10 @@ export default class KeyRequestHandler {
 
     /**
      * Handle incoming key request cancellation event
-     * @param keyRequest 
+     * @param keyRequest : IncomingRoomKeyRequestCancellation (:tchap: can not be typed because it is not exported in react-js)
      * @returns 
      */
-    handleKeyRequestCancellation(cancellation) {
+     public handleKeyRequestCancellation(cancellation) {
 
         // see if we can find the request in the queue
         const userId = cancellation.userId;
@@ -95,11 +84,11 @@ export default class KeyRequestHandler {
             return;
         }
 
-        if (!this._pendingKeyRequests[userId]) {
+        if (!this._pendingKeyRequests.has(userId) || !this._pendingKeyRequests.get(userId).has(deviceId) ) {
             return;
         }
-        const requests = this._pendingKeyRequests[userId][deviceId];
-        if (!requests) {
+        const requests = this._pendingKeyRequests.get(userId).get(deviceId);
+        if (requests.length === 0) {
             return;
         }
         const idx = requests.findIndex((r) => r.requestId === requestId);
@@ -108,26 +97,31 @@ export default class KeyRequestHandler {
         }
         console.log("Forgetting room key request");
         requests.splice(idx, 1);
+        //clean the _pendingKeyRequests by deleting empty entries of both deviceId and/or userId
         if (requests.length === 0) {
-            delete this._pendingKeyRequests[userId][deviceId];
-            if (Object.keys(this._pendingKeyRequests[userId]).length === 0) {
-                delete this._pendingKeyRequests[userId];
+            this._pendingKeyRequests.get(userId).delete(deviceId);
+            if (this._pendingKeyRequests.get(userId).size === 0) {
+                this._pendingKeyRequests.delete(userId);
             }
         }
     }
 
-    _processNextRequest() {
+    private _processNextRequest(): void {
         console.log(":tchap: _processNextRequest, pending requests:", Object.keys(this._pendingKeyRequests).length)
         console.log(":tchap: _processNextRequest, pending requests:", JSON.stringify(this._pendingKeyRequests))
 
-        const userId = Object.keys(this._pendingKeyRequests)[0];
-        if (!userId) {
+        if (this._pendingKeyRequests.size === 0) {
             return;
         }
-        const deviceId = Object.keys(this._pendingKeyRequests[userId])[0];
-        if (!deviceId) {
+        //get userId deviceId
+        const userId = this._pendingKeyRequests.keys().next().value;
+
+        if (this._pendingKeyRequests.get(userId).size === 0) {
             return;
         }
+        //get first deviceId for a userId
+        const deviceId = this._pendingKeyRequests.get(userId).keys().next().value;
+
         console.log(`:tchap: Starting KeyShareDialog for ${userId}:${deviceId}`);
 
         /**
@@ -138,7 +132,7 @@ export default class KeyRequestHandler {
             const cli = this._matrixClient;
 
             //tchap: this will share keys without taking care of the state of "r" ?!
-            for (const req of this._pendingKeyRequests[userId][deviceId]) {
+            for (const req of this._pendingKeyRequests.get(userId).get(deviceId)) {
                 if (cli.checkDeviceTrust(userId, deviceId).isVerified()) {
                     console.log(":tchap: share for req :", JSON.stringify(req))
                     req.share();   
@@ -156,15 +150,16 @@ export default class KeyRequestHandler {
             this._currentUser = null;
             this._currentDevice = null;
 
-            if (!this._pendingKeyRequests[userId] || !this._pendingKeyRequests[userId][deviceId]) {
+            if (!this._pendingKeyRequests.has(userId) || !this._pendingKeyRequests.get(userId).has(deviceId)) {
                 // request was removed in the time the dialog was displayed
                 this._processNextRequest();
                 return;
             }
-
-            delete this._pendingKeyRequests[userId][deviceId];
-            if (Object.keys(this._pendingKeyRequests[userId]).length === 0) {
-                delete this._pendingKeyRequests[userId];
+            //remove deviceId
+            this._pendingKeyRequests.get(userId).delete(deviceId);
+            if (this._pendingKeyRequests.get(userId).size === 0) {
+                //remove userId
+                this._pendingKeyRequests.delete(userId);
             }
             this._processNextRequest();
         }
@@ -196,7 +191,7 @@ export default class KeyRequestHandler {
         Modal.createDialog(VerificationRequestDialog, {
             verificationRequestPromise: verificationRequestPromise,
             member: cli.getUser(userId),
-            onFinished: async (r) => {
+            onFinished: async () => {
                 const request = await verificationRequestPromise;
                 shareKeys();
                 removeCurrentRequest();

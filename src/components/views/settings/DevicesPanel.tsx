@@ -37,6 +37,7 @@ interface IState {
     deviceLoadError?: string;
     selectedDevices: string[];
     deleting?: boolean;
+    isCrossSigningActivated?: boolean;
 }
 
 export default class DevicesPanel extends React.Component<IProps, IState> {
@@ -52,11 +53,19 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
     }
 
     public componentDidMount(): void {
+        this.detectCrossSigning();
         this.loadDevices();
     }
 
     public componentWillUnmount(): void {
         this.unmounted = true;
+    }
+
+    private detectCrossSigning(): void {
+        const cli = MatrixClientPeg.get();
+        cli.doesServerSupportUnstableFeature("org.matrix.e2e_cross_signing").then((isCrossSigningActivated)=>{
+            this.setState({isCrossSigningActivated: isCrossSigningActivated})
+        })
     }
 
     private loadDevices(): void {
@@ -112,13 +121,17 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
     private isDeviceVerified(device: IMyDevice): boolean | null {
         try {
             const cli = MatrixClientPeg.get();
-            const deviceInfo = cli.getStoredDevice(cli.getUserId(), device.device_id);
-            return this.state.crossSigningInfo.checkDeviceTrust(
-                this.state.crossSigningInfo,
-                deviceInfo,
-                false,
-                true,
-            ).isCrossSigningVerified();
+            if (!this.state.isCrossSigningActivated){
+                return cli.checkDeviceTrust(cli.getUserId(), device.device_id).isVerified();
+            }else{
+                const deviceInfo = cli.getStoredDevice(cli.getUserId(), device.device_id);
+                return this.state.crossSigningInfo.checkDeviceTrust(
+                    this.state.crossSigningInfo,
+                    deviceInfo,
+                    false,
+                    true,
+                ).isCrossSigningVerified();
+            }
         } catch (e) {
             console.error("Error getting device cross-signing info", e);
             return null;
